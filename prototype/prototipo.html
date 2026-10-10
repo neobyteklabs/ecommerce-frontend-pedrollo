@@ -1,0 +1,47 @@
+<!doctype html><html lang="es"><head><title>Prototipo · BSV Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script>
+<style>
+.screens{display:grid;gap:24px}@media(min-width:768px){.screens{grid-template-columns:1fr 1fr}}@media(min-width:1280px){.screens{grid-template-columns:repeat(3,1fr)}}
+.shot{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.shot .cap{padding:10px 14px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.shot .cap b{font-size:14px}.shot .cap a{font-size:13px;white-space:nowrap}
+.shot iframe{width:100%;height:520px;border:0;pointer-events:none}
+.shot .wrap{position:relative;overflow:hidden;background:var(--color-surface-sunken)}
+.shot.mobile .wrap{height:560px}
+.shot.mobile iframe{width:360px;height:760px;transform:scale(.72);transform-origin:top left;position:absolute;left:50%;margin-left:-130px;pointer-events:none}
+.shot.desktop iframe{width:1280px;height:1500px;transform:scale(.33);transform-origin:top left;position:absolute;pointer-events:none}
+.shot.desktop .wrap{height:520px}
+@media(min-width:1280px){.shot.desktop iframe{transform:scale(.3)}}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;counter-reset:f}
+.flow a{counter-increment:f;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-full);background:#fff;text-decoration:none;font-size:14px;font-weight:500}
+.flow a::before{content:counter(f);width:22px;height:22px;border-radius:50%;background:var(--color-primary);color:#fff;font-size:12px;display:grid;place-items:center}
+.view{display:flex;gap:8px;margin:16px 0 24px}
+</style></head>
+<body data-page="Prototipo">
+<bsv-header></bsv-header>
+<main class="container section">
+  <span class="badge badge-primary no-dot">Entregables 2 y 3</span>
+  <h1 style="margin-top:12px">Pantallas del MVP y prototipo navegable</h1>
+  <p class="lead muted" style="max-width:72ch">Cada pantalla es responsive de verdad: la misma URL rinde a 360, 768 y 1280. Abajo las ves en miniatura; abre cualquiera para navegar. Las imágenes de producto y los banners son huecos con nombre (<code>data-slot</code>) para que los llenemos uno por uno.</p>
+
+  <div class="card" style="margin-bottom:32px" data-component="FlujoPrincipal"><h3>Flujo principal (haz clic y sigue los botones)</h3>
+    <div class="flow"><a href="index.html">Home</a><a href="serie.html">Serie 4SR</a><a href="categoria.html">Categoría</a><a href="producto.html?id=pkm-60">Ficha PKm 60</a><a href="carrito.html?demo=1">Carrito</a><a href="login.html?next=checkout.html">Login</a><a href="checkout.html?step=1">Checkout 1·2·3</a><a href="checkout.html?step=3">Confirmación</a><a href="pedidos.html">Mis pedidos</a><a href="pedido.html">Detalle + línea de tiempo</a></div>
+    <p class="small muted" style="margin:12px 0 0">Casos límite: <a href="buscar.html?q=zzz">búsqueda sin resultados</a> · <a href="producto.html?id=jswm-1a">producto no disponible</a> · <a href="carrito.html?demo=1">precio cambiado en carrito</a> · <a href="checkout.html?step=2&declined=1">pago rechazado</a> · <a href="checkout.html?step=2&neterr=1">error de red</a> · <a href="login.html?expired=1">sesión expirada</a> · <a href="carrito.html">carrito vacío</a> (tras vaciarlo).</p></div>
+
+  <div class="view"><span class="label" style="align-self:center">Vista</span><button class="chip" aria-pressed="true" onclick="setView('mobile',this)">Móvil 360</button><button class="chip" aria-pressed="false" onclick="setView('desktop',this)">Escritorio 1280</button></div>
+  <div class="screens" id="screens"></div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+<script>
+  const S=[['1 · Home de marca','index.html'],['1b · Página de serie (tipo Apple)','serie.html'],['2 · Listado de categoría','categoria.html'],['3 · Búsqueda con resultados','buscar.html?q=PKm'],['3b · Búsqueda vacía','buscar.html?q=zzz'],['4 · Ficha de producto','producto.html?id=pkm-60'],['4b · Producto no disponible','producto.html?id=jswm-1a'],['5 · Carrito (precio cambiado)','carrito.html?demo=1'],['6 · Login / necesitas cuenta','login.html?next=checkout.html'],['6b · Perfil y datos fiscales','cuenta.html'],['7a · Checkout: dirección','checkout.html?step=1'],['7b · Checkout: pago','checkout.html?step=2'],['7b · Pago rechazado','checkout.html?step=2&declined=1'],['7c · Confirmación','checkout.html?step=3'],['8 · Mis pedidos','pedidos.html'],['8b · Detalle con línea de tiempo','pedido.html'],['9 · Solicitar factura','factura.html'],['10 · Devoluciones','devolucion.html'],['11 · Legales y contacto','legal.html'],['12 · Correos transaccionales','correos.html'],['Sistema de diseño','sistema-diseno.html'],['Cambio de marca','cambio-marca.html']];
+  let v='mobile';
+  function render(){document.getElementById('screens').innerHTML=S.map(([t,u])=>`<div class="shot ${v}"><div class="cap"><b>${t}</b><a href="${u}" target="_blank" rel="noopener">Abrir ↗</a></div><div class="wrap"><iframe loading="lazy" title="${t}" src="${u}${u.includes('?')?'&':'?'}proto=0"></iframe></div></div>`).join('');}
+  window.setView=(x,b)=>{v=x;[...b.parentElement.querySelectorAll('.chip')].forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');render();};
+  render();
+</script>
+</body></html>

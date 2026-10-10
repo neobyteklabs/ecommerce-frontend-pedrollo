@@ -1,0 +1,121 @@
+# Banco de imágenes Pedrollo — índice por familia del CRM
+
+| Familia CRM | Serie | # productos | Páginas Pedrollo | Carpeta |
+|---|---|---|---|---|
+| ACCESORIOS | DF | 1 | tanque-vertical-de-diafragma-fijo | `ACCESORIOS/DF/` |
+| ACCESORIOS | MR | 2 | tanque-vertical-mr | `ACCESORIOS/MR/` |
+| ASYPRESS 115V 1.5 BAR | V | 1 | easypress | `ASYPRESS-115V-1-5-BAR/V/` |
+| AUTOCEBANTES | CKRm | 1 | ck | `AUTOCEBANTES/CKRM/` |
+| AUTOCEBANTES | JCR | 8 | jcr-1, jcr-2 | `AUTOCEBANTES/JCR/` |
+| AUTOCEBANTES | JCRm | 1 | jcr-1 | `AUTOCEBANTES/JCRM/` |
+| AUTOCEBANTES | JDW | 1 | jdw | `AUTOCEBANTES/JDW/` |
+| AUTOCEBANTES | JSW | 14 | jsw-1, jsw-2, jsw-3 | `AUTOCEBANTES/JSW/` |
+| CENTRÍFUGAS | CP | 28 | cp-hasta-3hp, cp-hasta-25hp | `CENTRIFUGAS/CP/` |
+| CENTRÍFUGAS | F | 22 | f | `CENTRIFUGAS/F/` |
+| CENTRÍFUGAS | FG | 8 | fg | `CENTRIFUGAS/FG/` |
+| CENTRÍFUGAS | HF | 10 | hf-medio-caudal, hf-alto-caudal | `CENTRIFUGAS/HF/` |
+| CENTRÍFUGAS | NGA | 2 | nga | `CENTRIFUGAS/NGA/` |
+| CENTRÍFUGAS EN ACERO INOX. | AL-RED | 7 | al-red | `CENTRIFUGAS-EN-ACERO-INOX/AL-RED/` |
+| CENTRÍFUGAS EN ACERO INOX. | F | 2 | f-inox | `CENTRIFUGAS-EN-ACERO-INOX/F/` |
+| CENTRÍFUGAS EN ACERO INOX. | F INOX | 2 | f-inox | `CENTRIFUGAS-EN-ACERO-INOX/F-INOX/` |
+| CENTRÍFUGAS EN ACERO INOX. | NGA-PRO | 2 | nga-pro | `CENTRIFUGAS-EN-ACERO-INOX/NGA-PRO/` |
+| EP15 PKm80 | EP15 PKm80 | 1 | easypump-pk | `EP15-PKM80/EP15-PKM80/` |
+| HYDROFRESH | JSW | 1 | hydrofresh-mr-jsw | `HYDROFRESH/JSW/` |
+| MULTIETAPAS | 2CP | 12 | 2cp | `MULTIETAPAS/2CP/` |
+| MULTIETAPAS | 3-4CP | 5 | 3-4cp | `MULTIETAPAS/3-4CP/` |
+| MULTIETAPAS | HT | 7 | ht | `MULTIETAPAS/HT/` |
+| MULTIETAPAS | MK | 7 | mk | `MULTIETAPAS/MK/` |
+| PERIFÉRICAS | CK | 1 | ck | `PERIFERICAS/CK/` |
+| PERIFÉRICAS | PK | 11 | pk, pkm-60md | `PERIFERICAS/PK/` |
+| PERIFÉRICAS | PKS | 1 | pks | `PERIFERICAS/PKS/` |
+| PISCINAS | MAGNIFICA | 9 | magnifica | `PISCINAS/MAGNIFICA/` |
+| PISCINAS | MAXIMA | 3 | maxima | `PISCINAS/MAXIMA/` |
+| PISCINAS | PRIMA | 7 | prima | `PISCINAS/PRIMA/` |
+| POZO PROFUNDO | 140PR | 19 | 140pr | `POZO-PROFUNDO/140PR/` |
+| POZO PROFUNDO | 140PS | 7 | 140ps | `POZO-PROFUNDO/140PS/` |
+| POZO PROFUNDO | 3SR | 4 | 3sr | `POZO-PROFUNDO/3SR/` |
+| POZO PROFUNDO | 4BLOCK | 6 | 4-block | `POZO-PROFUNDO/4BLOCK/` |
+| POZO PROFUNDO | 4PD | 46 | 4pd | `POZO-PROFUNDO/4PD/` |
+| POZO PROFUNDO | 4SR | 15 | 4sr | `POZO-PROFUNDO/4SR/` |
+| POZO PROFUNDO | 4SR-N | 4 | 4sr | `POZO-PROFUNDO/4SR-N/` |
+| POZO PROFUNDO | 4SR-S | 26 | 4sr | `POZO-PROFUNDO/4SR-S/` |
+| POZO PROFUNDO | 6PD | 12 | 6pd | `POZO-PROFUNDO/6PD/` |
+| POZO PROFUNDO | FLUID SOLAR | 2 | fluid-solar | `POZO-PROFUNDO/FLUID-SOLAR/` |
+| POZO PROFUNDO | KIT 140PR | 38 | 140pr, 6pd | `POZO-PROFUNDO/KIT-140PR/` |
+| POZO PROFUNDO | KIT 140PS | 14 | 140ps, 6pd | `POZO-PROFUNDO/KIT-140PS/` |
+| POZO PROFUNDO | KIT 4SR | 45 | 4sr, 4pd | `POZO-PROFUNDO/KIT-4SR/` |
+| POZO PROFUNDO | P 1000 | 3 | p1000 | `POZO-PROFUNDO/P-1000/` |
+| POZO PROFUNDO | P 600 | 15 | p600 | `POZO-PROFUNDO/P-600/` |
+| POZO PROFUNDO | P 800 | 5 | p800 | `POZO-PROFUNDO/P-800/` |
+| POZO PROFUNDO | PX 1000 | 3 | px1000 | `POZO-PROFUNDO/PX-1000/` |
+| POZO PROFUNDO | PX 600 | 15 | px600 | `POZO-PROFUNDO/PX-600/` |
+| POZO PROFUNDO | PX 800 | 5 | px800 | `POZO-PROFUNDO/PX-800/` |
+| POZO PROFUNDO | QEM | 10 | qem | `POZO-PROFUNDO/QEM/` |
+| POZO PROFUNDO | QET | 13 | qet | `POZO-PROFUNDO/QET/` |
+| POZO PROFUNDO | UP | 10 | up | `POZO-PROFUNDO/UP/` |
+| PRESURIZACIÓN | DGBLU | 7 | dg-blu | `PRESURIZACION/DGBLU/` |
+| PRESURIZACIÓN | EASYPUMP | 24 | easypump-pk, easypump-cp, easypump-3-4cp, easypump-jsw, easypump-jcr, easypump-top-multi | `PRESURIZACION/EASYPUMP/` |
+| PRESURIZACIÓN | HYDROFRESH DF | 5 | hydrofresh-df, hydrofresh-df-jsw, hydrofresh-df-jcr | `PRESURIZACION/HYDROFRESH-DF/` |
+| PRESURIZACIÓN | HYDROFRESH MR | 46 | hydrofresh-mr, hydrofresh-mr-cp, hydrofresh-mr-3-4cp, hydrofresh-mr-jsw, hydrofresh-mr-jcr | `PRESURIZACION/HYDROFRESH-MR/` |
+| PRESURIZACIÓN | PRO DG | 2 | pro-dg | `PRESURIZACION/PRO-DG/` |
+| PRESURIZACIÓN | TOP MULTI | 5 | top-multi | `PRESURIZACION/TOP-MULTI/` |
+| PRESURIZACIÓN | TOP MULTI TECH | 4 | top-multi-tech | `PRESURIZACION/TOP-MULTI-TECH/` |
+| SUMERGIBLES PARA DRENAJE | D | 3 | d | `SUMERGIBLES-PARA-DRENAJE/D/` |
+| SUMERGIBLES PARA DRENAJE | MC | 9 | mc-50-65 | `SUMERGIBLES-PARA-DRENAJE/MC/` |
+| SUMERGIBLES PARA DRENAJE | RX-VORTEX | 3 | rx-vortex | `SUMERGIBLES-PARA-DRENAJE/RX-VORTEX/` |
+| SUMERGIBLES PARA DRENAJE | SAR | 4 | sar-40, sar-100, sar-250, sar-550 | `SUMERGIBLES-PARA-DRENAJE/SAR/` |
+| SUMERGIBLES PARA DRENAJE | TOP | 4 | top | `SUMERGIBLES-PARA-DRENAJE/TOP/` |
+| SUMERGIBLES PARA DRENAJE | TOP FLOOR | 1 | top-floor | `SUMERGIBLES-PARA-DRENAJE/TOP-FLOOR/` |
+| SUMERGIBLES PARA DRENAJE | TOP VORTEX | 1 | top-vortex | `SUMERGIBLES-PARA-DRENAJE/TOP-VORTEX/` |
+| SUMERGIBLES PARA DRENAJE | TRITUS | 8 | tritus, tritus-inox | `SUMERGIBLES-PARA-DRENAJE/TRITUS/` |
+| SUMERGIBLES PARA DRENAJE | VX | 11 | vx, vx-65-80 | `SUMERGIBLES-PARA-DRENAJE/VX/` |
+| SUMERGIBLES PARA DRENAJE | VX-ST | 4 | vx-st | `SUMERGIBLES-PARA-DRENAJE/VX-ST/` |
+| SUMERGIBLES PARA DRENAJE | VXC | 9 | vx | `SUMERGIBLES-PARA-DRENAJE/VXC/` |
+| SUMERGIBLES PARA DRENAJE | ZX | 1 | zxm-1 | `SUMERGIBLES-PARA-DRENAJE/ZX/` |
+| Sistema compacto automático de presión constante | Sistema compacto automático de presión constante | 1 | dg-blu | `SISTEMA-COMPACTO-AUTOMATICO-DE-PRESION-C/SISTEMA-COMPACTO-AUTOMATICO-DE-PRESION-C/` |
+| TANQUES PRECARGADOS | DF | 13 | tanque-vertical-de-diafragma-fijo, tanque-horizontal-de-diafragma-fijo, tanque-inline-df | `TANQUES-PRECARGADOS/DF/` |
+| TANQUES PRECARGADOS | FLO | 1 | flo | `TANQUES-PRECARGADOS/FLO/` |
+| TANQUES PRECARGADOS | MR | 13 | tanque-vertical-mr, tanque-horizontal-mr, tanque-inline-mr | `TANQUES-PRECARGADOS/MR/` |
+| TANQUES PRECARGADOS | MR PLUS | 7 | tanque-plus-mr | `TANQUES-PRECARGADOS/MR-PLUS/` |
+| TANQUES PRECARGADOS | MR ULTRA | 4 | tanque-ultra-mr | `TANQUES-PRECARGADOS/MR-ULTRA/` |
+| VARIADORES Y CONTROLES | E1 | 2 | e1-e2 | `VARIADORES-Y-CONTROLES/E1/` |
+| VARIADORES Y CONTROLES | E2 | 2 | e1-e2 | `VARIADORES-Y-CONTROLES/E2/` |
+| VARIADORES Y CONTROLES | EASYPRESS | 6 | easypress | `VARIADORES-Y-CONTROLES/EASYPRESS/` |
+| VARIADORES Y CONTROLES | PRO-DG | 5 | pro-dg | `VARIADORES-Y-CONTROLES/PRO-DG/` |
+| VARIADORES Y CONTROLES | STEADYPRES | 4 | steadypres, steadypres-4-0 | `VARIADORES-Y-CONTROLES/STEADYPRES/` |
+
+## Series del CRM sin imagen de origen (28)
+
+- ACCESORIOS | AR | 9 productos | ej. AR-12, AR-12V, AR-13
+- ACCESORIOS | FLOTADORES | 3 productos | ej. FLO 03, MAC 3 (T 80), MAC 5
+- ACCESORIOS | FN | 12 productos | ej. FN-14, FN-18, FN-18 SIC
+- ACCESORIOS | MANÓMETROS | 2 productos | ej. MR 10, MRG 10
+- ACCESORIOS | PSG | 3 productos | ej. PSG-1, PSG-2, PSG-3
+- ACCESORIOS | R | 2 productos | ej. R 3, R 5
+- ACCESORIOS | RP | 3 productos | ej. RP 710/02, RP 710/03, RP 710/05
+- ACCESORIOS | ST1 | 1 productos | ej. ST1-12
+- ACCESORIOS | TF | 7 productos | ej. TF 10-E, TFG 10-E, TFG 12-E
+- ACCESORIOS | TFN | 2 productos | ej. TFN 1, TFN 3
+- ACCESORIOS | VET | 4 productos | ej. VET-F 1", VET-F 1 1/2", VET-F 1 1/4"
+- ACCESORIOS | VF | 7 productos | ej. VF 1", VF 1 1/2", VF 1 1/4"
+- ACCESORIOS | VR | 8 productos | ej. VR 1", VR 1 1/2", VR 1 1/4"
+- CENTRÍFUGA AUTOCEBANTE | JETm | 1 productos | ej. FUTURE JETm 2A
+- POZO PROFUNDO | ANODO | 1 productos | ej. ANODO 4PD
+- POZO PROFUNDO | C-BOX | 10 productos | ej. C-BOX05, C-BOX05/2, C-BOX07
+- POZO PROFUNDO | ST1 | 1 productos | ej. ST1-16
+- POZO PROFUNDO | ST4 | 2 productos | ej. ST4-16, ST4-25
+- POZO PROFUNDO | STA | 1 productos | ej. STA-17
+- PRESURIZACIÓN | COMBIPRESS | 26 productos | ej. CB 2CP 25/16A-2, CB 2CP 25/16B-2, CB 2CPm 25/14B
+- PRESURIZACIÓN | EASY | 1 productos | ej. EASY SMALL
+- PRESURIZACIÓN | PA | 4 productos | ej. PA 06 1A 1A, PA 13 1A 1A, PA 13 2A 1A
+- PRESURIZACIÓN | PUMP MASTER | 74 productos | ej. PMD UP 2/2 MT, PMD UP 4/3 MT, PMD UP 4/4 MT
+- PRESURIZACIÓN | SELLOS MECÁNICOS | 6 productos | ej. 3P10022A, 3P10824A, ST1-13E
+- PRESURIZACIÓN | TF | 1 productos | ej. TFG 8
+- SUMERGIBLES PARA DRENAJE | SELLOS MECÁNICOS | 9 productos | ej. MG1-14D SIC, ST1-14 SIC, STA-12R SIC
+- SUMERGIBLES PARA DRENAJE | TIG INOX | 3 productos | ej. TIGm 0.75, TIGm 0.75-2, TIGm 1.3-2
+- TANQUES PRECARGADOS | MEMBRANAS | 12 productos | ej. MR 024PH, MR 024PI, MR 050
+
+## Páginas de Pedrollo no asignadas a ninguna serie del CRM (2)
+
+- pq — PQ
+- tanque-flex-lite-fv — Tanque FLEX-LITE Fibra de Vidrio

@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><title>Devoluciones · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Devoluciones">
+<bsv-header></bsv-header>
+<main class="container section" style="padding-top:16px">
+  <div class="account-layout">
+    <nav class="account-nav" aria-label="Mi cuenta" data-component="AccountNav"><a href="pedidos.html"><span data-icon-slot="package"></span>Mis pedidos</a><a href="cuenta.html" ><span data-icon-slot="mapPin"></span>Direcciones</a><a href="cuenta.html#fiscal"><span data-icon-slot="building"></span>Datos fiscales</a><a href="factura.html" ><span data-icon-slot="receipt"></span>Facturas</a><a href="devolucion.html" aria-current="page"><span data-icon-slot="rotate"></span>Devoluciones</a><a href="login.html"><span data-icon-slot="logout"></span>Cerrar sesión</a></nav>
+    <div class="stack" style="max-width:720px">
+      <div><h1 style="font-size:var(--text-2xl);margin-bottom:4px">Solicitar devolución</h1><span class="muted small">Pedido <span class="mono">BSV-24-01837</span> · entregado hace 3 días · tienes hasta el 31 de octubre</span></div>
+      <form class="card stack" data-component="ReturnForm" onsubmit="event.preventDefault();document.getElementById('rsent').hidden=false;this.hidden=true;window.scrollTo(0,0)">
+        <fieldset style="border:0;padding:0;margin:0"><legend class="label" style="margin-bottom:8px">¿Qué artículo deseas devolver?</legend>
+          <label class="radio-card"><input type="radio" name="item" checked><div><strong><span class="model">PKm 60</span> · Bomba periférica 0.5 HP</strong><span>2 piezas · ,890.00 c/u</span></div></label>
+          <label class="radio-card" style="margin-top:8px"><input type="radio" name="item"><div><strong><span class="model">4SR 2/9</span> · Bomba sumergible 1 HP</strong><span>1 pieza · ,850.00</span></div></label></fieldset>
+        <div class="field"><label for="qty">Cantidad a devolver</label><div class="qty"><button type="button" aria-label="Menos">−</button><input id="qty" type="number" value="1" min="1" max="2"><button type="button" aria-label="Más">+</button></div></div>
+        <div class="field"><label for="motivo">Motivo</label><select id="motivo" class="select" required><option value="">Elige un motivo</option><option>Llegó dañado</option><option>No es el modelo que pedí</option><option>No funciona / falla al arrancar</option><option>Ya no lo necesito</option><option>Otro</option></select><span class="hint">Si falla al arrancar, primero revisa voltaje y cebado: <a href="#">guía rápida</a>.</span></div>
+        <div class="field"><label>Fotos <span class="muted" style="font-weight:400">(mínimo 1, máximo 5)</span></label>
+          <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(96px,1fr))" data-component="PhotoUpload"><button type="button" class="img-slot" data-slot="" style="aspect-ratio:1;min-height:0;flex-direction:column;gap:6px;cursor:pointer;color:var(--color-primary);font-family:var(--font-body)"><span data-icon-slot="camera"></span>Agregar foto</button><div class="img-slot has-img" style="aspect-ratio:1;min-height:0"><span class="xs">IMG_2041.jpg</span></div></div>
+          <span class="hint">Incluye la etiqueta de datos de la bomba y el empaque.</span></div>
+        <div class="field"><label for="com">Comentarios</label><textarea id="com" class="textarea" placeholder="Cuéntanos qué pasó. Entre más detalle, más rápido resolvemos."></textarea></div>
+        <div class="alert alert-info"><span data-icon-slot="info"></span><div>Si aprobamos la devolución te mandamos una guía prepagada. El reembolso llega a tu tarjeta en 5–10 días hábiles después de recibir el equipo.</div></div>
+        <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" href="pedido.html"><span data-icon-slot="arrowLeft"></span> Volver al pedido</a><button class="btn btn-primary btn-lg" type="submit">Enviar solicitud</button></div>
+      </form>
+      <div class="card" id="rsent" hidden data-component="ReturnStatus">
+        <div class="row"><span class="badge badge-recibido">Solicitada</span><span class="small muted">Devolución <span class="mono">DEV-0412</span></span></div>
+        <h3 style="margin-top:12px">Solicitud enviada</h3><p class="muted">La revisamos en máximo 1 día hábil y te avisamos por correo.</p>
+        <ol class="timeline"><li class="is-current"><span class="t-title">Solicitada</span><span class="t-meta">Hoy · 11:20</span></li><li class="is-pending"><span class="t-title">Guía emitida</span><span class="t-meta">Te mandamos la etiqueta prepagada</span></li><li class="is-pending"><span class="t-title">Recibida en CEDIS</span><span class="t-meta">Revisión del equipo</span></li><li class="is-pending"><span class="t-title">Reembolsada</span><span class="t-meta">5–10 días hábiles a tu tarjeta</span></li></ol>
+        <a class="btn btn-secondary" href="pedido.html">Volver al pedido</a>
+      </div>
+      <section data-component="ReturnHistory"><h3>Devoluciones anteriores</h3>
+        <div class="stack-sm">
+          <div class="card card-sm"><div class="between" style="flex-wrap:wrap"><div><span class="mono" style="font-weight:600">DEV-0388</span> · PKm 100 · pedido BSV-24-01512</div><span class="badge badge-entregado">Reembolsada</span></div>
+            <ol class="timeline" style="margin-top:12px"><li class="is-done"><span class="t-title">Solicitada</span><span class="t-meta">6 sep</span></li><li class="is-done"><span class="t-title">Guía emitida</span><span class="t-meta">7 sep · Estafeta 7845 0011 2298 44</span></li><li class="is-done"><span class="t-title">Recibida</span><span class="t-meta">10 sep · CEDIS Tlalnepantla</span></li><li class="is-done"><span class="t-title">Reembolsada</span><span class="t-meta">12 sep · ,650.00 a Visa 4242</span></li></ol></div>
+          <div class="card card-sm"><div class="between" style="flex-wrap:wrap"><div><span class="mono" style="font-weight:600">DEV-0301</span> · TOP 2 · pedido BSV-24-01644</div><span class="badge badge-cancelado">Rechazada</span></div>
+            <ol class="timeline" style="margin-top:12px"><li class="is-done"><span class="t-title">Solicitada</span><span class="t-meta">22 sep</span></li><li class="is-done"><span class="t-title">Guía emitida</span><span class="t-meta">23 sep</span></li><li class="is-done"><span class="t-title">Recibida</span><span class="t-meta">26 sep</span></li><li class="is-rejected"><span class="t-title">Rechazada</span><span class="t-meta">27 sep</span><div class="t-body alert alert-danger"><span data-icon-slot="alert"></span><div><strong>Motivo</strong>El equipo presenta daño por operación en seco (sello quemado), no cubierto por garantía. Te lo regresamos sin costo y te enviamos cotización de reparación.</div></div></li></ol></div>
+        </div></section>
+    </div>
+  </div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar current="cuenta"></bsv-bottombar>
+</body></html>

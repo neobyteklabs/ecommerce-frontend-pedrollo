@@ -1,0 +1,1103 @@
+[
+ {
+  "familia": "ACCESORIOS",
+  "serie": "AR",
+  "n": 9,
+  "ejemplos": [
+   "AR-12",
+   "AR-12V",
+   "AR-13",
+   "AR-14"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "DF",
+  "n": 1,
+  "ejemplos": [
+   "PDF 18I"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "FLOTADORES",
+  "n": 3,
+  "ejemplos": [
+   "FLO 03",
+   "MAC 3 (T 80)",
+   "MAC 5"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "FN",
+  "n": 12,
+  "ejemplos": [
+   "FN-14",
+   "FN-18",
+   "FN-18 SIC",
+   "FN-20"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "MANÓMETROS",
+  "n": 2,
+  "ejemplos": [
+   "MR 10",
+   "MRG 10"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "MR",
+  "n": 2,
+  "ejemplos": [
+   "MR 005PI",
+   "PMR 005IS"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "PSG",
+  "n": 3,
+  "ejemplos": [
+   "PSG-1",
+   "PSG-2",
+   "PSG-3"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "R",
+  "n": 2,
+  "ejemplos": [
+   "R 3",
+   "R 5"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "RP",
+  "n": 3,
+  "ejemplos": [
+   "RP 710/02",
+   "RP 710/03",
+   "RP 710/05"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "ST1",
+  "n": 1,
+  "ejemplos": [
+   "ST1-12"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "TF",
+  "n": 7,
+  "ejemplos": [
+   "TF 10-E",
+   "TFG 10-E",
+   "TFG 12-E",
+   "TFG 14-E"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "TFN",
+  "n": 2,
+  "ejemplos": [
+   "TFN 1",
+   "TFN 3"
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "VET",
+  "n": 4,
+  "ejemplos": [
+   "VET-F 1\"",
+   "VET-F 1 1/2\"",
+   "VET-F 1 1/4\"",
+   "VET-P 2\""
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "VF",
+  "n": 7,
+  "ejemplos": [
+   "VF 1\"",
+   "VF 1 1/2\"",
+   "VF 1 1/4\"",
+   "VF 2\""
+  ]
+ },
+ {
+  "familia": "ACCESORIOS",
+  "serie": "VR",
+  "n": 8,
+  "ejemplos": [
+   "VR 1\"",
+   "VR 1 1/2\"",
+   "VR 1 1/4\"",
+   "VR 1/2\""
+  ]
+ },
+ {
+  "familia": "ASYPRESS 115V 1.5 BAR",
+  "serie": "V",
+  "n": 1,
+  "ejemplos": [
+   "EASYPRESS 115V 1.5 BAR"
+  ]
+ },
+ {
+  "familia": "AUTOCEBANTES",
+  "serie": "CKRm",
+  "n": 1,
+  "ejemplos": [
+   "CKRm 90"
+  ]
+ },
+ {
+  "familia": "AUTOCEBANTES",
+  "serie": "JCR",
+  "n": 8,
+  "ejemplos": [
+   "JCR 2A",
+   "JCR 2C",
+   "JCRm 1A",
+   "JCRm 1C"
+  ]
+ },
+ {
+  "familia": "AUTOCEBANTES",
+  "serie": "JCRm",
+  "n": 1,
+  "ejemplos": [
+   "JCRm 1C-2"
+  ]
+ },
+ {
+  "familia": "AUTOCEBANTES",
+  "serie": "JDW",
+  "n": 1,
+  "ejemplos": [
+   "JDWm 1AX-N-D"
+  ]
+ },
+ {
+  "familia": "AUTOCEBANTES",
+  "serie": "JSW",
+  "n": 14,
+  "ejemplos": [
+   "JSW 2AX",
+   "JSW 2CX",
+   "JSW 3AH",
+   "JSW 3BM"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGA AUTOCEBANTE",
+  "serie": "JETm",
+  "n": 1,
+  "ejemplos": [
+   "FUTURE JETm 2A"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS",
+  "serie": "CP",
+  "n": 28,
+  "ejemplos": [
+   "CP 160A",
+   "CP 160B",
+   "CP 160C",
+   "CP 210B"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS",
+  "serie": "F",
+  "n": 22,
+  "ejemplos": [
+   "F 100/160A",
+   "F 100/200A",
+   "F 100/200B",
+   "F 100/200C"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS",
+  "serie": "FG",
+  "n": 8,
+  "ejemplos": [
+   "FG 100/160A",
+   "FG 100/160A",
+   "FG 50/250AR",
+   "FG 50/250AR"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS",
+  "serie": "HF",
+  "n": 10,
+  "ejemplos": [
+   "HF 20A",
+   "HF 30A",
+   "HF 30B",
+   "HF 5A"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS",
+  "serie": "NGA",
+  "n": 2,
+  "ejemplos": [
+   "NGA 1A",
+   "NGAm 1A-2"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "serie": "AL-RED",
+  "n": 7,
+  "ejemplos": [
+   "AL-RED 620-4",
+   "AL-RED 660M-4",
+   "AL-RED 670M-4",
+   "AL-REDm 620-4"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "serie": "F",
+  "n": 2,
+  "ejemplos": [
+   "F 65/125B-I",
+   "F 65/125C-I"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "serie": "F INOX",
+  "n": 2,
+  "ejemplos": [
+   "F 50/160A-I",
+   "F 50/160C-I"
+  ]
+ },
+ {
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "serie": "NGA-PRO",
+  "n": 2,
+  "ejemplos": [
+   "NGA 1A-PRO",
+   "NGAm 1A-PRO-2"
+  ]
+ },
+ {
+  "familia": "EP15 PKm80",
+  "serie": "EP15 PKm80",
+  "n": 1,
+  "ejemplos": [
+   "EP15 PKm80"
+  ]
+ },
+ {
+  "familia": "HYDROFRESH",
+  "serie": "JSW",
+  "n": 1,
+  "ejemplos": [
+   "HFJSWm2A M100HS"
+  ]
+ },
+ {
+  "familia": "MULTIETAPAS",
+  "serie": "2CP",
+  "n": 12,
+  "ejemplos": [
+   "2CP 25/16A",
+   "2CP 25/16B",
+   "2CP 32/210A",
+   "2CP 32/210B"
+  ]
+ },
+ {
+  "familia": "MULTIETAPAS",
+  "serie": "3-4CP",
+  "n": 5,
+  "ejemplos": [
+   "3CPm 80",
+   "3CPm 80-2",
+   "4CP 100",
+   "4CPm 100"
+  ]
+ },
+ {
+  "familia": "MULTIETAPAS",
+  "serie": "HT",
+  "n": 7,
+  "ejemplos": [
+   "HT 10/9",
+   "HT 15/2",
+   "HT 15/3",
+   "HT 15/4"
+  ]
+ },
+ {
+  "familia": "MULTIETAPAS",
+  "serie": "MK",
+  "n": 7,
+  "ejemplos": [
+   "MK 5/4",
+   "MK 5/7",
+   "MK 8/5",
+   "MK 8/6"
+  ]
+ },
+ {
+  "familia": "PERIFÉRICAS",
+  "serie": "CK",
+  "n": 1,
+  "ejemplos": [
+   "CKm 80E-D"
+  ]
+ },
+ {
+  "familia": "PERIFÉRICAS",
+  "serie": "PK",
+  "n": 11,
+  "ejemplos": [
+   "PK 200",
+   "PK 300",
+   "PK 60",
+   "PK 65"
+  ]
+ },
+ {
+  "familia": "PERIFÉRICAS",
+  "serie": "PKS",
+  "n": 1,
+  "ejemplos": [
+   "PKSm 60"
+  ]
+ },
+ {
+  "familia": "PISCINAS",
+  "serie": "MAGNIFICA",
+  "n": 9,
+  "ejemplos": [
+   "MAGNIFICA 1m",
+   "MAGNIFICA 2m",
+   "MAGNIFICA 2m-2",
+   "MAGNIFICA 3m"
+  ]
+ },
+ {
+  "familia": "PISCINAS",
+  "serie": "MAXIMA",
+  "n": 3,
+  "ejemplos": [
+   "MAXIMA-4 1000",
+   "MAXIMA-4 550",
+   "MAXIMA-4 750"
+  ]
+ },
+ {
+  "familia": "PISCINAS",
+  "serie": "PRIMA",
+  "n": 7,
+  "ejemplos": [
+   "PRIMA 100m",
+   "PRIMA 100m-2",
+   "PRIMA 150m",
+   "PRIMA 150m-2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "140PR",
+  "n": 19,
+  "ejemplos": [
+   "140PR 16N/05",
+   "140PR 16N/08",
+   "140PR 16N/11",
+   "140PR 16N/13"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "140PS",
+  "n": 7,
+  "ejemplos": [
+   "140PS 42N/03",
+   "140PS 42N/05",
+   "140PS 42N/07",
+   "140PS 42N/09"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "3SR",
+  "n": 4,
+  "ejemplos": [
+   "3SRm 2/17",
+   "3SRm 2/8",
+   "3SRm 4/10",
+   "3SRm 4/14"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "4BLOCK",
+  "n": 6,
+  "ejemplos": [
+   "4BLOCKm 2/4",
+   "4BLOCKm 2/8",
+   "4BLOCKm 4/3",
+   "4BLOCKm 4/5"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "4PD",
+  "n": 46,
+  "ejemplos": [
+   "4PDm/0.5-2 + C-BOX05/2",
+   "4PDm/0.5 + C-BOX05",
+   "4PDm/0.75-2 + C-BOX07/2",
+   "4PDm/0.75 + C-BOX07"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "4SR",
+  "n": 15,
+  "ejemplos": [
+   "4SR60G/100",
+   "4SR60G/15",
+   "4SR60G/20",
+   "4SR60G/30"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "4SR-N",
+  "n": 4,
+  "ejemplos": [
+   "4SR105G/100-N",
+   "4SR105G/30-N",
+   "4SR105G/50-N",
+   "4SR105G/75-N"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "4SR-S",
+  "n": 26,
+  "ejemplos": [
+   "4SR13G/10-S",
+   "4SR13G/15-S",
+   "4SR13G/20-S",
+   "4SR13G/30-S"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "6PD",
+  "n": 12,
+  "ejemplos": [
+   "6PD 10-2",
+   "6PD 10-4",
+   "6PD 15-2",
+   "6PD 15-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "ANODO",
+  "n": 1,
+  "ejemplos": [
+   "ANODO 4PD"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "C-BOX",
+  "n": 10,
+  "ejemplos": [
+   "C-BOX05",
+   "C-BOX05/2",
+   "C-BOX07",
+   "C-BOX07/2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "FLUID SOLAR",
+  "n": 2,
+  "ejemplos": [
+   "FLUID SOLAR 2/6",
+   "FLUID SOLAR 4/8"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "KIT 140PR",
+  "n": 38,
+  "ejemplos": [
+   "140PR16 6PD/10-2",
+   "140PR16 6PD/15-2",
+   "140PR16 6PD/20-2",
+   "140PR16 6PD/25-2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "KIT 140PS",
+  "n": 14,
+  "ejemplos": [
+   "140PS42 6PD/10-2",
+   "140PS42 6PD/15-2",
+   "140PS42 6PD/20-2",
+   "140PS42 6PD/25-2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "KIT 4SR",
+  "n": 45,
+  "ejemplos": [
+   "4SR13G/10-S PD1",
+   "4SR13G/10-S PD2",
+   "4SR13G/15-S PD2",
+   "4SR13G/20-S PD2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "P 1000",
+  "n": 3,
+  "ejemplos": [
+   "P 10175-4",
+   "P 10200-4",
+   "P 10250-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "P 600",
+  "n": 15,
+  "ejemplos": [
+   "P 610-2",
+   "P 610-4",
+   "P 615-2",
+   "P 615-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "P 800",
+  "n": 5,
+  "ejemplos": [
+   "P 8100-4",
+   "P 8125-4",
+   "P 8150-4",
+   "P 860-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "PX 1000",
+  "n": 3,
+  "ejemplos": [
+   "PX 10175-4",
+   "PX 10200-4",
+   "PX 10250-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "PX 600",
+  "n": 15,
+  "ejemplos": [
+   "PX 610-2",
+   "PX 610-4",
+   "PX 615-2",
+   "PX 615-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "PX 800",
+  "n": 5,
+  "ejemplos": [
+   "PX 8100-4",
+   "PX 8125-4",
+   "PX 8150-4",
+   "PX 860-4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "QEM",
+  "n": 10,
+  "ejemplos": [
+   "QEM 050",
+   "QEM 050/2",
+   "QEM 075",
+   "QEM 075/2"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "QET",
+  "n": 13,
+  "ejemplos": [
+   "QET 050/2",
+   "QET 075/2",
+   "QET 1000/2",
+   "QET 1000/4"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "ST1",
+  "n": 1,
+  "ejemplos": [
+   "ST1-16"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "ST4",
+  "n": 2,
+  "ejemplos": [
+   "ST4-16",
+   "ST4-25"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "STA",
+  "n": 1,
+  "ejemplos": [
+   "STA-17"
+  ]
+ },
+ {
+  "familia": "POZO PROFUNDO",
+  "serie": "UP",
+  "n": 10,
+  "ejemplos": [
+   "Base para instalación horizontal",
+   "UP 2/2",
+   "UP 4/3",
+   "UP 4/4"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "COMBIPRESS",
+  "n": 26,
+  "ejemplos": [
+   "CB 2CP 25/16A-2",
+   "CB 2CP 25/16B-2",
+   "CB 2CPm 25/14B",
+   "CB 2CPm 25/16A"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "DGBLU",
+  "n": 7,
+  "ejemplos": [
+   "KIT DE CONEXIÓN PARA DGBLU DÚO",
+   "TARJETA ELECTRÓNICA DE EXPANSIÓN",
+   "DGBLU 3-D",
+   "DGBLU 5-2"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "EASY",
+  "n": 1,
+  "ejemplos": [
+   "EASY SMALL"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "EASYPUMP",
+  "n": 24,
+  "ejemplos": [
+   "EP15 PKm60",
+   "EP15 CPm610",
+   "EP15 CPm620",
+   "EP15 CPm650M"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "HYDROFRESH DF",
+  "n": 5,
+  "ejemplos": [
+   "HF JCRm1A D050H",
+   "HF JCRm2C D080H",
+   "HF JSWm1A D050H",
+   "HF JSWm2C D080H"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "HYDROFRESH MR",
+  "n": 46,
+  "ejemplos": [
+   "HF CPm610 M050HS",
+   "HF CPm610 M080HS",
+   "HF CPm620 M080HS",
+   "HF CPm620 M100HS"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "PA",
+  "n": 4,
+  "ejemplos": [
+   "PA 06 1A 1A",
+   "PA 13 1A 1A",
+   "PA 13 2A 1A",
+   "PA 35 1A 1A"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "PRO DG",
+  "n": 2,
+  "ejemplos": [
+   "PRO-DG MT 11",
+   "PRO-DG TT 11"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "PUMP MASTER",
+  "n": 74,
+  "ejemplos": [
+   "PMD UP 2/2 MT",
+   "PMD UP 4/3 MT",
+   "PMD UP 4/4 MT",
+   "PMD UP 8/3 MT"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "SELLOS MECÁNICOS",
+  "n": 6,
+  "ejemplos": [
+   "3P10022A",
+   "3P10824A",
+   "ST1-13E",
+   "STA-12R"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "TF",
+  "n": 1,
+  "ejemplos": [
+   "TFG 8"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "TOP MULTI",
+  "n": 5,
+  "ejemplos": [
+   "TOP MULTI 1",
+   "TOP MULTI 2",
+   "TOP MULTI 2-2",
+   "TOP MULTI 4"
+  ]
+ },
+ {
+  "familia": "PRESURIZACIÓN",
+  "serie": "TOP MULTI TECH",
+  "n": 4,
+  "ejemplos": [
+   "TOP MULTI TECH 2",
+   "TOP MULTI TECH 2-2",
+   "TOP MULTI TECH 4",
+   "TOP MULTI TECH 4-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "D",
+  "n": 3,
+  "ejemplos": [
+   "D 30",
+   "Dm 10",
+   "Dm 30-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "MC",
+  "n": 9,
+  "ejemplos": [
+   "MC 20/50-2",
+   "MC 30/50-2",
+   "MC 30/50-4",
+   "MC 40/50-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "RX-VORTEX",
+  "n": 3,
+  "ejemplos": [
+   "RX 2/20",
+   "RXm 2/20",
+   "RXm 2/20-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "SAR",
+  "n": 4,
+  "ejemplos": [
+   "SAR 100",
+   "SAR 250",
+   "SAR 40",
+   "SAR 550"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "SELLOS MECÁNICOS",
+  "n": 9,
+  "ejemplos": [
+   "MG1-14D SIC",
+   "ST1-14 SIC",
+   "STA-12R SIC",
+   "STA-19"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "TIG INOX",
+  "n": 3,
+  "ejemplos": [
+   "TIGm 0.75",
+   "TIGm 0.75-2",
+   "TIGm 1.3-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "TOP",
+  "n": 4,
+  "ejemplos": [
+   "TOP 1",
+   "TOP 2",
+   "TOP 3",
+   "TOP 5"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "TOP FLOOR",
+  "n": 1,
+  "ejemplos": [
+   "TOP 2-FLOOR"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "TOP VORTEX",
+  "n": 1,
+  "ejemplos": [
+   "TOP 2-VORTEX"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "TRITUS",
+  "n": 8,
+  "ejemplos": [
+   "TR 1.1-2",
+   "TR 1.5-2",
+   "TR 1.5-4",
+   "TR 2.2-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "VX",
+  "n": 11,
+  "ejemplos": [
+   "SOPORTE TUBO GUIA 2\"",
+   "VX 15/50-2",
+   "VX 55/65-4",
+   "VX 55/80-4"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "VX-ST",
+  "n": 4,
+  "ejemplos": [
+   "VX 10/50 ST-2",
+   "VX 15/50 ST-2",
+   "VXm 10/50 ST-2",
+   "VXm 15/50 ST-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "VXC",
+  "n": 9,
+  "ejemplos": [
+   "VXC 20/50-2",
+   "VXC 30/50-2",
+   "VXC 30/50-4",
+   "VXC 30/65-2"
+  ]
+ },
+ {
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "serie": "ZX",
+  "n": 1,
+  "ejemplos": [
+   "ZXm 1A/40"
+  ]
+ },
+ {
+  "familia": "Sistema compacto automático de presión constante",
+  "serie": "Sistema compacto automático de presión constante",
+  "n": 1,
+  "ejemplos": [
+   "DG BLU 5-2"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "DF",
+  "n": 13,
+  "ejemplos": [
+   "B PDF",
+   "PDF 24H",
+   "PDF 50H",
+   "PDF 80H"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "FLO",
+  "n": 1,
+  "ejemplos": [
+   "FLOVAREM 3"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "MEMBRANAS",
+  "n": 12,
+  "ejemplos": [
+   "MR 024PH",
+   "MR 024PI",
+   "MR 050",
+   "MR 080"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "MR",
+  "n": 13,
+  "ejemplos": [
+   "PMR 024HS",
+   "PMR 050HS",
+   "PMR 080HS",
+   "PMR 100HS"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "MR PLUS",
+  "n": 7,
+  "ejemplos": [
+   "PMR 10CVP",
+   "PMR 15CVP",
+   "PMR 200VP",
+   "PMR 20CVP"
+  ]
+ },
+ {
+  "familia": "TANQUES PRECARGADOS",
+  "serie": "MR ULTRA",
+  "n": 4,
+  "ejemplos": [
+   "PMR 10CVU",
+   "PMR 200VU",
+   "PMR 20CVU",
+   "PMR 500VU"
+  ]
+ },
+ {
+  "familia": "VARIADORES Y CONTROLES",
+  "serie": "E1",
+  "n": 2,
+  "ejemplos": [
+   "E1 TRI/18",
+   "E1 TRI/25"
+  ]
+ },
+ {
+  "familia": "VARIADORES Y CONTROLES",
+  "serie": "E2",
+  "n": 2,
+  "ejemplos": [
+   "E2 MONO/18 (BIVOLT)",
+   "E2 TRI/16"
+  ]
+ },
+ {
+  "familia": "VARIADORES Y CONTROLES",
+  "serie": "EASYPRESS",
+  "n": 6,
+  "ejemplos": [
+   "EASYPRESS A",
+   "EASYPRESS A-2",
+   "EASYPRESS R",
+   "EASYPRESS R-2"
+  ]
+ },
+ {
+  "familia": "VARIADORES Y CONTROLES",
+  "serie": "PRO-DG",
+  "n": 5,
+  "ejemplos": [
+   "ASSKITS002",
+   "PRO-DG MT11",
+   "PRO-DG TT11",
+   "PRO-DG TT30"
+  ]
+ },
+ {
+  "familia": "VARIADORES Y CONTROLES",
+  "serie": "STEADYPRES",
+  "n": 4,
+  "ejemplos": [
+   "STEADYPRES 2.0",
+   "STEADYPRES 4.0",
+   "TESP 2.0",
+   "TESP 4.0"
+  ]
+ }
+]

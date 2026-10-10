@@ -1,0 +1,101 @@
+/* =====================================================================
+   Movimiento. Todo está detrás de html.motion (lo pone motion.js), así
+   que sin JS, en exportes a Figma o con reduced-motion se ve el estado final.
+   En Angular: una directiva [bsvReveal] que añade .is-in con IntersectionObserver.
+   ===================================================================== */
+:root{--ease-out:cubic-bezier(.16,1,.3,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);--reveal-dur:700ms;--hover-dur:420ms}
+
+/* ---------- Reveal al desplazarse ---------- */
+html.motion [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity var(--reveal-dur) var(--ease-out),transform var(--reveal-dur) var(--ease-out);transition-delay:calc(var(--i,0) * 70ms);will-change:opacity,transform}
+html.motion [data-reveal="scale"]{transform:translateY(16px) scale(.96)}
+html.motion [data-reveal="left"]{transform:translateX(-28px)}
+html.motion [data-reveal].is-in{opacity:1;transform:none}
+html.motion .s-head [data-reveal]{transition-delay:calc(var(--i,0) * 110ms)}
+
+/* Hero: titular por palabras al cargar */
+html.motion .hero-center .copy>*,html.motion .s-hero .copy>*{opacity:0;transform:translateY(18px);animation:rise .9s var(--ease-out) forwards}
+html.motion .hero-center .copy>:nth-child(2),html.motion .s-hero .copy>:nth-child(2){animation-delay:.08s}
+html.motion .hero-center .copy>:nth-child(3),html.motion .s-hero .copy>:nth-child(3){animation-delay:.2s}
+html.motion .hero-center .copy>:nth-child(4),html.motion .s-hero .copy>:nth-child(4){animation-delay:.3s}
+html.motion .hero-center>.hero-inner>.img-slot,html.motion .hero-center .hero-search{opacity:0;animation:rise 1s var(--ease-out) .35s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+html.motion .grad{background-size:200% 100%;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+
+/* Contador de cifras grandes */
+.stat .big[data-count]{font-variant-numeric:tabular-nums}
+
+/* ---------- Hover: tarjetas de producto ---------- */
+.product-card{position:relative;transition:transform var(--hover-dur) var(--ease-out),box-shadow var(--hover-dur) var(--ease-out);overflow:hidden}
+.product-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(212,175,55,.14),transparent 45%);opacity:0;transition:opacity var(--hover-dur);pointer-events:none}
+.product-card::after{content:"";position:absolute;left:12%;right:12%;top:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--color-gold),transparent);transform:scaleX(0);transition:transform var(--hover-dur) var(--ease-out)}
+.product-card .img-slot{transition:transform var(--hover-dur) var(--ease-out),background var(--hover-dur)}
+.product-card .img-slot img{transition:transform .6s var(--ease-out)}
+.product-card .price{transition:transform var(--hover-dur) var(--ease-out)}
+.product-card .cta{display:flex;align-items:center;gap:6px;font-size:var(--text-sm);font-weight:600;color:var(--color-ink);opacity:0;transform:translateY(6px);transition:opacity var(--hover-dur),transform var(--hover-dur) var(--ease-out);margin-top:2px}
+.product-card .cta svg{width:16px;height:16px;transition:transform var(--hover-dur) var(--ease-spring)}
+@media (hover:hover){
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -12px rgba(10,13,20,.22),0 0 0 1px rgba(212,175,55,.25)}
+  .product-card:hover::before{opacity:1}
+  .product-card:hover::after{transform:scaleX(1)}
+  .product-card:hover .img-slot{transform:scale(1.04);background:#fff}
+  .product-card:hover .img-slot img{transform:scale(1.08)}
+  .product-card:hover .cta{opacity:1;transform:none}
+  .product-card:hover .cta svg{transform:translateX(4px)}
+}
+
+/* ---------- Hover: categorías ---------- */
+.cat-card{position:relative;overflow:hidden;transition:transform var(--hover-dur) var(--ease-out),box-shadow var(--hover-dur) var(--ease-out),background var(--hover-dur)}
+.cat-card .img-slot{transition:transform .7s var(--ease-out)}
+.cat-card strong{display:flex;align-items:center;gap:6px}
+.cat-card strong::after{content:"›";color:var(--color-gold-text);opacity:0;transform:translateX(-6px);transition:all var(--hover-dur) var(--ease-spring)}
+@media (hover:hover){
+  .cat-card:hover{transform:translateY(-4px)}
+  .cat-card:hover .img-slot{transform:scale(1.05)}
+  .cat-card:hover strong::after{opacity:1;transform:none}
+}
+
+/* ---------- Hover: bento, modelos, confianza, pedidos ---------- */
+.tile{transition:transform var(--hover-dur) var(--ease-out),box-shadow var(--hover-dur)}
+.tile::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.07),transparent 45%);opacity:0;transition:opacity var(--hover-dur);pointer-events:none}
+.tile.light::before,.tile.ivory::before{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(212,175,55,.12),transparent 45%)}
+.tile .img-slot{transition:transform .7s var(--ease-out)}
+@media (hover:hover){
+  .tile:hover{transform:translateY(-4px);box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+  .tile:hover::before{opacity:1}
+  .tile:hover .img-slot{transform:scale(1.03)}
+}
+.model-card{transition:transform var(--hover-dur) var(--ease-out),box-shadow var(--hover-dur) var(--ease-out)}
+.model-card .img-slot{transition:transform .7s var(--ease-out)}
+@media (hover:hover){.model-card:hover{transform:translateY(-6px);box-shadow:0 30px 50px -16px rgba(10,13,20,.25)}.model-card:hover .img-slot{transform:scale(1.05)}}
+.trust-item,.order-row,.download,.address-card{transition:transform var(--hover-dur) var(--ease-out),box-shadow var(--hover-dur),border-color var(--hover-dur)}
+@media (hover:hover){.trust-item:hover{transform:translateX(4px)}.order-row:hover,.download:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}}
+
+/* ---------- Botones: brillo y resorte ---------- */
+.btn{position:relative;overflow:hidden;transition:transform .25s var(--ease-spring),background var(--dur-fast),box-shadow var(--hover-dur)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease-out)}
+@media (hover:hover){.btn:hover{transform:translateY(-1px)}.btn:hover::after{transform:translateX(120%)}.btn-primary:hover,.btn-ink:hover,.btn-accent:hover{box-shadow:0 10px 24px -8px rgba(10,13,20,.45)}}
+.btn:active{transform:scale(.97)}
+.btn.is-loading::after{display:none}
+
+/* ---------- Píldora de compra y sub-barra ---------- */
+.buy-pill{transition:transform .5s var(--ease-out),opacity .4s}
+html.motion .buy-pill:not(.is-shown){transform:translateY(24px);opacity:0;pointer-events:none}
+.sub-nav nav a{position:relative}
+.sub-nav nav a::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:var(--color-gold);transform:scaleX(0);transition:transform .3s var(--ease-out)}
+.sub-nav nav a.is-active{color:#fff}
+.sub-nav nav a.is-active::after{transform:scaleX(1)}
+
+/* ---------- Chips e imagen del hero ---------- */
+.chip,.highlights a,.detail-tabs button{transition:transform .25s var(--ease-spring),background var(--dur-fast),color var(--dur-fast),border-color var(--dur-fast)}
+@media (hover:hover){.chip:hover,.highlights a:hover,.detail-tabs button:hover{transform:translateY(-2px)}}
+html.motion .detail .img-slot,html.motion .detail p{animation:rise .6s var(--ease-out)}
+html.motion .hero-center>.hero-inner>.img-slot{transition:transform .2s linear}
+
+/* ---------- Reduced motion: todo al estado final ---------- */
+@media (prefers-reduced-motion:reduce){
+  html.motion [data-reveal]{opacity:1!important;transform:none!important;transition:none!important}
+  html.motion .hero-center .copy>*,html.motion .s-hero .copy>*,html.motion .hero-center>.hero-inner>.img-slot,html.motion .hero-center .hero-search{animation:none!important;opacity:1!important;transform:none!important}
+  html.motion .grad{animation:none}
+  html.motion .buy-pill:not(.is-shown){transform:none;opacity:1;pointer-events:auto}
+}

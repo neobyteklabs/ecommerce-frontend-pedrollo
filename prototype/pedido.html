@@ -1,0 +1,40 @@
+<!doctype html><html lang="es"><head><title>Pedido BSV-24-01837 · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="DetallePedido">
+<bsv-header></bsv-header>
+<main class="container section" style="padding-top:16px">
+  <nav aria-label="Migas de pan"><ol class="breadcrumb"><li><a href="cuenta.html">Mi cuenta</a></li><li><a href="pedidos.html">Mis pedidos</a></li><li aria-current="page">BSV-24-01837</li></ol></nav>
+  <div class="between" style="flex-wrap:wrap;margin-bottom:24px"><div><h1 style="font-size:var(--text-2xl);margin-bottom:4px">Pedido <span class="mono">BSV-24-01837</span></h1><span class="muted small">Realizado el 8 de octubre de 2026 · 3 artículos · 3,580.00</span></div><span class="badge badge-enviado" style="font-size:var(--text-sm)">Enviado</span></div>
+  <div class="cart-layout">
+    <div class="stack">
+      <div class="card" data-component="OrderTimelineCard">
+        <h3>Seguimiento</h3>
+        <ol class="timeline" data-component="OrderTimeline">
+          <li class="is-done"><span class="t-title">Pedido recibido</span><span class="t-meta">8 oct · 10:42</span></li>
+          <li class="is-done"><span class="t-title">Pago confirmado</span><span class="t-meta">8 oct · 10:43 · Visa 4242 · 3,580.00</span></li>
+          <li class="is-done"><span class="t-title">En preparación</span><span class="t-meta">9 oct · CEDIS Tlalnepantla</span></li>
+          <li class="is-current"><span class="t-title">Enviado</span><span class="t-meta">10 oct · 16:20</span>
+            <div class="t-body card card-sm" style="margin-top:8px" data-component="ShipmentCard"><div class="between" style="flex-wrap:wrap"><div><strong>Estafeta</strong><div class="small muted">Guía <span class="mono">7845 0012 3391 07</span></div></div><a class="btn btn-secondary btn-sm" href="#" style="min-height:44px">Rastrear envío <span data-icon-slot="arrowRight"></span></a></div><div class="small muted" style="margin-top:8px">Entrega estimada: martes 21 – jueves 23 de octubre</div></div></li>
+          <li class="is-pending"><span class="t-title">Entregado</span><span class="t-meta">Pendiente</span></li>
+        </ol>
+      </div>
+      <div class="card" data-component="OrderLines">
+        <h3>Artículos</h3>
+        <div class="cart-line"><div class="img-slot product" data-slot="pkm-60"></div><div><span class="model">PKm 60</span><div style="font-weight:600">Bomba periférica monofásica 0.5 HP</div><div class="small muted">,890.00 × 2</div></div><div class="line-actions"><span class="line-total num">,780.00</span><a class="btn btn-ghost btn-sm" href="producto.html?id=pkm-60">Volver a comprar</a></div></div>
+        <div class="cart-line" style="border-bottom:0"><div class="img-slot product" data-slot="4sr-2-9"></div><div><span class="model">4SR 2/9</span><div style="font-weight:600">Bomba sumergible 4" para pozo 1 HP</div><div class="small muted">,850.00 × 1</div></div><div class="line-actions"><span class="line-total num">,850.00</span><a class="btn btn-ghost btn-sm" href="producto.html?id=4sr-2-9">Volver a comprar</a></div></div>
+      </div>
+    </div>
+    <aside class="stack">
+      <div class="card" data-component="OrderActions"><h3>Acciones</h3><div class="stack-sm"><a class="btn btn-primary btn-block" href="factura.html"><span data-icon-slot="receipt"></span> Solicitar factura</a><a class="btn btn-secondary btn-block" href="devolucion.html"><span data-icon-slot="rotate"></span> Solicitar devolución</a><a class="btn btn-ghost btn-block" href="https://wa.me/525572589681?text=Pedido BSV-24-01837"><span data-icon-slot="phone"></span> Ayuda con este pedido</a></div></div>
+      <div class="card"><h4>Envío a</h4><p class="small" style="margin:0">Ing. Laura Mendoza<br>Av. Mario Colín 125, Col. Industrial La Loma<br>54060 Tlalnepantla de Baz, Méx.<br>55 4421 9087</p></div>
+      <div class="card summary" style="position:static"><h4>Resumen</h4><div class="lines"><span>Subtotal</span><span class="num">1,706.90</span><span>IVA 16 %</span><span class="num">,873.10</span><span>Envío</span><span class="num">Gratis</span><span class="total">Total</span><span class="total num">3,580.00</span></div><p class="small muted" style="margin:12px 0 0">Pagado con Visa 4242 · ref. Stripe <span class="mono">pi_3Q…8kz</span></p></div>
+    </aside>
+  </div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar current="cuenta"></bsv-bottombar>
+</body></html>

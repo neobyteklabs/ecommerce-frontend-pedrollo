@@ -1,0 +1,47 @@
+<!doctype html><html lang="es"><head><title>Carrito · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Carrito">
+<bsv-header></bsv-header>
+<main class="container section" style="padding-top:16px" id="root"></main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar current="carrito"></bsv-bottombar>
+<script>
+  function render(){
+    const lines=cart.get(); const root=document.getElementById('root');
+    if(!lines.length){ root.innerHTML=`<h1 style="font-size:var(--text-2xl)">Tu carrito</h1>
+      <div class="empty" data-component="EmptyState/Carrito"><div class="icon">${icon('cart')}</div><h3>Tu carrito está vacío</h3><p>Agrega bombas, motores o refacciones. Los precios incluyen IVA y la factura se solicita desde tu cuenta.</p>
+      <div class="actions"><a class="btn btn-primary" href="categoria.html">Ver catálogo</a><a class="btn btn-ghost" href="pedidos.html">Repetir un pedido anterior</a></div></div>`; return; }
+    const sub=cart.subtotal(); const base=sub/1.16; const iva=sub-base; const ship=sub>=5000?0:250;
+    const changed=lines.find(l=>l.priceAtAdd!==PRODUCTS[l.id].price);
+    root.innerHTML=`<h1 style="font-size:var(--text-2xl)">Tu carrito <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· ${cart.count()} artículos</span></h1>
+    ${changed?`<div class="alert alert-warning" style="margin-bottom:16px" data-component="Alert/PrecioCambio">${icon('info')}<div><strong>El precio de ${PRODUCTS[changed.id].model} cambió</strong>Lo agregaste a ${fmt(changed.priceAtAdd)} y hoy cuesta ${fmt(PRODUCTS[changed.id].price)}. El total ya refleja el precio actual.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" onclick="ackPrice()">Entendido</button></div></div></div>`:''}
+    <div class="cart-layout">
+      <div class="card" style="padding-block:0">
+        ${lines.map(l=>{const p=PRODUCTS[l.id];return `<div class="cart-line" data-component="CartLine">
+          <div class="img-slot product" data-slot="${l.id}"></div>
+          <div><a class="model" href="producto.html?id=${l.id}" style="text-decoration:none">${p.model}</a><div style="font-weight:600">${p.name}</div><div class="small muted">${fmt(p.price)} c/u · ${availLabel(p.avail)}</div></div>
+          <div class="line-actions">
+            <div class="qty"><button type="button" aria-label="Menos" onclick="cart.setQty('${l.id}',${l.qty-1});render()">−</button><input type="number" value="${l.qty}" min="1" aria-label="Cantidad" onchange="cart.setQty('${l.id}',+this.value);render()"><button type="button" aria-label="Más" onclick="cart.setQty('${l.id}',${l.qty+1});render()">+</button></div>
+            <span class="line-total num" style="min-width:110px">${fmt(p.price*l.qty)}</span>
+            <button class="icon-btn" type="button" aria-label="Quitar ${p.model}" onclick="cart.remove('${l.id}');toast('${p.model} eliminado');render()">${icon('trash')}</button>
+          </div></div>`}).join('')}
+        <div style="padding:16px 0"><a href="categoria.html">${icon('arrowLeft')} Seguir comprando</a></div>
+      </div>
+      <aside class="card summary" data-component="OrderSummary">
+        <h3>Resumen</h3>
+        <div class="lines"><span>Subtotal (sin IVA)</span><span class="num">${fmt(base)}</span><span>IVA 16 %</span><span class="num">${fmt(iva)}</span><span>Envío estimado <span class="muted small">(CDMX y Edo. Méx.)</span></span><span class="num">${ship?fmt(ship):'Gratis'}</span><span class="total">Total</span><span class="total num">${fmt(sub+ship)}</span></div>
+        <p class="small muted" style="margin:12px 0 16px">El envío final se calcula con tu código postal en el siguiente paso. Pedidos mayores a ,000 tienen envío gratis en zona metropolitana.</p>
+        <a class="btn btn-primary btn-lg btn-block" href="login.html?next=checkout.html">Continuar al pago ${icon('arrowRight')}</a>
+        <div class="row small muted" style="justify-content:center;margin-top:12px">${icon('lock')} Pago seguro con Stripe · 3D Secure</div>
+      </aside>
+    </div>`;
+  }
+  window.ackPrice=()=>{cart.set(cart.get().map(l=>({...l,priceAtAdd:PRODUCTS[l.id].price})));render();};
+  if(!cart.count()&&new URLSearchParams(location.search).get('demo')){cart.add('pkm-60',2);cart.add('4sr-2-9',1);cart.set(cart.get().map(l=>l.id==='4sr-2-9'?{...l,priceAtAdd:9450}:l));}
+  render();
+</script>
+</body></html>

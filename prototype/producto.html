@@ -1,0 +1,85 @@
+<!doctype html><html lang="es"><head><title>Producto · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Producto">
+<bsv-header></bsv-header>
+<main class="container" id="pdp-root"></main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+<script>
+  const id=new URLSearchParams(location.search).get('id')||'pkm-60'; const p=PRODUCTS[id]||PRODUCTS['pkm-60'];
+  const unavailable=p.avail==='agotado';
+  document.title=p.model+' · '+p.name;
+  const related=Object.keys(PRODUCTS).filter(k=>k!==id).slice(0,4);
+  document.getElementById('pdp-root').innerHTML=`
+  <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a href="index.html">Inicio</a></li><li><a href="categoria.html">${p.cat}</a></li><li aria-current="page">${p.model}</li></ol></nav>
+  <div class="pdp">
+    <div class="gallery" data-component="Gallery">
+      <div class="img-slot product main" data-slot="${id} · principal · 1200×1200 fondo blanco"></div>
+      <div class="thumbs">
+        <div class="img-slot product is-active" data-slot="1" tabindex="0"></div><div class="img-slot product" data-slot="2" tabindex="0"></div><div class="img-slot product" data-slot="3" tabindex="0"></div><div class="img-slot product" data-slot="curva" tabindex="0"></div><div class="img-slot product" data-slot="instalada" tabindex="0"></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div>
+        <div class="row" style="margin-bottom:8px"><span class="model" style="color:var(--color-primary);font-size:var(--text-lg)">${p.model}</span>${unavailable?'<span class="badge badge-danger">No disponible</span>':p.avail==='stock'?'<span class="badge badge-success">En existencia</span>':'<span class="badge badge-warning">Sobre pedido</span>'}</div>
+        <h1 style="font-size:var(--text-2xl)">${p.name}</h1>
+        <p class="muted">${p.hp} HP · ${p.v} · ${p.phase} · Marca ${BSV_BRAND.name}${id.startsWith('4sr')?' · <a href="serie.html">Conoce la serie 4SR ›</a>':''}</p>
+      </div>
+      <div class="buy-box" data-component="BuyBox">
+        <div class="price-block" data-component="Price">
+          <span class="main">${fmt(p.price)} <span class="small muted" style="font-family:var(--font-body);font-weight:500">MXN</span></span>
+          <span class="breakdown">IVA incluido · ${fmt(p.price/1.16)} + ${fmt(p.price-p.price/1.16)} IVA</span>
+          <details><summary>Ver desglose ${icon('chevronDown')}</summary><div class="lines"><span>Precio base</span><span class="num">${fmt(p.price/1.16)}</span><span>IVA 16 %</span><span class="num">${fmt(p.price-p.price/1.16)}</span><span><strong>Total</strong></span><span class="num"><strong>${fmt(p.price)}</strong></span></div></details>
+        </div>
+        <div class="small" style="display:flex;gap:8px;align-items:center;color:${unavailable?'var(--color-danger)':'var(--color-text)'}">${icon(unavailable?'alert':'truck')} ${availLabel(p.avail)}</div>
+        ${unavailable?`
+        <div class="alert alert-warning" data-component="Alert/Warning">${icon('info')}<div><strong>Producto temporalmente agotado</strong>Te avisamos por correo cuando vuelva a existencia, o te sugerimos un equivalente.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" onclick="toast('Te avisaremos a tu correo cuando haya existencia')">Avísame cuando llegue</button><a class="btn btn-ghost btn-sm" href="producto.html?id=pkm-100">Ver equivalente PKm 100</a></div></div></div>`:`
+        <div class="row-qty"><label class="label" for="qty">Cantidad</label>
+          <div class="qty" data-component="QuantitySelector"><button type="button" aria-label="Menos" onclick="qty.stepDown()">−</button><input id="qty" type="number" min="1" value="1" aria-label="Cantidad"><button type="button" aria-label="Más" onclick="qty.stepUp()">+</button></div></div>
+        <button class="btn btn-primary btn-lg btn-block" type="button" id="addBtn" onclick="addToCart(this)">${icon('cart')} Agregar al carrito</button>
+        <a class="btn btn-ghost btn-block" href="https://wa.me/525572589681?text=Hola, quiero cotizar ${p.model}">${icon('phone')} ¿Compra por volumen? Cotiza con un asesor</a>`}
+        <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>Garantía de fábrica 12 meses</li><li>Factura CFDI 4.0 desde tu cuenta</li><li>Envío asegurado a todo México</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top:32px">
+    <div class="tabs" role="tablist" data-component="Tabs"><button role="tab" aria-selected="true">Especificaciones</button><button role="tab" aria-selected="false">Curva de desempeño</button><button role="tab" aria-selected="false">Descargas</button></div>
+    <div class="grid md-grid-2" style="gap:32px">
+      <div>
+        <h3>Ficha técnica</h3>
+        <table class="spec-table" data-component="SpecTable">
+          <tr><th scope="row">Modelo</th><td class="mono">${p.model}</td></tr>
+          <tr><th scope="row">Potencia</th><td>${p.hp} HP</td></tr>
+          <tr><th scope="row">Voltaje</th><td>${p.v}</td></tr>
+          <tr><th scope="row">Fase</th><td>${p.phase}</td></tr>
+          <tr><th scope="row">Caudal máximo</th><td>40 L/min <span class="ex">(ejemplo)</span></td></tr>
+          <tr><th scope="row">Altura máxima</th><td>40 m <span class="ex">(ejemplo)</span></td></tr>
+          <tr><th scope="row">Succión / descarga</th><td>1" × 1" <span class="ex">(ejemplo)</span></td></tr>
+          <tr><th scope="row">Temperatura del líquido</th><td>-10 °C a +60 °C <span class="ex">(ejemplo)</span></td></tr>
+          <tr><th scope="row">Material del cuerpo</th><td>Hierro fundido <span class="ex">(ejemplo)</span></td></tr>
+          <tr><th scope="row">Garantía</th><td>12 meses</td></tr>
+        </table>
+      </div>
+      <div class="stack">
+        <div><h3>Curva de desempeño</h3><div class="img-slot" data-slot="curva-${id} · imagen del catálogo oficial · 4:3" style="aspect-ratio:4/3"></div></div>
+        <div><h3>Descargas</h3><div class="stack-sm">
+          <a class="download" href="#" data-component="DownloadCard">${icon('file')}<div><strong>Ficha técnica ${p.model}</strong><span>PDF · 1.2 MB · español</span></div><span style="margin-left:auto">${icon('download')}</span></a>
+          <a class="download" href="#" data-component="DownloadCard">${icon('file')}<div><strong>Manual de instalación y uso</strong><span>PDF · 3.4 MB · español</span></div><span style="margin-left:auto">${icon('download')}</span></a>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" data-component="Section/Relacionados">
+    <div class="section-title"><h2>También te puede servir</h2></div>
+    <div class="product-grid">${related.map(k=>{const r=PRODUCTS[k];return `<a class="product-card" href="producto.html?id=${k}" data-component="ProductCard"><div class="img-slot product" data-slot="${k}"></div><span class="model">${r.model}</span><span class="name">${r.name}</span><span class="specs">${r.hp} HP · ${r.v}</span><span class="price">${fmt(r.price)} <small>IVA incl.</small></span><span class="avail">${availLabel(r.avail)}</span></a>`}).join('')}</div>
+  </section>
+  ${unavailable?'':`<div class="sticky-buy" data-component="StickyBuyBar"><div><div class="model small" style="color:var(--color-primary)">${p.model}</div><div style="font-weight:700;font-size:var(--text-lg)">${fmt(p.price)}</div></div><button class="btn btn-primary" style="flex:1" type="button" onclick="addToCart(this)">${icon('cart')} Agregar</button></div>`}`;
+  window.addToCart=btn=>{btn.classList.add('is-loading');setTimeout(()=>{btn.classList.remove('is-loading');cart.add(id,parseInt(document.getElementById('qty')?.value||1));toast(p.model+' agregado al carrito','success',{href:'carrito.html',label:'Ver carrito'});},600);};
+</script>
+</body></html>

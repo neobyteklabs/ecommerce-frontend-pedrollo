@@ -1,0 +1,39 @@
+<!doctype html><html lang="es"><head><title>Cambio de marca · BSV Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script>
+<style>
+.brands{display:grid;gap:24px}@media(min-width:1280px){.brands{grid-template-columns:repeat(3,1fr)}}
+.frame{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:#fff}
+.frame .cap{padding:10px 14px;font-size:13px;font-weight:600;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center}
+.frame iframe{width:100%;height:720px;border:0;display:block}
+.frame.mobile iframe{height:760px}
+.frame.mobile{max-width:390px;margin-inline:auto}
+</style></head>
+<body data-page="CambioMarca">
+<bsv-header></bsv-header>
+<main class="container section">
+  <span class="badge badge-primary no-dot">Entregable 4</span>
+  <h1 style="margin-top:12px">Cambio de marca</h1>
+  <p class="lead muted" style="max-width:72ch">Las tres columnas cargan <b>exactamente el mismo HTML</b>. Lo único que cambia es <code>data-brand</code> en la raíz, que reasigna 9 tokens: primary, primary-hover, primary-soft, focus, accent, accent-hover, accent-soft, brand-name y brand-tagline. Ningún componente se tocó.</p>
+  <div class="chip-list" style="margin-bottom:24px"><button class="chip" aria-pressed="true" onclick="show('index.html',this)">Home</button><button class="chip" aria-pressed="false" onclick="show('producto.html?id=pkm-60',this)">Ficha de producto</button><button class="chip" aria-pressed="false" onclick="show('categoria.html',this)">Listado</button><button class="chip" aria-pressed="false" onclick="show('pedido.html',this)">Detalle de pedido</button><button class="chip" aria-pressed="false" onclick="show('sistema-diseno.html',this)">Sistema de diseño</button></div>
+  <div class="row" style="margin-bottom:16px"><span class="label">Vista</span><button class="chip" aria-pressed="true" onclick="mode('desktop',this)">Escritorio</button><button class="chip" aria-pressed="false" onclick="mode('mobile',this)">Móvil 360</button></div>
+  <div class="brands" id="brands">
+    <div class="frame" data-brand-frame="pedrollo"><div class="cap">Pedrollo <span class="mono xs">#1A4F9C</span></div><iframe title="Pedrollo"></iframe></div>
+    <div class="frame" data-brand-frame="barmesa"><div class="cap">Barmesa <span class="mono xs">#0A7BC2</span></div><iframe title="Barmesa"></iframe></div>
+    <div class="frame" data-brand-frame="evans"><div class="cap">Evans <span class="mono xs">#C8102E</span></div><iframe title="Evans"></iframe></div>
+  </div>
+  <div class="alert alert-info" style="margin-top:24px"><span data-icon-slot="info"></span><div><strong>Cómo se implementa en Angular + Tailwind</strong>Un <code>BrandService</code> pone <code>data-brand</code> en <code>&lt;html&gt;</code> al arrancar (por dominio o por configuración). Tailwind lee las variables CSS: <code>colors: { primary: 'var(--color-primary)' }</code>. Logo y nombre son <code>InjectionToken</code>s leídos del mismo servicio. Nada de <code>::ng-deep</code> ni clases por marca.</div></div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+<script>
+  let page='index.html', m='desktop';
+  function paint(){document.querySelectorAll('[data-brand-frame]').forEach(f=>{const b=f.dataset.brandFrame;const u=new URL(page,location.href);u.searchParams.set('brand',b);u.searchParams.set('proto','0');f.querySelector('iframe').src=u;f.classList.toggle('mobile',m==='mobile');});}
+  function sel(btn){[...btn.parentElement.children].forEach(c=>c.setAttribute('aria-pressed','false'));btn.setAttribute('aria-pressed','true');}
+  window.show=(p,b)=>{page=p;sel(b);paint();}; window.mode=(x,b)=>{m=x;sel(b);paint();};
+  paint();
+</script>
+</body></html>

@@ -1,0 +1,69 @@
+<!doctype html><html lang="es"><head><title>Inicio · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Home">
+<bsv-header current="Inicio"></bsv-header>
+<main>
+  <section class="hero hero-center" data-component="Hero">
+    <div class="container hero-inner">
+      <div class="copy">
+        <span class="eyebrow">Serie 4SR · Sumergibles de 4"</span>
+        <h1>Hecha para el pozo. <span class="grad">Diseñada para durar.</span></h1>
+        <p class="lead">Hidráulica de 9 etapas en acero inoxidable. Desde $9,850 con IVA.</p>
+        <div class="row hero-links"><a class="btn-link" href="serie.html">Más información ›</a><a class="btn-link" href="producto.html?id=4sr-2-9">Comprar ›</a></div>
+      </div>
+      <div class="img-slot" data-slot="hero-home · 2000×900 · bomba 4SR flotando sobre negro"></div>
+      <form class="hero-search" action="buscar.html" role="search" data-component="SearchBar/Hero">
+        <label class="sr-only" for="hq">Buscar producto</label>
+        <div class="input-group"><span data-icon-slot="search"></span><input id="hq" name="q" type="search" placeholder="Modelo, HP o uso: PKm 60, 1 HP, pozo profundo…"><button class="btn btn-primary btn-sm" type="submit">Buscar</button></div>
+        <div class="hero-sug">Búsquedas frecuentes: <a href="buscar.html?q=PKm+60">PKm 60</a><a href="buscar.html?q=CPm+158">CPm 158</a><a href="buscar.html?q=sumergible+pozo">sumergible para pozo</a><a href="buscar.html?q=presurizador">presurizador</a></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section container" data-component="Section/Categorias">
+    <div class="section-title"><div><span class="eyebrow">Catálogo</span><h2 style="margin-top:8px">Compra por categoría</h2></div><a href="categoria.html">Ver todo el catálogo</a></div>
+    <div class="grid grid-2 md-grid-3 lg-grid-5">
+      <a class="cat-card" href="categoria.html"><div class="img-slot" data-slot="cat-superficie"></div><strong>Bombas de superficie</strong><span>Periféricas, centrífugas, autocebantes</span></a>
+      <a class="cat-card" href="categoria.html?c=sumergibles"><div class="img-slot" data-slot="cat-sumergibles"></div><strong>Sumergibles</strong><span>Pozo profundo 4" y 6", motores</span></a>
+      <a class="cat-card" href="categoria.html?c=presurizacion"><div class="img-slot" data-slot="cat-presurizacion"></div><strong>Presurización</strong><span>Equipos hidroneumáticos, reguladores</span></a>
+      <a class="cat-card" href="categoria.html?c=drenaje"><div class="img-slot" data-slot="cat-drenaje"></div><strong>Drenaje</strong><span>Achique, aguas sucias, cárcamos</span></a>
+      <a class="cat-card" href="categoria.html?c=refacciones"><div class="img-slot" data-slot="cat-refacciones"></div><strong>Refacciones</strong><span>Impulsores, sellos, capacitores</span></a>
+    </div>
+  </section>
+
+  <section class="section container" style="padding-top:0" data-component="Section/Destacados">
+    <div class="section-title"><div><span class="eyebrow">Selección</span><h2 style="margin-top:8px">Los más vendidos</h2></div><a href="categoria.html">Ver más</a></div>
+    <div class="product-grid" id="featured"></div>
+  </section>
+
+  <section class="trust-band on-ink" data-component="Section/Confianza">
+    <div class="container trust">
+      <div class="trust-item"><span data-icon-slot="shield"></span><div><strong>Distribuidor autorizado</strong><span>Garantía de fábrica y refacciones originales.</span></div></div>
+      <div class="trust-item"><span data-icon-slot="truck"></span><div><strong>Envío a todo México</strong><span>Existencia local sale en 24–48 h. Sobre pedido en 5–7 días.</span></div></div>
+      <div class="trust-item"><span data-icon-slot="receipt"></span><div><strong>Factura disponible</strong><span>CFDI 4.0 desde tu cuenta, sin llamar a nadie.</span></div></div>
+    </div>
+  </section>
+
+  <section class="section container" style="padding-top:0" data-component="Section/BannerMarca">
+    <div class="img-slot banner-marca" data-slot="banner-marca · 1280×400 · campaña o línea destacada" style="aspect-ratio:16/5;min-height:0;width:100%"></div>
+  </section>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar current="inicio"></bsv-bottombar>
+<script>
+  const ids=['pkm-60','cpm-158','4sr-2-9','pkm-100','top-2','easypress','cpm-170','jswm-1a'];
+  document.getElementById('featured').innerHTML = ids.map(id=>{const p=PRODUCTS[id];return `
+  <a class="product-card ${p.avail==='agotado'?'is-unavailable':''}" href="producto.html?id=${id}" data-component="ProductCard">
+    <div class="img-slot product" data-slot="${id}"></div>
+    <span class="model">${p.model}</span>
+    <span class="name">${p.name}</span>
+    <span class="specs">${p.hp} HP · ${p.v} · ${p.phase}</span>
+    <span class="price">${fmt(p.price)} <small>IVA incl.</small></span>
+    <span class="avail">${availLabel(p.avail)}</span>
+  </a>`}).join('');
+</script>
+</body></html>

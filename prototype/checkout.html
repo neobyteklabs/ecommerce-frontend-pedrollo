@@ -1,0 +1,73 @@
+<!doctype html><html lang="es"><head><title>Pagar · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Checkout">
+<bsv-header></bsv-header>
+<main class="container section" style="padding-top:16px" id="root"></main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar current="carrito"></bsv-bottombar>
+<script>
+  const sp=new URLSearchParams(location.search); const step=+(sp.get('step')||1); const declined=sp.get('declined'); const neterr=sp.get('neterr');
+  if(!cart.count()){cart.add('pkm-60',2);cart.add('4sr-2-9',1);}
+  const sub=cart.subtotal(), base=sub/1.16, iva=sub-base, ship=sub>=5000?0:250;
+  const stepper=`<ol class="stepper" data-component="CheckoutStepper"><li class="${step>1?'is-done':'is-current'}"><span>Dirección y envío</span></li><li class="${step>2?'is-done':step===2?'is-current':''}"><span>Pago</span></li><li class="${step===3?'is-current':''}"><span>Confirmación</span></li></ol>`;
+  const summary=`<aside class="card summary" data-component="OrderSummary"><h3>Tu pedido</h3>
+    ${cart.get().map(l=>`<div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">${PRODUCTS[l.id].model}</span> × ${l.qty}</span><span class="num">${fmt(PRODUCTS[l.id].price*l.qty)}</span></div>`).join('')}
+    <div class="lines" style="margin-top:12px"><span>Subtotal</span><span class="num">${fmt(base)}</span><span>IVA 16 %</span><span class="num">${fmt(iva)}</span><span>Envío</span><span class="num">${ship?fmt(ship):'Gratis'}</span><span class="total">Total</span><span class="total num">${fmt(sub+ship)}</span></div></aside>`;
+  let body='';
+  if(step===1) body=`<h1 style="font-size:var(--text-2xl)">Dirección y envío</h1>
+    <div class="stack">
+      <label class="radio-card" data-component="AddressOption"><input type="radio" name="addr" checked><div><strong>Taller · Ing. Laura Mendoza</strong><span class="small muted">Av. Mario Colín 125, Col. Industrial La Loma, 54060 Tlalnepantla, Méx. · 55 4421 9087</span></div></label>
+      <label class="radio-card" data-component="AddressOption"><input type="radio" name="addr"><div><strong>Oficina · Laura Mendoza</strong><span class="small muted">Calle Lago Zurich 219, Col. Ampliación Granada, 11529 Miguel Hidalgo, CDMX</span></div></label>
+      <details class="card card-sm"><summary style="cursor:pointer;font-weight:600;min-height:28px">+ Agregar dirección nueva</summary>
+        <div class="grid md-grid-2" style="margin-top:16px">
+          <div class="field"><label for="n">Nombre de quien recibe</label><input id="n" class="input" autocomplete="name"></div>
+          <div class="field"><label for="t">Teléfono</label><input id="t" class="input" type="tel" inputmode="tel" autocomplete="tel"><span class="hint">Para avisos de la paquetería</span></div>
+          <div class="field" style="grid-column:1/-1"><label for="c">Calle y número</label><input id="c" class="input" autocomplete="address-line1"></div>
+          <div class="field"><label for="col">Colonia</label><input id="col" class="input"></div>
+          <div class="field has-error"><label for="cp">Código postal</label><input id="cp" class="input" inputmode="numeric" value="5406" aria-invalid="true" aria-describedby="cpe"><span class="hint">5 dígitos</span><span class="error-msg" id="cpe">El código postal debe tener 5 dígitos.</span></div>
+          <div class="field"><label for="mun">Municipio / alcaldía</label><input id="mun" class="input"></div>
+          <div class="field"><label for="edo">Estado</label><select id="edo" class="select"><option>Estado de México</option><option>Ciudad de México</option><option>Puebla</option><option>Jalisco</option><option>Yucatán</option></select></div>
+          <div class="field" style="grid-column:1/-1"><label for="ref">Referencias <span class="muted" style="font-weight:400">(opcional)</span></label><input id="ref" class="input" placeholder="Portón negro, entre Av. Gustavo Baz y calle 5"></div>
+        </div></details>
+      <h3 style="margin-top:8px">Método de envío</h3>
+      <label class="radio-card" data-component="ShippingOption"><input type="radio" name="ship" checked><div class="between" style="flex:1"><div><strong>Paquetería asegurada</strong><span class="small muted">Estafeta o DHL · llega en 2–4 días hábiles tras salir de CEDIS</span></div><strong class="num">${ship?fmt(ship):'Gratis'}</strong></div></label>
+      <label class="radio-card" data-component="ShippingOption"><input type="radio" name="ship"><div class="between" style="flex:1"><div><strong>Recoger en CEDIS Tlalnepantla</strong><span class="small muted">Lun–Vie 9:00–18:00, Sáb 9:00–13:00 · te avisamos cuando esté listo</span></div><strong class="num">Gratis</strong></div></label>
+      <div class="alert alert-info">${icon('info')}<div>Tu pedido incluye 1 artículo sobre pedido (4SR 2/9). Todo se envía junto en 5–7 días hábiles. <a href="#">Dividir en dos envíos</a></div></div>
+      <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" href="carrito.html">${icon('arrowLeft')} Carrito</a><a class="btn btn-primary btn-lg" href="checkout.html?step=2">Continuar al pago ${icon('arrowRight')}</a></div>
+    </div>`;
+  if(step===2) body=`<h1 style="font-size:var(--text-2xl)">Pago</h1>
+    ${declined?`<div class="alert alert-danger" data-component="Alert/PagoRechazado">${icon('alert')}<div><strong>Tu banco rechazó el pago</strong>No se hizo ningún cargo. Suele pasar por fondos insuficientes o porque el banco bloqueó la compra en línea. Prueba otra tarjeta o llama a tu banco para autorizarla.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" onclick="document.getElementById('newcard').checked=true">Usar otra tarjeta</button><a class="btn btn-ghost btn-sm" href="https://wa.me/525572589681">Pagar por transferencia con un asesor</a></div></div></div>`:''}
+    ${neterr?`<div class="alert alert-danger" data-component="Alert/ErrorRed">${icon('wifiOff')}<div><strong>Sin conexión</strong>No pudimos confirmar tu pago porque se perdió la conexión. Revisa tu red. Si ya ves el cargo en tu banco, no lo repitas: escríbenos con el número de referencia.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" onclick="location.href='checkout.html?step=2'">Reintentar</button></div></div></div>`:''}
+    <div class="stack">
+      <div class="row small muted">${icon('lock')} Procesado por Stripe. Nunca guardamos el número completo de tu tarjeta.</div>
+      <label class="radio-card" data-component="PaymentOption/Saved"><input type="radio" name="pay" ${declined?'':'checked'}><div class="saved-card"><span class="card-brand">VISA</span><div><strong>Visa terminación 4242</strong><span class="small muted">Vence 08/28 · Laura Mendoza</span></div></div></label>
+      <label class="radio-card" data-component="PaymentOption/New" style="flex-direction:column;align-items:stretch"><div class="row"><input type="radio" name="pay" id="newcard" ${declined?'checked':''}><strong>Tarjeta nueva</strong><span class="row" style="margin-left:auto;gap:4px"><span class="card-brand">VISA</span><span class="card-brand">MC</span><span class="card-brand">AMEX</span></span></div>
+        <div class="grid" style="margin-top:12px;grid-template-columns:1fr 1fr">
+          <div class="field" style="grid-column:1/-1"><label for="cn">Número de tarjeta</label><input id="cn" class="input mono" inputmode="numeric" placeholder="0000 0000 0000 0000" autocomplete="cc-number"></div>
+          <div class="field"><label for="ce">Vencimiento</label><input id="ce" class="input mono" placeholder="MM / AA" inputmode="numeric" autocomplete="cc-exp"></div>
+          <div class="field"><label for="cv">CVC</label><input id="cv" class="input mono" inputmode="numeric" placeholder="123" autocomplete="cc-csc"><span class="hint">3 dígitos al reverso, 4 en Amex</span></div>
+          <div class="field" style="grid-column:1/-1"><label for="cnm">Nombre como aparece en la tarjeta</label><input id="cnm" class="input" autocomplete="cc-name"></div>
+          <label class="check" style="grid-column:1/-1;min-height:36px"><input type="checkbox" checked> Guardar esta tarjeta para la próxima compra</label>
+        </div></label>
+      <div class="alert alert-info">${icon('shield')}<div>Tu banco puede pedirte confirmar la compra en su app (3D Secure). Mantén el teléfono a la mano.</div></div>
+      <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" href="checkout.html?step=1">${icon('arrowLeft')} Dirección</a><button class="btn btn-primary btn-lg" type="button" onclick="pay(this)">Pagar ${fmt(sub+ship)}</button></div>
+      <p class="xs muted">Enlaces del prototipo: <a href="checkout.html?step=2&declined=1">simular pago rechazado</a> · <a href="checkout.html?step=2&neterr=1">simular error de red</a></p>
+    </div>
+    <div class="modal" id="tds" hidden role="dialog" aria-modal="true" aria-labelledby="tdst" data-component="Modal/3DS"><div class="modal-panel" style="text-align:center"><h3 id="tdst">Confirma en tu banco</h3><p class="muted">Abrimos la verificación 3D Secure de tu banco. No cierres esta ventana.</p><div class="btn btn-secondary is-loading" style="margin:16px auto;width:160px"></div><p class="small muted" style="margin:0">Cargo de ${fmt(sub+ship)} a Visa 4242</p></div></div>`;
+  if(step===3) body=`<div class="card" style="text-align:center;padding:0;border:0;background:transparent" data-component="OrderConfirmation">
+      <div class="empty confirm-hero" style="max-width:none"><div class="icon" style="background:var(--color-success-soft);color:var(--color-success)">${icon('check')}</div><h1 style="font-size:var(--text-2xl);margin:0">¡Pedido recibido!</h1><p>Número de pedido <strong class="mono" style="color:var(--color-gold)">BSV-24-01837</strong>. Te enviamos la confirmación a <strong>laura.mendoza@gmail.com</strong>.</p></div>
+      <div class="grid md-grid-3" style="margin:24px 0;text-align:left">
+        <div class="card card-sm"><span class="label">Entrega estimada</span><div style="font-weight:600">Martes 21 – jueves 23 de octubre</div><span class="small muted">Paquetería asegurada · Tlalnepantla</span></div>
+        <div class="card card-sm"><span class="label">Pago</span><div style="font-weight:600">${fmt(sub+ship)} · Visa 4242</div><span class="small muted">Autorizado con 3D Secure</span></div>
+        <div class="card card-sm"><span class="label">Factura</span><div style="font-weight:600">Solicítala desde el pedido</div><span class="small muted">Tienes hasta el cierre del mes</span></div>
+      </div>
+      <div class="row" style="justify-content:center"><a class="btn btn-primary btn-lg" href="pedido.html">Ver mi pedido</a><a class="btn btn-secondary btn-lg" href="factura.html">Solicitar factura</a></div>
+      <p class="small muted" style="margin:24px 0 0">¿Dudas? Escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu número de pedido.</p></div>`;
+  document.getElementById('root').innerHTML=stepper+(step===3?body:`<div class="checkout-layout"><div>${body}</div>${summary}</div>`);
+  window.pay=b=>{b.classList.add('is-loading');const m=document.getElementById('tds');setTimeout(()=>{m.hidden=false;},500);setTimeout(()=>{cart.clear();location.href='checkout.html?step=3';},2600);};
+</script>
+</body></html>

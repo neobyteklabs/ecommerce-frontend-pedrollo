@@ -1,0 +1,158 @@
+<!doctype html><html lang="es"><head><title>Sistema de diseño · BSV Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script>
+<style>
+.ds-section{padding-block:var(--space-6);border-bottom:1px solid var(--color-border)}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface)}
+.swatch .c{height:64px}
+.swatch .m{padding:8px 10px;font-size:12px}.swatch .m b{display:block;font-family:var(--font-mono);font-weight:600}
+.demo{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:20px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
+.type-row{display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--color-border)}
+.type-row .k{font-family:var(--font-mono);font-size:12px;color:var(--color-text-muted)}
+.sp{display:flex;gap:8px;align-items:flex-end}.sp div{background:var(--color-primary);border-radius:2px}
+.brand-strip{display:grid;gap:16px}@media(min-width:768px){.brand-strip{grid-template-columns:repeat(3,1fr)}}
+.brand-box{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface)}
+.brand-box .hd{padding:12px 16px;color:#fff;font-family:var(--font-display);font-weight:800;font-size:20px;background:var(--color-primary)}
+.brand-box .hd::after{content:var(--brand-name)}
+.brand-box .bd{padding:16px;display:grid;gap:10px}
+.ok{color:var(--color-success);font-weight:600}
+</style></head>
+<body data-page="SistemaDiseno">
+<bsv-header></bsv-header>
+<main class="container">
+  <div class="section" style="padding-bottom:16px">
+    <span class="badge badge-primary no-dot">Entregable 1</span>
+    <h1 style="margin-top:12px">Sistema de diseño</h1>
+    <p class="lead muted" style="max-width:70ch">Un solo sistema para Pedrollo, Barmesa y Evans. Todo color, tipografía, radio, sombra y espaciado es un token en <code>css/tokens.css</code>. El nombre del token es el nombre de la variable Tailwind y de la capa en Figma. Este frontend está fijado en Pedrollo; la página «Cambio de marca» demuestra que los mismos componentes se re-pintan con los tokens de Barmesa y Evans.</p>
+  </div>
+
+  <section class="ds-section" id="tokens" data-component="DS/Tokens">
+    <h2>1. Tokens de color · marca activa</h2>
+    <p class="muted small">Los valores de contraste se calcularon con la fórmula WCAG 2.1 sobre los hex finales. Mínimo exigido: 4.5:1 para texto normal.</p>
+    <div class="sw" id="swatches"></div>
+    <h3 style="margin-top:32px">Los tres juegos de marca</h3>
+    <div class="brand-strip">
+      <div class="brand-box" data-brand-preview="pedrollo"><div class="hd"></div><div class="bd"><div class="row"><span class="swatch-dot" style="background:#1A4F9C"></span><b class="mono">primary #1A4F9C</b><span class="ok">7.95:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#153F7D"></span><b class="mono">primary-hover #153F7D</b><span class="ok">10.30:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#C2410C"></span><b class="mono">accent #C2410C</b><span class="ok">5.18:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#E8EFF9"></span><b class="mono">primary-soft #E8EFF9</b></div></div></div>
+      <div class="brand-box" data-brand-preview="barmesa"><div class="hd"></div><div class="bd"><div class="row"><span class="swatch-dot" style="background:#0A7BC2"></span><b class="mono">primary #0A7BC2</b><span class="ok">4.54:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#07639C"></span><b class="mono">primary-hover #07639C</b><span class="ok">6.41:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#C2410C"></span><b class="mono">accent #C2410C</b><span class="ok">5.18:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#E6F2FA"></span><b class="mono">primary-soft #E6F2FA</b></div></div></div>
+      <div class="brand-box" data-brand-preview="evans"><div class="hd"></div><div class="bd"><div class="row"><span class="swatch-dot" style="background:#C8102E"></span><b class="mono">primary #C8102E</b><span class="ok">5.88:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#A50D26"></span><b class="mono">primary-hover #A50D26</b><span class="ok">7.82:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#1F2937"></span><b class="mono">accent #1F2937</b><span class="ok">14.7:1 ✓</span></div><div class="row"><span class="swatch-dot" style="background:#FBE9EC"></span><b class="mono">primary-soft #FBE9EC</b></div></div></div>
+    </div>
+    <div class="on-ink" style="margin-top:24px;padding:32px;border-radius:var(--radius-xl)" data-component="DS/CapaPremium"><span class="eyebrow">Capa premium</span><h3 style="margin-top:8px">Tinta, dorado y marfil son compartidos; el azul sigue siendo la marca</h3><p class="muted" style="max-width:70ch">Heros, banda de confianza y pie usan <code>ink</code> con filetes <code>gold</code>. El dorado solo va sobre tinta (9.24:1) o como texto oscurecido <code>gold-text</code> sobre blanco (4.91:1). El azul de marca sobre tinta falla AA, así que cada marca trae <code>primary-on-dark</code>: Pedrollo #5B8DEF, Barmesa #3FA3E6, Evans #F0475F.</p><div class="row"><button class="btn btn-primary">Primario sobre tinta</button><button class="btn btn-secondary">Secundario</button><button class="btn btn-gold">Dorado</button><span style="color:var(--color-primary-on-dark);font-weight:600">Enlace de marca sobre tinta</span></div></div>
+    <div class="alert alert-warning" style="margin-top:16px"><span data-icon-slot="info"></span><div><strong>Dos decisiones de contraste que conviene saber</strong>El naranja de marca (#F97316 Barmesa, #F26B1D acción Pedrollo) da 3.1:1 con texto blanco y <em>falla</em> AA. Por eso el token <code>accent</code> se oscurece a #C2410C y el naranja vivo queda solo para el punto del contador del carrito. El azul Barmesa #0A7BC2 pasa justo (4.54:1): nunca se usa en texto menor de 14 px ni sobre <code>surface-alt</code>.</div></div>
+  </section>
+
+  <section class="ds-section" id="tipografia" data-component="DS/Tipografia">
+    <h2>2. Tipografía</h2>
+    <p class="muted small">Display: <b>Inter Tight</b> 700–800, tracking −0.02em. Cuerpo: <b>Inter</b> 400–600 con <code>tnum</code> activado en todo el sitio para que precios y tablas alineen. Modelos (PKm 60, 4SR 2/9): <b>JetBrains Mono</b> 600, porque un código de modelo se lee letra por letra.</p>
+    <div class="card">
+      <div class="type-row"><span class="k">display-4xl · 48/1.15</span><span style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:800;letter-spacing:-.02em;line-height:1.15">Bombas con respaldo real</span></div>
+      <div class="type-row"><span class="k">h1 · 36</span><h1 style="margin:0">Bombas de superficie</h1></div>
+      <div class="type-row"><span class="k">h2 · 28</span><h2 style="margin:0">Los más vendidos</h2></div>
+      <div class="type-row"><span class="k">h3 · 22</span><h3 style="margin:0">Ficha técnica</h3></div>
+      <div class="type-row"><span class="k">body · 16/1.5</span><span>Catálogo oficial, existencia en CEDIS de Tlalnepantla, Puebla, Guadalajara y Mérida.</span></div>
+      <div class="type-row"><span class="k">small · 14</span><span class="small muted">Sobre pedido · entrega 5–7 días hábiles</span></div>
+      <div class="type-row"><span class="k">xs · 12</span><span class="xs muted">Solo metadatos: fecha, peso de archivo, pie de correo.</span></div>
+      <div class="type-row"><span class="k">model · mono 600</span><span><span class="model">PKm 60</span> · <span class="model">CPm 158</span> · <span class="model">4SR 2/9</span> · <span class="model">PKm 100</span></span></div>
+      <div class="type-row" style="border:0"><span class="k">price · display 700 tnum</span><span style="font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.02em">,890.00 &nbsp; ,850.00 &nbsp; 8,500.00</span></div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="espaciado" data-component="DS/Espaciado">
+    <h2>3. Espaciado, radios y sombras</h2>
+    <div class="grid md-grid-3">
+      <div class="card"><h4>space-1…8 (base 4 px)</h4><div class="sp"><div style="width:4px;height:4px"></div><div style="width:8px;height:8px"></div><div style="width:12px;height:12px"></div><div style="width:16px;height:16px"></div><div style="width:24px;height:24px"></div><div style="width:32px;height:32px"></div><div style="width:48px;height:48px"></div><div style="width:64px;height:64px"></div></div><p class="xs muted" style="margin:8px 0 0">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64</p></div>
+      <div class="card"><h4>radius-sm / md / lg</h4><div class="row"><div style="width:56px;height:56px;background:var(--color-primary-soft);border:2px solid var(--color-primary);border-radius:var(--radius-sm)"></div><div style="width:56px;height:56px;background:var(--color-primary-soft);border:2px solid var(--color-primary);border-radius:var(--radius-md)"></div><div style="width:56px;height:56px;background:var(--color-primary-soft);border:2px solid var(--color-primary);border-radius:var(--radius-lg)"></div><div style="width:56px;height:56px;background:var(--color-primary-soft);border:2px solid var(--color-primary);border-radius:var(--radius-full)"></div></div><p class="xs muted" style="margin:8px 0 0">6 · 10 · 16 · full. Botones e inputs: md. Cards: lg. Chips y badges: full.</p></div>
+      <div class="card"><h4>shadow-sm / md / lg</h4><div class="row"><div style="width:56px;height:56px;background:#fff;border-radius:10px;box-shadow:var(--shadow-sm)"></div><div style="width:56px;height:56px;background:#fff;border-radius:10px;box-shadow:var(--shadow-md)"></div><div style="width:56px;height:56px;background:#fff;border-radius:10px;box-shadow:var(--shadow-lg)"></div></div><p class="xs muted" style="margin:8px 0 0">Las cards en reposo usan borde, no sombra. La sombra md aparece al hover; lg solo en modales y toasts.</p></div>
+    </div>
+    <p class="small muted" style="margin-top:16px">Breakpoints: <b>360</b> (móvil base) · <b>768</b> (tableta, aparece búsqueda en cabecera y desaparece barra inferior) · <b>1280</b> (escritorio, filtros laterales y 4 columnas). Objetivo táctil mínimo 44 px (<code>control-h</code>). Contenedor 1280 px.</p>
+  </section>
+
+  <section class="ds-section" id="botones" data-component="DS/Botones">
+    <h2>4. Botones</h2>
+    <div class="stack">
+      <div class="demo"><button class="btn btn-primary">Primario</button><button class="btn btn-ink">Tinta</button><button class="btn btn-gold">Dorado</button><button class="btn btn-secondary">Secundario</button><button class="btn btn-ghost">Fantasma</button><button class="btn btn-accent">Acento</button><button class="btn btn-danger">Destructivo</button><button class="btn btn-oauth">OAuth</button></div>
+      <div class="demo"><button class="btn btn-primary btn-lg">Grande 52</button><button class="btn btn-primary">Normal 44</button><button class="btn btn-primary btn-sm">Pequeño 36 (solo escritorio)</button><button class="btn btn-primary btn-icon" aria-label="Carrito"><span data-icon-slot="cart"></span></button><button class="btn btn-primary"><span data-icon-slot="cart"></span> Con icono</button></div>
+      <div class="demo"><span class="label" style="width:100%">Estados</span><button class="btn btn-primary" style="background:var(--color-primary-hover)">Hover</button><button class="btn btn-primary" style="outline:3px solid var(--color-focus);outline-offset:2px">Focus</button><button class="btn btn-primary" disabled>Disabled</button><button class="btn btn-primary is-loading">Loading</button><button class="btn btn-secondary is-loading">Loading</button></div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="campos" data-component="DS/Campos">
+    <h2>5. Inputs y selects</h2>
+    <div class="grid md-grid-2 lg-grid-4">
+      <div class="field"><label for="i1">Normal</label><input id="i1" class="input" placeholder="Ej. Av. Mario Colín 125"><span class="hint">Texto de ayuda bajo el campo</span></div>
+      <div class="field"><label for="i2">Con valor</label><input id="i2" class="input" value="54060"></div>
+      <div class="field has-error"><label for="i3">Con error</label><input id="i3" class="input" value="5406" aria-invalid="true"><span class="hint">5 dígitos</span><span class="error-msg">El código postal debe tener 5 dígitos.</span></div>
+      <div class="field"><label for="i4">Deshabilitado</label><input id="i4" class="input" value="MEHL850612QA3" disabled></div>
+      <div class="field"><label for="s1">Select</label><select id="s1" class="select"><option>G03 · Gastos en general</option></select></div>
+      <div class="field"><label for="t1">Textarea</label><textarea id="t1" class="textarea" style="min-height:80px"></textarea></div>
+      <div class="field"><span class="label">Checkbox y radio</span><label class="check" style="min-height:36px"><input type="checkbox" checked> Guardar tarjeta</label><label class="check" style="min-height:36px"><input type="radio" checked> Paquetería</label></div>
+      <div class="field"><span class="label">Grupo de búsqueda</span><div class="input-group"><span data-icon-slot="search"></span><input placeholder="PKm 60"></div></div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="chips" data-component="DS/ChipsBadges">
+    <h2>6. Chips de filtro y badges de estado</h2>
+    <div class="demo"><button class="chip" aria-pressed="false">0.5 HP</button><button class="chip" aria-pressed="true">1 HP <span data-icon-slot="x"></span></button><button class="chip" aria-pressed="true">127 V <span data-icon-slot="x"></span></button><button class="chip chip-clear">Limpiar filtros</button></div>
+    <div class="demo" style="margin-top:12px"><span class="label" style="width:100%">Estado de pedido · un badge por estado, siempre con punto y texto (no solo color)</span><span class="badge badge-recibido">Recibido</span><span class="badge badge-pagado">Pagado</span><span class="badge badge-preparacion">En preparación</span><span class="badge badge-enviado">Enviado</span><span class="badge badge-entregado">Entregado</span><span class="badge badge-cancelado">Cancelado</span></div>
+    <div class="demo" style="margin-top:12px"><span class="label" style="width:100%">Devolución y factura</span><span class="badge badge-recibido">Solicitada</span><span class="badge badge-pagado">Guía emitida</span><span class="badge badge-preparacion">Recibida</span><span class="badge badge-entregado">Reembolsada</span><span class="badge badge-cancelado">Rechazada</span><span class="badge badge-pagado">Enviado a contabilidad</span><span class="badge badge-entregado">Factura enviada</span></div>
+    <div class="demo" style="margin-top:12px"><span class="label" style="width:100%">Disponibilidad</span><span class="badge badge-success">En existencia</span><span class="badge badge-warning">Sobre pedido</span><span class="badge badge-danger">No disponible</span><span class="badge badge-primary no-dot">Distribuidor autorizado</span><span class="badge badge-neutral no-dot">Opcional</span></div>
+  </section>
+
+  <section class="ds-section" id="card" data-component="DS/ProductCard">
+    <h2>7. Card de producto</h2>
+    <div class="product-grid" id="cards"></div>
+  </section>
+
+  <section class="ds-section" id="stepper" data-component="DS/StepperTimeline">
+    <h2>8. Stepper y línea de tiempo</h2>
+    <div class="grid md-grid-2">
+      <div class="card"><h4>Stepper del checkout</h4><ol class="stepper"><li class="is-done"><span>Dirección y envío</span></li><li class="is-current"><span>Pago</span></li><li><span>Confirmación</span></li></ol></div>
+      <div class="card"><h4>Línea de tiempo del pedido</h4><ol class="timeline"><li class="is-done"><span class="t-title">Recibido</span><span class="t-meta">8 oct · 10:42</span></li><li class="is-done"><span class="t-title">Pagado</span><span class="t-meta">8 oct · 10:43</span></li><li class="is-current"><span class="t-title">En preparación</span><span class="t-meta">CEDIS Tlalnepantla</span></li><li class="is-pending"><span class="t-title">Enviado</span></li><li class="is-pending"><span class="t-title">Entregado</span></li></ol></div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="tabla" data-component="DS/SpecTable">
+    <h2>9. Tabla de especificaciones</h2>
+    <div class="grid md-grid-2"><table class="spec-table"><tr><th>Modelo</th><td class="mono">PKm 60</td></tr><tr><th>Potencia</th><td>0.5 HP</td></tr><tr><th>Voltaje</th><td>127 V</td></tr><tr><th>Caudal máximo</th><td>40 L/min <span class="ex">(ejemplo)</span></td></tr></table>
+    <div><p class="small muted">Etiqueta en gris a la izquierda, valor en negrita a la derecha, números tabulares. Los valores que no están confirmados con el catálogo llevan el sufijo <em>(ejemplo)</em> para que nadie los copie a producción.</p></div></div>
+  </section>
+
+  <section class="ds-section" id="alertas" data-component="DS/Alertas">
+    <h2>10. Alertas, modal y toast</h2>
+    <div class="grid md-grid-2">
+      <div class="alert alert-info"><span data-icon-slot="info"></span><div><strong>Información</strong>Tu pedido incluye un artículo sobre pedido; todo sale junto en 5–7 días.</div></div>
+      <div class="alert alert-success"><span data-icon-slot="check"></span><div><strong>Listo</strong>Datos fiscales guardados.</div></div>
+      <div class="alert alert-warning"><span data-icon-slot="info"></span><div><strong>El precio cambió</strong>Lo agregaste a ,450.00 y hoy cuesta ,850.00.<div class="actions"><button class="btn btn-secondary btn-sm">Entendido</button></div></div></div>
+      <div class="alert alert-danger"><span data-icon-slot="alert"></span><div><strong>Tu banco rechazó el pago</strong>No se hizo ningún cargo. Prueba otra tarjeta.<div class="actions"><button class="btn btn-secondary btn-sm">Usar otra tarjeta</button></div></div></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn btn-secondary" type="button" onclick="document.getElementById('dm').hidden=false">Abrir modal</button><button class="btn btn-secondary" type="button" onclick="toast('PKm 60 agregado al carrito','success',{href:'#',label:'Ver carrito'})">Toast éxito</button><button class="btn btn-secondary" type="button" onclick="toast('No pudimos guardar. Revisa tu conexión.','danger')">Toast error</button></div>
+    <div class="modal" id="dm" hidden role="dialog" aria-modal="true" aria-labelledby="dmt" data-component="Modal"><div class="modal-panel"><h3 id="dmt">¿Quitar PKm 60 del carrito?</h3><p class="muted" style="margin:0">Puedes volver a agregarlo desde la ficha del producto.</p><div class="modal-actions"><button class="btn btn-ghost" type="button" onclick="document.getElementById('dm').hidden=true">Cancelar</button><button class="btn btn-danger" type="button" onclick="document.getElementById('dm').hidden=true;toast('PKm 60 eliminado')">Quitar</button></div></div></div>
+  </section>
+
+  <section class="ds-section" id="nav" data-component="DS/Navegacion">
+    <h2>11. Paginación, breadcrumb, estado vacío y skeleton</h2>
+    <nav aria-label="Migas de pan"><ol class="breadcrumb"><li><a href="#">Inicio</a></li><li><a href="#">Catálogo</a></li><li aria-current="page">Bombas de superficie</li></ol></nav>
+    <ul class="pagination" style="margin:8px 0 24px;justify-content:flex-start"><li><a href="#" aria-label="Anterior"><span data-icon-slot="arrowLeft"></span></a></li><li><a href="#" aria-current="page">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><span>…</span></li><li><a href="#">8</a></li><li><a href="#" aria-label="Siguiente"><span data-icon-slot="arrowRight"></span></a></li></ul>
+    <div class="grid md-grid-2">
+      <div class="card"><div class="empty" style="padding:16px"><div class="icon"><span data-icon-slot="cart"></span></div><h3>Tu carrito está vacío</h3><p>Agrega bombas, motores o refacciones.</p><div class="actions"><a class="btn btn-primary" href="#">Ver catálogo</a></div></div></div>
+      <div class="card"><div class="product-grid" style="grid-template-columns:1fr 1fr"><div class="product-card" aria-hidden="true"><div class="skeleton sk-img"></div><div class="skeleton sk-line w40"></div><div class="skeleton sk-line w80"></div><div class="skeleton sk-line w60"></div><div class="skeleton sk-btn"></div></div><div class="product-card" aria-hidden="true"><div class="skeleton sk-img"></div><div class="skeleton sk-line w40"></div><div class="skeleton sk-line w80"></div><div class="skeleton sk-line w60"></div><div class="skeleton sk-btn"></div></div></div></div>
+    </div>
+    <p class="small muted" style="margin-top:16px">Cabecera (con búsqueda y carrito), barra inferior móvil y pie de página son los que ves en esta misma página: componentes <code>Header</code>, <code>BottomBar</code>, <code>Footer</code>.</p>
+  </section>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+<script>
+  const names=['primary','primary-hover','primary-soft','on-primary','primary-on-dark','accent','accent-hover','accent-soft','ink','ink-2','ink-muted','gold','gold-text','gold-soft','ivory','surface','surface-alt','surface-sunken','text','text-muted','border','border-strong','success','warning','danger','info','focus'];
+  const cs=getComputedStyle(document.documentElement);
+  document.getElementById('swatches').innerHTML=names.map(n=>{const v=cs.getPropertyValue('--color-'+n).trim();return `<div class="swatch" data-token="color-${n}"><div class="c" style="background:${v}"></div><div class="m"><b>${n}</b><span class="mono">${v}</span></div></div>`}).join('');
+  document.querySelectorAll('.swatch-dot').forEach(d=>{d.style.cssText+=';width:22px;height:22px;border-radius:6px;border:1px solid var(--color-border);display:inline-block'});
+  document.querySelectorAll('[data-brand-preview]').forEach(b=>b.querySelector('.hd').style.background={pedrollo:'#1A4F9C',barmesa:'#0A7BC2',evans:'#C8102E'}[b.dataset.brandPreview]);
+  document.querySelectorAll('[data-brand-preview] .hd').forEach((h,i)=>h.textContent=['Pedrollo','Barmesa','Evans'][i]);
+  const mk=(id,extra='')=>{const p=PRODUCTS[id];return `<a class="product-card ${extra}" href="producto.html?id=${id}"><div class="img-slot product" data-slot="${id}"></div><span class="model">${p.model}</span><span class="name">${p.name}</span><span class="specs">${p.hp} HP · ${p.v} · ${p.phase}</span><span class="price">${fmt(p.price)} <small>IVA incl.</small></span><span class="avail">${availLabel(p.avail)}</span></a>`};
+  document.getElementById('cards').innerHTML=mk('pkm-60')+mk('cpm-158')+mk('jswm-1a','is-unavailable')+'<div class="product-card" aria-hidden="true"><div class="skeleton sk-img"></div><div class="skeleton sk-line w40"></div><div class="skeleton sk-line w80"></div><div class="skeleton sk-line w60"></div><div class="skeleton sk-line w40" style="height:24px"></div></div>';
+</script>
+</body></html>

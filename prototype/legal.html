@@ -1,0 +1,39 @@
+<!doctype html><html lang="es"><head><title>Ayuda y legales · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Legales">
+<bsv-header></bsv-header>
+<main class="container section" style="padding-top:16px">
+  <div class="account-layout">
+    <nav class="account-nav" aria-label="Legales" data-component="LegalNav"><a href="#terminos" aria-current="page">Términos y condiciones</a><a href="#privacidad">Aviso de privacidad</a><a href="#envios">Envíos y devoluciones</a><a href="#contacto">Contacto</a></nav>
+    <div class="stack" style="max-width:760px">
+      <section class="card" id="terminos" data-component="LegalSection"><h1 style="font-size:var(--text-2xl)">Términos y condiciones</h1><p class="muted small">Última actualización: 1 de octubre de 2026</p>
+        <h4>1. Quién vende</h4><p>Esta tienda es operada por Bombas y Sistemas Vega, S.A. de C.V. (BSV), distribuidor autorizado de la marca en México, con domicilio en Tlalnepantla de Baz, Estado de México.</p>
+        <h4>2. Precios y disponibilidad</h4><p>Los precios se muestran en pesos mexicanos con IVA incluido. Pueden cambiar sin previo aviso; el precio válido es el que ves al momento de pagar. Los artículos "sobre pedido" se surten en 5 a 7 días hábiles.</p>
+        <h4>3. Pago</h4><p>Aceptamos tarjetas de crédito y débito procesadas por Stripe. BSV no almacena datos completos de tarjetas.</p>
+        <h4>4. Garantía</h4><p>Los equipos cuentan con garantía de fábrica de 12 meses contra defectos de fabricación. No cubre daños por operación en seco, voltaje incorrecto o instalación inadecuada.</p></section>
+      <section class="card" id="privacidad" data-component="LegalSection"><h2>Aviso de privacidad</h2><p>BSV es responsable del tratamiento de tus datos personales. Los usamos para procesar pedidos, emitir facturas, enviar notificaciones del pedido y atender garantías. No los vendemos ni los compartimos con fines publicitarios. Puedes ejercer tus derechos ARCO escribiendo a <a href="mailto:privacidad@bombasvega.mx">privacidad@bombasvega.mx</a>.</p></section>
+      <section class="card" id="envios" data-component="LegalSection"><h2>Envíos y devoluciones</h2>
+        <h4>Envíos</h4><p>Enviamos a toda la República por paquetería asegurada (Estafeta, DHL). Existencia local sale en 24–48 h. Envío gratis en pedidos mayores a ,000 en la zona metropolitana. Puedes recoger sin costo en CEDIS Tlalnepantla, Puebla, Guadalajara y Mérida.</p>
+        <h4>Devoluciones</h4><p>Tienes 30 días naturales desde la entrega para solicitar una devolución desde tu cuenta. El equipo debe estar completo y sin uso, salvo falla de fábrica. Te enviamos guía prepagada y reembolsamos a tu método de pago en 5–10 días hábiles tras recibirlo.</p></section>
+      <section class="card" id="contacto" data-component="ContactSection"><h2>Contacto</h2>
+        <div class="grid md-grid-2">
+          <div class="trust-item"><span data-icon-slot="phone"></span><div><strong>Ventas y soporte</strong><span><a href="tel:+525572589681">55 7258 9681</a> · <a href="tel:+525570986532">55 7098 6532</a><br>Lun–Vie 9:00–18:00, Sáb 9:00–13:00</span></div></div>
+          <div class="trust-item"><span data-icon-slot="mail"></span><div><strong>Correo</strong><span><a href="mailto:ventas@bombasvega.mx">ventas@bombasvega.mx</a><br>Respondemos en menos de 1 día hábil</span></div></div>
+          <div class="trust-item"><span data-icon-slot="mapPin"></span><div><strong>CEDIS Tlalnepantla</strong><span>Tlalnepantla de Baz, Estado de México<br>Puebla · Zapopan · Mérida</span></div></div>
+          <div class="trust-item"><span data-icon-slot="zap"></span><div><strong>WhatsApp</strong><span><a href="https://wa.me/525572589681">Escríbenos</a> con tu modelo o número de pedido</span></div></div>
+        </div>
+        <form class="stack" style="margin-top:24px" onsubmit="event.preventDefault();toast('Mensaje enviado. Te respondemos en menos de 1 día hábil.')" data-component="ContactForm">
+          <div class="grid md-grid-2"><div class="field"><label for="cn">Nombre</label><input id="cn" class="input" required></div><div class="field"><label for="cm">Correo o teléfono</label><input id="cm" class="input" required></div></div>
+          <div class="field"><label for="ct">Mensaje</label><textarea id="ct" class="textarea" required placeholder="¿Qué equipo buscas o con qué pedido necesitas ayuda?"></textarea></div>
+          <div><button class="btn btn-primary" type="submit">Enviar mensaje</button></div>
+        </form></section>
+    </div>
+  </div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+</body></html>

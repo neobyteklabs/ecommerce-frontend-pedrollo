@@ -1,0 +1,86 @@
+<!doctype html><html lang="es"><head><title>Bombas de superficie · Tienda</title><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/premium.css"><link rel="stylesheet" href="css/motion.css">
+<script src="js/app.js"></script><script src="js/motion.js" defer></script></head>
+<body data-page="Categoria">
+<bsv-header current="Bombas de superficie"></bsv-header>
+<main class="container">
+  <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a href="index.html">Inicio</a></li><li><a href="categoria.html">Catálogo</a></li><li aria-current="page">Bombas de superficie</li></ol></nav>
+  <h1 style="font-size:var(--text-2xl)">Bombas de superficie <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· 24 productos</span></h1>
+  <p class="muted" style="max-width:70ch">Periféricas, centrífugas y autocebantes para casa habitación, comercio y riego. Filtra por potencia y voltaje para encontrar el equipo correcto.</p>
+
+  <div class="catalog">
+    <aside class="filters" id="filters" data-component="FilterPanel" aria-label="Filtros">
+      <div class="between hide-desktop" style="margin-bottom:8px"><strong>Filtros</strong><button class="btn btn-ghost btn-icon" type="button" aria-label="Cerrar filtros" onclick="document.getElementById('filters').classList.remove('is-open')"><span data-icon-slot="x"></span></button></div>
+      <details class="filter-group" open><summary>Potencia (HP)</summary>
+        <label class="check"><input type="checkbox" checked> 0.5 HP <span class="muted">(6)</span></label>
+        <label class="check"><input type="checkbox"> 0.75 HP <span class="muted">(3)</span></label>
+        <label class="check"><input type="checkbox" checked> 1 HP <span class="muted">(8)</span></label>
+        <label class="check"><input type="checkbox"> 1.5 HP <span class="muted">(4)</span></label>
+        <label class="check"><input type="checkbox"> 2 HP o más <span class="muted">(3)</span></label>
+      </details>
+      <details class="filter-group" open><summary>Voltaje</summary>
+        <label class="check"><input type="checkbox" checked> 127 V <span class="muted">(17)</span></label>
+        <label class="check"><input type="checkbox"> 220 V <span class="muted">(7)</span></label>
+      </details>
+      <details class="filter-group"><summary>Fase</summary>
+        <label class="check"><input type="checkbox"> Monofásica</label>
+        <label class="check"><input type="checkbox"> Trifásica</label>
+      </details>
+      <details class="filter-group"><summary>Caudal máximo (L/min)</summary>
+        <label class="check"><input type="checkbox"> Hasta 40</label>
+        <label class="check"><input type="checkbox"> 40 – 100</label>
+        <label class="check"><input type="checkbox"> Más de 100</label>
+      </details>
+      <details class="filter-group"><summary>Altura máxima (m)</summary>
+        <label class="check"><input type="checkbox"> Hasta 30 m</label>
+        <label class="check"><input type="checkbox"> 30 – 60 m</label>
+        <label class="check"><input type="checkbox"> Más de 60 m</label>
+      </details>
+      <details class="filter-group"><summary>Uso</summary>
+        <label class="check"><input type="checkbox"> Casa habitación</label>
+        <label class="check"><input type="checkbox"> Riego</label>
+        <label class="check"><input type="checkbox"> Comercio / industria</label>
+      </details>
+      <div class="hide-desktop" style="padding-top:16px"><button class="btn btn-primary btn-block" type="button" onclick="document.getElementById('filters').classList.remove('is-open')">Ver 14 resultados</button></div>
+    </aside>
+
+    <div>
+      <div class="catalog-toolbar" data-component="CatalogToolbar">
+        <div class="chip-list" data-component="ActiveChips">
+          <button class="chip" aria-pressed="true" type="button">0.5 HP <span data-icon-slot="x"></span></button>
+          <button class="chip" aria-pressed="true" type="button">1 HP <span data-icon-slot="x"></span></button>
+          <button class="chip" aria-pressed="true" type="button">127 V <span data-icon-slot="x"></span></button>
+          <button class="chip chip-clear" type="button">Limpiar filtros</button>
+        </div>
+        <div class="row">
+          <button class="btn btn-secondary btn-sm hide-desktop" type="button" onclick="document.getElementById('filters').classList.add('is-open')" style="min-height:44px"><span data-icon-slot="filter"></span> Filtros (3)</button>
+          <label class="sr-only" for="sort">Ordenar</label>
+          <select id="sort" class="select" style="width:auto;min-height:44px"><option>Más vendidos</option><option>Precio: menor a mayor</option><option>Precio: mayor a menor</option><option>Potencia</option></select>
+        </div>
+      </div>
+      <div class="product-grid" id="grid"></div>
+      <nav aria-label="Paginación"><ul class="pagination" data-component="Pagination"><li><a href="#" aria-label="Anterior"><span data-icon-slot="arrowLeft"></span></a></li><li><a href="#" aria-current="page">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#" aria-label="Siguiente"><span data-icon-slot="arrowRight"></span></a></li></ul></nav>
+    </div>
+  </div>
+</main>
+<bsv-footer></bsv-footer>
+<bsv-bottombar></bsv-bottombar>
+<script>
+  const ids=['pkm-60','pkm-80','pkm-100','cpm-158','cpm-170','jswm-1a','hf-6b','top-2','easypress','4sr-2-9'];
+  document.getElementById('grid').innerHTML = ids.map(id=>{const p=PRODUCTS[id];return `
+  <a class="product-card ${p.avail==='agotado'?'is-unavailable':''}" href="producto.html?id=${id}" data-component="ProductCard">
+    <div class="img-slot product" data-slot="${id}"></div>
+    <span class="model">${p.model}</span>
+    <span class="name">${p.name}</span>
+    <span class="specs">${p.hp} HP · ${p.v} · ${p.phase}</span>
+    <span class="price">${fmt(p.price)} <small>IVA incl. · ${fmt(p.price/1.16)} + IVA</small></span>
+    <span class="avail">${availLabel(p.avail)}</span>
+  </a>`}).join('') + `
+  <div class="product-card" aria-hidden="true" data-component="ProductCard/Skeleton"><div class="skeleton sk-img"></div><div class="skeleton sk-line w40"></div><div class="skeleton sk-line w80"></div><div class="skeleton sk-line w60"></div><div class="skeleton sk-line w40" style="height:24px"></div></div>
+  <div class="product-card" aria-hidden="true" data-component="ProductCard/Skeleton"><div class="skeleton sk-img"></div><div class="skeleton sk-line w40"></div><div class="skeleton sk-line w80"></div><div class="skeleton sk-line w60"></div><div class="skeleton sk-line w40" style="height:24px"></div></div>`;
+  document.querySelectorAll('[data-icon-slot]').forEach(el=>el.innerHTML=icon(el.dataset.iconSlot));
+</script>
+</body></html>

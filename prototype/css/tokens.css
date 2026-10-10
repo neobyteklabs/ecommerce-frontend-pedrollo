@@ -1,0 +1,126 @@
+/* =====================================================================
+   BSV Tienda · Design tokens
+   Una sola hoja de tokens; la marca se cambia con [data-brand] en <html>.
+   Nombres = nombres de capa en Figma y de variables Tailwind (Angular).
+   ===================================================================== */
+
+:root {
+  /* ---- Marca por defecto: Pedrollo ---- */
+  --brand-name: "Pedrollo";
+  --brand-tagline: "Distribuidor autorizado en México";
+  --color-primary: #1A4F9C;        /* AA sobre blanco 7.95:1 */
+  --color-primary-hover: #153F7D;
+  --color-primary-soft: #E8EFF9;   /* fondos de chips/alertas info */
+  --color-on-primary: #FFFFFF;
+
+  /* ---- Neutros (iguales en las tres marcas) ---- */
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F4F6F9;
+  --color-surface-sunken: #E9EDF2;
+  --color-text: #0F172A;           /* 17.85:1 */
+  --color-text-muted: #5B6472;     /* 5.98:1 sobre blanco · 5.53:1 sobre surface-alt */
+  --color-text-inverse: #FFFFFF;
+  --color-border: #D9DEE5;
+  --color-border-strong: #A9B2BF;
+
+  /* ---- Acento para acciones secundarias de compra (naranja) ---- */
+  --color-accent: #C2410C;         /* 5.18:1 con blanco */
+  --color-accent-hover: #9A3412;
+  --color-accent-soft: #FFF1E8;
+  --color-on-accent: #FFFFFF;
+
+  /* ---- Semánticos ---- */
+  --color-success: #15803D;  --color-success-soft: #ECFDF3;
+  --color-warning: #9A3412;  --color-warning-soft: #FFF7ED;
+  --color-danger:  #B91C1C;  --color-danger-soft:  #FEF2F2;
+  --color-info:    #1D4ED8;  --color-info-soft:    #EFF4FF;
+
+  --color-focus: #1A4F9C;
+  --color-primary-on-dark: #5B8DEF; /* el azul de marca sobre tinta falla AA (2.45:1); esta variante da 6.02:1 */
+
+  /* ---- Capa premium: tinta, dorado y marfil (compartidos por las tres marcas) ---- */
+  --color-ink: #0A0D14;            /* negro tinta de heros, banda de confianza y pie */
+  --color-ink-2: #141926;          /* tarjetas sobre tinta */
+  --color-ink-muted: #A3ADC2;      /* texto secundario sobre tinta · 8.62:1 */
+  --color-on-ink: #FFFFFF;
+  --color-gold: #D4AF37;           /* solo sobre tinta (9.24:1) o como filete; nunca texto sobre blanco */
+  --color-gold-text: #8A6D12;      /* dorado para texto sobre blanco · 4.91:1 */
+  --color-gold-soft: #FBF6E6;
+  --color-ivory: #F8F7F4;          /* fondo alterno cálido de secciones */
+
+  /* ---- Tipografía ---- */
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --text-xs: 0.75rem;   /* 12 · solo metadatos */
+  --text-sm: 0.875rem;  /* 14 */
+  --text-md: 1rem;      /* 16 · base */
+  --text-lg: 1.125rem;  /* 18 */
+  --text-xl: 1.375rem;  /* 22 */
+  --text-2xl: 1.75rem;  /* 28 */
+  --text-3xl: 2.25rem;  /* 36 */
+  --text-4xl: 3rem;     /* 48 */
+  --leading-tight: 1.15;
+  --leading-body: 1.5;
+  --tracking-display: -0.035em;
+  --text-5xl: 3.75rem;  /* 60 · hero escritorio */
+
+  /* ---- Espaciado (4px base) ---- */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+
+  /* ---- Radios ---- */
+  --radius-sm: 8px;  --radius-md: 12px;  --radius-lg: 20px;  --radius-xl: 28px;  --radius-full: 999px;
+
+  /* ---- Sombras ---- */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, .08), 0 1px 3px rgba(15, 23, 42, .06);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, .14);
+
+  /* ---- Tamaños de control ---- */
+  --control-h: 44px;       /* objetivo táctil mínimo */
+  --control-h-lg: 52px;
+  --control-h-sm: 36px;    /* solo escritorio, nunca en móvil */
+  --header-h: 64px;
+  --bottombar-h: 64px;
+
+  /* ---- Movimiento ---- */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur-fast: 150ms;  --dur-base: 220ms;  --dur-slow: 360ms;
+
+  /* ---- Layout ---- */
+  --container: 1280px;
+  --gutter: 16px;
+}
+
+/* =========================== Barmesa =========================== */
+:root[data-brand="barmesa"] {
+  --brand-name: "Barmesa";
+  --brand-tagline: "Bombas para la industria del agua";
+  --color-primary: #0A7BC2;        /* 4.54:1 · AA texto normal */
+  --color-primary-hover: #07639C;
+  --color-primary-soft: #E6F2FA;
+  --color-focus: #0A7BC2;
+  --color-primary-on-dark: #3FA3E6; /* 7.03:1 sobre tinta */
+  --color-accent: #C2410C;         /* naranja Barmesa oscurecido para AA */
+  --color-accent-hover: #9A3412;
+  --color-accent-soft: #FFF1E8;
+}
+
+/* ============================ Evans ============================ */
+:root[data-brand="evans"] {
+  --brand-name: "Evans";
+  --brand-tagline: "Potencia mexicana desde 1949";
+  --color-primary: #C8102E;        /* 5.88:1 */
+  --color-primary-hover: #A50D26;
+  --color-primary-soft: #FBE9EC;
+  --color-focus: #C8102E;
+  --color-primary-on-dark: #F0475F; /* 5.34:1 sobre tinta */
+  --color-accent: #1F2937;         /* en Evans el acento es grafito, no naranja */
+  --color-accent-hover: #111827;
+  --color-accent-soft: #F1F3F6;
+}
+
+@media (min-width: 768px) { :root { --gutter: 24px; } }
+@media (min-width: 1280px) { :root { --gutter: 32px; } }
