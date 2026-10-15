@@ -8,9 +8,16 @@ Lee `CONTEXTO.md` para el contexto completo: decisiones, módulos, reglas de rec
 
 ```bash
 npm install
+export BACKOFFICE_URL=http://localhost:8082        # el ecommerce-backend (bala 1)
+export STORE_KEY=<APP_STORE_KEY_PEDROLLO>          # llave de tienda; nunca en un archivo versionado
 npm start            # http://localhost:4200
-npm run build        # SSR + prerender (home, 12 categorías, 90 series, legales)
+npm run build        # SSR + prerender (home, 12 categorías, 90 series, legales); no necesita el backend
 ```
+
+Las dos variables son obligatorias para servir: sin ellas `server.ts` lo dice en el log y cada petición responde 500.
+Viven solo en el proceso Node: el navegador llama a `/api/tienda/...` en su propio origen y `server.ts` reenvía al
+back-office con `X-Store-Key`. Puedes guardarlas en `.env.local` (ignorado por git, `*.local`) y arrancar con
+`set -a; . ./.env.local; set +a; npm start`.
 
 Modo revisión (muestra recursos pendientes con etiqueta; protegerlo en producción): `http://localhost:4200/?revision=1` · apagar con `?revision=0`.
 
@@ -23,13 +30,23 @@ src/
   styles.css               Tailwind + @theme mapeado a los tokens + @utility container
   styles/                  tokens.css (3 marcas) · base · components · premium · serie · motion
   app/core/                brand · products · catalog (familias + narrativa 2CP) · resources (manifiesto) · images · cart · session · toast · review
+  app/core/api/            storefront-api.ts: cliente de la API de tienda (httpResource), tokens API_BASE / STORE_KEY e interceptor de servidor
   app/core/data/           familias_crm.json · recursos.json (generado, no editar a mano)
   app/shared/ui/           bsv-header, bottombar, footer, product-card, img-slot, price, qty, timeline, stepper, alert, empty, skeleton, toasts, icon
   app/shared/directives/   bsvReveal · bsvSpotlight · bsvCountUp
   app/features/            catalog (home, category, search, product, series) · cart · auth · checkout · account · legal
+public/brand/              logotipo dual Pedrollo · Vega (dual-horizontal*.svg); ver core/brand.ts
 public/media/              catalogo/ fichas/ tecnico/ revision/ comercial/ comerciales/  (generado desde el banco; Git LFS)
 prototype/                 prototipo HTML, sistema de diseño, export a Figma
 tools/banco/               generar_manifiesto.py · instalar_lote_estilizado.py · reportes
+```
+
+## Precios de demostración
+
+Mientras no exista la API de precios, `src/app/core/data/precios_demo.json` trae precios ficticios (lista del CRM × 1.15) para que el carrito y el checkout sean navegables en presentaciones. Regenerar:
+
+```bash
+python3 tools/precios_demo.py ../../_docs/pedrollo-catalogo.csv --factor 1.15
 ```
 
 ## Recursos y aprobación

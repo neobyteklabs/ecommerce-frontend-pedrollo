@@ -14,8 +14,12 @@ import { FAMILIES, NAV_FAMILIES } from '../../core/catalog';
     <div class="container">
       <div class="header-main">
         <a class="brand" routerLink="/" [attr.aria-label]="brand.name + ', inicio'" data-component="Brand/Logo">
-          <span class="logo-slot" data-slot="logo">@if (brand.logo) { <img [src]="brand.logo" alt="" /> }</span>
-          <span>@if (!brand.logo) { <span class="wordmark" style="--brand-name:'{{ brand.name }}'"></span> }<span class="by">por Bombas y Sistemas Vega</span></span>
+          @if (brand.logo) {
+            <span class="logo-slot" data-slot="logo"><picture>@if (brand.logoCompact) { <source media="(max-width: 767px)" [srcset]="brand.logoCompact" /> }<img [src]="brand.logo" [alt]="brand.name + ' · Bombas y Sistemas Vega, distribuidor autorizado'" width="475" height="86" /></picture></span>
+          } @else {
+            <span class="logo-slot" data-slot="logo"></span>
+            <span><span class="wordmark" style="--brand-name:'{{ brand.name }}'"></span><span class="by">por Bombas y Sistemas Vega</span></span>
+          }
         </a>
         <form class="header-search" role="search" data-component="SearchBar" (submit)="go($event, q.value)">
           <label class="sr-only" for="q">Buscar modelo o producto</label>

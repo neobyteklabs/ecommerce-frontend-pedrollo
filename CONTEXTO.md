@@ -14,8 +14,9 @@ Contacto BSV: 55 7258 9681 · 55 7098 6532 · Tlalnepantla de Baz, Estado de Mé
 
 | Carpeta | Contenido |
 |---|---|
-| `src/` | Aplicación Angular 22 (SSR, zoneless, signals) + Tailwind 4 |
+| `src/` | Aplicación Angular 22 (SSR, zoneless, signals) + Tailwind 4. `core/api/` = cliente de la API de tienda |
 | `public/media/` | Recursos del catálogo copiados desde el banco de imágenes (ver §5). ~300 MB, en Git LFS |
+| `public/brand/` | Logotipo dual Pedrollo · Vega (SVG con los logos incrustados; versionado normal, no LFS). Entregado el 2026-10-15 con su manual `BRANDING-LOGO.pdf` (fuera del repo) |
 | `prototype/` | Prototipo HTML original (sistema de diseño, 12 pantallas, cambio de marca) y export a Figma |
 | `tools/banco/` | Scripts y reportes del banco de recursos: generador del manifiesto, instalador de lotes, validación |
 | `CONTEXTO.md` | Este documento |
@@ -34,7 +35,23 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
 7. **Catálogo real del CRM**: 12 familias navegables, 90 series, 345 modelos (ejemplos del CRM + modelos de fichas). `familias_crm.json` es la fuente.
 8. **Nada inventado**: precios y disponibilidad son `null` ("por confirmar"), las especificaciones salen únicamente de la ficha técnica 60 Hz, y lo que no está en la ficha se muestra como "pendiente".
 9. **Recursos visuales en dos categorías** (§5) con **aprobación progresiva**: todo lo que entra queda pendiente y solo se publica cuando se aprueba explícitamente en su manifiesto.
-10. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
+10. **Precios de demostración** (2026-10-09, solo para presentación): `src/app/core/data/precios_demo.json` se genera con `tools/precios_demo.py` desde `pedrollo-catalogo.csv` del CRM (`precio_lista` × 1.15). `ProductService` los asigna por slug de modelo (342 de 345). La disponibilidad sigue en `null`. **Quitar** cuando se integre la API de precios BSV: borrar el JSON, el script y el `PRECIOS_DEMO` de `products.ts`.
+11. **La ficha lee el precio de la API del back-office** (2026-10-15, bala 1 del ecommerce): `/producto/:id` pide
+    `GET /api/tienda/v1/productos/{slug}` al `ecommerce-backend` y pinta `price.amount`; el carrito guarda ese precio al
+    agregar. Nunca se cae a `precios_demo.json`: si la API falla, «Precio por confirmar» + etiqueta «sin conexión con la
+    tienda». El resto (home, categorías, series, tarjetas) sigue con datos compilados hasta la fase 5, así que las
+    tarjetas muestran la demo (×1.15 sin IVA) y la ficha el motor real (+15 % e IVA). **La llave de tienda** (`X-Store-Key`)
+    vive solo en el proceso Node (`BACKOFFICE_URL`, `STORE_KEY`): `server.ts` hace de proxy de `/api/tienda/*` y el
+    navegador llama a su propio origen; el SSR llama al back-office con un interceptor que solo existe en la config de
+    servidor. Ver `src/app/core/api/storefront-api.ts`.
+12. **Logotipo dual** (2026-10-15): cabecera clara `dual-horizontal.svg` a 44 px (móvil `dual-horizontal-limpio.svg` a
+    32 px, sin distintivo), pie `dual-horizontal-blanco.svg` a 50 px. **Los SVG del paquete traían aire** (el dibujo ocupaba ~70 % del
+    lienzo); se recortó el `viewBox` al contenido, sin deformar ni recolorear, así que estas alturas son del logo real y
+    equivalen a ~1.4× lo que el LEEME daba con el lienzo original. Si llega un paquete nuevo, recortar igual antes de copiarlo. Rutas en `core/brand.ts` (`logo`, `logoCompact`,
+    `logoOnDark`); con logo, la cabecera ya no pinta el wordmark ni «por Bombas y Sistemas Vega» (el logo lo dice).
+    Nunca deformar, recolorear ni invertir el orden. El «DISTRIBUIDOR AUTORIZADO» del SVG usa Inter si está instalada;
+    dentro de `<img>` cae a Arial, aceptado.
+13. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
 
 ## 4. Módulos de la tienda
 

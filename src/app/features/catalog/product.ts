@@ -9,6 +9,7 @@ import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
+import { StorefrontApi } from '../../core/api/storefront-api';
 
 interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'scene' | 'technical' | 'placeholder'; alt: string; caption: string; pending?: boolean; }
 
@@ -46,10 +47,12 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
         <p class="muted">{{ specLine(p) }} · Marca {{ brand.name }}@if (hasStory()) { · <a [routerLink]="['/serie', p.serie]">Conoce la serie {{ p.serieName }} ›</a> }</p>
       </div>
       <div class="buy-box" data-component="BuyBox">
-        @if (p.price != null) { <bsv-price [total]="p.price" /> } @else {
-          <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Pendiente de la lista de precios BSV. Mientras tanto, cotiza con un asesor.</span></div> }
+        @if (remote.isLoading()) { <div class="price-block" aria-busy="true"><span class="main" style="font-size:var(--text-2xl)">Consultando precio…</span><span class="breakdown">Un momento.</span></div> }
+        @else if (price() != null) { <bsv-price [total]="price()!" /> }
+        @else { <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Pendiente de la lista de precios BSV. Mientras tanto, cotiza con un asesor.</span>
+          @if (apiDown()) { <span class="badge badge-warning no-dot" style="margin-top:6px">sin conexión con la tienda</span> }</div> }
         <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="p.avail === 'agotado' ? 'alert' : 'truck'" style="--icon:20px" /> {{ availLabel(p.avail) }}</div>
-        @if (p.price != null && p.avail !== 'agotado') {
+        @if (price() != null && p.avail !== 'agotado') {
           <div class="row-qty"><label class="label">Cantidad</label><bsv-qty [(value)]="qty" /></div>
           <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="adding()" (click)="add()"><bsv-icon name="cart" style="--icon:20px" /> Agregar al carrito</button>
         } @else {
@@ -103,6 +106,13 @@ export class ProductPage {
   id = input.required<string>();
   products = inject(ProductService); private cart = inject(CartService); toast = inject(ToastService); brand = inject(BRAND);
   p = computed(() => this.products.byId(this.id())); related = computed(() => this.products.related(this.id()));
+  /** El precio viene de la API de tienda (bala 1). Nunca se cae a la demo local: un fallback silencioso escondería que la bala falló. */
+  private api = inject(StorefrontApi);
+  remote = this.api.product(() => this.id());
+  /** `hasValue()` primero: en Angular 22 leer `value()` de un resource en error lanza ResourceValueError y rompe el render. */
+  price = computed(() => this.remote.hasValue() ? (this.remote.value()?.price?.amount ?? null) : null);
+  /** Error distinto de 404 (slug no publicado): el back-office o el proxy no contestaron. */
+  apiDown = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return !!e && e.status !== 404; });
   hasStory = computed(() => !!SERIES[this.p()?.serie ?? '']);
   series = computed(() => seriesBySlug(this.p()?.serie ?? ''));
   otherPdfs = computed(() => this.series()?.tecnico.otros_pdf ?? []);
@@ -155,5 +165,5 @@ export class ProductPage {
   mxn = mxn; availLabel = availLabel; specLine = specLine;
   private title = inject(Title);
   private _t = effect(() => { const p = this.p(); if (p) this.title.setTitle(`${p.model} · ${p.name} · Pedrollo`); });
-  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
+  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty(), this.price()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
 }

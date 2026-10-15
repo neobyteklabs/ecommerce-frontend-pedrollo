@@ -215,8 +215,10 @@
 .topbar a{color:#fff}
 .header-main{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:var(--space-3);height:var(--header-h)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--color-text);min-height:44px}
-.brand .logo-slot{height:32px;width:auto;min-width:32px;display:flex;align-items:center}
-.brand .logo-slot img{height:32px;width:auto}
+.brand .logo-slot{height:44px;width:auto;min-width:32px;display:flex;align-items:center}
+.brand .logo-slot img{height:44px;width:auto;display:block}
+.brand .logo-slot:empty{display:none}
+@media (max-width:767px){.brand .logo-slot,.brand .logo-slot img{height:32px}}
 .brand>span:last-child{display:flex;flex-direction:column}
 .brand .wordmark{font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-.03em;color:var(--color-primary);line-height:1}
 .brand .wordmark::after{content:var(--brand-name)}
@@ -253,6 +255,7 @@
 .site-footer .cols{display:grid;gap:var(--space-5);grid-template-columns:1fr 1fr}
 @media (min-width:768px){.site-footer .cols{grid-template-columns:2fr 1fr 1fr 1fr}}
 .site-footer .legal{margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid #334155;display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:space-between;font-size:var(--text-xs);color:#94A3B8}
+.site-footer .brand-logo img{height:50px;width:auto;display:block}
 .site-footer .wordmark{font-family:var(--font-display);font-weight:800;font-size:22px;color:#fff;letter-spacing:-.03em}
 .site-footer .wordmark::after{content:var(--brand-name)}
 

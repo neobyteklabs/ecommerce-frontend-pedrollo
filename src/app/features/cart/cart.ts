@@ -23,8 +23,8 @@ import { Icon, ImgSlot, Qty, Alert, Empty } from '../../shared/ui';
         @for (l of cart.lines(); track l.id) { @let p = products.byId(l.id)!;
           <div class="cart-line" data-component="CartLine">
             <bsv-img-slot [slot]="l.id" [product]="true" />
-            <div><a class="model" [routerLink]="['/producto', l.id]" style="text-decoration:none">{{ p.model }}</a><div style="font-weight:600">{{ p.name }}</div><div class="small muted">{{ p.price != null ? mxn(p.price) + ' c/u' : 'Precio por confirmar' }} · {{ availLabel(p.avail) }}</div></div>
-            <div class="line-actions"><bsv-qty [value]="l.qty" (valueChange)="cart.setQty(l.id, $event)" /><span class="line-total num" style="min-width:110px">{{ p.price != null ? mxn(p.price * l.qty) : 'Por cotizar' }}</span><button class="icon-btn" type="button" [attr.aria-label]="'Quitar ' + p.model" (click)="cart.remove(l.id); toast.show(p.model + ' eliminado')"><bsv-icon name="trash" /></button></div>
+            <div><a class="model" [routerLink]="['/producto', l.id]" style="text-decoration:none">{{ p.model }}</a><div style="font-weight:600">{{ p.name }}</div><div class="small muted">{{ cart.unitPrice(l) != null ? mxn(cart.unitPrice(l)) + ' c/u' : 'Precio por confirmar' }} · {{ availLabel(p.avail) }}</div></div>
+            <div class="line-actions"><bsv-qty [value]="l.qty" (valueChange)="cart.setQty(l.id, $event)" /><span class="line-total num" style="min-width:110px">{{ cart.unitPrice(l) != null ? mxn(cart.unitPrice(l)! * l.qty) : 'Por cotizar' }}</span><button class="icon-btn" type="button" [attr.aria-label]="'Quitar ' + p.model" (click)="cart.remove(l.id); toast.show(p.model + ' eliminado')"><bsv-icon name="trash" /></button></div>
           </div> }
         <div style="padding:16px 0"><a routerLink="/categoria/superficie"><bsv-icon name="arrowLeft" style="--icon:18px;vertical-align:-3px" /> Seguir comprando</a></div>
       </div>
