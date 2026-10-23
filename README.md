@@ -16,8 +16,9 @@ npm run build        # SSR + prerender (solo legales: home, categorías y series
 
 Las dos variables son obligatorias para servir: sin ellas `server.ts` lo dice en el log y cada petición responde 500.
 Viven solo en el proceso Node: el navegador llama a `/api/tienda/...` en su propio origen y `server.ts` reenvía al
-back-office con `X-Store-Key`. Puedes guardarlas en `.env.local` (ignorado por git, `*.local`) y arrancar con
-`set -a; . ./.env.local; set +a; npm start`.
+back-office con `X-Store-Key`. Guárdalas en `.env.local` (ignorado por git, `*.local`): **`npm start` lo carga solo**
+si existe. Desde IntelliJ, la run config «Angular CLI Server» corre `npm start`, así que también lo toma; si prefieres
+no tener el archivo, pon las dos variables en la run config.
 
 Modo revisión (muestra recursos pendientes con etiqueta; protegerlo en producción): `http://localhost:4200/?revision=1` · apagar con `?revision=0`.
 
