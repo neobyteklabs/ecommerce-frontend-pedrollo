@@ -52,6 +52,9 @@ Todo recurso visual entra con su estado de origen y **no se publica** hasta apro
 
 ## Git
 
+**Ramas:** el trabajo va a `develop`; `master` solo recibe liberaciones (merge desde `develop`). Las balas 1 y F1
+entraron directo a `master` porque el repo nació con una sola rama; desde el 2026-10-23 cada hand-off se abre en `develop`.
+
 `public/media/**`, `*.pdf`, `*.png`, `*.jpg` y `*.webp` van por **Git LFS** (`.gitattributes`). Antes del primer push:
 
 ```bash
