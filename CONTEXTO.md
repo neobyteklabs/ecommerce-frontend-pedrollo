@@ -35,7 +35,7 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
 7. **Catálogo real del CRM**: 12 familias navegables, 90 series, 345 modelos (ejemplos del CRM + modelos de fichas). `familias_crm.json` es la fuente.
 8. **Nada inventado**: precios y disponibilidad son `null` ("por confirmar"), las especificaciones salen únicamente de la ficha técnica 60 Hz, y lo que no está en la ficha se muestra como "pendiente".
 9. **Recursos visuales en dos categorías** (§5) con **aprobación progresiva**: todo lo que entra queda pendiente y solo se publica cuando se aprueba explícitamente en su manifiesto.
-10. **Precios de demostración** (2026-10-09, solo para presentación): `src/app/core/data/precios_demo.json` se genera con `tools/precios_demo.py` desde `pedrollo-catalogo.csv` del CRM (`precio_lista` × 1.15). `ProductService` los asigna por slug de modelo (342 de 345). La disponibilidad sigue en `null`. **Quitar** cuando se integre la API de precios BSV: borrar el JSON, el script y el `PRECIOS_DEMO` de `products.ts`.
+10. **Precios de demostración** (2026-10-09, solo para presentación; **retirados el 2026-10-23 en la bala F1**, ver 13): `src/app/core/data/precios_demo.json` se genera con `tools/precios_demo.py` desde `pedrollo-catalogo.csv` del CRM (`precio_lista` × 1.15). `ProductService` los asigna por slug de modelo (342 de 345). La disponibilidad sigue en `null`. **Quitar** cuando se integre la API de precios BSV: borrar el JSON, el script y el `PRECIOS_DEMO` de `products.ts`.
 11. **La ficha lee el precio de la API del back-office** (2026-10-15, bala 1 del ecommerce): `/producto/:id` pide
     `GET /api/tienda/v1/productos/{slug}` al `ecommerce-backend` y pinta `price.amount`; el carrito guarda ese precio al
     agregar. Nunca se cae a `precios_demo.json`: si la API falla, «Precio por confirmar» + etiqueta «sin conexión con la
@@ -51,17 +51,26 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
     `logoOnDark`); con logo, la cabecera ya no pinta el wordmark ni «por Bombas y Sistemas Vega» (el logo lo dice).
     Nunca deformar, recolorear ni invertir el orden. El «DISTRIBUIDOR AUTORIZADO» del SVG usa Inter si está instalada;
     dentro de `<img>` cae a Arial, aceptado.
-13. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
+13. **La tienda lista desde la API** (2026-10-23, bala F1): home (destacados), `/categoria/:slug` (listado, series,
+    facetas de HP/tensión/fase, orden y «ver más»), `/serie/:serie` (modelos) y `/buscar` leen de
+    `/api/tienda/v1/{familias,series,productos,productos/facetas}` vía el proxy de `server.ts`; los filtros viven en la
+    URL (`?serie=&hp=&tension=&fase=&orden=`). Las tarjetas reciben un `CardItem` (`core/api/storefront-view.ts`) que
+    construye desde la API o, para los relacionados de la ficha, desde el catálogo local. **El catálogo compilado
+    (`recursos.json`, `familias_crm.json`) queda solo para imágenes, recortes técnicos, narrativa de serie y modo
+    revisión.** `precios_demo.json` y `tools/precios_demo.py` se borraron. Home, categorías y series pasan a
+    `RenderMode.Server` (dependen de la API); solo `legal` se prerenderiza. Los 12 slugs de familia coinciden con los
+    del catálogo (mismo algoritmo); las 5 familias extra del catálogo no tienen página y no se muestran.
+14. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
 
 ## 4. Módulos de la tienda
 
 | Módulo | Ruta | Estado |
 |---|---|---|
-| Home | `/` | Hecho. Hero de campaña 2CP, familias, destacados, confianza, promos por familia (si aprobadas), banner |
-| Categoría | `/categoria/:slug` | Hecho. Encabezado con hero de familia (si aprobado), chips por serie, filtros reales (HP, tensión, fase, validación) |
-| Búsqueda | `/buscar?q=` | Hecho, con estado vacío |
+| Home | `/` | Hecho. Hero de campaña 2CP, familias, **destacados desde la API**, confianza, promos por familia (si aprobadas), banner |
+| Categoría | `/categoria/:slug` | Hecho. **Listado, chips de serie, facetas (HP, tensión, fase), orden y paginación desde la API**; filtros en la URL; hero de familia (si aprobado) |
+| Búsqueda | `/buscar?q=` | Hecho, **desde la API** (palabras en AND, orden por relevancia), con estados de carga, vacío y sin conexión |
 | Serie | `/serie/:slug` | Hecho (narrativa 2CP + genérica) |
-| Producto | `/producto/:id` | Hecho. Galería con pestañas Fotografía · Curvas · Componentes · Ficha técnica; specs de ficha 60 Hz; cotizar |
+| Producto | `/producto/:id` | Hecho. **Precio desde la API**; galería con pestañas Fotografía · Curvas · Componentes · Ficha técnica; specs de ficha 60 Hz; cotizar |
 | Carrito | `/carrito` | Hecho; totales "por cotizar" mientras no haya precios |
 | Login | `/login` | Maqueta (Google/Facebook simulados, guard de rutas) |
 | Checkout | `/checkout?step=1..3` | Maqueta (3 pasos, 3DS, rechazo, error de red) |
@@ -102,7 +111,7 @@ Tras cualquier cambio en el banco: `python3 generar_manifiesto.py` (en el banco)
 
 ## 7. Pendientes para producción
 
-- Integraciones: API de catálogo y lista de precios BSV, OIDC real (Google/Facebook), Stripe Elements + 3DS, endpoints de pedidos, factura (contabilidad timbra) y devoluciones, subida de fotos.
+- Integraciones: ~~API de catálogo y lista de precios BSV~~ (hechas: balas 1, 1b y F1 contra `ecommerce-backend`), OIDC real (Google/Facebook), Stripe Elements + 3DS, endpoints de pedidos, factura (contabilidad timbra) y devoluciones, subida de fotos. Pendiente de la API: disponibilidad por CEDIS y «Cotizar» → lead al CRM (bala 4), pedidos (bala 5).
 - Proteger el modo revisión en producción.
 - Servir `public/media` desde CDN/R2 (los PDF pesan 186 MB).
 - Aprobación progresiva de recursos (§5), empezando por 2CP, Autocebantes y Multietapas.

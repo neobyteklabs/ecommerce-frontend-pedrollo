@@ -1,10 +1,6 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { RESOURCES, ModelResources, SeriesResources, ModelCuts, modelSlug } from './resources';
 import { ReviewService } from './review';
-import preciosDemo from './data/precios_demo.json';
-
-/** DEMO: precios de lista del CSV × 1.15 (tools/precios_demo.py). Quitar cuando llegue la API de precios BSV. */
-const PRECIOS_DEMO: Record<string, number> = (preciosDemo as any).precios;
 
 export type Availability = 'stock' | 'pedido' | 'agotado';
 /** Producto = modelo del CRM. Sin precio ni disponibilidad hasta que lleguen de BSV (null = por confirmar). */
@@ -19,7 +15,7 @@ export interface Product {
 function toProduct(f: { slug: string; nombre: string }, s: SeriesResources, m: ModelResources): Product {
   return {
     id: modelSlug(m.modelo), model: m.modelo, name: `Serie ${s.serie} · ${titleCase(f.nombre)}`, family: f.slug, familyName: titleCase(f.nombre), serie: s.slug, serieName: s.serie,
-    price: PRECIOS_DEMO[modelSlug(m.modelo)] ?? null, avail: null,
+    price: null, avail: null,   // el precio vive en la API de tienda (balas 1 y F1); aquí solo dato de ficha/manifiesto
     hp: m.hp, kw: m.kw, phase: m.fase, voltages: m.tensiones, validated: m.validado, nota: m.nota,
     catalog: m.catalog, catalogIsSeriesPhoto: m.catalog_es_foto_de_serie, hero: m.hero, gallery: m.gallery, technical: m.technical, video: m.video,
     enCrm: m.en_crm, cuts: m.recortes ?? null,

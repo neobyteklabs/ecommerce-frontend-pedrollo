@@ -10,6 +10,7 @@ import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 import { StorefrontApi } from '../../core/api/storefront-api';
+import { cardFromProduct } from '../../core/api/storefront-view';
 
 interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'scene' | 'technical' | 'placeholder'; alt: string; caption: string; pending?: boolean; }
 
@@ -105,7 +106,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
 export class ProductPage {
   id = input.required<string>();
   products = inject(ProductService); private cart = inject(CartService); toast = inject(ToastService); brand = inject(BRAND);
-  p = computed(() => this.products.byId(this.id())); related = computed(() => this.products.related(this.id()));
+  p = computed(() => this.products.byId(this.id())); related = computed(() => this.products.related(this.id()).map(cardFromProduct));
   /** El precio viene de la API de tienda (bala 1). Nunca se cae a la demo local: un fallback silencioso escondería que la bala falló. */
   private api = inject(StorefrontApi);
   remote = this.api.product(() => this.id());

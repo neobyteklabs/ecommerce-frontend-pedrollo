@@ -5,6 +5,8 @@ import { Title } from '@angular/platform-browser';
 import { SERIES } from '../../core/catalog';
 import { seriesBySlug, familyOfSeries } from '../../core/resources';
 import { ProductService, cutsVisible } from '../../core/products';
+import { StorefrontApi } from '../../core/api/storefront-api';
+import { cardFromSummary } from '../../core/api/storefront-view';
 import { Icon, ImgSlot, ProductCard } from '../../shared/ui';
 import { Reveal, Spotlight, CountUp } from '../../shared/directives/motion';
 import { InlineMedia } from '../../shared/directives/inline-media';
@@ -112,7 +114,10 @@ export class Series {
   res = computed(() => seriesBySlug(this.serie()));
   fam = computed(() => familyOfSeries(this.serie()));
   c = computed(() => SERIES[this.serie()] ?? null);
-  products = computed(() => this.products$.bySeries(this.serie()));
+  private api = inject(StorefrontApi);
+  /** Modelos de la serie desde la API de tienda (bala F1); el resto de la página sigue del manifiesto local. */
+  productsRes = this.api.products(() => ({ serie: this.serie(), orden: 'serie', size: 100 }));
+  products = computed(() => this.productsRes.hasValue() ? this.productsRes.value().content.map(cardFromSummary) : []);
   /** Recortes compartidos de la serie (despiece, características, dimensiones), publicables solo si todos los modelos con recortes están aprobados o en modo revisión. */
   cutsPending = computed(() => { const ms = this.res()?.modelos ?? []; return ms.some(m => m.recortes && !m.recortes.aprobado); });
   sharedCuts = computed(() => {

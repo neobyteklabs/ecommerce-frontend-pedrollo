@@ -3,11 +3,13 @@ import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../core/products';
 import { FAMILIES } from '../../core/catalog';
 import { familyHero } from '../../core/resources';
-import { Icon, ImgSlot, ProductCard } from '../../shared/ui';
+import { StorefrontApi } from '../../core/api/storefront-api';
+import { cardFromSummary } from '../../core/api/storefront-view';
+import { Icon, ImgSlot, ProductCard, ProductSkeleton } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 
 @Component({
-  selector: 'bsv-home', imports: [RouterLink, Icon, ImgSlot, ProductCard, Reveal],
+  selector: 'bsv-home', imports: [RouterLink, Icon, ImgSlot, ProductCard, ProductSkeleton, Reveal],
   host: { 'data-page': 'Home' },
   template: `
   <section class="hero hero-center" data-component="Hero">
@@ -38,7 +40,7 @@ import { Reveal } from '../../shared/directives/motion';
 
   <section class="section container" style="padding-top:0" data-component="Section/Destacados">
     <div class="section-title" bsvReveal><div><span class="eyebrow">Selección</span><h2 style="margin-top:8px">Los más vendidos</h2></div><a routerLink="/categoria/multietapas">Ver más</a></div>
-    <div class="product-grid">@for (p of products.featured(); track p.id; let i = $index) { <bsv-product-card [p]="p" bsvReveal="scale" [revealIndex]="i" /> }</div>
+    <div class="product-grid">@for (p of featured(); track p.id; let i = $index) { <bsv-product-card [p]="p" bsvReveal="scale" [revealIndex]="i" /> }@if (featuredRes.isLoading()) { <bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /> }</div>
   </section>
 
   <section class="trust-band on-ink" data-component="Section/Confianza">
@@ -59,8 +61,11 @@ import { Reveal } from '../../shared/directives/motion';
   <section class="section container" data-component="Section/BannerMarca"><a routerLink="/serie/2cp" style="display:block" bsvReveal><bsv-img-slot class="banner-marca" slot="banner-marca" alt="Pedrollo 2CP, electrobombas centrífugas de doble rodete" [scene]="true" style="aspect-ratio:16/9;min-height:0;width:100%" /></a></section>`,
 })
 export class Home {
-  products = inject(ProductService); private router = inject(Router);
+  products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
   cats = FAMILIES;
+  /** Destacados desde la API (bala F1): la campaña activa es la 2CP, así que manda MULTIETAPAS hasta que exista `destacado`. */
+  featuredRes = this.api.products(() => ({ familia: 'multietapas', orden: 'serie', size: 8 }));
+  featured = computed(() => this.featuredRes.hasValue() ? this.featuredRes.value().content.map(cardFromSummary) : []);
   promos = computed(() => FAMILIES.map(f => ({ slug: f.slug, name: f.name, hero: familyHero(f.slug, this.products.reviewMode()) })).filter((x): x is { slug: string; name: string; hero: NonNullable<ReturnType<typeof familyHero>> } => !!x.hero));
   go(e: Event, q: string) { e.preventDefault(); this.router.navigate(['/buscar'], { queryParams: { q } }); }
 }
