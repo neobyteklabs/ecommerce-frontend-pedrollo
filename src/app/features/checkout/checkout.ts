@@ -76,7 +76,7 @@ import { Icon, Stepper, Alert } from '../../shared/ui';
 export class Checkout {
   step = input(1, { transform: (v: unknown) => Number(v) || 1 }); declined = input<string>(); neterr = input<string>();
   cart = inject(CartService); products = inject(ProductService); private router = inject(Router);
-  total = computed(() => this.cart.total() + this.cart.shipping());
+  total = computed(() => this.cart.total() + (this.cart.shipping() ?? 0));
   cp = signal(''); cpErr = computed(() => this.cp().length > 0 && this.cp().length !== 5);
   newCard = signal(false); paying = signal(false); tds = signal(false); mxn = mxn;
   constructor() { afterNextRender(() => { if (!this.cart.count() && this.step() < 3) this.cart.demo(); }); }

@@ -60,7 +60,15 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
     revisión.** `precios_demo.json` y `tools/precios_demo.py` se borraron. Home, categorías y series pasan a
     `RenderMode.Server` (dependen de la API); solo `legal` se prerenderiza. Los 12 slugs de familia coinciden con los
     del catálogo (mismo algoritmo); las 5 familias extra del catálogo no tienen página y no se muestran.
-14. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
+14. **Disponibilidad, envío y cotización desde la API** (2026-10-23, bala 4): dos estados, `carrito` (hay existencia en algún
+    CEDIS) y `cotizar` (no hay); nunca «agotado». La ficha y las tarjetas lo muestran; sin existencia el botón es «Cotizar», que
+    abre `bsv-quote-form` y crea un lead en el CRM (nombre y correo o teléfono obligatorios; `Idempotency-Key` por intento). El
+    carrito pide el **código postal** (recordado en `sessionStorage`), resuelve el envío por línea con `POST /carrito/envio`
+    (días, parciales, por cotizar; las líneas por cotizar no entran al total) y toma el costo de envío del back-office; la regla
+    fija de «gratis desde $5,000» se retiró. Al abrir el carrito se refrescan los precios desde la API: si alguno cambió, se
+    actualiza, se marca la línea con «precio actualizado» y se avisa (decisión de Manuel: avisar y actualizar). El proxy de
+    `server.ts` acepta POST **solo** en esas dos rutas. WhatsApp queda como camino secundario dentro del formulario.
+15. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
 
 ## 4. Módulos de la tienda
 
@@ -70,8 +78,8 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
 | Categoría | `/categoria/:slug` | Hecho. **Listado, chips de serie, facetas (HP, tensión, fase), orden y paginación desde la API**; filtros en la URL; hero de familia (si aprobado) |
 | Búsqueda | `/buscar?q=` | Hecho, **desde la API** (palabras en AND, orden por relevancia), con estados de carga, vacío y sin conexión |
 | Serie | `/serie/:slug` | Hecho (narrativa 2CP + genérica) |
-| Producto | `/producto/:id` | Hecho. **Precio desde la API**; galería con pestañas Fotografía · Curvas · Componentes · Ficha técnica; specs de ficha 60 Hz; cotizar |
-| Carrito | `/carrito` | Hecho; totales "por cotizar" mientras no haya precios |
+| Producto | `/producto/:id` | Hecho. **Precio y disponibilidad desde la API; «Cotizar» crea un lead en el CRM**; galería con pestañas Fotografía · Curvas · Componentes · Ficha técnica; specs de ficha 60 Hz; cotizar |
+| Carrito | `/carrito` | Hecho. **CP de envío, días y parciales por línea desde la API, líneas por cotizar con formulario, aviso de precio actualizado**; sin reservas ni pago (bala 5) |
 | Login | `/login` | Maqueta (Google/Facebook simulados, guard de rutas) |
 | Checkout | `/checkout?step=1..3` | Maqueta (3 pasos, 3DS, rechazo, error de red) |
 | Cuenta | `/cuenta` | Maqueta (direcciones, datos fiscales) |

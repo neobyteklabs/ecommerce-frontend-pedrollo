@@ -2,7 +2,8 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { RESOURCES, ModelResources, SeriesResources, ModelCuts, modelSlug } from './resources';
 import { ReviewService } from './review';
 
-export type Availability = 'stock' | 'pedido' | 'agotado';
+/** Dos estados, nunca «agotado»: el inventario no apaga productos, solo decide carrito o cotizar (ADR §15.4, bala 4). */
+export type Availability = 'carrito' | 'cotizar';
 /** Producto = modelo del CRM. Sin precio ni disponibilidad hasta que lleguen de BSV (null = por confirmar). */
 export interface Product {
   id: string; model: string; name: string; family: string; familyName: string; serie: string; serieName: string;
@@ -25,7 +26,7 @@ const titleCase = (s: string) => s.toLowerCase().replace(/(^|\s|\()([a-záéíó
 
 export const PRODUCTS: Product[] = RESOURCES.flatMap(f => f.series.flatMap(s => s.modelos.map(m => toProduct(f, s, m))));
 
-export const availLabel = (a: Availability | null) => a ? ({ stock: 'En existencia · envío 24–48 h', pedido: 'Sobre pedido · entrega 5–7 días', agotado: 'No disponible por ahora' })[a] : 'Disponibilidad por confirmar';
+export const availLabel = (a: Availability | null) => a === 'carrito' ? 'En existencia' : a === 'cotizar' ? 'Sobre pedido · cotiza con un asesor' : 'Disponibilidad por confirmar';
 export const mxn = (n: number | null | undefined) => n == null ? 'Por confirmar' : '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const IVA = 0.16;
 export const specLine = (p: Product) => p.validated ? [p.hp != null ? `${p.hp} HP` : null, p.kw != null ? `${p.kw} kW` : null, p.phase, p.voltages.length ? p.voltages.join(' / ') : null].filter(Boolean).join(' · ') : 'Especificaciones pendientes de ficha 60 Hz';

@@ -1,5 +1,6 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
-import { HttpInterceptorFn, httpResource } from '@angular/common/http';
+import { HttpClient, HttpInterceptorFn, httpResource } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 /** Base de la API de tienda. En el navegador es '' (mismo origen: server.ts hace de proxy y pone la llave);
  *  en SSR la config de servidor la sobreescribe con BACKOFFICE_URL (absoluta, no hay origen relativo). */
@@ -13,12 +14,20 @@ export interface StorefrontPrice {
   /** Solo si hay promoción vigente (bala 3): precio con IVA antes de la promoción, para el tachado. */
   before?: number; promotion?: { label: string; until: string };
 }
+/** Disponibilidad (bala 4): dos estados; `carrito` = hay existencia en algún CEDIS, `cotizar` = no hay, se pide cotización. */
+export interface StorefrontAvailability { state: 'carrito' | 'cotizar'; }
+/** Envío por código postal (bala 4): el back-office resuelve por línea de qué CEDIS sale y cuánto tarda; nunca bloquea. */
+export interface ShippingLine { slug: string; estado: 'carrito' | 'cotizar'; parcial: boolean; cedis: string | null; dias: number | null; costoEnvio: number | null; solicitado: number; disponible: number; }
+export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; }
+/** «Cotizar» (bala 4): llega al CRM como lead; nombre y al menos correo o teléfono son obligatorios. */
+export interface QuoteRequest { slug: string; cantidad: number; nombre: string; correo?: string; telefono?: string; cp?: string; mensaje?: string; }
+export interface QuoteResponse { folio: string; }
 /** Listados (bala F1). Identificadores en inglés, valores en español tal como vienen del catálogo. */
 export interface StorefrontFamily { slug: string; name: string; count: number; }
 export interface StorefrontSeries { slug: string; name: string; familySlug: string; count: number; }
 export interface StorefrontProductSummary {
   slug: string; catalogProductId: number; model: string; family: string | null; familySlug: string | null;
-  series: string | null; seriesSlug: string | null; price: StorefrontPrice | null; availability: string | null;
+  series: string | null; seriesSlug: string | null; price: StorefrontPrice | null; availability: StorefrontAvailability | null;
   hp: string | null; phase: string | null; voltage: string | null; imageKey: string | null;
 }
 export interface StorefrontPage { content: StorefrontProductSummary[]; totalElements: number; totalPages: number; number: number; size: number; }
@@ -28,7 +37,7 @@ export type ListingOrder = 'serie' | 'hp-asc' | 'hp-desc' | 'precio-asc' | 'prec
 export interface ListingParams { familia?: string; serie?: string; q?: string; hp?: string; tension?: string; fase?: string; orden?: ListingOrder; page?: number; size?: number; }
 export interface StorefrontProduct {
   slug: string; catalogProductId: number; model: string; family: string; subtype: string | null; series: string | null;
-  supplier: { id: number | null; slug: string | null }; price: StorefrontPrice | null; availability: string | null;
+  supplier: { id: number | null; slug: string | null }; price: StorefrontPrice | null; availability: StorefrontAvailability | null;
   attributes: Record<string, unknown>; sectionNote: string | null; description: string | null; imageKey: string | null; fichaKey: string | null;
 }
 
@@ -41,6 +50,15 @@ export const storeKeyInterceptor: HttpInterceptorFn = (req, next) => {
 @Injectable({ providedIn: 'root' })
 export class StorefrontApi {
   private base = inject(API_BASE);
+  private http = inject(HttpClient);
+  /** Resuelve envío por CP para las líneas del carrito. POST sin caché; va por el proxy como todo lo demás. */
+  shipping(cp: string, lineas: { slug: string; cantidad: number }[]) {
+    return firstValueFrom(this.http.post<ShippingResponse>(`${this.base}/api/tienda/v1/carrito/envio`, { cp, lineas }));
+  }
+  /** Pide una cotización. `idempotencyKey` es un UUID por intento del usuario: un doble clic no crea dos leads. */
+  quote(body: QuoteRequest, idempotencyKey: string) {
+    return firstValueFrom(this.http.post<QuoteResponse>(`${this.base}/api/tienda/v1/cotizaciones`, body, { headers: { 'Idempotency-Key': idempotencyKey } }));
+  }
   /** La ficha pública. Debe llamarse en contexto de inyección (campo de componente). */
   product(slug: () => string) {
     return httpResource<StorefrontProduct>(() => `${this.base}/api/tienda/v1/productos/${encodeURIComponent(slug())}`);

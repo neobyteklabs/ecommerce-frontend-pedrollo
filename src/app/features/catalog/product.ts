@@ -7,7 +7,7 @@ import { CartService } from '../../core/cart';
 import { ToastService } from '../../core/toast';
 import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
-import { Icon, ImgSlot, ProductCard, Price, Qty, Alert } from '../../shared/ui';
+import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 import { StorefrontApi } from '../../core/api/storefront-api';
 import { cardFromProduct } from '../../core/api/storefront-view';
@@ -18,7 +18,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
  *  Fotografía principal = foto oficial referencial de la serie (no verificada por modelo). Recortes técnicos tal cual
  *  vienen del paquete de la serie; los marcados "pendiente aprobacion" solo se ven en modo revisión. */
 @Component({
-  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal],
+  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal, QuoteForm],
   host: { class: 'container block', 'data-page': 'Producto' },
   template: `
   @if (p(); as p) {
@@ -52,12 +52,14 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
         @else if (price() != null) { <bsv-price [total]="price()!" /> }
         @else { <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Pendiente de la lista de precios BSV. Mientras tanto, cotiza con un asesor.</span>
           @if (apiDown()) { <span class="badge badge-warning no-dot" style="margin-top:6px">sin conexión con la tienda</span> }</div> }
-        <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="p.avail === 'agotado' ? 'alert' : 'truck'" style="--icon:20px" /> {{ availLabel(p.avail) }}</div>
-        @if (price() != null && p.avail !== 'agotado') {
+        <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="avail() === 'carrito' ? 'truck' : 'phone'" style="--icon:20px" /> {{ availLabel(avail()) }}</div>
+        @if (price() != null && avail() === 'carrito') {
           <div class="row-qty"><label class="label">Cantidad</label><bsv-qty [(value)]="qty" /></div>
           <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="adding()" (click)="add()"><bsv-icon name="cart" style="--icon:20px" /> Agregar al carrito</button>
+        } @else if (quoting()) {
+          <bsv-quote-form [slug]="p.id" [model]="p.model" [initialQty]="qty()" (cancel)="quoting.set(false)" />
         } @else {
-          <a class="btn btn-primary btn-lg btn-block" [href]="'https://wa.me/525572589681?text=Hola, quiero cotizar ' + p.model"><bsv-icon name="phone" style="--icon:20px" /> Cotizar {{ p.model }}</a>
+          <button class="btn btn-primary btn-lg btn-block" type="button" (click)="quoting.set(true)"><bsv-icon name="mail" style="--icon:20px" /> Cotizar {{ p.model }}</button>
         }
         <a class="btn btn-ghost btn-block" [href]="'https://wa.me/525572589681?text=Hola, quiero cotizar ' + p.model"><bsv-icon name="phone" style="--icon:20px" /> ¿Compra por volumen? Habla con un asesor</a>
         <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>Garantía de fábrica Pedrollo</li><li>Factura CFDI 4.0 desde tu cuenta</li><li>Envío asegurado a todo México</li></ul>
@@ -114,6 +116,9 @@ export class ProductPage {
   price = computed(() => this.remote.hasValue() ? (this.remote.value()?.price?.amount ?? null) : null);
   /** Error distinto de 404 (slug no publicado): el back-office o el proxy no contestaron. */
   apiDown = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return !!e && e.status !== 404; });
+  /** Disponibilidad real (bala 4): `carrito` o `cotizar`; sin respuesta, se muestra «por confirmar» y se ofrece cotizar. */
+  avail = computed(() => this.remote.hasValue() ? (this.remote.value()?.availability?.state ?? null) : null);
+  quoting = signal(false);
   hasStory = computed(() => !!SERIES[this.p()?.serie ?? '']);
   series = computed(() => seriesBySlug(this.p()?.serie ?? ''));
   otherPdfs = computed(() => this.series()?.tecnico.otros_pdf ?? []);

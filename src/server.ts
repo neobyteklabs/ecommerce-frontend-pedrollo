@@ -58,6 +58,31 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
     res.status(503).json({ code: 'CATALOG_UNAVAILABLE', message: 'La tienda no pudo consultar el back-office.', timestamp: new Date().toISOString() });
   }
 });
+/** Las dos únicas escrituras de la tienda (bala 4): envío por CP y cotización. Se reenvía el cuerpo tal cual (bytes) y la
+ *  cabecera Idempotency-Key; cualquier otro POST sigue siendo 405. */
+const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones']);
+app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: '64kb' }), async (req, res) => {
+  if (!WRITABLE.has(req.path)) {
+    res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
+    return;
+  }
+  if (CONFIG_ERROR) {
+    res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
+    return;
+  }
+  try {
+    const headers: Record<string, string> = { 'X-Store-Key': STORE_KEY, Accept: 'application/json', 'Content-Type': 'application/json' };
+    const idem = req.header('Idempotency-Key'); if (idem) headers['Idempotency-Key'] = idem;
+    const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(8000) });
+    res.status(upstream.status);
+    const type = upstream.headers.get('content-type');
+    if (type) res.setHeader('Content-Type', type);
+    res.setHeader('Cache-Control', 'no-store');
+    res.send(Buffer.from(await upstream.arrayBuffer()));
+  } catch {
+    res.status(503).json({ code: 'CATALOG_UNAVAILABLE', message: 'La tienda no pudo consultar el back-office.', timestamp: new Date().toISOString() });
+  }
+});
 app.all('/api/tienda/{*splat}', (_req, res) => {
   res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
 });

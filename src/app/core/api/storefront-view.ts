@@ -7,7 +7,7 @@ import { familyBySlug } from '../catalog';
  *  (relacionados de la ficha). Imagen = foto oficial de la SERIE desde el manifiesto local, por slug de serie. */
 export interface CardItem {
   id: string; model: string; name: string; serie: string; serieName: string; catalog: string | null;
-  price: number | null; before: number | null; promoLabel: string | null; avail: 'stock' | 'pedido' | 'agotado' | null;
+  price: number | null; before: number | null; promoLabel: string | null; avail: 'carrito' | 'cotizar' | null;
   specs: string; specsPending: boolean;
 }
 
@@ -21,7 +21,7 @@ export function cardFromSummary(p: StorefrontProductSummary): CardItem {
     id: p.slug, model: p.model, name: `Serie ${p.series ?? '—'}${familyName ? ' · ' + familyName : ''}`,
     serie: serieSlug, serieName: p.series ?? '', catalog: imageFor(`catalog-${serieSlug}`),
     price: p.price?.amount ?? null, before: p.price?.before ?? null, promoLabel: p.price?.promotion?.label ?? null,
-    avail: (p.availability as CardItem['avail']) ?? null, specs: specs || 'Especificaciones pendientes', specsPending: !specs,
+    avail: p.availability?.state ?? null, specs: specs || 'Especificaciones pendientes', specsPending: !specs,
   };
 }
 
