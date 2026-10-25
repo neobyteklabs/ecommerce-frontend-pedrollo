@@ -9,7 +9,11 @@ export const routes: Routes = [
   { path: 'serie/:serie', loadComponent: () => import('./features/catalog/series').then(m => m.Series), title: 'Serie 4SR · Sumergibles para pozo' },
   { path: 'carrito', loadComponent: () => import('./features/cart/cart').then(m => m.Cart), title: 'Carrito' },
   { path: 'login', loadComponent: () => import('./features/auth/login').then(m => m.Login), title: 'Iniciar sesión' },
-  { path: 'checkout', canActivate: [authGuard], loadComponent: () => import('./features/checkout/checkout').then(m => m.Checkout), title: 'Pagar' },
+  { path: 'checkout', loadComponent: () => import('./features/checkout/checkout').then(m => m.Checkout), title: 'Pagar' },
+  { path: 'checkout/confirmando', loadComponent: () => import('./features/checkout/confirming').then(m => m.Confirming), title: 'Confirmando tu pago' },
+  { path: 'pedido/:folio/gracias', loadComponent: () => import('./features/checkout/thanks').then(m => m.Thanks), title: 'Pedido recibido' },
+  { path: 'seguimiento', loadComponent: () => import('./features/tracking/tracking').then(m => m.Tracking), title: 'Seguimiento' },
+  { path: 'seguimiento/:folio', loadComponent: () => import('./features/tracking/tracking').then(m => m.Tracking), title: 'Seguimiento' },
   { path: 'cuenta', canActivate: [authGuard], children: [
     { path: '', loadComponent: () => import('./features/account/profile').then(m => m.Profile), title: 'Mi cuenta' },
     { path: 'pedidos', loadComponent: () => import('./features/account/orders').then(m => m.Orders), title: 'Mis pedidos' },

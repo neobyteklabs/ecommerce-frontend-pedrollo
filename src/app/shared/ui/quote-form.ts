@@ -1,4 +1,5 @@
 import { Component, inject, input, output, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { StorefrontApi } from '../../core/api/storefront-api';
 import { Alert } from './alert';
@@ -7,11 +8,11 @@ import { Icon } from './icon';
 /** «Cotizar» (bala 4): la solicitud llega al CRM como lead y una vendedora de BSV responde. Nombre y al menos correo o
  *  teléfono son obligatorios (el CRM rechaza un lead sin contacto). Un UUID por intento evita leads duplicados. */
 @Component({
-  selector: 'bsv-quote-form', imports: [FormsModule, Alert, Icon],
+  selector: 'bsv-quote-form', imports: [FormsModule, RouterLink, Alert, Icon],
   host: { class: 'card', 'data-component': 'QuoteForm', style: 'display:block;padding:16px' },
   template: `
   @if (folio()) {
-    <bsv-alert kind="success" title="Solicitud enviada">Tu folio es <strong>{{ folio() }}</strong>. Un asesor de Bombas y Sistemas Vega te contacta para cotizar {{ model() }}.</bsv-alert>
+    <bsv-alert kind="success" title="Solicitud enviada">Tu folio es <strong class="mono">{{ folio() }}</strong>. Un asesor de Bombas y Sistemas Vega te contacta para cotizar {{ model() }}. Guarda tu folio: <a [routerLink]="['/seguimiento', folio()]" [queryParams]="{ c: correo.trim() || telefono.trim() }">aquí ves el avance</a>.</bsv-alert>
   } @else {
     <form (submit)="send($event)" novalidate>
       <h3 style="margin:0 0 4px">Cotizar {{ model() }}</h3>

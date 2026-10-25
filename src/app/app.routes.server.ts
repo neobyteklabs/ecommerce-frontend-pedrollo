@@ -9,5 +9,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'serie/:serie', renderMode: RenderMode.Server },
   { path: 'producto/:id', renderMode: RenderMode.Server },
   { path: 'buscar', renderMode: RenderMode.Server },
+  { path: 'seguimiento', renderMode: RenderMode.Server },
+  { path: 'seguimiento/:folio', renderMode: RenderMode.Server },
   { path: '**', renderMode: RenderMode.Client },
 ];

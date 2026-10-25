@@ -55,7 +55,8 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
         <div class="lines"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span><span>IVA 16 %</span><span class="num">{{ mxn(cart.iva()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Se confirma al pagar' : (cart.shipping() === 0 ? 'Gratis' : mxn(cart.shipping()))) : 'Calcula con tu CP' }}</span><span class="total">Total</span><span class="total num">{{ cart.hasUnpriced() ? 'Por cotizar' : mxn(cart.total() + (cart.shipping() ?? 0)) }}</span></div>
         @if (cart.hasQuoteOnly()) { <bsv-alert kind="info" style="margin-top:12px">Las líneas sin existencia no entran al total: cotízalas y un asesor te confirma precio y entrega.</bsv-alert> }
         @if (cart.hasUnpriced()) { <bsv-alert kind="info" style="margin-top:12px">Hay artículos sin precio confirmado. Al continuar, BSV te enviará la cotización antes de cobrar.</bsv-alert> }
-        <a class="btn btn-primary btn-lg btn-block" style="margin-top:16px" routerLink="/checkout">{{ cart.hasUnpriced() ? 'Solicitar cotización' : 'Continuar al pago' }} <bsv-icon name="arrowRight" style="--icon:20px" /></a>
+        @if (cart.canCheckout()) { <a class="btn btn-primary btn-lg btn-block" style="margin-top:16px" routerLink="/checkout">Continuar al pago <bsv-icon name="arrowRight" style="--icon:20px" /></a> }
+        @else { <span class="btn btn-primary btn-lg btn-block" style="margin-top:16px;opacity:.5;pointer-events:none" aria-disabled="true">Continuar al pago</span><p class="xs muted" style="margin:8px 0 0;text-align:center">Calcula el envío con tu CP; las líneas por cotizar se atienden con un asesor.</p> }
         <div class="row small muted" style="justify-content:center;margin-top:12px"><bsv-icon name="lock" style="--icon:16px" /> Pago seguro con Stripe · 3D Secure</div>
       </aside>
     </div>

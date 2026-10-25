@@ -70,6 +70,19 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
     `server.ts` acepta POST **solo** en esas dos rutas. WhatsApp queda como camino secundario dentro del formulario.
 15. **Modo revisión** (`?revision=1`, se recuerda en sessionStorage; `?revision=0` lo apaga): muestra recursos pendientes con etiqueta. El público nunca los ve. En producción hay que proteger este modo (p. ej. detrás de autenticación o solo en staging).
 
+16. **Checkout como invitado, Stripe y seguimiento por folio** (2026-10-24, bala 5): `/checkout` ya no exige sesión (no hay
+    cuenta de comprador hasta OIDC); dos pasos reales (datos y entrega → revisión, cupón y pago) y `/checkout/confirmando`
+    que cierra el pedido con `POST /api/tienda/v1/pedidos/{folio}/confirmar`. El pedido se crea con `precioEsperado` por línea:
+    un 409 `PRECIO_CAMBIO` aplica los precios nuevos y avisa (Manuel: avisar y actualizar); nunca se vende al precio viejo.
+    Pago con **Stripe Payment Element** (`@stripe/stripe-js`; la llave publicable llega por `/__config` desde
+    `STRIPE_PUBLISHABLE_KEY` del servidor, vacía = modo simulado del backend). Solo tarjeta en fase 1; SPEI/OXXO en fase 2.
+    Sin RFC en el checkout: la factura se pide después. `/pedido/:folio/gracias?c=` muestra el pedido real.
+    **Seguimiento** `/seguimiento/:folio?c=` (folio + correo o teléfono, 404 sin distinguir causa, botón «Actualizar», sin
+    polling): la tienda pregunta al back-office, que pregunta al CRM y traduce a `recibida · lista · ajustando · vencida ·
+    pedido_recibido · preparando · en_camino · entregado · cerrada` (spec §10.5). Enlaces desde el toast de «Cotizar», la
+    pantalla de gracias y el footer. `server.ts` acepta POST en cupón, pedidos y confirmar, limita por IP pedidos y
+    seguimiento (30/min) y pasa el PDF de la cotización en streaming.
+
 ## 4. Módulos de la tienda
 
 | Módulo | Ruta | Estado |
@@ -79,11 +92,12 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
 | Búsqueda | `/buscar?q=` | Hecho, **desde la API** (palabras en AND, orden por relevancia), con estados de carga, vacío y sin conexión |
 | Serie | `/serie/:slug` | Hecho (narrativa 2CP + genérica) |
 | Producto | `/producto/:id` | Hecho. **Precio y disponibilidad desde la API; «Cotizar» crea un lead en el CRM**; galería con pestañas Fotografía · Curvas · Componentes · Ficha técnica; specs de ficha 60 Hz; cotizar |
-| Carrito | `/carrito` | Hecho. **CP de envío, días y parciales por línea desde la API, líneas por cotizar con formulario, aviso de precio actualizado**; sin reservas ni pago (bala 5) |
+| Carrito | `/carrito` | Hecho. **CP de envío, días y parciales por línea desde la API, líneas por cotizar con formulario, aviso de precio actualizado**; «Continuar al pago» solo con líneas cobrables (la reserva la hace el pedido) |
 | Login | `/login` | Maqueta (Google/Facebook simulados, guard de rutas) |
-| Checkout | `/checkout?step=1..3` | Maqueta (3 pasos, 3DS, rechazo, error de red) |
+| Checkout | `/checkout?step=1..2`, `/checkout/confirmando`, `/pedido/:folio/gracias` | Hecho (bala 5). **Invitado; datos y entrega; cupón; Stripe Payment Element o modo simulado; 409 de precio; confirmación idempotente** |
+| Seguimiento | `/seguimiento`, `/seguimiento/:folio?c=` | Hecho (bala 5). **Estado desde el CRM vía back-office, línea de tiempo, envíos con guía, PDF de cotización, asesor** |
 | Cuenta | `/cuenta` | Maqueta (direcciones, datos fiscales) |
-| Pedidos | `/cuenta/pedidos`, `/cuenta/pedidos/:id` | Maqueta (línea de tiempo, guía) |
+| Pedidos | `/cuenta/pedidos`, `/cuenta/pedidos/:id` | Maqueta; pendiente de OIDC (hoy el seguimiento real es por folio) |
 | Factura | `/cuenta/factura` | Maqueta |
 | Devolución | `/cuenta/devolucion` | Maqueta |
 | Legales | `/legal` | Hecho |

@@ -38,36 +38,64 @@ if (CONFIG_ERROR) {
   ].join('\n'));
 }
 
-/** Proxy de solo lectura hacia la API de tienda. Devuelve estado, Content-Type y cuerpo tal cual. */
+/** Proxy GET hacia la API de tienda (ficha, listados, pedido y seguimiento por folio + contacto, PDF). Devuelve estado, Content-Type y cuerpo tal cual. */
 app.get('/api/tienda/{*splat}', async (req, res) => {
   if (CONFIG_ERROR) {
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
+  if (/^\/api\/tienda\/v1\/(seguimiento|pedidos)\//.test(req.path) && limited(req, 'seguimiento')) {
+    res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
+    return;
+  }
   try {
     const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, {
-      headers: { 'X-Store-Key': STORE_KEY, Accept: 'application/json' },
-      signal: AbortSignal.timeout(8000),
+      headers: { 'X-Store-Key': STORE_KEY, Accept: req.path.endsWith('.pdf') ? 'application/pdf' : 'application/json' },
+      signal: AbortSignal.timeout(15000),
     });
     res.status(upstream.status);
     const type = upstream.headers.get('content-type');
     if (type) res.setHeader('Content-Type', type);
+    const disp = upstream.headers.get('content-disposition');
+    if (disp) res.setHeader('Content-Disposition', disp);
     res.setHeader('Cache-Control', 'no-store');
     res.send(Buffer.from(await upstream.arrayBuffer()));
   } catch {
     res.status(503).json({ code: 'CATALOG_UNAVAILABLE', message: 'La tienda no pudo consultar el back-office.', timestamp: new Date().toISOString() });
   }
 });
-/** Las dos únicas escrituras de la tienda (bala 4): envío por CP y cotización. Se reenvía el cuerpo tal cual (bytes) y la
+/** Las escrituras de la tienda (balas 4 y 5) de la tienda (bala 4): envío por CP y cotización. Se reenvía el cuerpo tal cual (bytes) y la
  *  cabecera Idempotency-Key; cualquier otro POST sigue siendo 405. */
-const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones']);
+const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones', '/api/tienda/v1/carrito/cupon', '/api/tienda/v1/pedidos']);
+/** Bala 5: confirmar el pago de un pedido (idempotente). */
+const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/];
+const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re => re.test(path));
+
+/** Límite por IP, en memoria (bala 5): crear pedidos y consultar seguimiento no deben servir para enumerar folios ni
+ *  para martillar al back-office. 30 peticiones por minuto por IP y ruta; detrás de CloudFront llega X-Forwarded-For. */
+const RATE: Record<string, { n: number; until: number }> = {};
+function limited(req: express.Request, bucket: string, max = 30): boolean {
+  const ip = (req.headers['x-forwarded-for']?.toString().split(',')[0] ?? req.ip ?? 'ip').trim();
+  const k = `${bucket}:${ip}`; const now = Date.now(); const e = RATE[k];
+  if (!e || e.until < now) { RATE[k] = { n: 1, until: now + 60_000 }; return false; }
+  e.n++; return e.n > max;
+}
+setInterval(() => { const now = Date.now(); for (const k of Object.keys(RATE)) if (RATE[k].until < now) delete RATE[k]; }, 60_000).unref();
+
+/** Config pública del navegador (bala 5): la llave publicable de Stripe NO es secreta; vacía = la tienda cobra en modo simulado. */
+const STRIPE_PUBLISHABLE_KEY = process.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+app.get('/__config', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY }); });
 app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: '64kb' }), async (req, res) => {
-  if (!WRITABLE.has(req.path)) {
+  if (!isWritable(req.path)) {
     res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
     return;
   }
   if (CONFIG_ERROR) {
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
+    return;
+  }
+  if (req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) {
+    res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
   }
   try {

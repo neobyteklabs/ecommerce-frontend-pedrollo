@@ -41,6 +41,30 @@ export interface StorefrontProduct {
   attributes: Record<string, unknown>; sectionNote: string | null; description: string | null; imageKey: string | null; fichaKey: string | null;
 }
 
+/** Bala 5: cupón, pedido, pago y seguimiento (contrato §5 del hand-off de backend bala 5). */
+export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; total: number; }
+export interface OrderBuyer { nombre: string; correo: string; telefono: string; empresa?: string; }
+export interface OrderAddress { cp: string; calle: string; numeroExt: string; numeroInt?: string; colonia: string; municipio: string; estado: string; referencias?: string; }
+export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; }
+export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null }; }
+export interface OrderConfirm { folio: string; numero: string; estado: 'pagado' | 'pendiente_pago' | 'expirado' | 'cancelado'; }
+export interface OrderLineView { modelo: string; descripcion: string; cantidad: number; precioUnitario: number; importe: number; cedis: string | null; sobrePedido: boolean; diasEstimados: number | null; }
+export interface OrderView {
+  folio: string; numero: string; estado: string; moneda: string; subtotal: number; descuentoCupon: number; cuponCodigo: string | null; iva: number; envio: number; total: number;
+  comprador: OrderBuyer; entrega: OrderAddress; renglones: OrderLineView[]; pago: { modo: string; estado: string } | null; creado: string;
+}
+/** Error 409 al crear el pedido: el precio cambió o no hay existencia para alguna línea. */
+export interface OrderConflict { code: 'PRECIO_CAMBIO' | 'SIN_EXISTENCIA' | string; lineas?: { slug: string; precioAnterior?: number; precioActual?: number; disponible?: number }[]; }
+export type TrackingState = 'recibida' | 'lista' | 'ajustando' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'entregado' | 'cerrada';
+export interface TrackingShipment { origen: string; paqueteria: string | null; guia: string | null; urlRastreo: string | null; fechaEstimada: string | null; entregadoEn: string | null; renglones: { modelo: string; cantidad: number }[]; }
+export interface TrackingResponse {
+  folio: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
+  asesor?: { nombre: string; telefono: string | null; whatsapp: string | null } | null;
+  pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[] } | null;
+  cotizacion?: { folio: string; total: number; moneda: string; vigencia: string | null; documento: string | null } | null;
+  envios: TrackingShipment[]; acciones: string[];
+}
+
 /** Añade X-Store-Key solo cuando hay llave (SSR) y la petición va al back-office. En el bundle del navegador STORE_KEY es '' y no hace nada. */
 export const storeKeyInterceptor: HttpInterceptorFn = (req, next) => {
   const key = inject(STORE_KEY); const base = inject(API_BASE);
@@ -58,6 +82,22 @@ export class StorefrontApi {
   /** Pide una cotización. `idempotencyKey` es un UUID por intento del usuario: un doble clic no crea dos leads. */
   quote(body: QuoteRequest, idempotencyKey: string) {
     return firstValueFrom(this.http.post<QuoteResponse>(`${this.base}/api/tienda/v1/cotizaciones`, body, { headers: { 'Idempotency-Key': idempotencyKey } }));
+  }
+  /** Valida un cupón contra las líneas del carrito (bala 5). Nunca dice si el código existe. */
+  coupon(codigo: string, lineas: { slug: string; cantidad: number }[]) {
+    return firstValueFrom(this.http.post<CouponResponse>(`${this.base}/api/tienda/v1/carrito/cupon`, { codigo, lineas }));
+  }
+  /** Crea el pedido pendiente de pago (snapshot + reserva). 409 si el precio cambió o no hay existencia. */
+  createOrder(body: OrderRequest) { return firstValueFrom(this.http.post<OrderCreated>(`${this.base}/api/tienda/v1/pedidos`, body)); }
+  /** Confirma el pago consultando la pasarela; idempotente. */
+  confirmOrder(folio: string) { return firstValueFrom(this.http.post<OrderConfirm>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/confirmar`, {})); }
+  /** El pedido para la pantalla de gracias; segunda llave = correo o teléfono del comprador. */
+  order(folio: string, contacto: string) {
+    return firstValueFrom(this.http.get<OrderView>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}`, { params: { contacto } }));
+  }
+  /** Seguimiento por folio + contacto (pedido o cotización). `undefined` no pide nada. Debe llamarse en contexto de inyección. */
+  tracking(key: () => { folio: string; contacto: string } | undefined) {
+    return httpResource<TrackingResponse>(() => { const k = key(); return k ? { url: `${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(k.folio)}`, params: { contacto: k.contacto } } : undefined; });
   }
   /** La ficha pública. Debe llamarse en contexto de inyección (campo de componente). */
   product(slug: () => string) {

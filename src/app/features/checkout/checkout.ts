@@ -1,84 +1,191 @@
-import { Component, inject, input, computed, signal, afterNextRender } from '@angular/core';
+import { Component, inject, input, computed, signal, afterNextRender, effect, PLATFORM_ID, ElementRef, viewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CartService } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
+import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated } from '../../core/api/storefront-api';
 import { Icon, Stepper, Alert } from '../../shared/ui';
+import type { Stripe, StripeElements } from '@stripe/stripe-js';
 
+const ESTADOS = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Coahuila', 'Colima', 'Durango', 'Estado de México', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'];
+type Form = OrderBuyer & OrderAddress;
+const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '', calle: '', numeroExt: '', numeroInt: '', colonia: '', municipio: '', estado: 'Ciudad de México', referencias: '' };
+
+/** Checkout real (bala 5): invitado (sin cuenta hasta OIDC), datos y entrega → revisión, cupón y pago con Stripe Payment
+ *  Element (o modo simulado si la tienda no tiene llave) → `/checkout/confirmando`. El pedido se crea con `precioEsperado`
+ *  por línea: si el backend responde 409 PRECIO_CAMBIO, el carrito aplica los precios nuevos y avisa (Manuel: avisar y actualizar). */
 @Component({
-  selector: 'bsv-checkout', imports: [RouterLink, Icon, Stepper, Alert],
+  selector: 'bsv-checkout', imports: [RouterLink, FormsModule, Icon, Stepper, Alert],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Checkout' },
   template: `
-  <bsv-stepper [current]="step()" />
-  @if (step() === 3) {
-    <div data-component="OrderConfirmation">
-      <div class="empty confirm-hero" style="max-width:none"><div class="icon"><bsv-icon name="check" style="--icon:30px" /></div><h1 style="font-size:var(--text-2xl);margin:0">¡Pedido recibido!</h1><p>Número de pedido <strong class="mono" style="color:var(--color-gold)">BSV-24-01837</strong>. Te enviamos la confirmación a <strong>laura.mendoza&#64;gmail.com</strong>.</p></div>
-      <div class="grid md-grid-3" style="margin:24px 0;text-align:left">
-        <div class="card card-sm"><span class="label">Entrega estimada</span><div style="font-weight:600">Martes 21 – jueves 23 de octubre</div><span class="small muted">Paquetería asegurada · Tlalnepantla</span></div>
-        <div class="card card-sm"><span class="label">Pago</span><div style="font-weight:600">{{ cart.hasUnpriced() ? 'Cotización en proceso' : mxn(total()) + ' · Visa 4242' }}</div><span class="small muted">{{ cart.hasUnpriced() ? 'BSV confirma precio antes de cobrar' : 'Autorizado con 3D Secure' }}</span></div>
-        <div class="card card-sm"><span class="label">Factura</span><div style="font-weight:600">Solicítala desde el pedido</div><span class="small muted">Tienes hasta el cierre del mes</span></div>
-      </div>
-      <div class="row" style="justify-content:center"><a class="btn btn-primary btn-lg" routerLink="/cuenta/pedidos/BSV-24-01837">Ver mi pedido</a><a class="btn btn-secondary btn-lg" routerLink="/cuenta/factura">Solicitar factura</a></div>
-      <p class="small muted" style="margin:24px 0 0;text-align:center">¿Dudas? Escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu número de pedido.</p>
-    </div>
+  <bsv-stepper [steps]="['Datos y entrega', 'Revisión y pago', 'Confirmación']" [current]="step()" />
+  @if (!cart.canCheckout()) {
+    <div class="empty" data-component="EmptyState/Checkout"><h1 style="font-size:var(--text-2xl)">No hay artículos para pagar</h1><p>Las líneas sin existencia se cotizan con un asesor; agrega al carrito algo con existencia para continuar.</p><a class="btn btn-primary" routerLink="/carrito">Ir al carrito</a></div>
   } @else {
   <div class="checkout-layout">
     <div>
       @if (step() === 1) {
-        <h1 style="font-size:var(--text-2xl)">Dirección y envío</h1>
-        <div class="stack">
-          <label class="radio-card" data-component="AddressOption"><input type="radio" name="addr" checked /><div><strong>Taller · Ing. Laura Mendoza</strong><span class="small muted">Av. Mario Colín 125, Col. Industrial La Loma, 54060 Tlalnepantla, Méx. · 55 4421 9087</span></div></label>
-          <label class="radio-card" data-component="AddressOption"><input type="radio" name="addr" /><div><strong>Oficina · Laura Mendoza</strong><span class="small muted">Calle Lago Zurich 219, Col. Ampliación Granada, 11529 Miguel Hidalgo, CDMX</span></div></label>
-          <details class="card card-sm"><summary style="cursor:pointer;font-weight:600;min-height:28px">+ Agregar dirección nueva</summary>
-            <div class="grid md-grid-2" style="margin-top:16px">
-              <div class="field"><label for="n">Nombre de quien recibe</label><input id="n" class="input" autocomplete="name" /></div>
-              <div class="field"><label for="t">Teléfono</label><input id="t" class="input" type="tel" inputmode="tel" autocomplete="tel" /><span class="hint">Para avisos de la paquetería</span></div>
-              <div class="field" style="grid-column:1/-1"><label for="c">Calle y número</label><input id="c" class="input" autocomplete="address-line1" /></div>
-              <div class="field"><label for="col">Colonia</label><input id="col" class="input" /></div>
-              <div class="field" [class.has-error]="cpErr()"><label for="cp">Código postal</label><input id="cp" class="input" inputmode="numeric" maxlength="5" (input)="cp.set($any($event.target).value)" [attr.aria-invalid]="cpErr()" aria-describedby="cpe" /><span class="hint">5 dígitos</span><span class="error-msg" id="cpe">El código postal debe tener 5 dígitos.</span></div>
-              <div class="field"><label for="mun">Municipio / alcaldía</label><input id="mun" class="input" /></div>
-              <div class="field"><label for="edo">Estado</label><select id="edo" class="select"><option>Estado de México</option><option>Ciudad de México</option><option>Puebla</option><option>Jalisco</option><option>Yucatán</option></select></div>
-              <div class="field" style="grid-column:1/-1"><label for="ref">Referencias <span class="muted" style="font-weight:400">(opcional)</span></label><input id="ref" class="input" placeholder="Portón negro, entre Av. Gustavo Baz y calle 5" /></div>
-            </div></details>
-          <h3 style="margin-top:8px">Método de envío</h3>
-          <label class="radio-card" data-component="ShippingOption"><input type="radio" name="ship" checked /><div class="between" style="flex:1"><div><strong>Paquetería asegurada</strong><span class="small muted">Estafeta o DHL · llega en 2–4 días hábiles tras salir de CEDIS</span></div><strong class="num">{{ cart.shipping() ? mxn(cart.shipping()) : 'Gratis' }}</strong></div></label>
-          <label class="radio-card" data-component="ShippingOption"><input type="radio" name="ship" /><div class="between" style="flex:1"><div><strong>Recoger en CEDIS Tlalnepantla</strong><span class="small muted">Lun–Vie 9:00–18:00, Sáb 9:00–13:00 · te avisamos cuando esté listo</span></div><strong class="num">Gratis</strong></div></label>
-          <bsv-alert kind="info">Tu pedido incluye artículos sobre pedido. Todo se envía junto en 5–7 días hábiles. <a href="#">Dividir en dos envíos</a></bsv-alert>
-          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/carrito"><bsv-icon name="arrowLeft" style="--icon:20px" /> Carrito</a><a class="btn btn-primary btn-lg" routerLink="/checkout" [queryParams]="{ step: 2 }">Continuar al pago <bsv-icon name="arrowRight" style="--icon:20px" /></a></div>
-        </div>
+        <h1 style="font-size:var(--text-2xl)">Datos y entrega</h1>
+        <form class="stack" (submit)="next($event)" novalidate data-component="CheckoutForm">
+          <div class="card card-sm"><h3 style="margin:0 0 12px">Tus datos</h3>
+            <div class="grid md-grid-2">
+              <div class="field" [class.has-error]="err('nombre')"><label for="f-nombre">Nombre completo *</label><input id="f-nombre" class="input" name="nombre" [(ngModel)]="f.nombre" autocomplete="name" maxlength="200" /><span class="error-msg">Escribe tu nombre.</span></div>
+              <div class="field"><label for="f-empresa">Empresa <span class="muted" style="font-weight:400">(opcional)</span></label><input id="f-empresa" class="input" name="empresa" [(ngModel)]="f.empresa" autocomplete="organization" maxlength="200" /></div>
+              <div class="field" [class.has-error]="err('correo')"><label for="f-correo">Correo *</label><input id="f-correo" class="input" name="correo" type="email" [(ngModel)]="f.correo" autocomplete="email" maxlength="200" /><span class="hint">Aquí te avisamos del pedido y de su seguimiento</span><span class="error-msg">Escribe un correo válido.</span></div>
+              <div class="field" [class.has-error]="err('telefono')"><label for="f-tel">Teléfono *</label><input id="f-tel" class="input" name="telefono" type="tel" inputmode="tel" [(ngModel)]="f.telefono" autocomplete="tel" maxlength="50" /><span class="hint">Para la paquetería</span><span class="error-msg">Escribe un teléfono de 10 dígitos.</span></div>
+            </div></div>
+          <div class="card card-sm"><h3 style="margin:0 0 12px">Entrega</h3>
+            <div class="grid md-grid-2">
+              <div class="field" [class.has-error]="err('cp')"><label for="f-cp">Código postal *</label><input id="f-cp" class="input" name="cp" inputmode="numeric" maxlength="5" [(ngModel)]="f.cp" autocomplete="postal-code" /><span class="hint">Define de qué CEDIS sale y los días de entrega</span><span class="error-msg">5 dígitos.</span></div>
+              <div class="field" [class.has-error]="err('estado')"><label for="f-edo">Estado *</label><select id="f-edo" class="select" name="estado" [(ngModel)]="f.estado">@for (e of estados; track e) { <option [value]="e">{{ e }}</option> }</select></div>
+              <div class="field" style="grid-column:1/-1" [class.has-error]="err('calle')"><label for="f-calle">Calle *</label><input id="f-calle" class="input" name="calle" [(ngModel)]="f.calle" autocomplete="address-line1" maxlength="200" /><span class="error-msg">Escribe la calle.</span></div>
+              <div class="field" [class.has-error]="err('numeroExt')"><label for="f-next">Número exterior *</label><input id="f-next" class="input" name="numeroExt" [(ngModel)]="f.numeroExt" maxlength="20" /><span class="error-msg">Obligatorio.</span></div>
+              <div class="field"><label for="f-nint">Número interior</label><input id="f-nint" class="input" name="numeroInt" [(ngModel)]="f.numeroInt" maxlength="20" /></div>
+              <div class="field" [class.has-error]="err('colonia')"><label for="f-col">Colonia *</label><input id="f-col" class="input" name="colonia" [(ngModel)]="f.colonia" autocomplete="address-level3" maxlength="120" /><span class="error-msg">Escribe la colonia.</span></div>
+              <div class="field" [class.has-error]="err('municipio')"><label for="f-mun">Municipio / alcaldía *</label><input id="f-mun" class="input" name="municipio" [(ngModel)]="f.municipio" autocomplete="address-level2" maxlength="120" /><span class="error-msg">Escribe el municipio.</span></div>
+              <div class="field" style="grid-column:1/-1"><label for="f-ref">Referencias <span class="muted" style="font-weight:400">(opcional)</span></label><input id="f-ref" class="input" name="referencias" [(ngModel)]="f.referencias" placeholder="Portón negro, entre Av. Gustavo Baz y calle 5" maxlength="300" /></div>
+            </div></div>
+          <p class="small muted" style="margin:0">¿Necesitas factura? La pides después desde «Solicitar factura» con tu número de pedido.</p>
+          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/carrito"><bsv-icon name="arrowLeft" style="--icon:20px" /> Carrito</a><button class="btn btn-primary btn-lg" type="submit">Revisar y pagar <bsv-icon name="arrowRight" style="--icon:20px" /></button></div>
+        </form>
       } @else {
-        <h1 style="font-size:var(--text-2xl)">Pago</h1>
-        @if (declined()) { <bsv-alert kind="danger" title="Tu banco rechazó el pago" data-component="Alert/PagoRechazado">No se hizo ningún cargo. Suele pasar por fondos insuficientes o porque el banco bloqueó la compra en línea. Prueba otra tarjeta o llama a tu banco para autorizarla.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" (click)="newCard.set(true)">Usar otra tarjeta</button><a class="btn btn-ghost btn-sm" href="https://wa.me/525572589681">Pagar por transferencia con un asesor</a></div></bsv-alert> }
-        @if (neterr()) { <bsv-alert kind="danger" title="Sin conexión" icon="wifiOff" data-component="Alert/ErrorRed">No pudimos confirmar tu pago porque se perdió la conexión. Revisa tu red. Si ya ves el cargo en tu banco, no lo repitas: escríbenos con el número de referencia.<div class="actions"><a class="btn btn-secondary btn-sm" routerLink="/checkout" [queryParams]="{ step: 2 }">Reintentar</a></div></bsv-alert> }
+        <h1 style="font-size:var(--text-2xl)">Revisión y pago</h1>
         <div class="stack">
-          <div class="row small muted"><bsv-icon name="lock" style="--icon:16px" /> Procesado por Stripe. Nunca guardamos el número completo de tu tarjeta.</div>
-          <label class="radio-card" data-component="PaymentOption/Saved"><input type="radio" name="pay" [checked]="!newCard()" (change)="newCard.set(false)" /><div class="saved-card"><span class="card-brand">VISA</span><div><strong>Visa terminación 4242</strong><span class="small muted">Vence 08/28 · Laura Mendoza</span></div></div></label>
-          <label class="radio-card" data-component="PaymentOption/New" style="flex-direction:column;align-items:stretch"><div class="row"><input type="radio" name="pay" [checked]="newCard()" (change)="newCard.set(true)" /><strong>Tarjeta nueva</strong><span class="row" style="margin-left:auto;gap:4px"><span class="card-brand">VISA</span><span class="card-brand">MC</span><span class="card-brand">AMEX</span></span></div>
-            <div class="grid" style="margin-top:12px;grid-template-columns:1fr 1fr">
-              <div class="field" style="grid-column:1/-1"><label for="cn">Número de tarjeta</label><input id="cn" class="input mono" inputmode="numeric" placeholder="0000 0000 0000 0000" autocomplete="cc-number" /></div>
-              <div class="field"><label for="ce">Vencimiento</label><input id="ce" class="input mono" placeholder="MM / AA" inputmode="numeric" autocomplete="cc-exp" /></div>
-              <div class="field"><label for="cv">CVC</label><input id="cv" class="input mono" inputmode="numeric" placeholder="123" autocomplete="cc-csc" /><span class="hint">3 dígitos al reverso, 4 en Amex</span></div>
-              <div class="field" style="grid-column:1/-1"><label for="cnm">Nombre como aparece en la tarjeta</label><input id="cnm" class="input" autocomplete="cc-name" /></div>
-              <label class="check" style="grid-column:1/-1;min-height:36px"><input type="checkbox" checked /> Guardar esta tarjeta para la próxima compra</label>
-            </div></label>
-          <bsv-alert kind="info" icon="shield">Tu banco puede pedirte confirmar la compra en su app (3D Secure). Mantén el teléfono a la mano.</bsv-alert>
-          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Dirección</a><button class="btn btn-primary btn-lg" type="button" [class.is-loading]="paying()" (click)="pay()">{{ cart.hasUnpriced() ? 'Enviar solicitud de cotización' : 'Pagar ' + mxn(total()) }}</button></div>
-          <p class="xs muted">Enlaces del prototipo: <a routerLink="/checkout" [queryParams]="{ step: 2, declined: 1 }">simular pago rechazado</a> · <a routerLink="/checkout" [queryParams]="{ step: 2, neterr: 1 }">simular error de red</a></p>
+          @if (cart.priceChanged(); as pc) { <bsv-alert kind="warning" title="Cambió el precio de {{ products.byId(pc.id)?.model }}" data-component="Alert/PrecioCambio">Lo tenías a {{ mxn(pc.changedFrom!) }} y hoy es {{ mxn(cart.unitPrice(pc)!) }}. El total ya refleja los precios actuales; revísalo antes de pagar.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" (click)="cart.acknowledgePrices()">Entendido</button></div></bsv-alert> }
+          @if (error(); as e) { <bsv-alert kind="danger" [title]="e.title" data-component="Alert/Checkout">{{ e.detail }}</bsv-alert> }
+          <div class="card card-sm" data-component="ReviewLines"><h3 style="margin:0 0 8px">Artículos</h3>
+            @for (l of cart.checkoutLines(); track l.id) {
+              @let s = cart.shippingOf(l);
+              <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border);align-items:flex-start;gap:12px">
+                <div><span class="model">{{ products.byId(l.id)?.model }}</span> × {{ l.qty }}
+                  @if (s?.parcial) { <div class="muted">{{ s!.disponible }} salen de CEDIS en {{ s!.dias }} días · {{ l.qty - s!.disponible }} sobre pedido, un asesor confirma la fecha</div> }
+                  @else if (s?.dias != null) { <div class="muted">Sale de CEDIS · entrega estimada {{ s!.dias }} días</div> }
+                </div>
+                <span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span>
+              </div> }
+            <div class="between small" style="padding:8px 0"><span>Entrega a</span><span style="text-align:right">{{ f.calle }} {{ f.numeroExt }}{{ f.numeroInt ? ' int. ' + f.numeroInt : '' }}, {{ f.colonia }}<br />{{ f.cp }} {{ f.municipio }}, {{ f.estado }} · <a routerLink="/checkout" [queryParams]="{ step: 1 }">cambiar</a></span></div>
+          </div>
+          <form class="card card-sm" (submit)="$event.preventDefault(); applyCoupon()" data-component="Coupon"><h3 style="margin:0 0 8px">Cupón</h3>
+            <div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap"><label class="label" style="flex:1;min-width:200px">Código<input class="input mono" name="cupon" [(ngModel)]="couponInput" maxlength="40" autocapitalize="characters" /></label><button class="btn btn-secondary" type="submit" [class.is-loading]="couponLoading()">Aplicar</button></div>
+            @if (cart.coupon(); as c) { @if (c.valido) { <p class="small" style="margin:8px 0 0;color:var(--color-success,green)">Cupón {{ cart.couponCode() }} aplicado: −{{ mxn(c.descuento) }}</p> } @else { <p class="small" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ c.motivo || 'Cupón no válido.' }}</p> } }
+          </form>
+          <div class="card card-sm" data-component="Payment"><h3 style="margin:0 0 8px">Pago con tarjeta</h3>
+            <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> Procesado por Stripe con 3D Secure. Nunca vemos el número completo de tu tarjeta.</div>
+            @if (order(); as o) {
+              @if (o.pago.modo === 'stripe') { <div #paymentEl data-component="StripePaymentElement"></div>
+                @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">Pagar {{ mxn(o.total) }}</button> }
+                @else { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> } }
+            } @else {
+              <p class="small muted" style="margin:0 0 12px">Al continuar apartamos tu mercancía 30 minutos mientras pagas.</p>
+              <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="creating()" [disabled]="creating()" (click)="createOrder()">Continuar al pago · {{ mxn(total()) }}</button>
+            }
+            <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p>
+          </div>
+          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a><a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a></div>
         </div>
-        <div class="modal" [hidden]="!tds()" role="dialog" aria-modal="true" aria-labelledby="tdst" data-component="Modal/3DS"><div class="modal-panel" style="text-align:center"><h3 id="tdst">Confirma en tu banco</h3><p class="muted">Abrimos la verificación 3D Secure de tu banco. No cierres esta ventana.</p><div class="btn btn-secondary is-loading" style="margin:16px auto;width:160px"></div><p class="small muted" style="margin:0">Cargo a Visa 4242</p></div></div>
       }
     </div>
     <aside class="card summary" data-component="OrderSummary"><h3>Tu pedido</h3>
-      @for (l of cart.lines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ products.byId(l.id)!.model }}</span> × {{ l.qty }}</span><span class="num">{{ products.byId(l.id)!.price != null ? mxn(products.byId(l.id)!.price! * l.qty) : 'Por cotizar' }}</span></div> }
-      <div class="lines" style="margin-top:12px"><span>Subtotal</span><span class="num">{{ mxn(cart.base()) }}</span><span>IVA 16 %</span><span class="num">{{ mxn(cart.iva()) }}</span><span>Envío</span><span class="num">{{ cart.shipping() ? mxn(cart.shipping()) : 'Gratis' }}</span><span class="total">Total</span><span class="total num">{{ cart.hasUnpriced() ? 'Por cotizar' : mxn(total()) }}</span></div></aside>
+      @for (l of cart.checkoutLines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ products.byId(l.id)?.model }}</span> × {{ l.qty }}</span><span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span></div> }
+      <div class="lines" style="margin-top:12px"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span>
+        @if (cart.coupon()?.valido) { <span>Cupón {{ cart.couponCode() }}</span><span class="num">−{{ mxn(cart.coupon()!.descuento) }}</span> }
+        <span>IVA 16 %</span><span class="num">{{ mxn(cart.iva()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Por confirmar' : cart.shipping() ? mxn(cart.shipping()!) : 'Gratis') : 'Según CP' }}</span><span class="total">Total</span><span class="total num">{{ mxn(total()) }}</span></div>
+      @if (cart.hasQuoteOnly()) { <p class="xs muted" style="margin:12px 0 0">Las líneas sin existencia no entran a este pedido: cotízalas desde el carrito.</p> }
+    </aside>
   </div>
   }`,
 })
 export class Checkout {
-  step = input(1, { transform: (v: unknown) => Number(v) || 1 }); declined = input<string>(); neterr = input<string>();
-  cart = inject(CartService); products = inject(ProductService); private router = inject(Router);
-  total = computed(() => this.cart.total() + (this.cart.shipping() ?? 0));
-  cp = signal(''); cpErr = computed(() => this.cp().length > 0 && this.cp().length !== 5);
-  newCard = signal(false); paying = signal(false); tds = signal(false); mxn = mxn;
-  constructor() { afterNextRender(() => { if (!this.cart.count() && this.step() < 3) this.cart.demo(); }); }
-  pay() { this.paying.set(true); setTimeout(() => this.tds.set(true), 500); setTimeout(() => { this.cart.clear(); this.router.navigate(['/checkout'], { queryParams: { step: 3 } }); }, 2600); }
+  step = input(1, { transform: (v: unknown) => Number(v) || 1 });
+  cart = inject(CartService); products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
+  private browser = isPlatformBrowser(inject(PLATFORM_ID));
+  paymentEl = viewChild<ElementRef<HTMLDivElement>>('paymentEl');
+  estados = ESTADOS; mxn = mxn;
+  f: Form = this.loadForm();
+  submitted = signal(false); couponInput = ''; couponLoading = signal(false);
+  creating = signal(false); paying = signal(false); stripeReady = signal(false);
+  order = signal<OrderCreated | null>(null);
+  error = signal<{ title: string; detail: string } | null>(null);
+  total = computed(() => this.cart.totalWithCoupon() + (this.cart.shipping() ?? 0));
+  private stripe: Stripe | null = null; private elements: StripeElements | null = null;
+
+  constructor() {
+    afterNextRender(() => {
+      this.couponInput = this.cart.couponCode();
+      if (this.step() === 2) {
+        if (!this.valid()) { this.router.navigate(['/checkout'], { queryParams: { step: 1 } }); return; }
+        if (this.f.cp && this.cart.cp() !== this.f.cp) this.cart.cp.set(this.f.cp);
+        if (!this.cart.shippingResult() && this.cart.cp()) this.cart.resolveShipping();
+        if (this.cart.couponCode()) this.cart.applyCoupon(this.cart.couponCode());
+      }
+    });
+    // Monta el Payment Element en cuanto existe el contenedor y hay pedido en modo Stripe.
+    effect(() => { const el = this.paymentEl(); const o = this.order(); if (el && o?.pago.modo === 'stripe' && o.pago.clientSecret && !this.elements) this.mountStripe(el.nativeElement, o.pago.clientSecret); });
+  }
+
+  err(k: keyof Form) { return this.submitted() && !this.ok(k); }
+  private ok(k: keyof Form): boolean {
+    const v = (this.f[k] ?? '').toString().trim();
+    switch (k) {
+      case 'correo': return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      case 'telefono': return v.replace(/\D/g, '').length >= 10;
+      case 'cp': return /^\d{5}$/.test(v);
+      case 'empresa': case 'numeroInt': case 'referencias': return true;
+      default: return v.length > 0;
+    }
+  }
+  private valid() { return (Object.keys(EMPTY) as (keyof Form)[]).every(k => this.ok(k)); }
+  next(e: Event) {
+    e.preventDefault(); this.submitted.set(true);
+    if (!this.valid()) return;
+    this.saveForm(); this.cart.cp.set(this.f.cp.trim()); this.cart.resolveShipping();
+    this.router.navigate(['/checkout'], { queryParams: { step: 2 } });
+  }
+  async applyCoupon() { this.couponLoading.set(true); try { await this.cart.applyCoupon(this.couponInput); } finally { this.couponLoading.set(false); } }
+
+  /** Crea el pedido (snapshot + reserva 30 min). Con Stripe, el pago se confirma en el Payment Element; simulado, va directo a confirmar. */
+  async createOrder() {
+    this.error.set(null); this.creating.set(true);
+    try {
+      const body = { comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) };
+      const o = await this.api.createOrder(body);
+      this.remember(o.folio);
+      if (o.pago.modo === 'simulado' || !o.pago.clientSecret) { this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } }); return; }
+      this.order.set(o);
+    } catch (e) { this.handle(e); } finally { this.creating.set(false); }
+  }
+  private async mountStripe(host: HTMLElement, clientSecret: string) {
+    try {
+      const { stripePublishableKey } = await (await fetch('/__config')).json() as { stripePublishableKey: string };
+      const { loadStripe } = await import('@stripe/stripe-js');
+      this.stripe = await loadStripe(stripePublishableKey, { locale: 'es-419' });
+      if (!this.stripe) throw new Error('stripe');
+      this.elements = this.stripe.elements({ clientSecret, appearance: { theme: 'stripe', variables: { colorPrimary: '#0b2b55', borderRadius: '8px', fontFamily: 'inherit' } } });
+      const pe = this.elements.create('payment', { layout: 'tabs' });
+      pe.mount(host); pe.on('ready', () => this.stripeReady.set(true));
+    } catch { this.error.set({ title: 'No pudimos cargar el pago', detail: 'Recarga la página o escríbenos por WhatsApp para pagar por transferencia.' }); }
+  }
+  /** Confirma en Stripe. Sin 3DS termina aquí; con 3DS, Stripe redirige a `return_url` y `/checkout/confirmando` cierra el pedido. */
+  async confirmStripe() {
+    const o = this.order(); if (!this.stripe || !this.elements || !o) return;
+    this.paying.set(true); this.error.set(null);
+    const returnUrl = `${location.origin}/checkout/confirmando?folio=${encodeURIComponent(o.folio)}&c=${encodeURIComponent(this.f.correo.trim())}`;
+    const { error } = await this.stripe.confirmPayment({ elements: this.elements, confirmParams: { return_url: returnUrl }, redirect: 'if_required' });
+    if (error) { this.paying.set(false); this.error.set({ title: error.type === 'card_error' ? 'Tu banco rechazó el pago' : 'No se pudo procesar el pago', detail: error.message ?? 'Prueba otra tarjeta o llama a tu banco para autorizar la compra en línea.' }); return; }
+    this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } });
+  }
+  private handle(e: unknown) {
+    const err = e as HttpErrorResponse; const body = (err.error ?? {}) as OrderConflict & { message?: string };
+    if (err.status === 409 && body.code === 'PRECIO_CAMBIO') { this.cart.applyPriceChanges(body.lineas ?? []); this.error.set({ title: 'Cambió el precio de un artículo', detail: 'Actualizamos el total con los precios de hoy. Revísalo y vuelve a continuar al pago.' }); return; }
+    if (err.status === 409 && body.code === 'SIN_EXISTENCIA') { this.cart.shippingResult.set(null); this.error.set({ title: 'Ya no hay existencia suficiente', detail: 'Alguien apartó esa mercancía hace un momento. Ajusta la cantidad en el carrito o pide cotización de esa línea.' }); return; }
+    if (err.status === 429) { this.error.set({ title: 'Demasiados intentos', detail: 'Espera un minuto y vuelve a intentar.' }); return; }
+    this.error.set({ title: 'No pudimos crear el pedido', detail: body.message || 'Revisa tu conexión e intenta de nuevo. Si el problema sigue, escríbenos por WhatsApp.' });
+  }
+  private buyer(): OrderBuyer { return { nombre: this.f.nombre.trim(), correo: this.f.correo.trim().toLowerCase(), telefono: this.f.telefono.trim(), ...(this.f.empresa?.trim() ? { empresa: this.f.empresa.trim() } : {}) }; }
+  private address(): OrderAddress { return { cp: this.f.cp.trim(), calle: this.f.calle.trim(), numeroExt: this.f.numeroExt.trim(), ...(this.f.numeroInt?.trim() ? { numeroInt: this.f.numeroInt.trim() } : {}), colonia: this.f.colonia.trim(), municipio: this.f.municipio.trim(), estado: this.f.estado, ...(this.f.referencias?.trim() ? { referencias: this.f.referencias.trim() } : {}) }; }
+  private loadForm(): Form { if (!this.browser) return { ...EMPTY }; try { return { ...EMPTY, ...(JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}') as Partial<Form>), ...(sessionStorage.getItem('bsv.cp') && !JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}').cp ? { cp: sessionStorage.getItem('bsv.cp')! } : {}) }; } catch { return { ...EMPTY }; } }
+  private saveForm() { if (this.browser) sessionStorage.setItem('bsv.checkout', JSON.stringify(this.f)); }
+  private remember(folio: string) { if (this.browser) sessionStorage.setItem('bsv.pedido', JSON.stringify({ folio, contacto: this.f.correo.trim() })); }
 }
