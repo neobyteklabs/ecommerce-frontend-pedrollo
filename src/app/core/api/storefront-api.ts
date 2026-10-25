@@ -55,7 +55,7 @@ export interface OrderView {
 }
 /** Error 409 al crear el pedido: el precio cambió o no hay existencia para alguna línea. */
 export interface OrderConflict { code: 'PRECIO_CAMBIO' | 'SIN_EXISTENCIA' | string; lineas?: { slug: string; precioAnterior?: number; precioActual?: number; disponible?: number }[]; }
-export type TrackingState = 'recibida' | 'lista' | 'ajustando' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'entregado' | 'cerrada';
+export type TrackingState = 'recibida' | 'lista' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'entregado' | 'cerrada';
 export interface TrackingShipment { origen: string; paqueteria: string | null; guia: string | null; urlRastreo: string | null; fechaEstimada: string | null; entregadoEn: string | null; renglones: { modelo: string; cantidad: number }[]; }
 export interface TrackingResponse {
   folio: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;

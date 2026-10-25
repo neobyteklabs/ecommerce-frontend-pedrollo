@@ -88,8 +88,8 @@ function buildSteps(t: TrackingResponse): TimelineStep[] {
   const pedido = ['Pedido recibido', 'Preparando', 'En camino', 'Entregado'];
   const cot = ['Solicitud recibida', 'Cotización lista', 'Pago y preparación', 'En camino', 'Entregado'];
   const idx: Record<TrackingState, number> = t.tipo === 'pedido'
-    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, entregado: 3, recibida: 0, lista: 0, ajustando: 0, vencida: 0, cerrada: 0 }
-    : { recibida: 0, lista: 1, ajustando: 1, vencida: 1, preparando: 2, pedido_recibido: 2, en_camino: 3, entregado: 4, cerrada: 0 };
+    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, entregado: 3, recibida: 0, lista: 0, vencida: 0, cerrada: 0 }
+    : { recibida: 0, lista: 1, vencida: 1, preparando: 2, pedido_recibido: 2, en_camino: 3, entregado: 4, cerrada: 0 };
   const titles = t.tipo === 'pedido' ? pedido : cot; const cur = idx[t.estado] ?? 0; const bad = t.estado === 'cerrada' || t.estado === 'vencida';
   return titles.map((title, i) => ({ title, state: i < cur ? 'done' : i === cur ? (bad ? 'rejected' : t.estado === 'entregado' ? 'done' : 'current') : 'pending' }));
 }

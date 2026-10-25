@@ -78,8 +78,8 @@ El **banco de imágenes** (fotos, PDFs, paquetes) vive fuera del repositorio, en
     `STRIPE_PUBLISHABLE_KEY` del servidor, vacía = modo simulado del backend). Solo tarjeta en fase 1; SPEI/OXXO en fase 2.
     Sin RFC en el checkout: la factura se pide después. `/pedido/:folio/gracias?c=` muestra el pedido real.
     **Seguimiento** `/seguimiento/:folio?c=` (folio + correo o teléfono, 404 sin distinguir causa, botón «Actualizar», sin
-    polling): la tienda pregunta al back-office, que pregunta al CRM y traduce a `recibida · lista · ajustando · vencida ·
-    pedido_recibido · preparando · en_camino · entregado · cerrada` (spec §10.5). Enlaces desde el toast de «Cotizar», la
+    polling): la tienda pregunta al back-office, que pregunta al CRM y traduce a `recibida · lista · vencida · pedido_recibido ·
+    preparando · en_camino · entregado · cerrada` (spec §10.5; etapas del CRM según su V28). Enlaces desde el toast de «Cotizar», la
     pantalla de gracias y el footer. `server.ts` acepta POST en cupón, pedidos y confirmar, limita por IP pedidos y
     seguimiento (30/min) y pasa el PDF de la cotización en streaming.
 
