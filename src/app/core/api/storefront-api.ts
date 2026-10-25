@@ -42,7 +42,7 @@ export interface StorefrontProduct {
 }
 
 /** Bala 5: cupón, pedido, pago y seguimiento (contrato §5 del hand-off de backend bala 5). */
-export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; total: number; }
+export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; iva?: number; total: number; }
 export interface OrderBuyer { nombre: string; correo: string; telefono: string; empresa?: string; }
 export interface OrderAddress { cp: string; calle: string; numeroExt: string; numeroInt?: string; colonia: string; municipio: string; estado: string; referencias?: string; }
 export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; }

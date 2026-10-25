@@ -41,7 +41,9 @@ export class CartService {
   /** Cupón aplicado en el carrito/checkout (bala 5). Se valida contra el backend; el pedido lo vuelve a validar al crearse. */
   readonly couponCode = signal<string>(this.loadSession('bsv.cupon') ?? '');
   readonly coupon = signal<CouponResponse | null>(null);
-  readonly totalWithCoupon = computed(() => { const c = this.coupon(); return c?.valido ? Math.max(0, this.total() - c.descuento) : this.total(); });
+  /** Con cupón válido, los totales son los del backend (descuento antes de IVA); sin cupón, los locales. */
+  readonly totalWithCoupon = computed(() => { const c = this.coupon(); return c?.valido ? c.total : this.total(); });
+  readonly ivaWithCoupon = computed(() => { const c = this.coupon(); return c?.valido && c.iva != null ? c.iva : this.iva(); });
   readonly priceChanged = computed(() => this.changed()[0] ?? null);
 
   constructor() {

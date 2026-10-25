@@ -91,7 +91,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
       @for (l of cart.checkoutLines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ products.byId(l.id)?.model }}</span> × {{ l.qty }}</span><span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span></div> }
       <div class="lines" style="margin-top:12px"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span>
         @if (cart.coupon()?.valido) { <span>Cupón {{ cart.couponCode() }}</span><span class="num">−{{ mxn(cart.coupon()!.descuento) }}</span> }
-        <span>IVA 16 %</span><span class="num">{{ mxn(cart.iva()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Por confirmar' : cart.shipping() ? mxn(cart.shipping()!) : 'Gratis') : 'Según CP' }}</span><span class="total">Total</span><span class="total num">{{ mxn(total()) }}</span></div>
+        <span>IVA 16 %</span><span class="num">{{ mxn(cart.ivaWithCoupon()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Por confirmar' : cart.shipping() ? mxn(cart.shipping()!) : 'Gratis') : 'Según CP' }}</span><span class="total">Total</span><span class="total num">{{ mxn(total()) }}</span></div>
       @if (cart.hasQuoteOnly()) { <p class="xs muted" style="margin:12px 0 0">Las líneas sin existencia no entran a este pedido: cotízalas desde el carrito.</p> }
     </aside>
   </div>

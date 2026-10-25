@@ -80,7 +80,8 @@ export class Tracking {
     if (!f || !c) { this.formError.set('Escribe el folio y tu correo o teléfono.'); return; }
     this.router.navigate(['/seguimiento', f], { queryParams: { c } });
   }
-  fecha(iso: string) { const d = new Date(iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
+  /** Una fecha sin hora (`2026-10-28`) se lee como día local, no como medianoche UTC: si no, en México se mostraría el día anterior. */
+  fecha(iso: string) { const d = new Date(iso.length === 10 ? iso + 'T00:00:00' : iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
 }
 
 /** Línea de tiempo por tipo (spec §10.5). Monótona hacia adelante; `cerrada`/`vencida` marcan el paso actual como rechazado. */
