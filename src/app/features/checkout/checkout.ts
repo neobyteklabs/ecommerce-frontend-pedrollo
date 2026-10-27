@@ -69,7 +69,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
           </div>
           <form class="card card-sm" (submit)="$event.preventDefault(); applyCoupon()" data-component="Coupon"><h3 style="margin:0 0 8px">Cupón</h3>
             <div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap"><label class="label" style="flex:1;min-width:200px">Código<input class="input mono" name="cupon" [(ngModel)]="couponInput" maxlength="40" autocapitalize="characters" /></label><button class="btn btn-secondary" type="submit" [class.is-loading]="couponLoading()">Aplicar</button></div>
-            @if (cart.coupon(); as c) { @if (c.valido) { <p class="small" style="margin:8px 0 0;color:var(--color-success,green)">Cupón {{ cart.couponCode() }} aplicado: −{{ mxn(c.descuento) }}</p> } @else { <p class="small" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ c.motivo || 'Cupón no válido.' }}</p> } }
+            @if (cart.coupon(); as c) { @if (c.valido) { <p class="small" style="margin:8px 0 0;color:var(--color-success,green)">Cupón {{ cart.couponCode() }} aplicado: −{{ mxn(c.descuento) }}</p> } @else { <p class="small" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ c.motivo || 'Cupón no válido.' }} <span class="muted">Revisa el código tal como te lo enviaron, letra por letra.</span></p> } }
           </form>
           <div class="card card-sm" data-component="Payment"><h3 style="margin:0 0 8px">Pago con tarjeta</h3>
             <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> Procesado por Stripe con 3D Secure. Nunca vemos el número completo de tu tarjeta.</div>
