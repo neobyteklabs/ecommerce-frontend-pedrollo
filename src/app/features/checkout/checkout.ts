@@ -7,6 +7,7 @@ import { CartService } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
 import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated } from '../../core/api/storefront-api';
 import { Icon, Stepper, Alert } from '../../shared/ui';
+import { PayProgress } from './pay-progress';
 import type { Stripe, StripeElements } from '@stripe/stripe-js';
 
 const ESTADOS = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Coahuila', 'Colima', 'Durango', 'Estado de México', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'];
@@ -17,7 +18,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
  *  Element (o modo simulado si la tienda no tiene llave) → `/checkout/confirmando`. El pedido se crea con `precioEsperado`
  *  por línea: si el backend responde 409 PRECIO_CAMBIO, el carrito aplica los precios nuevos y avisa (Manuel: avisar y actualizar). */
 @Component({
-  selector: 'bsv-checkout', imports: [RouterLink, FormsModule, Icon, Stepper, Alert],
+  selector: 'bsv-checkout', imports: [RouterLink, FormsModule, Icon, Stepper, Alert, PayProgress],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Checkout' },
   template: `
   <bsv-stepper [steps]="['Datos y entrega', 'Revisión y pago', 'Confirmación']" [current]="step()" />
@@ -74,8 +75,8 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
           <div class="card card-sm" data-component="Payment"><h3 style="margin:0 0 8px">Pago con tarjeta</h3>
             <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> Procesado por Stripe con 3D Secure. Nunca vemos el número completo de tu tarjeta.</div>
             @if (order(); as o) {
-              @if (o.pago.modo === 'stripe') { <div #paymentEl data-component="StripePaymentElement"></div>
-                @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">Pagar {{ mxn(o.total) }}</button> }
+              @if (o.pago.modo === 'stripe') { <div class="pay-overlay"><div #paymentEl data-component="StripePaymentElement"></div>@if (paying()) { <div class="pay-shield"><bsv-pay-progress /></div> }</div>
+                @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">{{ paying() ? 'Procesando pago…' : 'Pagar ' + mxn(o.total) }}</button> }
                 @else { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> } }
             } @else {
               <p class="small muted" style="margin:0 0 12px">Al continuar apartamos tu mercancía 30 minutos mientras pagas.</p>

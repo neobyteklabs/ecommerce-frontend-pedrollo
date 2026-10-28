@@ -99,3 +99,29 @@ html.motion .hero-center>.hero-inner>.img-slot{transition:transform .2s linear}
   html.motion .grad{animation:none}
   html.motion .buy-pill:not(.is-shown){transform:none;opacity:1;pointer-events:auto}
 }
+
+/* ===== Procesando pago (bala 5d) ===== */
+.pay-progress{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.pay-progress .pp-stage{position:relative;width:72px;height:72px;color:var(--color-gold,#c9a24a)}
+.pay-progress .pp-ico{position:absolute;inset:0;width:100%;height:100%;opacity:0;transform:scale(.8);animation:pp-cycle 3.6s ease-in-out infinite}
+.pay-progress .pp-lock{animation-delay:1.2s}
+.pay-progress .pp-check{animation-delay:2.4s}
+.pay-progress .pp-tick{stroke-dasharray:30;stroke-dashoffset:30;animation:pp-tick 3.6s ease-out infinite;animation-delay:2.6s}
+@keyframes pp-cycle{0%,30%{opacity:0;transform:scale(.8)}5%,25%{opacity:1;transform:scale(1)}33%,100%{opacity:0;transform:scale(.8)}}
+@keyframes pp-tick{0%,5%{stroke-dashoffset:30}20%,100%{stroke-dashoffset:0}}
+.pay-progress .pp-bar{width:min(240px,80%);height:4px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden}
+.pay-progress .pp-bar span{display:block;height:100%;width:40%;border-radius:999px;background:var(--color-gold,#c9a24a);animation:pp-bar 1.4s ease-in-out infinite}
+@keyframes pp-bar{0%{transform:translateX(-120%)}100%{transform:translateX(280%)}}
+.pay-progress .pp-text{margin:0;font-size:var(--text-sm);min-height:1.4em}
+.pay-progress.is-done .pp-ico{animation:none;opacity:0}
+.pay-progress.is-done .pp-check{opacity:1;transform:scale(1)}
+.pay-progress.is-done .pp-tick{animation:none;stroke-dashoffset:0}
+.pay-progress.is-done .pp-bar span{animation:none;width:100%;transform:none}
+/* Sobre el Payment Element mientras se cobra: que no edite la tarjeta a medio cargo. */
+.pay-overlay{position:relative}
+.pay-overlay .pay-shield{position:absolute;inset:-8px;border-radius:var(--radius-lg,12px);background:color-mix(in srgb,var(--color-surface,#fff) 78%,transparent);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:2}
+.pay-overlay .pay-shield .pay-progress{color:var(--color-text)}
+.pay-overlay .pay-shield .pp-bar{background:var(--color-primary-soft,#e6ecf5)}
+.pay-overlay .pay-shield .pp-stage,.pay-overlay .pay-shield .pp-bar span{color:var(--color-primary);background-color:transparent}
+.pay-overlay .pay-shield .pp-bar span{background:var(--color-primary)}
+@media (prefers-reduced-motion:reduce){.pay-progress .pp-ico{animation:none;opacity:0}.pay-progress .pp-lock{opacity:1;transform:none}.pay-progress .pp-bar span{animation:none;width:100%}}

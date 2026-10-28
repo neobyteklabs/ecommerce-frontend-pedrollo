@@ -28,7 +28,7 @@ import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
       <div class="stack">
         @if (t.obsoleto) { <bsv-alert kind="warning">Mostrando el último estado conocido: no pudimos actualizarlo ahora mismo.</bsv-alert> }
         <div class="card" data-component="TrackingStatus">
-          <div class="between" style="flex-wrap:wrap;gap:8px"><div><span class="label">{{ t.tipo === 'pedido' ? 'Pedido' : 'Cotización' }} · folio <span class="mono">{{ t.folio }}</span></span><h2 style="margin:4px 0 0;font-size:var(--text-xl)">{{ t.titulo }}</h2></div><button class="btn btn-secondary btn-sm" type="button" [class.is-loading]="remote.isLoading()" (click)="remote.reload()"><bsv-icon name="rotate" style="--icon:16px" /> Actualizar</button></div>
+          <div class="between" style="flex-wrap:wrap;gap:8px"><div><span class="label">{{ t.tipo === 'pedido' ? 'Pedido' : 'Cotización' }} · folio <span class="mono">{{ t.folio }}</span></span><h2 style="margin:4px 0 0;font-size:var(--text-xl)">{{ t.estado === 'entregado' && t.recibio ? 'Entregado a ' + t.recibio : t.titulo }}</h2></div><button class="btn btn-secondary btn-sm" type="button" [class.is-loading]="remote.isLoading()" (click)="remote.reload()"><bsv-icon name="rotate" style="--icon:16px" /> Actualizar</button></div>
           <p style="margin:8px 0 0">{{ t.detalle }}</p>
           @if (t.actualizado) { <p class="xs muted" style="margin:8px 0 0">Última actualización: {{ fecha(t.actualizado) }}</p> }
           <bsv-timeline [steps]="steps()" style="display:block;margin-top:16px" />
@@ -38,11 +38,16 @@ import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
             @for (e of t.envios; track $index) {
               <div class="card card-sm" style="margin-bottom:8px" data-component="ShipmentCard">
                 <div class="between" style="flex-wrap:wrap;gap:8px"><div><strong>{{ e.origen.startsWith('cedis') ? 'Sale de nuestro CEDIS' : 'Sobre pedido · directo del fabricante' }}</strong>
-                  @if (e.paqueteria || e.guia) { <div class="small">{{ e.paqueteria }} @if (e.guia) { · guía <span class="mono">{{ e.guia }}</span> } </div> }
-                  @if (e.entregadoEn) { <div class="small" style="color:var(--color-success,green)">Entregado el {{ fecha(e.entregadoEn) }}</div> }
+                  @if (e.modo === 'reparto') { <div class="small"><bsv-icon name="truck" style="--icon:14px;vertical-align:-2px" /> Lo entrega un repartidor de Pedrollo</div> }
+                  @else if (e.paqueteria || e.guia) { <div class="small">{{ e.paqueteria }} @if (e.guia) { · guía <span class="mono">{{ e.guia }}</span> } </div> }
+                  @if (e.entregadoEn) { <div class="small" style="color:var(--color-success,green)">Entregado el {{ fecha(e.entregadoEn) }}@if (e.recibio) { · Recibió: <strong>{{ e.recibio }}</strong> }</div> }
+                  @else if (e.enRepartoDesde) { <div class="small">En reparto desde las {{ hora(e.enRepartoDesde) }} · ten a la mano quién lo recibirá</div> }
                   @else if (e.fechaEstimada) { <div class="small muted">Llega aprox. el {{ fecha(e.fechaEstimada) }}</div> }
                   @else { <div class="small muted">Pendiente de embarque</div> } </div>
-                  @if (e.urlRastreo) { <a class="btn btn-secondary btn-sm" [href]="e.urlRastreo" target="_blank" rel="noopener"><bsv-icon name="truck" style="--icon:16px" /> Rastrear</a> }</div>
+                  <div class="row" style="gap:6px;flex-wrap:wrap">
+                  @if (e.urlRastreo) { <a class="btn btn-secondary btn-sm" [href]="e.urlRastreo" target="_blank" rel="noopener"><bsv-icon name="truck" style="--icon:16px" /> Rastrear</a> }
+                  @if (e.remisionUrl) { <a class="btn btn-secondary btn-sm" [href]="remisionUrl(e.remisionUrl)" target="_blank" rel="noopener" data-component="RemisionLink"><bsv-icon name="download" style="--icon:16px" /> {{ e.entregadoEn ? 'Nota de remisión firmada' : 'Ver nota de remisión' }}</a> }
+                  </div></div>
                 <div class="small muted" style="margin-top:6px">@for (r of e.renglones; track $index) { <span class="model">{{ r.modelo }}</span> × {{ r.cantidad }}@if (!$last) { · } }</div>
               </div> }
           </div> }
@@ -74,6 +79,9 @@ export class Tracking {
   remote = this.api.tracking(() => this.key());
   unavailable = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return (e?.status ?? 0) >= 500 || e?.status === 0; });
   steps = computed<TimelineStep[]>(() => this.remote.hasValue() ? buildSteps(this.remote.value()) : []);
+  /** El backend manda la URL relativa de la remisión sin el contacto; la segunda llave se añade aquí (misma regla que el PDF de la cotización). */
+  remisionUrl(url: string) { const k = this.key(); return k ? `${url}${url.includes('?') ? '&' : '?'}contacto=${encodeURIComponent(k.contacto)}` : url; }
+  hora(iso: string) { const d = new Date(iso); return isNaN(d.getTime()) ? iso : d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }); }
   pdfUrl() { const k = this.key(); return k ? `/api/tienda/v1/seguimiento/${encodeURIComponent(k.folio)}/cotizacion.pdf?contacto=${encodeURIComponent(k.contacto)}` : ''; }
   go(e: Event) {
     e.preventDefault(); const f = this.folioInput.trim(); const c = this.contactoInput.trim();
@@ -84,13 +92,13 @@ export class Tracking {
   fecha(iso: string) { const d = new Date(iso.length === 10 ? iso + 'T00:00:00' : iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
 }
 
-/** Línea de tiempo por tipo (spec §10.5). Monótona hacia adelante; `cerrada`/`vencida` marcan el paso actual como rechazado. */
+/** Línea de tiempo por tipo (contrato §8, bala 5d: Enviando / En reparto). Un pedido por paquetería salta «En reparto»: se marca hecho al entregar. Monótona hacia adelante; `cerrada`/`vencida` marcan el paso actual como rechazado. */
 function buildSteps(t: TrackingResponse): TimelineStep[] {
-  const pedido = ['Pedido recibido', 'Preparando', 'En camino', 'Entregado'];
-  const cot = ['Solicitud recibida', 'Cotización lista', 'Pago y preparación', 'En camino', 'Entregado'];
+  const pedido = ['Pedido recibido', 'Preparando', 'Enviando', 'En reparto', 'Entregado'];
+  const cot = ['Solicitud recibida', 'Cotización lista', 'Pago y preparación', 'Enviando', 'En reparto', 'Entregado'];
   const idx: Record<TrackingState, number> = t.tipo === 'pedido'
-    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, entregado: 3, recibida: 0, lista: 0, vencida: 0, cerrada: 0 }
-    : { recibida: 0, lista: 1, vencida: 1, preparando: 2, pedido_recibido: 2, en_camino: 3, entregado: 4, cerrada: 0 };
+    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, en_reparto: 3, entregado: 4, recibida: 0, lista: 0, vencida: 0, cerrada: 0 }
+    : { recibida: 0, lista: 1, vencida: 1, preparando: 2, pedido_recibido: 2, en_camino: 3, en_reparto: 4, entregado: 5, cerrada: 0 };
   const titles = t.tipo === 'pedido' ? pedido : cot; const cur = idx[t.estado] ?? 0; const bad = t.estado === 'cerrada' || t.estado === 'vencida';
   return titles.map((title, i) => ({ title, state: i < cur ? 'done' : i === cur ? (bad ? 'rejected' : t.estado === 'entregado' ? 'done' : 'current') : 'pending' }));
 }

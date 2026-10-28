@@ -55,10 +55,12 @@ export interface OrderView {
 }
 /** Error 409 al crear el pedido: el precio cambió o no hay existencia para alguna línea. */
 export interface OrderConflict { code: 'PRECIO_CAMBIO' | 'SIN_EXISTENCIA' | string; lineas?: { slug: string; precioAnterior?: number; precioActual?: number; disponible?: number }[]; }
-export type TrackingState = 'recibida' | 'lista' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'entregado' | 'cerrada';
-export interface TrackingShipment { origen: string; paqueteria: string | null; guia: string | null; urlRastreo: string | null; fechaEstimada: string | null; entregadoEn: string | null; renglones: { modelo: string; cantidad: number }[]; }
+export type TrackingState = 'recibida' | 'lista' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'en_reparto' | 'entregado' | 'cerrada';
+/** Bala 5d: `modo` `reparto` = lo lleva un repartidor de la tienda (sin guía); `remisionUrl` es la nota de remisión, firmada tras entregar. */
+export interface TrackingShipment { id?: number; origen: string; modo?: 'paqueteria' | 'reparto' | null; paqueteria: string | null; guia: string | null; urlRastreo: string | null; fechaEstimada: string | null; enRepartoDesde?: string | null; entregadoEn: string | null; recibio?: string | null; remisionUrl?: string | null; renglones: { modelo: string; cantidad: number }[]; }
 export interface TrackingResponse {
   folio: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
+  entregadoEn?: string | null; recibio?: string | null;
   asesor?: { nombre: string; telefono: string | null; whatsapp: string | null } | null;
   pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[] } | null;
   cotizacion?: { folio: string; total: number; moneda: string; vigencia: string | null; documento: string | null } | null;
