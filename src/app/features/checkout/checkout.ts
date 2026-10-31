@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CartService } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
 import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated } from '../../core/api/storefront-api';
+import { loadAddress, saveAddress } from '../../core/address';
 import { Icon, Stepper, Alert } from '../../shared/ui';
 import { PayProgress } from './pay-progress';
 import type { Stripe, StripeElements } from '@stripe/stripe-js';
@@ -152,7 +153,7 @@ export class Checkout {
     try {
       const body = { comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) };
       const o = await this.api.createOrder(body);
-      this.remember(o.folio);
+      this.remember(o.folio); saveAddress(this.address());   // F14: la próxima cotización o compra la prellena
       if (o.pago.modo === 'simulado' || !o.pago.clientSecret) { this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } }); return; }
       this.order.set(o);
     } catch (e) { this.handle(e); } finally { this.creating.set(false); }
@@ -186,7 +187,7 @@ export class Checkout {
   }
   private buyer(): OrderBuyer { return { nombre: this.f.nombre.trim(), correo: this.f.correo.trim().toLowerCase(), telefono: this.f.telefono.trim(), ...(this.f.empresa?.trim() ? { empresa: this.f.empresa.trim() } : {}) }; }
   private address(): OrderAddress { return { cp: this.f.cp.trim(), calle: this.f.calle.trim(), numeroExt: this.f.numeroExt.trim(), ...(this.f.numeroInt?.trim() ? { numeroInt: this.f.numeroInt.trim() } : {}), colonia: this.f.colonia.trim(), municipio: this.f.municipio.trim(), estado: this.f.estado, ...(this.f.referencias?.trim() ? { referencias: this.f.referencias.trim() } : {}) }; }
-  private loadForm(): Form { if (!this.browser) return { ...EMPTY }; try { return { ...EMPTY, ...(JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}') as Partial<Form>), ...(sessionStorage.getItem('bsv.cp') && !JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}').cp ? { cp: sessionStorage.getItem('bsv.cp')! } : {}) }; } catch { return { ...EMPTY }; } }
+  private loadForm(): Form { if (!this.browser) return { ...EMPTY }; try { return { ...EMPTY, ...(loadAddress() ?? {}), ...(JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}') as Partial<Form>), ...(sessionStorage.getItem('bsv.cp') && !JSON.parse(sessionStorage.getItem('bsv.checkout') || '{}').cp ? { cp: sessionStorage.getItem('bsv.cp')! } : {}) }; } catch { return { ...EMPTY }; } }
   private saveForm() { if (this.browser) sessionStorage.setItem('bsv.checkout', JSON.stringify(this.f)); }
   private remember(folio: string) { if (this.browser) sessionStorage.setItem('bsv.pedido', JSON.stringify({ folio, contacto: this.f.correo.trim() })); }
 }

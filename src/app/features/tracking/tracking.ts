@@ -1,15 +1,16 @@
 import { Component, inject, input, computed, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { StorefrontApi, TrackingResponse, TrackingState } from '../../core/api/storefront-api';
+import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress } from '../../core/api/storefront-api';
+import { EMPTY_ADDRESS, addressComplete, loadAddress, normalizeAddress, saveAddress } from '../../core/address';
 import { mxn } from '../../core/products';
-import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
+import { Icon, Alert, Timeline, TimelineStep, AddressFields } from '../../shared/ui';
 import { ToastService } from '../../core/toast';
 
 /** `/seguimiento` y `/seguimiento/:folio?c=` (bala 5, spec §10): la tienda pregunta al back-office, que pregunta al CRM.
  *  Dos llaves: folio + correo o teléfono. Sin polling: se consulta al abrir y con «Actualizar». Un 404 no distingue causa. */
 @Component({
-  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline],
+  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Seguimiento' },
   template: `
   <h1 style="font-size:var(--text-2xl)">Seguimiento de tu pedido o cotización</h1>
@@ -82,6 +83,13 @@ import { ToastService } from '../../core/toast';
         <h3 id="accept-title" style="margin:0 0 8px">Aceptar cotización</h3>
         <p style="margin:0 0 4px">Vas a aceptar la cotización <strong class="mono">{{ remote.value().numero || remote.value().folio }}</strong>@if (q) { por <strong class="num">{{ mxn(q.total) }}</strong> }.</p>
         <p class="small muted" style="margin:0 0 12px">Con esto tu asesor prepara la orden y te contacta para el pago y la entrega. Si quieres cambiar algo, mejor escríbele por WhatsApp.</p>
+        @if (remote.value().requiereEntrega) {
+          <div style="margin-bottom:12px" data-component="AcceptAddress">
+            <strong class="small" style="display:block;margin-bottom:8px">¿A dónde lo enviamos?</strong>
+            <bsv-address-fields [(a)]="entrega" [showErrors]="addrErrors()" prefix="acc" />
+            <p class="xs muted" style="margin:8px 0 0">La guardamos para tus próximas compras; no la volveremos a pedir.</p>
+          </div>
+        }
         @if (acceptError()) { <bsv-alert kind="danger" style="margin-bottom:12px">{{ acceptError() }}</bsv-alert> }
         <div class="row" style="gap:8px;justify-content:flex-end;flex-wrap:wrap">
           <button class="btn btn-ghost" type="button" [disabled]="accepting()" (click)="confirming.set(false)">Cerrar</button>
@@ -95,6 +103,8 @@ export class Tracking {
   folio = input<string>(); c = input<string>();
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
   confirming = signal(false); accepting = signal(false); acceptError = signal<string | null>(null);
+  /** F14: solo se pide cuando el seguimiento dice `requiereEntrega`; prellenada con la que recuerda el dispositivo. */
+  entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
   folioInput = ''; contactoInput = ''; formError = signal<string | null>(null);
   key = computed(() => { const f = this.folio()?.trim(); const c = this.c()?.trim(); return f && c ? { folio: f, contacto: c } : undefined; });
   remote = this.api.tracking(() => this.key());
@@ -107,9 +117,13 @@ export class Tracking {
   /** «Aceptar» del modal: una sola llamada; el backend es idempotente y el CRM decide si procede. Al terminar se vuelve a leer el seguimiento. */
   async accept() {
     const k = this.key(); if (!k || this.accepting()) { return; }
+    const needsAddress = !!this.remote.value()?.requiereEntrega;
+    if (needsAddress && !addressComplete(this.entrega())) { this.addrErrors.set(true); this.acceptError.set('Completa la dirección de entrega.'); return; }
+    const entrega = needsAddress ? normalizeAddress(this.entrega()) : undefined;
     this.accepting.set(true); this.acceptError.set(null);
     try {
-      await this.api.acceptQuote(k.folio, k.contacto);
+      await this.api.acceptQuote(k.folio, k.contacto, entrega);
+      if (entrega) saveAddress(entrega);
       this.confirming.set(false); this.remote.reload();
       this.toast.show('Cotización aceptada. Tu asesor te contacta.', 'success');
     } catch (err: unknown) {

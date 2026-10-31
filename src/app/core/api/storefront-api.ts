@@ -20,7 +20,7 @@ export interface StorefrontAvailability { state: 'carrito' | 'cotizar'; }
 export interface ShippingLine { slug: string; estado: 'carrito' | 'cotizar'; parcial: boolean; cedis: string | null; dias: number | null; costoEnvio: number | null; solicitado: number; disponible: number; }
 export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; }
 /** «Cotizar» (bala 4): llega al CRM como lead; nombre y al menos correo o teléfono son obligatorios. */
-export interface QuoteRequest { slug: string; cantidad: number; nombre: string; correo?: string; telefono?: string; cp?: string; mensaje?: string; }
+export interface QuoteRequest { slug: string; cantidad: number; nombre: string; correo?: string; telefono?: string; cp?: string; mensaje?: string; entrega?: OrderAddress; }
 /** `numero` (`COT-000015`) es lo que se le enseña al comprador; `folio` es el UUID interno, que el seguimiento también acepta. */
 export interface QuoteResponse { folio: string; numero: string; }
 /** Listados (bala F1). Identificadores en inglés, valores en español tal como vienen del catálogo. */
@@ -66,6 +66,8 @@ export interface TrackingResponse {
   pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[] } | null;
   cotizacion?: { folio: string; total: number; moneda: string; vigencia: string | null; documento: string | null } | null;
   envios: TrackingShipment[]; acciones: string[];
+  /** F14: solo viaja (true) en una cotización sin dirección ni en el lead ni guardada: el modal de aceptar la pide. */
+  requiereEntrega?: boolean;
 }
 
 /** Añade X-Store-Key solo cuando hay llave (SSR) y la petición va al back-office. En el bundle del navegador STORE_KEY es '' y no hace nada. */
@@ -103,8 +105,8 @@ export class StorefrontApi {
     return httpResource<TrackingResponse>(() => { const k = key(); return k ? { url: `${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(k.folio)}`, params: { contacto: k.contacto } } : undefined; });
   }
   /** El comprador acepta su cotización desde la tienda (limpieza pre-bala 6). Idempotente; 409 si venció o no está lista, 503 si el CRM no contestó. */
-  acceptQuote(folio: string, contacto: string) {
-    return firstValueFrom(this.http.post<TrackingResponse>(`${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(folio)}/aceptar`, {}, { params: { contacto } }));
+  acceptQuote(folio: string, contacto: string, entrega?: OrderAddress) {
+    return firstValueFrom(this.http.post<TrackingResponse>(`${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(folio)}/aceptar`, entrega ? { entrega } : {}, { params: { contacto } }));
   }
   /** La ficha pública. Debe llamarse en contexto de inyección (campo de componente). */
   product(slug: () => string) {
