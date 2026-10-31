@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { StorefrontApi, TrackingResponse, TrackingState } from '../../core/api/storefront-api';
 import { mxn } from '../../core/products';
 import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
+import { ToastService } from '../../core/toast';
 
 /** `/seguimiento` y `/seguimiento/:folio?c=` (bala 5, spec §10): la tienda pregunta al back-office, que pregunta al CRM.
  *  Dos llaves: folio + correo o teléfono. Sin polling: se consulta al abrir y con «Actualizar». Un 404 no distingue causa. */
@@ -28,7 +29,7 @@ import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
       <div class="stack">
         @if (t.obsoleto) { <bsv-alert kind="warning">Mostrando el último estado conocido: no pudimos actualizarlo ahora mismo.</bsv-alert> }
         <div class="card" data-component="TrackingStatus">
-          <div class="between" style="flex-wrap:wrap;gap:8px"><div><span class="label">{{ t.tipo === 'pedido' ? 'Pedido' : 'Cotización' }} · folio <span class="mono">{{ t.folio }}</span></span><h2 style="margin:4px 0 0;font-size:var(--text-xl)">{{ t.estado === 'entregado' && t.recibio ? 'Entregado a ' + t.recibio : t.titulo }}</h2></div><button class="btn btn-secondary btn-sm" type="button" [class.is-loading]="remote.isLoading()" (click)="remote.reload()"><bsv-icon name="rotate" style="--icon:16px" /> Actualizar</button></div>
+          <div class="between" style="flex-wrap:wrap;gap:8px"><div><span class="label">{{ t.tipo === 'pedido' ? 'Pedido' : 'Cotización' }} · folio <span class="mono">{{ t.numero || t.folio }}</span></span><h2 style="margin:4px 0 0;font-size:var(--text-xl)">{{ t.estado === 'entregado' && t.recibio ? 'Entregado a ' + t.recibio : t.titulo }}</h2></div><button class="btn btn-secondary btn-sm" type="button" [class.is-loading]="remote.isLoading()" (click)="remote.reload()"><bsv-icon name="rotate" style="--icon:16px" /> Actualizar</button></div>
           <p style="margin:8px 0 0">{{ t.detalle }}</p>
           @if (t.actualizado) { <p class="xs muted" style="margin:8px 0 0">Última actualización: {{ fecha(t.actualizado) }}</p> }
           <bsv-timeline [steps]="steps()" style="display:block;margin-top:16px" />
@@ -55,7 +56,11 @@ import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
           <div class="card" data-component="QuoteCard"><h3>Tu cotización</h3>
             <div class="between small" style="flex-wrap:wrap"><span>Folio BSV <span class="mono">{{ q.folio }}</span></span><span class="num">{{ mxn(q.total) }}</span></div>
             @if (q.vigencia) { <p class="small muted" style="margin:4px 0 0">Vigente hasta el {{ fecha(q.vigencia) }}</p> }
-            @if (q.documento) { <a class="btn btn-primary btn-sm" style="margin-top:12px" [href]="pdfUrl()" target="_blank" rel="noopener"><bsv-icon name="download" style="--icon:16px" /> Descargar PDF</a> }
+            @if (t.estado === 'aceptada') { <bsv-alert kind="success" style="margin-top:12px">Aceptaste esta cotización. Tu asesor te contacta para cerrar el pago y la entrega.</bsv-alert> }
+            <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:12px">
+              @if (t.acciones.includes('aceptar')) { <button class="btn btn-primary btn-sm" type="button" data-component="AcceptQuoteButton" (click)="confirming.set(true)"><bsv-icon name="check" style="--icon:16px" /> Aceptar cotización</button> }
+              @if (q.documento) { <a class="btn btn-secondary btn-sm" [href]="pdfUrl()" target="_blank" rel="noopener"><bsv-icon name="download" style="--icon:16px" /> Descargar PDF</a> }
+            </div>
           </div> }
       </div>
       <aside class="stack">
@@ -69,11 +74,27 @@ import { Icon, Alert, Timeline, TimelineStep } from '../../shared/ui';
   } @else if (remote.error()) {
     @if (unavailable()) { <div class="empty" data-component="EmptyState/SinConexion"><div class="icon"><bsv-icon name="wifiOff" style="--icon:30px" /></div><h2 style="font-size:var(--text-xl)">No pudimos consultar el seguimiento</h2><p>La tienda no respondió. Intenta de nuevo en un momento.</p><button class="btn btn-primary" type="button" (click)="remote.reload()">Reintentar</button></div> }
     @else { <div class="empty" data-component="EmptyState/Seguimiento"><div class="icon"><bsv-icon name="search" style="--icon:30px" /></div><h2 style="font-size:var(--text-xl)">No encontramos ese folio con ese contacto</h2><p>Revisa que el folio y el correo o teléfono sean los que usaste al comprar o cotizar.</p><a class="btn btn-primary" routerLink="/seguimiento">Intentar de nuevo</a></div> }
-  } @else { <div class="btn btn-secondary is-loading" style="margin:40px auto;width:160px"></div> }`,
+  } @else { <div class="btn btn-secondary is-loading" style="margin:40px auto;width:160px"></div> }
+  @if (confirming() && remote.hasValue()) {
+    @let q = remote.value().cotizacion;
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accept-title" data-component="AcceptQuoteModal" (click)="$event.target === $event.currentTarget && !accepting() && confirming.set(false)">
+      <div class="modal-panel">
+        <h3 id="accept-title" style="margin:0 0 8px">Aceptar cotización</h3>
+        <p style="margin:0 0 4px">Vas a aceptar la cotización <strong class="mono">{{ remote.value().numero || remote.value().folio }}</strong>@if (q) { por <strong class="num">{{ mxn(q.total) }}</strong> }.</p>
+        <p class="small muted" style="margin:0 0 12px">Con esto tu asesor prepara la orden y te contacta para el pago y la entrega. Si quieres cambiar algo, mejor escríbele por WhatsApp.</p>
+        @if (acceptError()) { <bsv-alert kind="danger" style="margin-bottom:12px">{{ acceptError() }}</bsv-alert> }
+        <div class="row" style="gap:8px;justify-content:flex-end;flex-wrap:wrap">
+          <button class="btn btn-ghost" type="button" [disabled]="accepting()" (click)="confirming.set(false)">Cerrar</button>
+          <button class="btn btn-primary" type="button" [class.is-loading]="accepting()" [disabled]="accepting()" (click)="accept()"><bsv-icon name="check" style="--icon:18px" /> Aceptar</button>
+        </div>
+      </div>
+    </div>
+  }`,
 })
 export class Tracking {
   folio = input<string>(); c = input<string>();
-  private api = inject(StorefrontApi); private router = inject(Router); mxn = mxn;
+  private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
+  confirming = signal(false); accepting = signal(false); acceptError = signal<string | null>(null);
   folioInput = ''; contactoInput = ''; formError = signal<string | null>(null);
   key = computed(() => { const f = this.folio()?.trim(); const c = this.c()?.trim(); return f && c ? { folio: f, contacto: c } : undefined; });
   remote = this.api.tracking(() => this.key());
@@ -83,6 +104,22 @@ export class Tracking {
   remisionUrl(url: string) { const k = this.key(); return k ? `${url}${url.includes('?') ? '&' : '?'}contacto=${encodeURIComponent(k.contacto)}` : url; }
   hora(iso: string) { const d = new Date(iso); return isNaN(d.getTime()) ? iso : d.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' }); }
   pdfUrl() { const k = this.key(); return k ? `/api/tienda/v1/seguimiento/${encodeURIComponent(k.folio)}/cotizacion.pdf?contacto=${encodeURIComponent(k.contacto)}` : ''; }
+  /** «Aceptar» del modal: una sola llamada; el backend es idempotente y el CRM decide si procede. Al terminar se vuelve a leer el seguimiento. */
+  async accept() {
+    const k = this.key(); if (!k || this.accepting()) { return; }
+    this.accepting.set(true); this.acceptError.set(null);
+    try {
+      await this.api.acceptQuote(k.folio, k.contacto);
+      this.confirming.set(false); this.remote.reload();
+      this.toast.show('Cotización aceptada. Tu asesor te contacta.', 'success');
+    } catch (err: unknown) {
+      const e = err as { status?: number; error?: { message?: string } };
+      this.acceptError.set(e.status === 409 ? (e.error?.message || 'Esta cotización ya no se puede aceptar. Consulta a tu asesor.')
+        : e.status === 404 ? 'No encontramos esta cotización con ese contacto.'
+        : 'No pudimos registrar tu aceptación ahora mismo. Inténtalo de nuevo en unos minutos.');
+      if (e.status === 409) { this.remote.reload(); }
+    } finally { this.accepting.set(false); }
+  }
   go(e: Event) {
     e.preventDefault(); const f = this.folioInput.trim(); const c = this.contactoInput.trim();
     if (!f || !c) { this.formError.set('Escribe el folio y tu correo o teléfono.'); return; }
@@ -92,13 +129,13 @@ export class Tracking {
   fecha(iso: string) { const d = new Date(iso.length === 10 ? iso + 'T00:00:00' : iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
 }
 
-/** Línea de tiempo por tipo (contrato §8, bala 5d: Enviando / En reparto). Un pedido por paquetería salta «En reparto»: se marca hecho al entregar. Monótona hacia adelante; `cerrada`/`vencida` marcan el paso actual como rechazado. */
+/** Línea de tiempo por tipo (contrato §8, bala 5d: Enviando / En reparto; limpieza pre-bala 6: «Aceptada» entre lista y preparando). Un pedido por paquetería salta «En reparto»: se marca hecho al entregar. Monótona hacia adelante; `cerrada`/`vencida` marcan el paso actual como rechazado. */
 function buildSteps(t: TrackingResponse): TimelineStep[] {
   const pedido = ['Pedido recibido', 'Preparando', 'Enviando', 'En reparto', 'Entregado'];
-  const cot = ['Solicitud recibida', 'Cotización lista', 'Pago y preparación', 'Enviando', 'En reparto', 'Entregado'];
+  const cot = ['Solicitud recibida', 'Cotización lista', 'Aceptada', 'Preparando', 'Enviando', 'En reparto', 'Entregado'];
   const idx: Record<TrackingState, number> = t.tipo === 'pedido'
-    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, en_reparto: 3, entregado: 4, recibida: 0, lista: 0, vencida: 0, cerrada: 0 }
-    : { recibida: 0, lista: 1, vencida: 1, preparando: 2, pedido_recibido: 2, en_camino: 3, en_reparto: 4, entregado: 5, cerrada: 0 };
+    ? { pedido_recibido: 0, preparando: 1, en_camino: 2, en_reparto: 3, entregado: 4, recibida: 0, lista: 0, vencida: 0, aceptada: 0, cerrada: 0 }
+    : { recibida: 0, lista: 1, vencida: 1, aceptada: 2, preparando: 3, pedido_recibido: 3, en_camino: 4, en_reparto: 5, entregado: 6, cerrada: 0 };
   const titles = t.tipo === 'pedido' ? pedido : cot; const cur = idx[t.estado] ?? 0; const bad = t.estado === 'cerrada' || t.estado === 'vencida';
   return titles.map((title, i) => ({ title, state: i < cur ? 'done' : i === cur ? (bad ? 'rejected' : t.estado === 'entregado' ? 'done' : 'current') : 'pending' }));
 }

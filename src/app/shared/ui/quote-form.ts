@@ -49,7 +49,7 @@ export class QuoteForm {
     this.sending.set(true);
     try {
       const r = await this.api.quote({ slug: this.slug(), cantidad: Math.max(1, Number(this.cantidad) || 1), nombre: this.nombre.trim(), correo: this.correo.trim() || undefined, telefono: this.telefono.trim() || undefined, cp: this.cp.trim() || undefined, mensaje: this.mensaje.trim() || undefined }, this.idem);
-      this.folio.set(r.folio); this.sent.emit(r.folio);
+      this.folio.set(r.numero || r.folio); this.sent.emit(r.numero || r.folio);   // el número legible (COT-…); el UUID solo si el backend aún no lo manda
     } catch (err: unknown) {
       const status = (err as { status?: number }).status;
       this.error.set(status === 400 ? 'Revisa los datos: hace falta un nombre y un correo o teléfono válidos.' : 'No pudimos enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.');

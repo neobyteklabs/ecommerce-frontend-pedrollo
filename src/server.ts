@@ -67,8 +67,9 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
 /** Las escrituras de la tienda (balas 4 y 5) de la tienda (bala 4): envío por CP y cotización. Se reenvía el cuerpo tal cual (bytes) y la
  *  cabecera Idempotency-Key; cualquier otro POST sigue siendo 405. */
 const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones', '/api/tienda/v1/carrito/cupon', '/api/tienda/v1/pedidos']);
-/** Bala 5: confirmar el pago de un pedido (idempotente). */
-const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/];
+/** Bala 5: confirmar el pago de un pedido (idempotente). Limpieza pre-bala 6: aceptar la cotización desde la tienda (idempotente; la segunda
+ *  llave va en `?contacto=`, que viaja en `originalUrl`). */
+const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/];
 const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re => re.test(path));
 
 /** Límite por IP, en memoria (bala 5): crear pedidos y consultar seguimiento no deben servir para enumerar folios ni
@@ -94,7 +95,7 @@ app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: 
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
-  if (req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) {
+  if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento'))) {
     res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
   }

@@ -21,7 +21,8 @@ export interface ShippingLine { slug: string; estado: 'carrito' | 'cotizar'; par
 export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; }
 /** «Cotizar» (bala 4): llega al CRM como lead; nombre y al menos correo o teléfono son obligatorios. */
 export interface QuoteRequest { slug: string; cantidad: number; nombre: string; correo?: string; telefono?: string; cp?: string; mensaje?: string; }
-export interface QuoteResponse { folio: string; }
+/** `numero` (`COT-000015`) es lo que se le enseña al comprador; `folio` es el UUID interno, que el seguimiento también acepta. */
+export interface QuoteResponse { folio: string; numero: string; }
 /** Listados (bala F1). Identificadores en inglés, valores en español tal como vienen del catálogo. */
 export interface StorefrontFamily { slug: string; name: string; count: number; }
 export interface StorefrontSeries { slug: string; name: string; familySlug: string; count: number; }
@@ -55,11 +56,11 @@ export interface OrderView {
 }
 /** Error 409 al crear el pedido: el precio cambió o no hay existencia para alguna línea. */
 export interface OrderConflict { code: 'PRECIO_CAMBIO' | 'SIN_EXISTENCIA' | string; lineas?: { slug: string; precioAnterior?: number; precioActual?: number; disponible?: number }[]; }
-export type TrackingState = 'recibida' | 'lista' | 'vencida' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'en_reparto' | 'entregado' | 'cerrada';
+export type TrackingState = 'recibida' | 'lista' | 'vencida' | 'aceptada' | 'pedido_recibido' | 'preparando' | 'en_camino' | 'en_reparto' | 'entregado' | 'cerrada';
 /** Bala 5d: `modo` `reparto` = lo lleva un repartidor de la tienda (sin guía); `remisionUrl` es la nota de remisión, firmada tras entregar. */
 export interface TrackingShipment { id?: number; origen: string; modo?: 'paqueteria' | 'reparto' | null; paqueteria: string | null; guia: string | null; urlRastreo: string | null; fechaEstimada: string | null; enRepartoDesde?: string | null; entregadoEn: string | null; recibio?: string | null; remisionUrl?: string | null; renglones: { modelo: string; cantidad: number }[]; }
 export interface TrackingResponse {
-  folio: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
+  folio: string; numero: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
   entregadoEn?: string | null; recibio?: string | null;
   asesor?: { nombre: string; telefono: string | null; whatsapp: string | null } | null;
   pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[] } | null;
@@ -100,6 +101,10 @@ export class StorefrontApi {
   /** Seguimiento por folio + contacto (pedido o cotización). `undefined` no pide nada. Debe llamarse en contexto de inyección. */
   tracking(key: () => { folio: string; contacto: string } | undefined) {
     return httpResource<TrackingResponse>(() => { const k = key(); return k ? { url: `${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(k.folio)}`, params: { contacto: k.contacto } } : undefined; });
+  }
+  /** El comprador acepta su cotización desde la tienda (limpieza pre-bala 6). Idempotente; 409 si venció o no está lista, 503 si el CRM no contestó. */
+  acceptQuote(folio: string, contacto: string) {
+    return firstValueFrom(this.http.post<TrackingResponse>(`${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(folio)}/aceptar`, {}, { params: { contacto } }));
   }
   /** La ficha pública. Debe llamarse en contexto de inyección (campo de componente). */
   product(slug: () => string) {
