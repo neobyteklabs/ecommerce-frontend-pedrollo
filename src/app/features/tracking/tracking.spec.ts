@@ -58,4 +58,17 @@ describe('Tracking · solicitar factura', () => {
     (boton(el) as HTMLButtonElement).click(); TestBed.tick();
     expect(el.querySelector('[data-component=InvoiceModal] bsv-invoice-form')).not.toBeNull();
   });
+
+  it('un clic dentro del modal no queda cancelado: el submit de «Enviar solicitud» sí dispara (regresión del backdrop)', async () => {
+    const el = await mostrar({ acciones: ['factura'] });
+    (boton(el) as HTMLButtonElement).click();
+    await new Promise(r => setTimeout(r, 0));
+    const modal = document.querySelector('[data-component=InvoiceModal]') ?? el.querySelector('[data-component=InvoiceModal]');
+    expect(modal).not.toBeNull();
+    const submit = modal!.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const ev = new MouseEvent('click', { bubbles: true, cancelable: true });
+    submit.dispatchEvent(ev);
+    expect(ev.defaultPrevented).toBe(false);
+    expect(document.querySelector('[data-component=InvoiceModal]') ?? el.querySelector('[data-component=InvoiceModal]')).not.toBeNull();
+  });
 });

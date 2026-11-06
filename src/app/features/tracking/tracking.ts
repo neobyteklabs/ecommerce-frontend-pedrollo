@@ -95,7 +95,7 @@ import { ToastService } from '../../core/toast';
   } @else { <div class="btn btn-secondary is-loading" style="margin:40px auto;width:160px"></div> }
   @if (confirming() && remote.hasValue()) {
     @let q = remote.value().cotizacion;
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accept-title" data-component="AcceptQuoteModal" (click)="$event.target === $event.currentTarget && !accepting() && confirming.set(false)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accept-title" data-component="AcceptQuoteModal" (click)="backdrop($event, !accepting(), confirming)">
       <div class="modal-panel">
         <h3 id="accept-title" style="margin:0 0 8px">Aceptar cotización</h3>
         <p style="margin:0 0 4px">Vas a aceptar la cotización <strong class="mono">{{ remote.value().numero || remote.value().folio }}</strong>@if (q) { por <strong class="num">{{ mxn(q.total) }}</strong> }.</p>
@@ -116,7 +116,7 @@ import { ToastService } from '../../core/toast';
     </div>
   }
   @if (invoicing() && remote.hasValue() && key(); as k) {
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="$event.target === $event.currentTarget && !invoiceCmp()?.sending() && invoicing.set(false)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="backdrop($event, !invoiceCmp()?.sending(), invoicing)">
       <div class="modal-panel">
         <h3 id="invoice-title" style="margin:0 0 12px">Solicitar factura</h3>
         <bsv-invoice-form [folio]="k.folio" [contacto]="k.contacto" [numero]="remote.value().numero || remote.value().folio" [total]="remote.value().pedido?.total ?? null" (enviada)="invoiceSent($event)" (cancelar)="invoicing.set(false)" />
@@ -160,6 +160,9 @@ export class Tracking {
       if (e.status === 409) { this.remote.reload(); }
     } finally { this.accepting.set(false); }
   }
+  /** Cierra el modal solo con clic en el fondo. Va en un método y no en una expresión `a && b && x.set()` porque Angular llama `preventDefault()`
+   *  cuando el manejador devuelve `false`, y eso cancelaba el clic de «Enviar solicitud» (un botón submit dentro del modal). */
+  backdrop(e: Event, puede: boolean, abierto: { set(v: boolean): void }) { if (e.target === e.currentTarget && puede) { abierto.set(false); } }
   invoiceBadge(s: InvoiceState) { return s === 'facturada' ? 'badge badge-success' : s === 'rechazada' ? 'badge badge-danger' : 'badge badge-info'; }
   invoiceLabel(s: InvoiceState) { return s === 'facturada' ? 'Facturada' : s === 'rechazada' ? 'Rechazada' : 'Enviada a contabilidad'; }
   /** La solicitud ya está en el servidor: se cierra el modal, se vuelve a leer el seguimiento (trae el bloque `factura`) y se avisa. */

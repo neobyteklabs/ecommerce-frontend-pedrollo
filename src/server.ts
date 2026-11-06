@@ -69,7 +69,9 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
 const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones', '/api/tienda/v1/carrito/cupon', '/api/tienda/v1/pedidos']);
 /** Bala 5: confirmar el pago de un pedido (idempotente). Limpieza pre-bala 6: aceptar la cotización desde la tienda (idempotente; la segunda
  *  llave va en `?contacto=`, que viaja en `originalUrl`). */
-const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/];
+const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/,
+  // Bala 7: la solicitud de factura también escribe (y comparte el límite de «seguimiento»).
+  /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/factura$/];
 const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re => re.test(path));
 
 /** Límite por IP, en memoria (bala 5): crear pedidos y consultar seguimiento no deben servir para enumerar folios ni
