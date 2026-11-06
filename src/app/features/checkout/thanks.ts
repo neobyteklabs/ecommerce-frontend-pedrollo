@@ -22,7 +22,7 @@ import { Icon } from '../../shared/ui';
         <div class="lines" style="margin-top:12px"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(o.subtotal) }}</span>@if (o.descuentoCupon) { <span>Cupón {{ o.cuponCodigo }}</span><span class="num">−{{ mxn(o.descuentoCupon) }}</span> }<span>IVA 16 %</span><span class="num">{{ mxn(o.iva) }}</span><span>Envío</span><span class="num">{{ o.envio ? mxn(o.envio) : 'Gratis' }}</span><span class="total">Total</span><span class="total num">{{ mxn(o.total) }}</span></div>
       </div>
       <div class="row" style="justify-content:center;margin-top:24px;flex-wrap:wrap"><a class="btn btn-primary btn-lg" [routerLink]="['/seguimiento', o.folio]" [queryParams]="{ c: c() }"><bsv-icon name="truck" style="--icon:20px" /> Seguir mi pedido</a><a class="btn btn-secondary btn-lg" routerLink="/cuenta/factura">Solicitar factura</a></div>
-      <p class="small muted" style="margin:24px 0 0;text-align:center">Guarda tu folio <span class="mono">{{ o.folio }}</span>. ¿Dudas? Escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu número de pedido.</p>
+      <p class="small muted" style="margin:24px 0 0;text-align:center">Guarda tu número de pedido <span class="mono">{{ o.numero || o.folio }}</span>: con él y tu correo consultas el seguimiento. ¿Dudas? Escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu número de pedido.</p>
     </div>
   } @else if (missing()) {
     <div class="empty"><h1 style="font-size:var(--text-2xl)">No encontramos ese pedido</h1><p>Revisa el enlace de tu correo o consulta el seguimiento con tu folio y tu correo.</p><a class="btn btn-primary" routerLink="/seguimiento">Ir al seguimiento</a></div>

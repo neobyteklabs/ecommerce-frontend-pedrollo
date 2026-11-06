@@ -1,5 +1,6 @@
 import { Component, inject, input, computed, signal, viewChild } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress, InvoiceState, InvoiceRequested } from '../../core/api/storefront-api';
 import { InvoiceFormComponent } from './invoice-form';
@@ -42,17 +43,18 @@ import { ToastService } from '../../core/toast';
             @for (e of t.envios; track $index) {
               <div class="card card-sm" style="margin-bottom:8px" data-component="ShipmentCard">
                 <div class="between" style="flex-wrap:wrap;gap:8px"><div><strong>{{ e.origen.startsWith('cedis') ? 'Sale de nuestro CEDIS' : 'Sobre pedido · directo del fabricante' }}</strong>
-                  @if (e.modo === 'reparto') { <div class="small"><bsv-icon name="truck" style="--icon:14px;vertical-align:-2px" /> Lo entrega un repartidor de Pedrollo</div> }
+                  @if (e.modo === 'reparto') { <div class="small"><bsv-icon name="truck" style="--icon:14px;vertical-align:-2px" /> Lo entrega un repartidor de Bombas y Sistemas Vega</div> }
                   @else if (e.paqueteria || e.guia) { <div class="small">{{ e.paqueteria }} @if (e.guia) { · guía <span class="mono">{{ e.guia }}</span> } </div> }
                   @if (e.entregadoEn) { <div class="small" style="color:var(--color-success,green)">Entregado el {{ fecha(e.entregadoEn) }}@if (e.recibio) { · Recibió: <strong>{{ e.recibio }}</strong> }</div> }
-                  @else if (e.enRepartoDesde) { <div class="small">En reparto desde las {{ hora(e.enRepartoDesde) }} · ten a la mano quién lo recibirá</div> }
+                  @else if (e.enRepartoDesde) { <div class="small">En reparto desde las {{ hora(e.enRepartoDesde) }} · asegúrate de que haya alguien para recibir el paquete</div> }
                   @else if (e.fechaEstimada) { <div class="small muted">Llega aprox. el {{ fecha(e.fechaEstimada) }}</div> }
                   @else { <div class="small muted">Pendiente de embarque</div> } </div>
                   <div class="row" style="gap:6px;flex-wrap:wrap">
                   @if (e.urlRastreo) { <a class="btn btn-secondary btn-sm" [href]="e.urlRastreo" target="_blank" rel="noopener"><bsv-icon name="truck" style="--icon:16px" /> Rastrear</a> }
-                  @if (e.remisionUrl) { <a class="btn btn-secondary btn-sm" [href]="remisionUrl(e.remisionUrl)" target="_blank" rel="noopener" data-component="RemisionLink"><bsv-icon name="download" style="--icon:16px" /> {{ e.entregadoEn ? 'Nota de remisión firmada' : 'Ver nota de remisión' }}</a> }
+                  @if (e.remisionUrl) { <button type="button" class="btn btn-secondary btn-sm" data-component="RemisionLink" (click)="verPdf(e.entregadoEn ? 'Nota de remisión firmada' : 'Nota de remisión', remisionUrl(e.remisionUrl))"><bsv-icon name="receipt" style="--icon:16px" /> {{ e.entregadoEn ? 'Nota de remisión firmada' : 'Ver nota de remisión' }}</button> }
                   </div></div>
                 <div class="small muted" style="margin-top:6px">@for (r of e.renglones; track $index) { <span class="model">{{ r.modelo }}</span> × {{ r.cantidad }}@if (!$last) { · } }</div>
+                <div class="small muted" style="margin-top:4px">Folio <span class="mono">{{ t.numero || t.folio }}</span></div>
               </div> }
           </div> }
         @if (t.cotizacion; as q) {
@@ -62,7 +64,7 @@ import { ToastService } from '../../core/toast';
             @if (t.estado === 'aceptada') { <bsv-alert kind="success" style="margin-top:12px">Aceptaste esta cotización. Tu asesor te contacta para cerrar el pago y la entrega.</bsv-alert> }
             <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:12px">
               @if (t.acciones.includes('aceptar')) { <button class="btn btn-primary btn-sm" type="button" data-component="AcceptQuoteButton" (click)="confirming.set(true)"><bsv-icon name="check" style="--icon:16px" /> Aceptar cotización</button> }
-              @if (q.documento) { <a class="btn btn-secondary btn-sm" [href]="pdfUrl()" target="_blank" rel="noopener"><bsv-icon name="download" style="--icon:16px" /> Descargar PDF</a> }
+              @if (q.documento) { <button type="button" class="btn btn-secondary btn-sm" data-component="QuotePdfLink" (click)="verPdf('Tu cotización', pdfUrl())"><bsv-icon name="receipt" style="--icon:16px" /> Ver cotización</button> }
             </div>
           </div> }
       </div>
@@ -115,6 +117,16 @@ import { ToastService } from '../../core/toast';
       </div>
     </div>
   }
+  @if (pdf(); as p) {
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pdf-title" data-component="PdfModal" (click)="$event.target === $event.currentTarget ? pdf.set(null) : null">
+      <div class="modal-panel" style="max-width:920px;display:flex;flex-direction:column;gap:12px;max-height:92vh">
+        <div class="between" style="gap:8px;flex-wrap:wrap"><h3 id="pdf-title" style="margin:0">{{ p.titulo }}</h3>
+          <div class="row" style="gap:6px"><a class="btn btn-ghost btn-sm" [href]="p.url" download><bsv-icon name="download" style="--icon:16px" /> Descargar</a><button type="button" class="btn btn-ghost btn-sm" (click)="pdf.set(null)">Cerrar</button></div></div>
+        <iframe [src]="p.safe" title="{{ p.titulo }}" style="width:100%;height:72vh;border:1px solid var(--color-border);border-radius:var(--radius-md);background:#fff"></iframe>
+        <p class="small muted" style="margin:0">Si no se ve el documento, usa «Descargar».</p>
+      </div>
+    </div>
+  }
   @if (invoicing() && remote.hasValue() && key(); as k) {
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="backdrop($event, !invoiceCmp()?.sending(), invoicing)">
       <div class="modal-panel">
@@ -128,6 +140,10 @@ export class Tracking {
   folio = input<string>(); c = input<string>();
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
   invoicing = signal(false); invoiceNotice = signal<string | null>(null); invoiceCmp = viewChild(InvoiceFormComponent);
+  /** La remisión y la cotización se ven en un modal, sin sacar al comprador de la tienda (Felipe, 6-nov). Solo URLs relativas de la propia tienda. */
+  pdf = signal<{ titulo: string; url: string; safe: SafeResourceUrl } | null>(null);
+  private sanitizer = inject(DomSanitizer);
+  verPdf(titulo: string, url: string) { if (!url.startsWith('/')) { return; } this.pdf.set({ titulo, url, safe: this.sanitizer.bypassSecurityTrustResourceUrl(url) }); }
   confirming = signal(false); accepting = signal(false); acceptError = signal<string | null>(null);
   /** F14: solo se pide cuando el seguimiento dice `requiereEntrega`; prellenada con la que recuerda el dispositivo. */
   entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
