@@ -18,7 +18,6 @@ export const routes: Routes = [
     { path: '', loadComponent: () => import('./features/account/profile').then(m => m.Profile), title: 'Mi cuenta' },
     { path: 'pedidos', loadComponent: () => import('./features/account/orders').then(m => m.Orders), title: 'Mis pedidos' },
     { path: 'pedidos/:id', loadComponent: () => import('./features/account/order-detail').then(m => m.OrderDetail), title: 'Detalle del pedido' },
-    { path: 'factura', loadComponent: () => import('./features/account/invoice').then(m => m.Invoice), title: 'Solicitar factura' },
     { path: 'devolucion', loadComponent: () => import('./features/account/return').then(m => m.Return), title: 'Devoluciones' },
   ] },
   { path: 'legal', loadComponent: () => import('./features/legal/legal').then(m => m.Legal), title: 'Ayuda y legales' },
