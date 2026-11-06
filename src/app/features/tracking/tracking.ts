@@ -1,7 +1,8 @@
-import { Component, inject, input, computed, signal } from '@angular/core';
+import { Component, inject, input, computed, signal, viewChild } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress } from '../../core/api/storefront-api';
+import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress, InvoiceState, InvoiceRequested } from '../../core/api/storefront-api';
+import { InvoiceFormComponent } from './invoice-form';
 import { EMPTY_ADDRESS, addressComplete, loadAddress, normalizeAddress, saveAddress } from '../../core/address';
 import { mxn } from '../../core/products';
 import { Icon, Alert, Timeline, TimelineStep, AddressFields } from '../../shared/ui';
@@ -10,7 +11,7 @@ import { ToastService } from '../../core/toast';
 /** `/seguimiento` y `/seguimiento/:folio?c=` (bala 5, spec §10): la tienda pregunta al back-office, que pregunta al CRM.
  *  Dos llaves: folio + correo o teléfono. Sin polling: se consulta al abrir y con «Actualizar». Un 404 no distingue causa. */
 @Component({
-  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields],
+  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields, InvoiceFormComponent],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Seguimiento' },
   template: `
   <h1 style="font-size:var(--text-2xl)">Seguimiento de tu pedido o cotización</h1>
@@ -28,6 +29,7 @@ import { ToastService } from '../../core/toast';
     @let t = remote.value();
     <div class="cart-layout" data-component="Tracking">
       <div class="stack">
+        @if (invoiceNotice()) { <bsv-alert kind="success" data-component="InvoiceNotice">{{ invoiceNotice() }}</bsv-alert> }
         @if (t.obsoleto) { <bsv-alert kind="warning">Mostrando el último estado conocido: no pudimos actualizarlo ahora mismo.</bsv-alert> }
         <div class="card" data-component="TrackingStatus">
           <div class="between" style="flex-wrap:wrap;gap:8px"><div><span class="label">{{ t.tipo === 'pedido' ? 'Pedido' : 'Cotización' }} · folio <span class="mono">{{ t.numero || t.folio }}</span></span><h2 style="margin:4px 0 0;font-size:var(--text-xl)">{{ t.estado === 'entregado' && t.recibio ? 'Entregado a ' + t.recibio : t.titulo }}</h2></div><button class="btn btn-secondary btn-sm" type="button" [class.is-loading]="remote.isLoading()" (click)="remote.reload()"><bsv-icon name="rotate" style="--icon:16px" /> Actualizar</button></div>
@@ -68,6 +70,21 @@ import { ToastService } from '../../core/toast';
         @if (t.asesor; as a) { <div class="card" data-component="Advisor"><h4>Tu asesor</h4><p style="margin:0"><strong>{{ a.nombre }}</strong>@if (a.telefono) { <br />{{ a.telefono }} }</p>@if (a.whatsapp) { <a class="btn btn-secondary btn-sm" style="margin-top:12px" [href]="a.whatsapp"><bsv-icon name="phone" style="--icon:16px" /> WhatsApp</a> }</div> }
         @else { <div class="card"><h4>¿Dudas?</h4><p class="small" style="margin:0">Escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu folio.</p></div> }
         @if (t.pedido; as p) { <div class="card summary" style="position:static"><h4>Pedido {{ p.numero }}</h4>@for (r of p.renglones; track $index) { <div class="between small" style="padding:4px 0"><span><span class="model">{{ r.modelo }}</span> × {{ r.cantidad }}</span></div> }<div class="between" style="margin-top:8px;font-weight:600"><span>Total</span><span class="num">{{ mxn(p.total) }}</span></div></div> }
+        @if (t.tipo === 'pedido' && (t.acciones.includes('factura') || t.factura)) {
+          <div class="card" data-component="Invoice"><h4>Factura</h4>
+            @if (t.factura; as fa) {
+              <div class="stack-sm">
+                <span class="badge" [class]="invoiceBadge(fa.estado)" data-component="InvoiceBadge">{{ invoiceLabel(fa.estado) }}</span>
+                @switch (fa.estado) {
+                  @case ('facturada') { <p class="small" style="margin:0">Enviada a <strong>{{ fa.correo }}</strong></p> }
+                  @case ('rechazada') { <p class="small" style="margin:0">Contabilidad no pudo facturar con esos datos; revisa tu correo.</p> }
+                  @case ('sin_contabilidad') { <p class="small" style="margin:0">Solicitada el {{ fecha(fa.creado) }} · te la hacemos llegar a <strong>{{ fa.correo }}</strong></p> }
+                  @default { <p class="small" style="margin:0">Solicitada el {{ fecha(fa.creado) }} · tu CFDI llega a <strong>{{ fa.correo }}</strong> en máximo 2 días hábiles</p> }
+                }
+              </div>
+            } @else { <p class="small" style="margin:0 0 12px">¿Necesitas factura?</p> }
+            @if (t.acciones.includes('factura')) { <button class="btn btn-secondary btn-block" style="margin-top:12px" type="button" data-component="InvoiceRequestButton" (click)="invoicing.set(true)"><bsv-icon name="receipt" style="--icon:18px" /> Solicitar factura</button> }
+          </div> }
         @if (t.estado === 'cerrada' || t.estado === 'vencida') { <a class="btn btn-primary btn-block" routerLink="/categoria/centrifugas">Cotizar de nuevo</a> }
         <a class="btn btn-ghost btn-block" routerLink="/seguimiento">Consultar otro folio</a>
       </aside>
@@ -97,11 +114,20 @@ import { ToastService } from '../../core/toast';
         </div>
       </div>
     </div>
+  }
+  @if (invoicing() && remote.hasValue() && key(); as k) {
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="$event.target === $event.currentTarget && !invoiceCmp()?.sending() && invoicing.set(false)">
+      <div class="modal-panel">
+        <h3 id="invoice-title" style="margin:0 0 12px">Solicitar factura</h3>
+        <bsv-invoice-form [folio]="k.folio" [contacto]="k.contacto" [numero]="remote.value().numero || remote.value().folio" [total]="remote.value().pedido?.total ?? null" (enviada)="invoiceSent($event)" (cancelar)="invoicing.set(false)" />
+      </div>
+    </div>
   }`,
 })
 export class Tracking {
   folio = input<string>(); c = input<string>();
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
+  invoicing = signal(false); invoiceNotice = signal<string | null>(null); invoiceCmp = viewChild(InvoiceFormComponent);
   confirming = signal(false); accepting = signal(false); acceptError = signal<string | null>(null);
   /** F14: solo se pide cuando el seguimiento dice `requiereEntrega`; prellenada con la que recuerda el dispositivo. */
   entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
@@ -133,6 +159,13 @@ export class Tracking {
         : 'No pudimos registrar tu aceptación ahora mismo. Inténtalo de nuevo en unos minutos.');
       if (e.status === 409) { this.remote.reload(); }
     } finally { this.accepting.set(false); }
+  }
+  invoiceBadge(s: InvoiceState) { return s === 'facturada' ? 'badge badge-success' : s === 'rechazada' ? 'badge badge-danger' : 'badge badge-info'; }
+  invoiceLabel(s: InvoiceState) { return s === 'facturada' ? 'Facturada' : s === 'rechazada' ? 'Rechazada' : 'Enviada a contabilidad'; }
+  /** La solicitud ya está en el servidor: se cierra el modal, se vuelve a leer el seguimiento (trae el bloque `factura`) y se avisa. */
+  invoiceSent(r: InvoiceRequested & { correo: string }) {
+    this.invoicing.set(false); this.remote.reload();
+    this.invoiceNotice.set(r.yaSolicitada ? `Ya habíamos recibido tu solicitud de factura. Te llega por correo a ${r.correo}.` : `Recibimos tu solicitud. Te llega por correo a ${r.correo}.`);
   }
   go(e: Event) {
     e.preventDefault(); const f = this.folioInput.trim(); const c = this.contactoInput.trim();

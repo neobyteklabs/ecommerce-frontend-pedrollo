@@ -37,7 +37,8 @@ const FIELDS: readonly Field[] = ['rfc', 'razonSocial', 'regimen', 'cpFiscal', '
 })
 export class InvoiceFormComponent {
   folio = input.required<string>(); contacto = input.required<string>(); numero = input<string>(''); total = input<number | null>(null);
-  enviada = output<InvoiceRequested>(); cancelar = output<void>();
+  /** La respuesta del POST más el correo al que se pidió (el servidor no lo devuelve). */
+  enviada = output<InvoiceRequested & { correo: string }>(); cancelar = output<void>();
   private api = inject(StorefrontApi); mxn = mxn; regimenes = REGIMENES; usos = USOS_CFDI;
   f = { rfc: '', razonSocial: '', regimen: '', cpFiscal: '', usoCfdi: 'G03', correo: '', comentarios: '' };
   private submitted = signal(false); private server = signal<Partial<Record<Field, string>>>({});
@@ -70,8 +71,10 @@ export class InvoiceFormComponent {
     this.sending.set(true);
     try {
       const v = this.f;
-      this.enviada.emit(await this.api.requestInvoice(this.folio(), this.contacto(), { rfc: v.rfc.trim().toUpperCase(), razonSocial: v.razonSocial.trim(), regimen: v.regimen,
-        cpFiscal: v.cpFiscal.trim(), usoCfdi: v.usoCfdi, correo: v.correo.trim(), comentarios: v.comentarios.trim() }));
+      const correo = v.correo.trim();
+      const res = await this.api.requestInvoice(this.folio(), this.contacto(), { rfc: v.rfc.trim().toUpperCase(), razonSocial: v.razonSocial.trim(), regimen: v.regimen,
+        cpFiscal: v.cpFiscal.trim(), usoCfdi: v.usoCfdi, correo, comentarios: v.comentarios.trim() });
+      this.enviada.emit({ ...res, correo });
     } catch (err: unknown) {
       const e2 = err as { status?: number; error?: { message?: string } };
       const message = e2.error?.message ?? '';
