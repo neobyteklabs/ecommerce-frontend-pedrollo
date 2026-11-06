@@ -49,7 +49,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
               <div class="field" [class.has-error]="err('municipio')"><label for="f-mun">Municipio / alcaldía *</label><input id="f-mun" class="input" name="municipio" [(ngModel)]="f.municipio" autocomplete="address-level2" maxlength="120" /><span class="error-msg">Escribe el municipio.</span></div>
               <div class="field" style="grid-column:1/-1"><label for="f-ref">Referencias <span class="muted" style="font-weight:400">(opcional)</span></label><input id="f-ref" class="input" name="referencias" [(ngModel)]="f.referencias" placeholder="Portón negro, entre Av. Gustavo Baz y calle 5" maxlength="300" /></div>
             </div></div>
-          <p class="small muted" style="margin:0">¿Necesitas factura? La pides después desde «Solicitar factura» con tu número de pedido.</p>
+          <p class="small muted" style="margin:0">¿Necesitas factura? La pides después desde el seguimiento de tu pedido, con tu número de pedido y tu correo.</p>
           <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/carrito"><bsv-icon name="arrowLeft" style="--icon:20px" /> Carrito</a><button class="btn btn-primary btn-lg" type="submit">Revisar y pagar <bsv-icon name="arrowRight" style="--icon:20px" /></button></div>
         </form>
       } @else {
