@@ -68,7 +68,13 @@ export interface TrackingResponse {
   envios: TrackingShipment[]; acciones: string[];
   /** F14: solo viaja (true) en una cotización sin dirección ni en el lead ni guardada: el modal de aceptar la pide. */
   requiereEntrega?: boolean;
+  /** Bala 7: la solicitud de factura del pedido, sin datos fiscales. Solo viaja cuando ya se pidió. `acciones` trae `'factura'` si no hay una viva. */
+  factura?: { estado: InvoiceState; creado: string; correo: string } | null;
 }
+/** Bala 7: `solicitada` y `enviada_contabilidad` se ven igual; `sin_contabilidad` = la tienda la guardó pero no salió correo; `rechazada` se puede volver a pedir. */
+export type InvoiceState = 'solicitada' | 'enviada_contabilidad' | 'sin_contabilidad' | 'facturada' | 'rechazada';
+export interface InvoiceForm { rfc: string; razonSocial: string; regimen: string; cpFiscal: string; usoCfdi: string; correo: string; comentarios?: string; }
+export interface InvoiceRequested { estado: InvoiceState; creado: string; yaSolicitada: boolean; }
 
 /** Añade X-Store-Key solo cuando hay llave (SSR) y la petición va al back-office. En el bundle del navegador STORE_KEY es '' y no hace nada. */
 export const storeKeyInterceptor: HttpInterceptorFn = (req, next) => {
@@ -107,6 +113,10 @@ export class StorefrontApi {
   /** El comprador acepta su cotización desde la tienda (limpieza pre-bala 6). Idempotente; 409 si venció o no está lista, 503 si el CRM no contestó. */
   acceptQuote(folio: string, contacto: string, entrega?: OrderAddress) {
     return firstValueFrom(this.http.post<TrackingResponse>(`${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(folio)}/aceptar`, entrega ? { entrega } : {}, { params: { contacto } }));
+  }
+  /** Bala 7: pide la factura de un pedido pagado. 201 la primera vez, 200 `yaSolicitada` si ya había una viva; 400 con el campo en la primera palabra del `message`; 409 `factura_no_disponible`; 404 opaco. */
+  requestInvoice(folio: string, contacto: string, form: InvoiceForm) {
+    return firstValueFrom(this.http.post<InvoiceRequested>(`${this.base}/api/tienda/v1/seguimiento/${encodeURIComponent(folio)}/factura`, form, { params: { contacto } }));
   }
   /** La ficha pública. Debe llamarse en contexto de inyección (campo de componente). */
   product(slug: () => string) {
