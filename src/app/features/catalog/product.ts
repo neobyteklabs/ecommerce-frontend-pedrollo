@@ -7,10 +7,13 @@ import { CartService } from '../../core/cart';
 import { ToastService } from '../../core/toast';
 import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
-import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm } from '../../shared/ui';
+import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm, PdfModal } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
-import { StorefrontApi, GallerySection } from '../../core/api/storefront-api';
+import { StorefrontApi, GallerySection, StoreDocument } from '../../core/api/storefront-api';
 import { cardFromProduct } from '../../core/api/storefront-view';
+
+/** «850 KB», «1.2 MB»: el peso de un PDF para el comprador. */
+export function pesoLegible(bytes: number): string { return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`; }
 
 interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'scene' | 'technical' | 'placeholder'; alt: string; caption: string; pending?: boolean; }
 
@@ -18,7 +21,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
  *  Fotografía principal = foto oficial referencial de la serie (no verificada por modelo). Recortes técnicos tal cual
  *  vienen del paquete de la serie; los marcados "pendiente aprobacion" solo se ven en modo revisión. */
 @Component({
-  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal, QuoteForm],
+  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal, QuoteForm, PdfModal],
   host: { class: 'container block', 'data-page': 'Producto' },
   template: `
   @if (p(); as p) {
@@ -29,7 +32,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
   @if (products.reviewMode()) { <bsv-alert kind="info" title="Modo revisión activo" style="margin-bottom:16px">Se muestran recursos pendientes de aprobación con etiqueta. Público no los ve. <a href="?revision=0">Salir</a></bsv-alert> }
   <div class="pdp">
     <div class="gallery" data-component="Gallery">
-      <div class="gallery-tabs" role="tablist" data-component="GalleryTabs">@for (t of galleryTabs(); track t.id) { <button role="tab" type="button" [attr.aria-selected]="t.id === gtab()" [disabled]="!t.items.length" (click)="gtab.set(t.id); thumb.set(0)">{{ t.name }}@if (t.pending) { <span class="badge badge-warning no-dot" style="margin-left:6px">en revisión</span> }</button> }</div>
+      <div class="gallery-tabs" role="tablist" data-component="GalleryTabs">@for (t of galleryTabs(); track t.id) { <button role="tab" type="button" [attr.aria-selected]="t.id === gtab()" [disabled]="!t.items.length && !docsDe(t.id).length" (click)="gtab.set(t.id); thumb.set(0)">{{ t.name }}@if (t.pending) { <span class="badge badge-warning no-dot" style="margin-left:6px">en revisión</span> }</button> }</div>
       @let items = currentItems();
       @if (items[thumb()]; as cur) {
         <bsv-img-slot cls="main" [slot]="cur.slot" [src]="cur.src" [product]="cur.kind === 'catalog'" [scene]="cur.kind === 'scene'" [class.technical]="cur.kind === 'technical'" [eager]="true" [alt]="cur.alt" />
@@ -37,6 +40,17 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
         @if (items.length > 1) { <div class="thumbs">@for (it of items; track it.slot; let i = $index) { <bsv-img-slot [slot]="it.slot" [src]="it.src" [product]="it.kind === 'catalog'" [scene]="it.kind === 'scene'" [class.technical]="it.kind === 'technical'" [class.is-active]="i === thumb()" tabindex="0" role="button" [attr.aria-label]="it.caption" (click)="thumb.set(i)" (keydown.enter)="thumb.set(i)" /> }</div> }
       } @else {
         <div class="img-slot technical" [attr.data-slot]="emptyTabLabel()" style="aspect-ratio:4/3"></div>
+      }
+      @if (docsDeLaPestana().length) {
+        <ul class="docs" data-component="Documentos" style="list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px">
+          @for (d of docsDeLaPestana(); track d.url) {
+            <li class="row" style="gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--color-border);border-radius:var(--radius-md)">
+              <bsv-icon name="file" style="--icon:24px" />
+              <span style="flex:1;min-width:0"><strong style="display:block;overflow-wrap:anywhere">{{ d.titulo }}</strong><span class="xs muted">PDF · {{ peso(d.bytes) }}</span></span>
+              <button class="btn btn-secondary btn-sm" type="button" (click)="doc.set(d)">Ver</button>
+              <a class="btn btn-ghost btn-sm" [href]="d.url" download>Descargar</a>
+            </li> }
+        </ul>
       }
     </div>
     <div class="stack">
@@ -66,6 +80,8 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
       </div>
     </div>
   </div>
+
+  @if (doc(); as d) { <bsv-pdf-modal [titulo]="d.titulo" [url]="d.url" (cerrar)="doc.set(null)" /> }
 
   <section class="section" style="padding-top:32px">
     <div class="grid md-grid-2" style="gap:32px">
@@ -170,6 +186,13 @@ export class ProductPage {
       { id: 'ficha', name: 'Ficha técnica', items: ficha, pending: ok && pend },
     ];
   });
+  /** Bala 12: a qué pestaña de la ficha pertenece cada tipo de documento. */
+  private static TAB: Record<string, string> = { curvas: 'curvas', despiece: 'componentes' };
+  /** Los documentos del producto que corresponden a la pestaña activa (curvas → Curvas, despiece → Componentes, el resto → Ficha técnica). */
+  docsDe(tab: string): StoreDocument[] { return (this.remote.hasValue() ? this.remote.value()?.documentos ?? [] : []).filter(d => (ProductPage.TAB[d.tipo] ?? 'ficha') === tab); }
+  docsDeLaPestana = computed<StoreDocument[]>(() => this.docsDe(this.gtab()));
+  doc = signal<StoreDocument | null>(null);
+  peso = pesoLegible;
   currentItems = computed(() => this.galleryTabs().find(t => t.id === this.gtab())?.items ?? []);
   emptyTabLabel = computed(() => { const c = this.p()?.cuts; const lote = (this.series()?.tecnico.revision ?? []).length > 0; return (c && !c.aprobado) || lote ? (this.products.reviewMode() ? 'sin vista preliminar en el lote para esta pestaña' : 'recurso técnico en revisión · pendiente de aprobación') : 'recurso técnico pendiente'; });
 

@@ -1,18 +1,17 @@
 import { Component, inject, input, computed, signal, viewChild } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress, InvoiceState, InvoiceRequested } from '../../core/api/storefront-api';
 import { InvoiceFormComponent } from './invoice-form';
 import { EMPTY_ADDRESS, addressComplete, loadAddress, normalizeAddress, saveAddress } from '../../core/address';
 import { mxn } from '../../core/products';
-import { Icon, Alert, Timeline, TimelineStep, AddressFields } from '../../shared/ui';
+import { Icon, Alert, Timeline, TimelineStep, AddressFields, PdfModal } from '../../shared/ui';
 import { ToastService } from '../../core/toast';
 
 /** `/seguimiento` y `/seguimiento/:folio?c=` (bala 5, spec §10): la tienda pregunta al back-office, que pregunta al CRM.
  *  Dos llaves: folio + correo o teléfono. Sin polling: se consulta al abrir y con «Actualizar». Un 404 no distingue causa. */
 @Component({
-  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields, InvoiceFormComponent],
+  selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields, InvoiceFormComponent, PdfModal],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Seguimiento' },
   template: `
   <h1 style="font-size:var(--text-2xl)">Seguimiento de tu pedido o cotización</h1>
@@ -117,16 +116,7 @@ import { ToastService } from '../../core/toast';
       </div>
     </div>
   }
-  @if (pdf(); as p) {
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pdf-title" data-component="PdfModal" (click)="$event.target === $event.currentTarget ? pdf.set(null) : null">
-      <div class="modal-panel" style="max-width:920px;display:flex;flex-direction:column;gap:12px;max-height:92vh">
-        <div class="between" style="gap:8px;flex-wrap:wrap"><h3 id="pdf-title" style="margin:0">{{ p.titulo }}</h3>
-          <div class="row" style="gap:6px"><a class="btn btn-ghost btn-sm" [href]="p.url" download><bsv-icon name="download" style="--icon:16px" /> Descargar</a><button type="button" class="btn btn-ghost btn-sm" (click)="pdf.set(null)">Cerrar</button></div></div>
-        <iframe [src]="p.safe" title="{{ p.titulo }}" style="width:100%;height:72vh;border:1px solid var(--color-border);border-radius:var(--radius-md);background:#fff"></iframe>
-        <p class="small muted" style="margin:0">Si no se ve el documento, usa «Descargar».</p>
-      </div>
-    </div>
-  }
+  @if (pdf(); as p) { <bsv-pdf-modal [titulo]="p.titulo" [url]="p.url" (cerrar)="pdf.set(null)" /> }
   @if (invoicing() && remote.hasValue() && key(); as k) {
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="backdrop($event, !invoiceCmp()?.sending(), invoicing)">
       <div class="modal-panel">
@@ -141,9 +131,8 @@ export class Tracking {
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
   invoicing = signal(false); invoiceNotice = signal<string | null>(null); invoiceCmp = viewChild(InvoiceFormComponent);
   /** La remisión y la cotización se ven en un modal, sin sacar al comprador de la tienda (Felipe, 6-nov). Solo URLs relativas de la propia tienda. */
-  pdf = signal<{ titulo: string; url: string; safe: SafeResourceUrl } | null>(null);
-  private sanitizer = inject(DomSanitizer);
-  verPdf(titulo: string, url: string) { if (!url.startsWith('/')) { return; } this.pdf.set({ titulo, url, safe: this.sanitizer.bypassSecurityTrustResourceUrl(url) }); }
+  pdf = signal<{ titulo: string; url: string } | null>(null);
+  verPdf(titulo: string, url: string) { if (!url.startsWith('/')) { return; } this.pdf.set({ titulo, url }); }
   confirming = signal(false); accepting = signal(false); acceptError = signal<string | null>(null);
   /** F14: solo se pide cuando el seguimiento dice `requiereEntrega`; prellenada con la que recuerda el dispositivo. */
   entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
