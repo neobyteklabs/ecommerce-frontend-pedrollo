@@ -6,6 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { mediaHandler } from './media-proxy';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -37,6 +38,17 @@ if (CONFIG_ERROR) {
     '',
   ].join('\n'));
 }
+
+/** Bala 11, C0: las imágenes de tienda y los banners que sube el portal (ver media-proxy.ts). Solo GET; cualquier otro método, 405. */
+const media = mediaHandler(BACKOFFICE_URL);
+app.all('/media/{*splat}', (req, res) => {
+  const out = {
+    status: (c: number) => { res.status(c); return out; },
+    setHeader: (n: string, v: string) => res.setHeader(n, v),
+    send: (b?: Uint8Array | string) => res.send(typeof b === 'string' || b === undefined ? b : Buffer.from(b)),
+  };
+  return media(req, out);
+});
 
 /** Proxy GET hacia la API de tienda (ficha, listados, pedido y seguimiento por folio + contacto, PDF). Devuelve estado, Content-Type y cuerpo tal cual. */
 app.get('/api/tienda/{*splat}', async (req, res) => {
