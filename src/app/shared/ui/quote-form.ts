@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { StorefrontApi, OrderAddress } from '../../core/api/storefront-api';
 import { AddressFields } from './address-fields';
 import { EMPTY_ADDRESS, addressComplete, addressEmpty, loadAddress, normalizeAddress, saveAddress } from '../../core/address';
+import { uuid } from '../../core/uuid';
 import { Alert } from './alert';
 import { Icon } from './icon';
 
@@ -53,7 +54,7 @@ export class QuoteForm {
   sending = signal(false); error = signal<string | null>(null); folio = signal<string | null>(null);
   /** F14: la dirección es del comprador. Si el dispositivo la recuerda, el bloque viene abierto y prellenado; si no, es opcional. */
   entrega = signal<OrderAddress>({ ...EMPTY_ADDRESS }); showAddress = signal(false); addrErrors = signal(false);
-  private idem = crypto.randomUUID();
+  private idem = uuid();
   ngOnInit() { this.cantidad = this.initialQty(); this.cp = this.initialCp() ?? ''; const saved = loadAddress(); if (saved) { this.entrega.set(saved); this.showAddress.set(true); if (!this.cp) this.cp = saved.cp; } }
   async send(e: Event) {
     e.preventDefault(); this.error.set(null);
@@ -70,7 +71,7 @@ export class QuoteForm {
     } catch (err: unknown) {
       const status = (err as { status?: number }).status;
       this.error.set(status === 400 ? 'Revisa los datos: hace falta un nombre y un correo o teléfono válidos.' : 'No pudimos enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.');
-      this.idem = crypto.randomUUID();   // un intento nuevo del usuario, una llave nueva
+      this.idem = uuid();   // un intento nuevo del usuario, una llave nueva
     } finally { this.sending.set(false); }
   }
 }
