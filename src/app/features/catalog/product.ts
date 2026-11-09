@@ -132,6 +132,8 @@ export class ProductPage {
     const c = p.cuts; const rev = this.products.reviewMode(); const ok = cutsVisible(c, rev); const pend = !!c && !c.aprobado;
     const shared = this.series()?.tecnico.recortes?.compartidos ?? {};
     const foto: GalleryItem[] = [];
+    // Bala 11: las imágenes estilizadas de la tienda (admin) van PRIMERO; la foto verificada/referencial queda después.
+    (this.remote.hasValue() ? this.remote.value()?.imagenes ?? [] : []).forEach((im, i) => foto.push({ slot: `tienda-${p.id}-${i}`, src: im.url, kind: 'scene', alt: im.alt || `${p.model}, imagen de tienda`, caption: 'Imagen de tienda' }));
     if (c?.foto_modelo && c.foto_modelo_verificada) foto.push({ slot: `foto-${p.id}`, src: c.foto_modelo, kind: 'catalog', alt: `${p.model}, fotografía verificada`, caption: 'Fotografía verificada del modelo.' });
     foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Serie ${p.serieName}, imagen referencial`, caption: p.catalog ? 'Imagen referencial de la familia (pedrollo.com.mx). No es fotografía verificada de este modelo.' : 'Placeholder: imagen referencial pendiente.' });
     p.gallery.forEach((g, i) => foto.push({ slot: `serie-${p.serie}-${i === 0 ? 'hero' : 'banner'}`, src: g, kind: 'scene', alt: `Serie ${p.serieName}, imagen comercial`, caption: 'Imagen comercial representativa de la serie.' }));

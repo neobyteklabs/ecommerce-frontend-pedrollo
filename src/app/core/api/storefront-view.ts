@@ -9,6 +9,8 @@ export interface CardItem {
   id: string; model: string; name: string; serie: string; serieName: string; catalog: string | null;
   price: number | null; before: number | null; promoLabel: string | null; avail: 'carrito' | 'cotizar' | null;
   specs: string; specsPending: boolean;
+  /** Bala 11: primera imagen estilizada de la tienda (desde la API); gana sobre `catalog`. */
+  imagen?: string | null;
 }
 
 const titleCase = (s: string) => s.toLowerCase().replace(/(^|\s|\()([a-záéíóúñ])/g, (_, a, b) => a + b.toUpperCase()).replace(/\bInox\.?/g, 'Inox.');
@@ -22,6 +24,7 @@ export function cardFromSummary(p: StorefrontProductSummary): CardItem {
     serie: serieSlug, serieName: p.series ?? '', catalog: imageFor(`catalog-${serieSlug}`),
     price: p.price?.amount ?? null, before: p.price?.before ?? null, promoLabel: p.price?.promotion?.label ?? null,
     avail: p.availability?.state ?? null, specs: specs || 'Especificaciones pendientes', specsPending: !specs,
+    imagen: p.imagen ?? null,
   };
 }
 
