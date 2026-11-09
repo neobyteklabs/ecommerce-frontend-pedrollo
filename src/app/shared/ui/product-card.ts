@@ -15,7 +15,7 @@ import { Spotlight, Reveal } from '../directives/motion';
   host: { class: 'product-card', 'data-component': 'ProductCard' },
   template: `
     <a class="absolute inset-0 z-10" [routerLink]="['/producto', p().id]" [attr.aria-label]="p().model + ' ' + p().name"></a>
-    <bsv-img-slot [slot]="'catalog-' + p().serie + ' · foto oficial pendiente'" [src]="p().imagen ?? p().catalog" [product]="true" [alt]="'Serie ' + p().serieName + ' (foto oficial de la serie)'" />
+    <bsv-img-slot [slot]="'catalog-' + p().serie + ' · foto oficial pendiente'" [src]="p().imagen ?? p().catalog" [product]="true" [alt]="p().imagen ? p().model + ', imagen de tienda' : 'Serie ' + p().serieName + ' (foto oficial de la serie)'" />
     <span class="model">{{ p().model }}</span>
     <span class="name">{{ p().name }}</span>
     <span class="specs" [class.muted]="p().specsPending">{{ p().specs }}</span>

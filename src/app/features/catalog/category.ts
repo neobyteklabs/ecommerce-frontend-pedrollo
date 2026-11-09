@@ -20,7 +20,7 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   template: `
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
   @if (banner(); as b) {
-  <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>
+  <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" cls="banner" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>
   <h1 style="font-size:var(--text-2xl);margin-top:16px">{{ cat().name }} <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} modelos</span></h1>
   } @else if (hero(); as h) {
   <div class="family-hero" data-component="FamilyHero">
