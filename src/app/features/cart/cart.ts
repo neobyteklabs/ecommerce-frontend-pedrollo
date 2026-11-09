@@ -27,7 +27,7 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
       <div class="card" style="padding-block:0">
         @for (l of cart.lines(); track l.id) { @let p = products.byId(l.id)!; @let s = cart.shippingOf(l);
           <div class="cart-line" data-component="CartLine" [class.is-quote]="s?.estado === 'cotizar'">
-            <bsv-img-slot [slot]="l.id" [product]="true" />
+            <bsv-img-slot [slot]="l.id" [src]="l.imagen ?? p.catalog" [product]="true" [alt]="p.model" />
             <div>
               <a class="model" [routerLink]="['/producto', l.id]" style="text-decoration:none">{{ p.model }}</a>@if (l.changedFrom != null) { <span class="badge badge-warning no-dot" style="margin-left:8px">precio actualizado</span> }
               <div style="font-weight:600">{{ p.name }}</div>

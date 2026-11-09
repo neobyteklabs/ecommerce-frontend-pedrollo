@@ -5,7 +5,9 @@ import { StorefrontApi, ShippingResponse, ShippingLine, CouponResponse } from '.
 
 /** `fromApi`: el precio vino de la API de tienda al agregar. `changedFrom`: el precio anterior cuando la API devolvió otro
  *  al refrescar (bala 4, Manuel: avisar y actualizar); se limpia con «Entendido». */
-export interface CartLine { id: string; qty: number; priceAtAdd: number | null; fromApi?: boolean; changedFrom?: number | null; }
+export interface CartLine { id: string; qty: number; priceAtAdd: number | null; fromApi?: boolean; changedFrom?: number | null;
+  /** Bala 12: la imagen de tienda (primera de «foto») guardada al agregar; sin ella, la línea usa la foto técnica del modelo. */
+  imagen?: string | null; }
 
 /** Carrito en signals; persiste en localStorage solo en navegador (SSR-safe). El CP y el envío resuelto viven en sessionStorage. */
 @Injectable({ providedIn: 'root' })
@@ -52,10 +54,10 @@ export class CartService {
     effect(() => { if (this.browser) { const c = this.couponCode(); if (c) sessionStorage.setItem('bsv.cupon', c); else sessionStorage.removeItem('bsv.cupon'); } });
   }
 
-  add(id: string, qty = 1, price: number | null = null) {
+  add(id: string, qty = 1, price: number | null = null, imagen: string | null = null) {
     const p = this.products.byId(id); if (!p) return;
     const fromApi = price != null;
-    this.lines.update(ls => { const l = ls.find(x => x.id === id); return l ? ls.map(x => x.id === id ? { ...x, qty: x.qty + qty, ...(fromApi ? { priceAtAdd: price, fromApi } : {}) } : x) : [...ls, { id, qty, priceAtAdd: fromApi ? price : p.price, ...(fromApi ? { fromApi } : {}) }]; });
+    this.lines.update(ls => { const l = ls.find(x => x.id === id); return l ? ls.map(x => x.id === id ? { ...x, qty: x.qty + qty, ...(fromApi ? { priceAtAdd: price, fromApi } : {}), ...(imagen ? { imagen } : {}) } : x) : [...ls, { id, qty, priceAtAdd: fromApi ? price : p.price, ...(fromApi ? { fromApi } : {}), ...(imagen ? { imagen } : {}) }]; });
     this.shippingResult.set(null);
   }
   setQty(id: string, qty: number) { this.lines.update(ls => ls.map(x => x.id === id ? { ...x, qty } : x).filter(x => x.qty > 0)); this.shippingResult.set(null); }

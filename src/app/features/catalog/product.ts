@@ -192,6 +192,8 @@ export class ProductPage {
   docsDe(tab: string): StoreDocument[] { return (this.remote.hasValue() ? this.remote.value()?.documentos ?? [] : []).filter(d => (ProductPage.TAB[d.tipo] ?? 'ficha') === tab); }
   docsDeLaPestana = computed<StoreDocument[]>(() => this.docsDe(this.gtab()));
   doc = signal<StoreDocument | null>(null);
+  /** La imagen de tienda que representa al producto en el carrito: la primera de «foto» (la misma que la tarjeta). */
+  private primeraFoto = () => (this.remote.hasValue() ? this.remote.value()?.imagenes ?? [] : []).find(i => (i.seccion ?? 'foto') === 'foto')?.url ?? null;
   peso = pesoLegible;
   currentItems = computed(() => this.galleryTabs().find(t => t.id === this.gtab())?.items ?? []);
   emptyTabLabel = computed(() => { const c = this.p()?.cuts; const lote = (this.series()?.tecnico.revision ?? []).length > 0; return (c && !c.aprobado) || lote ? (this.products.reviewMode() ? 'sin vista preliminar en el lote para esta pestaña' : 'recurso técnico en revisión · pendiente de aprobación') : 'recurso técnico pendiente'; });
@@ -200,5 +202,5 @@ export class ProductPage {
   mxn = mxn; availLabel = availLabel; specLine = specLine;
   private title = inject(Title);
   private _t = effect(() => { const p = this.p(); if (p) this.title.setTitle(`${p.model} · ${p.name} · Pedrollo`); });
-  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty(), this.price()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
+  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty(), this.price(), this.primeraFoto()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
 }
