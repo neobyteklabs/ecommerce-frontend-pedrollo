@@ -1,7 +1,7 @@
 import { Component, inject, input, signal, computed } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../core/products';
-import { StorefrontApi, ListingOrder } from '../../core/api/storefront-api';
+import { StorefrontApi, ListingOrder, StoreBanner } from '../../core/api/storefront-api';
 import { cardFromSummary } from '../../core/api/storefront-view';
 import { Icon, ProductCard, ProductSkeleton, Empty } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
@@ -19,7 +19,10 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   host: { class: 'container block', 'data-page': 'Categoria' },
   template: `
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
-  @if (hero(); as h) {
+  @if (banner(); as b) {
+  <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>
+  <h1 style="font-size:var(--text-2xl);margin-top:16px">{{ cat().name }} <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} modelos</span></h1>
+  } @else if (hero(); as h) {
   <div class="family-hero" data-component="FamilyHero">
     <bsv-img-slot [slot]="'familia-' + slug() + '-hero'" [src]="h.web" [scene]="true" [eager]="true" [alt]="cat().name + ', imagen comercial de familia'" />
     <div class="family-hero-copy"><span class="eyebrow">Familia</span><h1>{{ cat().name }}</h1>@if (h.pending) { <span class="badge badge-warning no-dot">Pendiente de aprobación visual · modo revisión</span> }</div>
@@ -79,6 +82,9 @@ export class Category {
   private products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
   open = signal(false); pages = signal(1);
   hero = computed(() => familyHero(this.slug(), this.products.reviewMode()));
+  /** Bala 11: el banner de esta familia (admin) encabeza la página en lugar del hero del manifiesto; sin él, como hoy. */
+  private bannersRes = this.api.banners();
+  banner = computed<StoreBanner | null>(() => this.bannersRes.hasValue() ? this.bannersRes.value().categoria?.[this.slug()]?.[0] ?? null : null);
   cat = computed(() => familyBySlug(this.slug()) ?? FAMILIES[0]);
   order = computed<ListingOrder>(() => (ORDERS as string[]).includes(this.orden() ?? '') ? this.orden() as ListingOrder : 'serie');
 

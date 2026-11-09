@@ -3,10 +3,12 @@ import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../core/products';
 import { FAMILIES } from '../../core/catalog';
 import { familyHero } from '../../core/resources';
-import { StorefrontApi } from '../../core/api/storefront-api';
+import { StorefrontApi, StoreBanners } from '../../core/api/storefront-api';
 import { cardFromSummary } from '../../core/api/storefront-view';
 import { Icon, ImgSlot, ProductCard, ProductSkeleton } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
+
+const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], categoria: {} };
 
 @Component({
   selector: 'bsv-home', imports: [RouterLink, Icon, ImgSlot, ProductCard, ProductSkeleton, Reveal],
@@ -20,7 +22,7 @@ import { Reveal } from '../../shared/directives/motion';
         <p class="lead">Dos impulsores en serie: altura hasta 112 m y caudal hasta 450 l/min según la ficha 60 Hz.</p>
         <div class="row hero-links"><a class="btn-link" routerLink="/serie/2cp">Más información ›</a><a class="btn-link" routerLink="/producto/2cp-32-210a">Ver modelos ›</a></div>
       </div>
-      <bsv-img-slot slot="hero-home" alt="Electrobomba Pedrollo 2CP sobre fondo negro con salpicaduras de agua" [scene]="true" [eager]="true" />
+      <bsv-img-slot slot="hero-home" alt="Electrobomba Pedrollo 2CP sobre fondo negro con salpicaduras de agua" [scene]="true" [eager]="true" [banner]="banners().hero[0] ?? null" />
       <form class="hero-search" role="search" data-component="SearchBar/Hero" (submit)="go($event, hq.value)">
         <label class="sr-only" for="hq">Buscar producto</label>
         <div class="input-group"><bsv-icon name="search" style="--icon:20px" /><input #hq id="hq" type="search" placeholder="Modelo, HP o uso: PKm 60, 1 HP, pozo profundo…" /><button class="btn btn-primary btn-sm" type="submit">Buscar</button></div>
@@ -28,6 +30,12 @@ import { Reveal } from '../../shared/directives/motion';
       </form>
     </div>
   </section>
+
+  @if (banners().franja.length) {
+  <section class="container" style="display:grid;gap:var(--space-3);padding-top:var(--space-5)" data-component="Section/Franja">
+    @for (b of banners().franja; track $index) { <bsv-img-slot cls="franja" slot="franja" [banner]="b" [scene]="true" style="aspect-ratio:20/3;min-height:0;width:100%" /> }
+  </section>
+  }
 
   <section class="section container" data-component="Section/Categorias">
     <div class="section-title" bsvReveal><div><span class="eyebrow">Catálogo</span><h2 style="margin-top:8px">Compra por categoría</h2></div><a routerLink="/categoria/centrifugas">Ver todo el catálogo</a></div>
@@ -58,11 +66,20 @@ import { Reveal } from '../../shared/directives/motion';
       <a class="promo-tile" [routerLink]="['/categoria', pr.slug]" bsvReveal="scale" [revealIndex]="i"><bsv-img-slot [slot]="'familia-' + pr.slug + '-hero'" [src]="pr.hero.web" [scene]="true" [alt]="pr.name + ', imagen comercial de familia'" /><span class="promo-copy"><strong>{{ pr.name }}</strong>@if (pr.hero.pending) { <span class="badge badge-warning no-dot">en revisión</span> }</span></a> }</div>
   </section>
   }
-  <section class="section container" data-component="Section/BannerMarca"><a routerLink="/serie/2cp" style="display:block" bsvReveal><bsv-img-slot class="banner-marca" slot="banner-marca" alt="Pedrollo 2CP, electrobombas centrífugas de doble rodete" [scene]="true" style="aspect-ratio:16/9;min-height:0;width:100%" /></a></section>`,
+  @if (marca(); as m) {
+  <section class="section container" data-component="Section/BannerMarca"><div style="display:block" bsvReveal><bsv-img-slot class="banner-marca" slot="banner-marca" [banner]="m" [scene]="true" style="aspect-ratio:10/3;min-height:0;width:100%" /></div></section>
+  } @else {
+  <section class="section container" data-component="Section/BannerMarca"><a routerLink="/serie/2cp" style="display:block" bsvReveal><bsv-img-slot class="banner-marca" slot="banner-marca" alt="Pedrollo 2CP, electrobombas centrífugas de doble rodete" [scene]="true" style="aspect-ratio:16/9;min-height:0;width:100%" /></a></section>
+  }`,
 })
 export class Home {
   products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
   cats = FAMILIES;
+  /** Bala 11: banners del admin por hueco. Sin respuesta (o vacíos), la home queda como siempre: el manifiesto estático es el respaldo. */
+  private bannersRes = this.api.banners();
+  banners = computed<StoreBanners>(() => this.bannersRes.hasValue() ? this.bannersRes.value() : NO_BANNERS);
+  /** El banner de marca; sin enlace propio, va a la serie de la campaña como el hueco fijo. */
+  marca = computed(() => { const b = this.banners()['banner-marca'][0]; return b ? { ...b, enlace: b.enlace ?? '/serie/2cp' } : null; });
   /** Destacados desde la API (bala F1): la campaña activa es la 2CP, así que manda MULTIETAPAS hasta que exista `destacado`. */
   featuredRes = this.api.products(() => ({ familia: 'multietapas', orden: 'serie', size: 8 }));
   featured = computed(() => this.featuredRes.hasValue() ? this.featuredRes.value().content.map(cardFromSummary) : []);

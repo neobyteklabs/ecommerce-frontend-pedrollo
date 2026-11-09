@@ -30,6 +30,8 @@ export interface StorefrontProductSummary {
   slug: string; catalogProductId: number; model: string; family: string | null; familySlug: string | null;
   series: string | null; seriesSlug: string | null; price: StorefrontPrice | null; availability: StorefrontAvailability | null;
   hp: string | null; phase: string | null; voltage: string | null; imageKey: string | null;
+  /** Bala 11: URL de la primera imagen estilizada de la tienda (relativa `/media/…` o absoluta del CDN); `null` = la técnica / el manifiesto. */
+  imagen: string | null;
 }
 export interface StorefrontPage { content: StorefrontProductSummary[]; totalElements: number; totalPages: number; number: number; size: number; }
 export interface FacetValue { value: string; count: number; }
@@ -40,7 +42,12 @@ export interface StorefrontProduct {
   slug: string; catalogProductId: number; model: string; family: string; subtype: string | null; series: string | null;
   supplier: { id: number | null; slug: string | null }; price: StorefrontPrice | null; availability: StorefrontAvailability | null;
   attributes: Record<string, unknown>; sectionNote: string | null; description: string | null; imageKey: string | null; fichaKey: string | null;
+  /** Bala 11: imágenes estilizadas de la tienda, en el orden del admin; pueden ser `[]`. */
+  imagenes: { url: string; alt: string }[];
 }
+/** Bala 11: un banner de tienda. La imagen completa + alt + enlace opcional (ruta de la tienda `/…` o `https://…`); la tienda no pinta texto encima. */
+export interface StoreBanner { url: string; urlMovil: string | null; alt: string; enlace: string | null; }
+export interface StoreBanners { hero: StoreBanner[]; franja: StoreBanner[]; 'banner-marca': StoreBanner[]; categoria: Record<string, StoreBanner[]>; }
 
 /** Bala 5: cupón, pedido, pago y seguimiento (contrato §5 del hand-off de backend bala 5). */
 export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; iva?: number; total: number; }
@@ -122,6 +129,8 @@ export class StorefrontApi {
   product(slug: () => string) {
     return httpResource<StorefrontProduct>(() => `${this.base}/api/tienda/v1/productos/${encodeURIComponent(slug())}`);
   }
+  /** Bala 11: banners vigentes por hueco. Una llamada por render (el transfer cache de la hidratación evita repetirla en el cliente). */
+  banners() { return httpResource<StoreBanners>(() => `${this.base}/api/tienda/v1/banners`); }
   /** Familias visibles con conteo. */
   families() { return httpResource<StorefrontFamily[]>(() => `${this.base}/api/tienda/v1/familias`); }
   /** Series de una familia (slug). `undefined` no pide nada. */
