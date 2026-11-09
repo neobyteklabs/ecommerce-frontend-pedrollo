@@ -43,8 +43,15 @@ export interface StorefrontProduct {
   supplier: { id: number | null; slug: string | null }; price: StorefrontPrice | null; availability: StorefrontAvailability | null;
   attributes: Record<string, unknown>; sectionNote: string | null; description: string | null; imageKey: string | null; fichaKey: string | null;
   /** Bala 11: imágenes estilizadas de la tienda, en el orden del admin; pueden ser `[]`. */
-  imagenes: { url: string; alt: string }[];
+  imagenes: StoreImage[];
+  /** Bala 12: PDF de la tienda para este producto (ficha técnica, curvas, manual…), en el orden del admin; pueden ser `[]`. */
+  documentos: StoreDocument[];
 }
+/** Bala 12: la sección de la ficha (sus pestañas) a la que pertenece una imagen de tienda. */
+export type GallerySection = 'foto' | 'curvas' | 'componentes' | 'ficha';
+export interface StoreImage { url: string; alt: string; seccion: GallerySection; }
+export type DocumentType = 'ficha-tecnica' | 'curvas' | 'manual' | 'despiece' | 'certificado' | 'otro';
+export interface StoreDocument { url: string; tipo: DocumentType; titulo: string; bytes: number; }
 /** Bala 11: un banner de tienda. La imagen completa + alt + enlace opcional (ruta de la tienda `/…` o `https://…`); la tienda no pinta texto encima. */
 export interface StoreBanner { url: string; urlMovil: string | null; alt: string; enlace: string | null; }
 export interface StoreBanners { hero: StoreBanner[]; franja: StoreBanner[]; 'banner-marca': StoreBanner[]; categoria: Record<string, StoreBanner[]>; }

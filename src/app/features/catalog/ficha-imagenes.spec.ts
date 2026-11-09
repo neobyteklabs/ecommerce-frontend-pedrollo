@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
-import { StorefrontProduct } from '../../core/api/storefront-api';
+import { StorefrontProduct, StoreImage } from '../../core/api/storefront-api';
 import { ProductPage } from './product';
 
 // jsdom no trae IntersectionObserver (lo usa la animación de entrada): un doble inerte basta.
@@ -11,9 +11,9 @@ import { ProductPage } from './product';
 const PAGE = { content: [], totalElements: 0, totalPages: 0, number: 0, size: 8 };
 
 describe('Ficha · imágenes de tienda (bala 11)', () => {
-  const remoto = (imagenes: { url: string; alt: string }[]): Partial<StorefrontProduct> => ({ slug: '2cp-32-210a', model: '2CP 32/210A', imageKey: null, fichaKey: null, price: null, availability: null, imagenes });
+  const remoto = (imagenes: StoreImage[]): Partial<StorefrontProduct> => ({ slug: '2cp-32-210a', model: '2CP 32/210A', imageKey: null, fichaKey: null, price: null, availability: null, imagenes });
 
-  async function ficha(imagenes: { url: string; alt: string }[]) {
+  async function ficha(imagenes: StoreImage[]) {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])] });
     const http = TestBed.inject(HttpTestingController);
@@ -27,7 +27,7 @@ describe('Ficha · imágenes de tienda (bala 11)', () => {
   }
 
   it('con imagenes [a, b] la galería arranca en a y la foto referencial queda después', async () => {
-    const el = await ficha([{ url: '/media/pedrollo/producto/aaaaaaaaaaaaaaaa.webp', alt: 'Vista frontal' }, { url: '/media/pedrollo/producto/bbbbbbbbbbbbbbbb.webp', alt: '' }]);
+    const el = await ficha([{ url: '/media/pedrollo/producto/aaaaaaaaaaaaaaaa.webp', alt: 'Vista frontal', seccion: 'foto' }, { url: '/media/pedrollo/producto/bbbbbbbbbbbbbbbb.webp', alt: '', seccion: 'foto' }]);
     const main = el.querySelector('[data-component=Gallery] img')!;
     expect(main.getAttribute('src')).toBe('/media/pedrollo/producto/aaaaaaaaaaaaaaaa.webp'); expect(main.getAttribute('alt')).toBe('Vista frontal');
     const thumbs = Array.from(el.querySelectorAll('.thumbs img')).map(i => i.getAttribute('src'));

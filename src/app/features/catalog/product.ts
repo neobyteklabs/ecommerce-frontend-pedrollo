@@ -9,7 +9,7 @@ import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
-import { StorefrontApi } from '../../core/api/storefront-api';
+import { StorefrontApi, GallerySection } from '../../core/api/storefront-api';
 import { cardFromProduct } from '../../core/api/storefront-view';
 
 interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'scene' | 'technical' | 'placeholder'; alt: string; caption: string; pending?: boolean; }
@@ -132,8 +132,11 @@ export class ProductPage {
     const c = p.cuts; const rev = this.products.reviewMode(); const ok = cutsVisible(c, rev); const pend = !!c && !c.aprobado;
     const shared = this.series()?.tecnico.recortes?.compartidos ?? {};
     const foto: GalleryItem[] = [];
-    // Bala 11: las imágenes estilizadas de la tienda (admin) van PRIMERO; la foto verificada/referencial queda después.
-    (this.remote.hasValue() ? this.remote.value()?.imagenes ?? [] : []).forEach((im, i) => foto.push({ slot: `tienda-${p.id}-${i}`, src: im.url, kind: 'scene', alt: im.alt || `${p.model}, imagen de tienda`, caption: 'Imagen de tienda' }));
+    // Bala 11/12: las imágenes estilizadas de la tienda (admin) van PRIMERO en la pestaña de su sección; lo del catálogo, después.
+    const tienda = (sec: GallerySection, kind: 'scene' | 'technical'): GalleryItem[] => (this.remote.hasValue() ? this.remote.value()?.imagenes ?? [] : [])
+      .map((im, i) => ({ im, i })).filter(x => (x.im.seccion ?? 'foto') === sec)
+      .map(({ im, i }) => ({ slot: `tienda-${p.id}-${i}`, src: im.url, kind, alt: im.alt || `${p.model}, imagen de tienda`, caption: 'Imagen de tienda' }));
+    foto.push(...tienda('foto', 'scene'));
     if (c?.foto_modelo && c.foto_modelo_verificada) foto.push({ slot: `foto-${p.id}`, src: c.foto_modelo, kind: 'catalog', alt: `${p.model}, fotografía verificada`, caption: 'Fotografía verificada del modelo.' });
     foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Serie ${p.serieName}, imagen referencial`, caption: p.catalog ? 'Imagen referencial de la familia (pedrollo.com.mx). No es fotografía verificada de este modelo.' : 'Placeholder: imagen referencial pendiente.' });
     p.gallery.forEach((g, i) => foto.push({ slot: `serie-${p.serie}-${i === 0 ? 'hero' : 'banner'}`, src: g, kind: 'scene', alt: `Serie ${p.serieName}, imagen comercial`, caption: 'Imagen comercial representativa de la serie.' }));
@@ -144,13 +147,14 @@ export class ProductPage {
       for (const a of mm.catalogo) foto.push({ slot: `mm-catalogo-${p.serie}`, src: a.path, kind: 'catalog', alt: `Serie ${p.serieName}, catálogo 1:1 (referencia de familia)`, caption: 'Catálogo 1:1 derivado de la foto de referencia de familia (re-codificación, sin edición). No es fotografía verificada de este modelo.', pending: pendMM });
       for (const a of mm.macro) foto.push({ slot: `mm-macro-${p.serie}-${a.etiqueta}`, src: a.path, kind: 'catalog', alt: `${a.etiqueta}, detalle de la serie ${p.serieName}`, caption: `Detalle macro · ${a.etiqueta} · recorte de la foto de referencia de familia (píxeles originales). No es fotografía verificada de este modelo.`, pending: pendMM });
     }
-    if (!(c?.foto_modelo && c.foto_modelo_verificada)) foto.push({ slot: `foto-${p.id} · fotografía original del modelo · pendiente`, src: null, kind: 'placeholder', alt: '', caption: 'Placeholder: fotografía original específica del modelo, pendiente.' });
-    const curvas: GalleryItem[] = ok ? ([
+    // Con al menos una imagen de tienda en `foto` ya hay fotografía del modelo: el mosaico «pendiente» no se pinta.
+    if (!(c?.foto_modelo && c.foto_modelo_verificada) && !foto.some(x => x.slot.startsWith('tienda-'))) foto.push({ slot: `foto-${p.id} · fotografía original del modelo · pendiente`, src: null, kind: 'placeholder', alt: '', caption: 'Placeholder: fotografía original específica del modelo, pendiente.' });
+    const curvas: GalleryItem[] = [...tienda('curvas', 'technical'), ...(ok ? ([
       { slot: `curva-${p.id}`, src: c!.curva, kind: 'technical' as const, alt: `Curvas de rendimiento ${p.model}`, caption: `Curvas H-Q, NPSH y P2 · ficha 60 Hz, página ${c!.pdf_pagina_curva ?? '—'} · recorte fiel del PDF. La gráfica incluye las variantes de su grupo; consultar la etiqueta ${p.model}.`, pending: pend },
       { slot: `tabla-${p.id}`, src: c!.tabla_prestaciones, kind: 'technical' as const, alt: `Tabla de prestaciones ${p.model}`, caption: 'Tabla de prestaciones HS = 0 m · ficha 60 Hz · recorte fiel del PDF.', pending: pend },
-    ] as GalleryItem[]).filter(x => x.src) : [];
-    const comp: GalleryItem[] = ok ? [['despiece', 'Despiece y materiales'], ['caracteristicas', 'Características constructivas'], ['dimensiones', 'Dimensiones y pesos']].filter(([k]) => shared[k]?.path).map(([k, n]) => ({ slot: `${k}-${p.serie}`, src: shared[k].path, kind: 'technical' as const, alt: `${n} serie ${p.serieName}`, caption: `${n} · común a la serie ${p.serieName} · ficha 60 Hz, página ${shared[k].pdf_page ?? '—'} · recorte fiel del PDF.`, pending: pend })) : [];
-    const ficha: GalleryItem[] = ok && c!.tabla_consumos ? [{ slot: `consumos-${p.id}`, src: c!.tabla_consumos, kind: 'technical' as const, alt: `Consumos eléctricos ${p.model}`, caption: 'Tensiones y consumos (A) · ficha 60 Hz · recorte fiel del PDF.', pending: pend }] : [];
+    ] as GalleryItem[]).filter(x => x.src) : [])];
+    const comp: GalleryItem[] = [...tienda('componentes', 'technical'), ...(ok ? [['despiece', 'Despiece y materiales'], ['caracteristicas', 'Características constructivas'], ['dimensiones', 'Dimensiones y pesos']].filter(([k]) => shared[k]?.path).map(([k, n]) => ({ slot: `${k}-${p.serie}`, src: shared[k].path, kind: 'technical' as const, alt: `${n} serie ${p.serieName}`, caption: `${n} · común a la serie ${p.serieName} · ficha 60 Hz, página ${shared[k].pdf_page ?? '—'} · recorte fiel del PDF.`, pending: pend })) : [])];
+    const ficha: GalleryItem[] = [...tienda('ficha', 'technical'), ...(ok && c!.tabla_consumos ? [{ slot: `consumos-${p.id}`, src: c!.tabla_consumos, kind: 'technical' as const, alt: `Consumos eléctricos ${p.model}`, caption: 'Tensiones y consumos (A) · ficha 60 Hz · recorte fiel del PDF.', pending: pend }] : [])];
     // Lote global de revisión: páginas completas del PDF, solo en modo revisión y solo si no hay recortes de serie visibles.
     if (rev && !ok) {
       for (const rv of this.series()?.tecnico.revision ?? []) {
