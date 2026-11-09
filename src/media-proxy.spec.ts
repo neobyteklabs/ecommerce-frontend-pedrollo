@@ -12,7 +12,8 @@ describe('proxy de medios (C0)', () => {
   it('solo acepta keys de medios', () => {
     expect(isMediaKeyPath(KEY)).toBe(true);
     expect(isMediaKeyPath('/media/pedrollo/producto/3f9a1c2e7b4d6a80.png')).toBe(true);
-    for (const bad of ['/media/pedrollo/banner/abc.webp', '/media/pedrollo/logo/3f9a1c2e7b4d6a80.webp', '/media/../etc/passwd',
+    expect(isMediaKeyPath('/media/pedrollo/documento/3f9a1c2e7b4d6a80.pdf')).toBe(true);
+    for (const bad of ['/media/pedrollo/documento/3f9a1c2e7b4d6a80.exe', '/media/pedrollo/documento/3f9a1c2e7b4d6a80.png', '/media/pedrollo/producto/3f9a1c2e7b4d6a80.pdf', '/media/pedrollo/banner/3f9a1c2e7b4d6a80.pdf', '/media/pedrollo/documento/abc.pdf','/media/pedrollo/banner/abc.webp', '/media/pedrollo/logo/3f9a1c2e7b4d6a80.webp', '/media/../etc/passwd',
       '/media/pedrollo/banner/3f9a1c2e7b4d6a80.svg', '/media/Pedrollo/banner/3f9a1c2e7b4d6a80.webp', '/media/pedrollo/banner/3f9a1c2e7b4d6a80.webp/x', '/media']) {
       expect(isMediaKeyPath(bad), bad).toBe(false);
     }
@@ -46,9 +47,26 @@ describe('proxy de medios (C0)', () => {
     expect(r502.code).toBe(502); expect(r502.body).toBeUndefined();
   });
 
-  it('una respuesta de más de 8 MB se rechaza', async () => {
-    const big = (async () => new Response(new Uint8Array(8 * 1024 * 1024 + 1), { status: 200 })) as unknown as typeof fetch;
+  it('una respuesta de más de 16 MB se rechaza', async () => {
+    const big = (async () => new Response(new Uint8Array(16 * 1024 * 1024 + 1), { status: 200 })) as unknown as typeof fetch;
     const res = fakeRes(); await mediaHandler('http://back', big)({ method: 'GET', path: KEY, originalUrl: KEY }, res);
     expect(res.code).toBe(502);
+  });
+
+  it('un PDF conserva Content-Type, Content-Disposition y Cache-Control del upstream', async () => {
+    const PDF = '/media/pedrollo/documento/3f9a1c2e7b4d6a80.pdf';
+    const fetchFn = (async () => new Response(new Uint8Array([37, 80, 68, 70]), { status: 200, headers: { 'content-type': 'application/pdf',
+      'content-disposition': 'inline; filename="3f9a1c2e7b4d6a80.pdf"', 'cache-control': 'public, max-age=31536000, immutable' } })) as unknown as typeof fetch;
+    const res = fakeRes(); await mediaHandler('http://back', fetchFn)({ method: 'GET', path: PDF, originalUrl: PDF }, res);
+    expect(res.code).toBe(200); expect(res.headers['Content-Type']).toBe('application/pdf');
+    expect(res.headers['Content-Disposition']).toBe('inline; filename="3f9a1c2e7b4d6a80.pdf"');
+    expect(res.headers['Cache-Control']).toBe('public, max-age=31536000, immutable');
+  });
+
+  it('un .exe en documento/ → 404 sin pedir nada', async () => {
+    let calls = 0;
+    const fetchFn = (async () => { calls++; return new Response(''); }) as unknown as typeof fetch;
+    const res = fakeRes(); await mediaHandler('http://back', fetchFn)({ method: 'GET', path: '/media/pedrollo/documento/3f9a1c2e7b4d6a80.exe', originalUrl: '/x' }, res);
+    expect(res.code).toBe(404); expect(calls).toBe(0);
   });
 });

@@ -1,6 +1,6 @@
 /**
  * Proxy de medios (bala 11, C0): las imágenes que sube el portal viven en el back-office (`GET /media/{tenant}/{uso}/{hash}.{ext}`, público y
- * `immutable`). El navegador las pide a su propio origen y este proxy las reenvía SIN `X-Store-Key` (no la necesitan). Con CDN
+ * `immutable`; desde la bala 12 también los PDF de documentos). El navegador las pide a su propio origen y este proxy las reenvía SIN `X-Store-Key` (no la necesitan). Con CDN
  * (`APP_MEDIA_PUBLIC_URL` del back-office) las URLs llegan absolutas y este proxy no interviene.
  *
  * Si el back-office responde 302 (almacén S3), `fetch` lo sigue (`redirect: 'follow'`) y se sirven los bytes: así el navegador nunca ve el
@@ -8,12 +8,12 @@
  */
 
 /** Lo único que puede ser una key de medios; todo lo demás se rechaza antes de pedirlo al back-office. */
-export const MEDIA_KEY_PATH = /^\/media\/[a-z0-9][a-z0-9-]*\/(producto|banner)\/[0-9a-f]{16}\.(webp|png|jpg)$/;
+export const MEDIA_KEY_PATH = /^\/media\/[a-z0-9][a-z0-9-]*\/((producto|banner)\/[0-9a-f]{16}\.(webp|png|jpg)|documento\/[0-9a-f]{16}\.pdf)$/;
 
 export const isMediaKeyPath = (path: string): boolean => MEDIA_KEY_PATH.test(path);
 
-/** Tamaño máximo de la respuesta (las imágenes válidas pesan ≤ 2 MB). */
-export const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
+/** Tamaño máximo de la respuesta (las imágenes válidas pesan ≤ 2 MB; los PDF de la bala 12, ≤ 15 MB). */
+export const MEDIA_MAX_BYTES = 16 * 1024 * 1024;
 
 export interface MediaReq { method: string; path: string; originalUrl: string }
 export interface MediaRes {
@@ -54,6 +54,9 @@ export function mediaHandler(backofficeUrl: string, fetchFn: typeof fetch = fetc
       res.status(upstream.status);
       const type = upstream.headers.get('content-type');
       if (type) res.setHeader('Content-Type', type);
+      // El PDF sale `inline; filename=…`: el navegador lo abre en el modal y, al descargarlo, lleva un nombre decente.
+      const disposition = upstream.headers.get('content-disposition');
+      if (disposition) res.setHeader('Content-Disposition', disposition);
       // Aquí SÍ se respeta el Cache-Control del upstream (immutable un año): la key lleva el hash del contenido.
       const cache = upstream.headers.get('cache-control');
       res.setHeader('Cache-Control', cache ?? 'no-store');
