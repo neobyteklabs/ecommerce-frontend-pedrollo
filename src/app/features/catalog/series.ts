@@ -36,18 +36,22 @@ import { InlineMedia } from '../../shared/directives/inline-media';
     <div class="detail">@let t = c.tabs[tab()]; <bsv-img-slot [slot]="t.slot" [scene]="true" [alt]="t.name" /><p><b>{{ t.name }}.</b> {{ t.text }}</p></div>
   </div></section>
 
+  @if (c.perf.stats.length) {
   <section class="s-section light" id="rendimiento" data-component="Performance"><div class="container">
     <div class="s-head"><span class="eyebrow" bsvReveal>Rendimiento</span><h2 bsvReveal [revealIndex]="1">{{ c.perf.head }}</h2><p bsvReveal [revealIndex]="2">{{ c.perf.lead }}</p></div>
     <div class="stats">@for (s of c.perf.stats; track s.pre; let i = $index) { <div class="stat" bsvReveal [revealIndex]="i"><span class="pre">{{ s.pre }}</span><div class="big grad" bsvCountUp>{{ s.big }}</div><span class="post">{{ s.post }}</span><br /><span class="fn">{{ s.fn }}</span></div> }</div>
     <bsv-img-slot [slot]="'curva-' + r.slug + ' · curvas H-Q de la ficha 60 Hz · pendiente de recortar del PDF'" style="margin-top:var(--space-7);aspect-ratio:16/7;min-height:0;width:100%" bsvReveal />
     <p class="muted small" style="margin-top:12px">Curvas de prestaciones HS = 0 m, tolerancia según EN ISO 9906 Grado 3B. @if (r.tecnico.ficha_60hz) { <a [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener">Abrir ficha técnica 60 Hz (PDF)</a> }</p>
   </div></section>
+  }
 
+  @if (c.eng.tiles.length) {
   <section class="s-section" id="ingenieria" data-component="EngineeringBento"><div class="container">
     <div class="s-head"><span class="eyebrow" bsvReveal>Ingeniería</span><h2 bsvReveal [revealIndex]="1">{{ c.eng.head }}</h2><p bsvReveal [revealIndex]="2">{{ c.eng.lead }}</p></div>
     <div class="bento">@for (tl of c.eng.tiles; track tl.title; let i = $index) {
       <div class="tile" [class]="'tile w' + tl.w + (tl.tone ? ' ' + tl.tone : '')" bsvSpotlight bsvReveal="scale" [revealIndex]="i"><span class="eyebrow">{{ tl.eyebrow }}</span><h3>{{ tl.title }}</h3><p>{{ tl.text }}</p>@if (tl.slot) { <bsv-img-slot [slot]="tl.slot" /> }</div> }</div>
   </div></section>
+  }
   } @else {
   <section class="s-hero" id="top" data-component="SeriesHero">
     <bsv-img-slot [slot]="'serie-' + r.slug + '-hero · hero cinematográfico pendiente · 2560×1440'" [scene]="true" [eager]="true" [alt]="'Serie ' + r.serie + ', imagen representativa'" />
@@ -99,7 +103,7 @@ import { InlineMedia } from '../../shared/directives/inline-media';
     <div class="row" style="margin-top:var(--space-5)">@if (r.tecnico.ficha_60hz) { <a class="download" [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ r.serie }} · 60 Hz</strong><span>PDF · México</span></div></a> }@for (o of r.tecnico.otros_pdf; track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div></a> }</div>
   </div></section>
   }
-  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz incluida en el banco de imágenes. Los modelos sin coincidencia en la ficha se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios y disponibilidad: pendientes de la lista BSV. No se muestran valores estimados.</li></ol></div>
+  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz incluida en el banco de imágenes. Los modelos sin coincidencia en la ficha se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios y disponibilidad: pendientes de la lista BSV. No se muestran valores estimados.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
   } @else {
   <section class="container section"><h1>Serie no encontrada</h1><p class="muted">No hay una serie con ese identificador. <a routerLink="/categoria/centrifugas">Ver catálogo</a>.</p></section>
   }`,
@@ -127,7 +131,7 @@ export class Series {
   });
   tab = linkedSignal<string, number>({ source: () => this.serie(), computation: () => 0 });
   pill = signal(false); active = signal<string | null>(null);
-  sections = computed(() => [...(this.c() ? [{ id: 'detalle', name: 'Vista general' }, { id: 'rendimiento', name: 'Rendimiento' }, { id: 'ingenieria', name: 'Ingeniería' }] : [{ id: 'detalle', name: 'Ficha' }]), ...(this.sharedCuts().length ? [{ id: 'componentes', name: 'Componentes' }] : []), ...(this.familyGallery().length ? [{ id: 'galeria', name: 'Galería' }] : []), ...(this.products$.reviewMode() && this.reviewPreviews().length ? [{ id: 'revision', name: 'Revisión' }] : []), { id: 'comparar', name: 'Modelos' }, ...(this.c() ? [{ id: 'especificaciones', name: 'Especificaciones' }] : [])]);
+  sections = computed(() => [...(this.c() ? [{ id: 'detalle', name: 'Vista general' }, ...(this.c()!.perf.stats.length ? [{ id: 'rendimiento', name: 'Rendimiento' }] : []), ...(this.c()!.eng.tiles.length ? [{ id: 'ingenieria', name: 'Ingeniería' }] : [])] : [{ id: 'detalle', name: 'Ficha' }]), ...(this.sharedCuts().length ? [{ id: 'componentes', name: 'Componentes' }] : []), ...(this.familyGallery().length ? [{ id: 'galeria', name: 'Galería' }] : []), ...(this.products$.reviewMode() && this.reviewPreviews().length ? [{ id: 'revision', name: 'Revisión' }] : []), { id: 'comparar', name: 'Modelos' }, ...(this.c() ? [{ id: 'especificaciones', name: 'Especificaciones' }] : [])]);
   constructor() {
     const title = inject(Title);
     effect(() => { const r = this.res(); title.setTitle(r ? `Serie ${r.serie} · Pedrollo` : 'Serie · Pedrollo'); });

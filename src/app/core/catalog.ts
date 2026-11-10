@@ -1,4 +1,5 @@
 import familias from './data/familias_crm.json';
+import seriesGeneradas from './data/series.json';
 
 /** Familias y series reales del CRM (familias_crm.json). Slug = familia normalizada. */
 export interface SerieCrm { familia: string; serie: string; n: number; ejemplos: string[]; }
@@ -39,9 +40,12 @@ export interface SeriesContent {
   eng: { head: string; lead: string; tiles: { w: 2 | 3 | 4 | 6; tone?: 'light' | 'ivory'; eyebrow: string; title: string; text: string; slot?: string }[] };
   compare: { head: string; lead: string; models: string[] };
   specs: [string, string][][];
+  /** De dónde salen los datos cuando el contenido es generado (`tools/series/generar_series.py`). */
+  source?: string;
 }
 
-export const SERIES: Record<string, SeriesContent> = {
+/** Series con contenido escrito a mano contra su ficha técnica; ganan sobre lo generado. */
+const SERIES_MANUAL: Record<string, SeriesContent> = {
   '2cp': {
     slug: '2cp', name: 'Serie 2CP', family: 'multietapas', kicker: 'Serie 2CP · Electrobombas centrífugas de doble rodete',
     headline: ['Dos rodetes.', 'El doble de presión.'],
@@ -73,3 +77,9 @@ export const SERIES: Record<string, SeriesContent> = {
     specs: [[['Tipo', 'Centrífuga de doble rodete'], ['Caudal', 'hasta 450 l/min (27 m³/h)'], ['Altura', 'hasta 112 m'], ['Aspiración manométrica', 'hasta 7 m']], [['Temperatura del líquido', '−10 °C a +90 °C'], ['Temperatura ambiente', '−10 °C a +40 °C'], ['Presión máx. en el cuerpo', '10 bar'], ['Frecuencia', '60 Hz']]],
   },
 };
+
+/**
+ * Todas las series tienen la página larga (10-nov): el contenido de las que no están escritas a mano se genera con
+ * `tools/series/generar_series.py` a partir de los datos técnicos de pedrollo.com.mx y del catálogo, en `data/series.json`.
+ */
+export const SERIES: Record<string, SeriesContent> = { ...(seriesGeneradas as unknown as Record<string, SeriesContent>), ...SERIES_MANUAL };

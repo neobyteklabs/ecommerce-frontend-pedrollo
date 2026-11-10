@@ -1,0 +1,4749 @@
+{
+ "vxc-50-65": {
+  "titulo": "VXC 50-65",
+  "tipo": "Bombas sumergibles para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 1250 l/min (75 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 20 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 50 mm para VXC /50– hasta Ø 65 mm para VXC /65"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 10 m (con cable de alimentación de longitud adecuada)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "completamente descubierta"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Hierro fundido"
+   ],
+   [
+    "Carcasa del motor",
+    "Hierro fundido"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/vxc-50-65/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/11/VXC-50-65_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VXC-50-65_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VXC-50-65_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "easysmall": {
+  "titulo": "EASYSMALL",
+  "tipo": "Dispositivo de control automático",
+  "tecnicas": [
+   [
+    "Presión de reinicio",
+    "1.5 bar"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +50 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima",
+    "10 bar"
+   ],
+   [
+    "Voltaje de alimentación",
+    "1~230V"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 65"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easysmall/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/10/EASYSMALL_ES-ficha-tecnica_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/EASYSMALL_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/EASYSMALL_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "tanque-flex-lite-fv": {
+  "titulo": "Tanque FLEX-LITE Fibra de Vidrio",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad FLEX-LITE",
+    "hasta 450 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "8.6 bar / 125 psi"
+   ],
+   [
+    "Conexión",
+    "1\" (57, 84 y 133 Litros) y 1 1/4\" (190, 311 y 450 Litros)"
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +49 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-flex-lite-fv/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-FL-VERTICAL_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-ultra-mr": {
+  "titulo": "Tanque ULTRA de Membrana Reemplazable",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad ULTRA",
+    "hasta 2000 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "25 bar / 362 psi"
+   ],
+   [
+    "Conexión",
+    "1 1/4\" (200 y 500 Litros) y 2\" (1000 y 2000 Litros)"
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-ultra-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-MR-ULTRA_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-plus-mr": {
+  "titulo": "Tanque PLUS de Membrana Reemplazable",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad PLUS",
+    "hasta 2000 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "16 bar / 232 psi"
+   ],
+   [
+    "Conexión",
+    "1 1/4\" (200, 300 y 500 Litros) y 2\" (750, 1000, 1500 y 2000 Litros)"
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-plus-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-MR-PLUS_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-vertical-mr": {
+  "titulo": "Tanque VERTICAL de Membrana Reemplazable",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad VERTICAL",
+    "hasta 500 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\" (80, 100 y 150 Litros) y 1 1/4\" (200, 300 y 500 Litros)"
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-vertical-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-MR-VERTICAL_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-horizontal-mr": {
+  "titulo": "Tanque HORIZONTAL de Membrana Reemplazable",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad HORIZONTAL",
+    "hasta 200 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\" (24, 50, 80, 100, 150 Litros) y 1 1/4\" (200 Litros)"
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-horizontal-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-MR-HORIZONTAL_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-inline-mr": {
+  "titulo": "Tanque INLINE de Membrana Reemplazable",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad INLINE",
+    "hasta 24 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\""
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-inline-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-MR-IN-LINE_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-vertical-de-diafragma-fijo": {
+  "titulo": "Tanque VERTICAL de Diafragma Fijo",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad HORIZONTAL",
+    "de 50 a 600 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\""
+   ],
+   [
+    "Salidas simultáneas",
+    "entre -10 °C y +99 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-vertical-de-diafragma-fijo/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-PDF-VERTICAL_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-horizontal-de-diafragma-fijo": {
+  "titulo": "Tanque HORIZONTAL de Diafragma Fijo",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad HORIZONTAL",
+    "de 24 a 80 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\""
+   ],
+   [
+    "Salidas simultáneas",
+    "entre -10 °C y +99 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-horizontal-de-diafragma-fijo/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-PDF-HORIZONTAL_ES_60Hz.pdf"
+  ]
+ },
+ "tanque-inline-df": {
+  "titulo": "Tanque INLINE de Diafragma Fijo",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad INLINE",
+    "hasta 18 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexión",
+    "1\""
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +99 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/tanque-inline-df/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-PDF-IN-LINE_ES_60Hz.pdf"
+  ]
+ },
+ "flo": {
+  "titulo": "FLO",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Capacidad IN LINE",
+    "hasta 3 Litros"
+   ],
+   [
+    "Máxima presión de trabajo",
+    "10 bar / 145 psi"
+   ],
+   [
+    "Conexiones",
+    "1\" x 1\""
+   ],
+   [
+    "Temperatura de trabajo",
+    "entre -10 °C y +100 °C"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/flo/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/TANQUE-FLO_ES_60Hz.pdf"
+  ]
+ },
+ "hydrofresh-mr-3-4cp": {
+  "titulo": "HYDROFRESH MR 3-4CP",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 130 l/min (7.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 38 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 8"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-mr-3-4cp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-3-4CP-PMR_ES_60HZ.pdf"
+  ]
+ },
+ "hydrofresh-mr-cp": {
+  "titulo": "HYDROFRESH MR CP",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 160 l/min (9.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 52 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+3"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 12"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-mr-cp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-CP-PMR_ES_60HZ.pdf"
+  ]
+ },
+ "hydrofresh-mr-jsw": {
+  "titulo": "HYDROFRESH MR JSW",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 120 l/min (7.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 58 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+4"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 10"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-mr-jsw/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-JSW-PMR_ES_60HZ.pdf"
+  ]
+ },
+ "hydrofresh-mr-jcr": {
+  "titulo": "HYDROFRESH MR JCR",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 60 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+3"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 7"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-mr-jcr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-JCR-PMR_ES_60HZ.pdf"
+  ]
+ },
+ "hydrofresh-df-jsw": {
+  "titulo": "HYDROFRESH DF JSW",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 47 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 6"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-df-jsw/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-JSW-PDF_ES_60HZ.pdf"
+  ]
+ },
+ "hydrofresh-df-jcr": {
+  "titulo": "HYDROFRESH DF JCR",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 47 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 6"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-df-jcr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-JCR-PDF_ES_60HZ.pdf"
+  ]
+ },
+ "jdw": {
+  "titulo": "JDW",
+  "tipo": "Bombas centrífugas autocebantes",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 3600 l/h"
+   ],
+   [
+    "Altura de succión manométrica",
+    "hasta 45 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Grado de protección",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Cuerpo eyector",
+    "Hierro fundido"
+   ],
+   [
+    "Impulsor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje motor",
+    "Acero inoxidable"
+   ],
+   [
+    "Sello mecánico",
+    "Cerámica - Grafito - NBR"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jdw/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/JDW_ES_60Hz.pdf"
+  ]
+ },
+ "140ps": {
+  "titulo": "140PS",
+  "tipo": "Electrobomba sumergible de 6″ en hierro fundido",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 1080 l/min (64.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 253 m"
+   ],
+   [
+    "Contenido máximo de arena",
+    "50 g/m³"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de impulsión",
+    "Hierro fundido"
+   ],
+   [
+    "Camisa",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Impulsor",
+    "Noryl GFN2"
+   ],
+   [
+    "Difusor",
+    "Noryl GFN2"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 420"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/140ps/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/140PS_ES_60Hz.pdf"
+  ]
+ },
+ "140pr": {
+  "titulo": "140PR",
+  "tipo": "Electrobomba sumergible de 6″ en hierro fundido",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 960 l/min (57.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 450 m"
+   ],
+   [
+    "Contenido máximo de arena",
+    "400 g/m³"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de impulsión",
+    "Hierro fundido"
+   ],
+   [
+    "Camisa",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Impulsor",
+    "Noryl GFN2"
+   ],
+   [
+    "Difusor",
+    "Noryl GFN2"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 420"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/140pr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/140PR_ES_60Hz.pdf"
+  ]
+ },
+ "px800": {
+  "titulo": "PX800",
+  "tipo": "Motor sumergible de 8″ en acero inoxidable",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 40 hasta 150 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +30 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Acero inoxidable"
+   ],
+   [
+    "Soporte superior",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Base motor",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/px800/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/PX800_ES_60Hz.pdf"
+  ]
+ },
+ "p800": {
+  "titulo": "P800",
+  "tipo": "Motor sumergible de 8″ en hierro fundido",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 40 hasta 150 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +30 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Acero inoxidable"
+   ],
+   [
+    "Soporte superior",
+    "Hierro fundido G25"
+   ],
+   [
+    "Base motor",
+    "Hierro fundido G25"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/p800/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/P800_ES_60Hz.pdf"
+  ]
+ },
+ "px600": {
+  "titulo": "PX600",
+  "tipo": "Motor sumergible de 6″ en acero inoxidable",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 7.5 hasta 50 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +50 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Acero inoxidable"
+   ],
+   [
+    "Acero Inoxidable",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Base motor",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/px600/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/PX600_ES_60Hz.pdf"
+  ]
+ },
+ "p600": {
+  "titulo": "P600",
+  "tipo": "Motor sumergible de 6″ en hierro fundido",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 7.5 hasta 50 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +50 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Acero inoxidable"
+   ],
+   [
+    "Soporte superior",
+    "Hierro fundido G25"
+   ],
+   [
+    "Base motor",
+    "Hierro fundido G25"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/p600/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/P600_ES_60Hz.pdf"
+  ]
+ },
+ "px1000": {
+  "titulo": "PX1000",
+  "tipo": "Motor sumergible de 10″ en acero inoxidable",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 100 hasta 250 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +30 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Acero inoxidable"
+   ],
+   [
+    "Soporte superior",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Base motor",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/px1000/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/PX1000_ES_60Hz.pdf"
+  ]
+ },
+ "p1000": {
+  "titulo": "P1000",
+  "tipo": "Motor sumergible de 10″ en hierro fundido",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 100 hasta 250 HP"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +30 °C"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa",
+    "Dúplex"
+   ],
+   [
+    "Soporte superior",
+    "Hierro fundido G25"
+   ],
+   [
+    "Base motor",
+    "Hierro fundido G25"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/p1000/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/05/P1000_ES_60Hz.pdf"
+  ]
+ },
+ "hydrofresh-df": {
+  "titulo": "HYDROFRESH DF PK",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 60 l/min (3.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 29 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+1"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 3"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-df/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-PK-PDF_ES_60HZ.pdf"
+  ]
+ },
+ "easypump-top-multi": {
+  "titulo": "EASYPUMP TOP MULTI",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 80 l/min (4.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 50 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+3"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 6"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-top-multi/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-TOP-MULTI_ES_60Hz.pdf"
+  ]
+ },
+ "easypump-pk": {
+  "titulo": "EASYPUMP PK",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 60 l/min (3.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 29 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+1"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 3"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-pk/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-PK_ES_60Hz.pdf"
+  ]
+ },
+ "easypump-jsw": {
+  "titulo": "EASYPUMP JSW",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 61 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+3"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 7"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-jsw/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-JSW_ES_60Hz.pdf"
+  ]
+ },
+ "easypump-jcr": {
+  "titulo": "EASYPUMP JCR",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 62 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+3"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 7"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-jcr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-JCR_ES_60Hz.pdf"
+  ]
+ },
+ "easypump-cp": {
+  "titulo": "EASYPUMP CP",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 150 l/min (9 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 32 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 10"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-cp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-CP_ES_60Hz.pdf"
+  ]
+ },
+ "easypump-3-4cp": {
+  "titulo": "EASYPUMP 3-4CP",
+  "tipo": "Grupo de presión electrónico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 130 l/min (7.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 38 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 7"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypump-3-4cp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/EASYPUMP-3-4CP_ES_60Hz.pdf"
+  ]
+ },
+ "cp-hasta-3hp": {
+  "titulo": "CP hasta 3HP",
+  "tipo": "Electrobombas centrífugas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 900 l/min (54 m³/h)"
+   ],
+   [
+    "Altura",
+    "hasta 76 m"
+   ],
+   [
+    "Altura de aspiración manométrica",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "de -10 °C hasta +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "de -10 °C hasta +40 °C"
+   ],
+   [
+    "Presión máxima en el cuerpo de la bomba",
+    "10 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Protección",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo bomba",
+    "Fundición de hierro"
+   ],
+   [
+    "Rodete",
+    "– Acero inoxidable AISI 304 (para CP 160) – Latón (para CP 210, CP 220, CP 230) – Fundición de hierro (para CP 250)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Carcasa",
+    "Fundición de hierro"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/cp-hasta-3hp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/CP-hasta-3-HP_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/CP-1_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/CP-1_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "jsw-1": {
+  "titulo": "JSW 1",
+  "tipo": "Bombas centrífugas autocebantes",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 58 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Unidad eyectora",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jsw-1/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/JSW1_ES_60Hz.pdf"
+  ]
+ },
+ "jcr-1": {
+  "titulo": "JCR 1",
+  "tipo": "Bombas centrífugas autocebantes de acero inoxidable",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 60 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Unidad eyectora",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jcr-1/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/JCR1_ES_60Hz.pdf"
+  ]
+ },
+ "zxm-1": {
+  "titulo": "ZXm 1",
+  "tipo": "Bombas sumergibles para aguas ligeramente sucias",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 400 l/min (24 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 11 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 40 mm"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "240 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Tecnopolímero"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/zxm-1/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/ZXm-1_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/ZXm-1_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "vx-st": {
+  "titulo": "VX-ST",
+  "tipo": "Bombas sumergibles de acero inoxidable para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 700 l/min (42 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 17 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 40 mm para VX /35-ST – hasta Ø 50 mm para VX /50-ST"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "– 290 mm para VX 8-ST y VX 10-ST – 330 mm para VX 15-ST – 360 mm para VX 20-ST"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/vx-st/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VX-ST_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VX-ST_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "vx-65-80": {
+  "titulo": "VX 65-80",
+  "tipo": "Bombas sumergibles para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 1800 l/min (108 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 23 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 65 mm para VX/65– hasta Ø 80 mm para VX/80"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 10 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "500 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Impulsor",
+    "Hierro fundido"
+   ],
+   [
+    "Camisa motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/vx-65-80/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/VX-50-65-80_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "vx": {
+  "titulo": "VX",
+  "tipo": "Bombas sumergibles para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 750 l/min (45 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 15.5 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 40 mm para VX /35 – hasta Ø 50 mm para VX /50"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "– 290 mm para VX 8 y VX 10 – 330 mm para VX 15 – 360 mm para VX 20"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/vx/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VX_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/VX_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "up": {
+  "titulo": "UP",
+  "tipo": "Bombas sumergibles multietapa",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 180 l/min (10.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 97 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Contenido máximo de arena",
+    "150 g/m³"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 20 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Boca de impulsión",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "Noryl™"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/up/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/UP_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/UP_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "tritus-inox": {
+  "titulo": "TRITUS-INOX",
+  "tipo": "Bombas sumergibles trituradoras para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 250 l/min (15 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 24 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "-"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "300 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Tecnopolímero"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Triturador",
+    "Acero inoxidable AISI 440C templado"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/tritus-inox/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TRITUS-INOX_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TRITUS-INOX_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "tritus": {
+  "titulo": "TRITUS",
+  "tipo": "Bombas sumergibles trituradoras para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 410 l/min (24.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 44.5 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "-"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 10 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "– 300 mm para 0.75, 0.9, 1.1, 1.3 – 350 mm para 1.5, 2.2, TR 2.2 AP, TR 3 AP, TR 3, TR 4"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Tecnopolímero (para TR 0.75-0.9-1.1-1.3) Acero inoxidable AISI 304 fundido a precisión"
+   ],
+   [
+    "Carcasa del motor",
+    "Hierro fundido"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Triturador",
+    "Acero inoxidable AISI 440C templado"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/tritus/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TRITUS_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TRITUS_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "top-vortex": {
+  "titulo": "TOP-VORTEX",
+  "tipo": "Bombas sumergibles de drenaje para aguas grises",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 170 l/min (10.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 8.7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C (+90 °C para servicio intermitente hasta 3 minutos)"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 25 mm"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 3 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Nivel de vaciado",
+    "25 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Tecnopolímero"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/top-vortex/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-VORTEX_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-VORTEX_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "top-floor": {
+  "titulo": "TOP-FLOOR",
+  "tipo": "Bombas sumergibles de drenaje para aguas limpias",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 170 l/min (10.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 10.4 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C (+90 °C para servicio intermitente hasta 3 minutos)"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 10 mm"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 3 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Nivel de vaciado",
+    "2 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Tecnopolímero"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/top-floor/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-FLOOR_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-FLOOR_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "top-multi-tech": {
+  "titulo": "TOP MULTI-TECH",
+  "tipo": "Bombas sumergibles multietapa automáticas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 120 l/min (7.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 52 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m"
+   ],
+   [
+    "Nivel de vaciado",
+    "35 mm"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Tecnopolímero"
+   ],
+   [
+    "Rodetes",
+    "Noryl™"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/top-multi-tech/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-MULTI-TECH_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-MULTI-TECH_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "top-multi": {
+  "titulo": "TOP MULTI",
+  "tipo": "Bombas sumergibles multietapa",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 120 l/min (7.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 52 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "– hasta 3 m para TOP MULTI 1 – hasta 10 m para TOP MULTI 2-3-4-5"
+   ],
+   [
+    "Nivel de vaciado",
+    "– hasta 25 mm para TOP MULTI 1 – hasta 35 mm para TOP MULTI 2-3-4-5"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ],
+   [
+    "Cuerpo de la bomba",
+    "Tecnopolímero"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Rodetes",
+    "Noryl™"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/top-multi/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-MULTI_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP-MULTI_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "top": {
+  "titulo": "TOP",
+  "tipo": "Bombas sumergibles de drenaje para aguas limpias",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 360 l/min (21.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 15.5 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C (+90 °C para servicio intermitente hasta 3 minutos)"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 10 mm"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "– hasta 3 m para TOP 1-2-3 – hasta 5 m para TOP 4-5"
+   ],
+   [
+    "Nivel de vaciado",
+    "– hasta 14 mm para TOP 1-2-3 – hasta 30 mm para TOP 4-5"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Tecnopolímero"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Camisa del motor",
+    "– Acero inoxidable AISI 304 – Acero inoxidable AISI 316L (para TOP-LA)"
+   ],
+   [
+    "Eje",
+    "– Acero inoxidable AISI 431 – Acero inoxidable AISI 316L (para TOP-LA)"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/top/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/TOP_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "steadypres-4-0": {
+  "titulo": "STEADYPRES 4.0",
+  "tipo": "Variador de velocidad (inverter) con paso de agua",
+  "tecnicas": [
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima",
+    "10 bar"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/steadypres-4-0/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/STEADYPRES-4_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/STEADYPRES-4_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "steadypres": {
+  "titulo": "STEADYPRES",
+  "tipo": "Variador de velocidad (inverter) con paso de agua",
+  "tecnicas": [
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima",
+    "10 bar"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 65"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/steadypres/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/STEADYPRES_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/STEADYPRES_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "sar-550": {
+  "titulo": "SAR 550",
+  "tipo": "Estaciones de elevación y recolección",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 750 l/min (por bomba individual)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 26 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Volumen del tanque",
+    "550 litros"
+   ],
+   [
+    "Conexión de la tubería de recolección",
+    "DN 110"
+   ],
+   [
+    "Conexión de la tubería de descarga",
+    "– 1 1/2\" – 1 1/4\" (para TIG y TR 0.9-1.1-1.3) – 2\" (para VX /50)"
+   ],
+   [
+    "Cable de alimentación",
+    "10 m"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/sar-550/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-550_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-550_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "sar-40": {
+  "titulo": "SAR 40",
+  "tipo": "Estaciones de elevación y recolección",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 220 l/min"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 11.5 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "– hasta +40 °C (para TOP, TEX, TRITUS-TX) – hasta +50 °C (para RX) – hasta +90 °C para servicio intermitente de hasta 3 minutos"
+   ],
+   [
+    "Volumen del tanque",
+    "40 litros"
+   ],
+   [
+    "Conexión de la tubería de recolección",
+    "1 1/2\""
+   ],
+   [
+    "Conexión de la tubería de descarga",
+    "1 1/4\""
+   ],
+   [
+    "Cable de alimentación",
+    "5 m"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/sar-40/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-40_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-40_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "sar-250": {
+  "titulo": "SAR 250",
+  "tipo": "Estaciones de elevación y recolección",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 650 l/min"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 26 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "– hasta +40 °C – hasta +50 °C (para RX)"
+   ],
+   [
+    "Volumen del tanque",
+    "250 litros"
+   ],
+   [
+    "Conexión de la tubería de recolección",
+    "DN 110"
+   ],
+   [
+    "Conexión de la tubería de descarga",
+    "– 1 1/2\" – 1 1/4\" (para TOP, RX) – 2\" (para VX /50)"
+   ],
+   [
+    "Cable de alimentación",
+    "10 m"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/sar-250/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-250_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-250_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "sar-100": {
+  "titulo": "SAR 100",
+  "tipo": "Estaciones de elevación y recolección",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 400 l/min"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 19 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "– hasta +40 °C – hasta +50 °C (para RX)"
+   ],
+   [
+    "Volumen del tanque",
+    "100 litros"
+   ],
+   [
+    "Conexión de la tubería de recolección",
+    "DN 110"
+   ],
+   [
+    "Conexión de la tubería de descarga",
+    "– 1 1/4\" (para TOP, RX) – 1 1/2\""
+   ],
+   [
+    "Cable de alimentación",
+    "10 m"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/sar-100/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-100_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/SAR-100_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "rx-vortex": {
+  "titulo": "RX-VORTEX",
+  "tipo": "Bombas sumergibles de drenaje de acero inoxidable para aguas grises",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 380 l/min (22.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 12.8 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +50 °C (+90 °C para servicio intermitente hasta 3 minutos)"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 20 mm para RX 2/20, RX 3/20 – hasta Ø 40 mm para RX 4/40, RX 5/40"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 10 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Nivel de vaciado",
+    "– 25 mm para RX 2/20, RX 3/20 – 50 mm para RX 4/40, RX 5/40"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/rx-vortex/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/RX-VORTEX_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/RX-VORTEX_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "qet": {
+  "titulo": "QET",
+  "tipo": "Panel de control para bombas sumergibles de pozo trifásicas",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 0.37 a 37 kW"
+   ],
+   [
+    "Alimentación",
+    "3~400 V ±10%"
+   ],
+   [
+    "Frecuencia",
+    "50 Hz"
+   ],
+   [
+    "Temperatura ambiente",
+    "de -5 °C a +40 °C"
+   ],
+   [
+    "Humedad relativa",
+    "50% a 40 °C"
+   ],
+   [
+    "Grado de protección IP",
+    "IP55"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/qet/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/QET_ES_60HZ.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/QET_ES-ficha-tecnica_50Hz.pdf"
+  ]
+ },
+ "qem": {
+  "titulo": "QEM",
+  "tipo": "Panel de control para bombas sumergibles de pozo monofásicas",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 0.37 a 2.2 kW"
+   ],
+   [
+    "Alimentación",
+    "1~230 V ±10%"
+   ],
+   [
+    "Frecuencia",
+    "50 Hz"
+   ],
+   [
+    "Temperatura ambiente",
+    "de -5 °C a +40 °C"
+   ],
+   [
+    "Humedad relativa",
+    "50% a 40 °C"
+   ],
+   [
+    "Grado de protección IP",
+    "IP55"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/qem/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/QEM_ES_60HZ.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/QEM_ES-ficha-tecnica_50Hz.pdf"
+  ]
+ },
+ "pro-dg": {
+  "titulo": "PRO-DG",
+  "tipo": "Variador de velocidad (inverter) de pared",
+  "tecnicas": [
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 54"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/pro-dg/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PRO-DG_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PRO-DG_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "prima": {
+  "titulo": "PRIMA",
+  "tipo": "Bombas centrífugas autocebantes para piscinas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 310 l/min (18.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 16 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 4 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "2.5 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Polipropileno reforzado con fibra de vidrio"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Difusor",
+    "Polipropileno reforzado con fibra de vidrio"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Inserto del sello",
+    "Polipropileno reforzado con fibra de vidrio"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/prima/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/PRIMA_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PRIMA_ES-ficha-tecnica_50Hz.pdf"
+  ]
+ },
+ "pq": {
+  "titulo": "PQ",
+  "tipo": "Bombas de rodete periférico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 90 l/min (5.4 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 100 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 8 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C (+50 °C para PQ 60 y PQ61)"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para PQ 60, PQ 61, PQ 65 – 7 bar para PQ 80 – 10 bar para PQ 90, PQ 100, PQ 200, PQ 300"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431 Acero inoxidable AISI 430F (para PQ 60, PQ 61, PQ 65)"
+   ],
+   [
+    "Soporte del motor",
+    "Aluminio con tapa de latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/pq/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PQ_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PQ_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "pks": {
+  "titulo": "PKS",
+  "tipo": "Bombas autocebantes con rodete periférico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 50 l/min (3.0 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 70 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C (+50 °C para PKS 60)"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para PKS 60, PKS 65 – 7 bar para PKS 80"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431 Acero inoxidable AISI 430F (para PKS 60, PKS 65)"
+   ],
+   [
+    "Soporte del motor",
+    "Aluminio con tapa de latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/pks/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PKS_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PKS_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "pkm-60md": {
+  "titulo": "PKm 60MD",
+  "tipo": "Bombas de rodete periférico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 40 l/min (2.4 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 40 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 8 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +50 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431 Acero inoxidable AISI 430F (para PK 60, PK 65)"
+   ],
+   [
+    "Soporte del motor",
+    "Aluminio con tapa de latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/pkm-60md/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/PK60-MD.pdf"
+  ]
+ },
+ "pk": {
+  "titulo": "PK",
+  "tipo": "Bombas de rodete periférico",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 90 l/min (5.4 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 100 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 8 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para PK 65 – 7 bar para PK 80 – 10 bar para PK 90, PK 100, PK 200, PK 300"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 430F"
+   ],
+   [
+    "Soporte del motor",
+    "Aluminio con tapa de latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/pk/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/PK_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PK_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/PK_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "nga-pro": {
+  "titulo": "NGA-PRO",
+  "tipo": "Bombas centrífugas de acero inoxidable fundido a precisión con rodete abierto",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 900 l/min (54 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 20.5 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para NGA1-2 -PRO – 10 bar para NGA3-PRO"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 12 mm para NGA1-2 -PRO – hasta Ø 20 mm para NGA3-PRO"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 316L"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 316"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/nga-pro/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/NGA-PRO_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/NGA-PRO_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "nga": {
+  "titulo": "NGA",
+  "tipo": "Bombas centrífugas con rodete abierto",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 900 l/min (54 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 20.5 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para NGA1-2 – 10 bar para NGA3"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 12 mm para NGA1-2 – hasta Ø 20 mm para NGA3"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido JL250"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Hierro fundido JL250"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/nga/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/NGA_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/NGA_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "mk": {
+  "titulo": "MK",
+  "tipo": "Bombas centrífugas multietapa verticales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 180 l/min (10.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 114 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "11 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Parte de entrada",
+    "Hierro fundido"
+   ],
+   [
+    "Parte de salida",
+    "Hierro fundido"
+   ],
+   [
+    "Rodetes",
+    "Noryl™"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/mk/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MK_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MK_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "mc-50-65": {
+  "titulo": "MC 50-65",
+  "tipo": "Bombas sumergibles para aguas residuales",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 1600 l/min (96 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 25 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "– hasta Ø 50 mm para MC /50 – hasta Ø 65 mm para MC /65"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 10 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "– 320 mm para MC /50 – 360 mm para MC /65"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304 fundido a precisión"
+   ],
+   [
+    "Carcasa del motor",
+    "Hierro fundido"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/mc-50-65/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MC-50-65_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MC-50-65_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "maxima": {
+  "titulo": "MAXIMA",
+  "tipo": "Bombas centrífugas autocebantes para piscinas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 2400 l/min (180 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 16 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 4 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "2.5 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Polipropileno reforzado con fibra de vidrio"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Difusor",
+    "Polipropileno reforzado con fibra de vidrio"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Inserto del sello",
+    "Polipropileno reforzado con fibra de vidrio"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/maxima/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/MAXIMA_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MAXIMA_ES-ficha-tecnica_50Hz.pdf"
+  ]
+ },
+ "magnifica": {
+  "titulo": "MAGNIFICA",
+  "tipo": "Bombas centrífugas autocebantes para piscinas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 700 l/min (42 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 23 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 4 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +45 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +50 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "2.5 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Polipropileno reforzado con fibra de vidrio"
+   ],
+   [
+    "Rodete",
+    "Noryl™"
+   ],
+   [
+    "Difusor",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Inserto del sello",
+    "Polipropileno reforzado con fibra de vidrio"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/magnifica/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MAGNIFICA_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/MAGNIFICA_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "jsw-3": {
+  "titulo": "JSW 3",
+  "tipo": "Electrobombas autocebantes “JET”",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 160 l/min (9.6 m³/h)"
+   ],
+   [
+    "Altura",
+    "hasta 97 m"
+   ],
+   [
+    "Altura de aspiración manométrica",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "de -10 °C hasta +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima en el cuerpo de la bomba",
+    "10 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Protección",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo bomba",
+    "Fundición de hierro"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Conjunto eyector",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Carcasa",
+    "Fundición de hierro"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jsw-3/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/JSW-3_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/JSW-3_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "jsw-2": {
+  "titulo": "JSW 2",
+  "tipo": "Bombas centrífugas autocebantes",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 58 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Unidad eyectora",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jsw-2/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/JSW2_ES_60Hz.pdf"
+  ]
+ },
+ "jcr-2": {
+  "titulo": "JCR 2",
+  "tipo": "Bombas centrífugas autocebantes de acero inoxidable",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 70 l/min (4.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 60 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Unidad eyectora",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/jcr-2/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/JCR2_ES_60Hz.pdf"
+  ]
+ },
+ "hydrofresh-mr": {
+  "titulo": "HYDROFRESH MR PK",
+  "tipo": "Grupo de presión",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 60 l/min (3.6 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 29 m"
+   ],
+   [
+    "Elevación",
+    "hasta PB+2"
+   ],
+   [
+    "Salidas simultáneas",
+    "hasta 3"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/hydrofresh-mr/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/09/HF-PK-PMR_ES_60HZ.pdf"
+  ]
+ },
+ "ht": {
+  "titulo": "HT",
+  "tipo": "Bombas centrífugas multietapa verticales de acero inoxidable",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 800 l/min (48 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 160 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -15 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "16 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido JL250"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Difusores",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Hierro fundido JL250"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/ht/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/HT_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/HT_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "hf-medio-caudal": {
+  "titulo": "HF MEDIO CAUDAL",
+  "tipo": "Bombas centrífugas de un solo rodete",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 700 l/min (42 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 39 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para HF 5-50-51 – 10 bar para HF 5M-70"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304 Hierro fundido (para HF 5M, HF 70)"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/hf-medio-caudal/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/HF-Medios-caudales_ES_60Hz.pdf"
+  ]
+ },
+ "hf-alto-caudal": {
+  "titulo": "HF ALTO CAUDAL",
+  "tipo": "Bombas centrífugas de un solo rodete",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 2400 l/min (144 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 24.5 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para HF 4 – 10 bar para HF 6-8-20-30"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304 (para HF 4, HF 6) Latón (para HF 8) Hierro fundido (para HF 20, HF 30)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Hierro fundido Acero inoxidable AISI 304 (para HF 4)"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/hf-alto-caudal/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/HF-Altos-caudales_ES_60Hz.pdf"
+  ]
+ },
+ "fluid-solar": {
+  "titulo": "FLUID SOLAR",
+  "tipo": "Bombas sumergibles solares de 4″",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 180 l/min (10.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 194.5 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +35 °C"
+   ],
+   [
+    "Contenido máximo de arena",
+    "200 g/m³"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "100 m"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Boca de impulsión",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "Derlin®"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Soporte del motor",
+    "Tecnopolímero y Latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/fluid-solar/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/FLUID-SOLAR_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/FLUID-SOLAR_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "fg": {
+  "titulo": "FG",
+  "tipo": "Bombas centrífugas monobloque EN 733",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 5750 l/min (345 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 98 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar (PN10)"
+   ],
+   [
+    "Motor",
+    "2 polos FG2 4 polos FG4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Hierro fundido Latón (para FG 32/160-200, FG 40/125-160-200, FG 50/125-160)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Hierro fundido"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/fg/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/FG_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/FG_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "f-inox": {
+  "titulo": "F-INOX",
+  "tipo": "Bombas centrífugas monobloque EN 733",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 2200 l/min (132 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 37 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar (PN10)"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 316L"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 316"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/f-inox/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/F-INOX_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/F-INOX_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "f": {
+  "titulo": "F",
+  "tipo": "Bombas centrífugas monobloque EN 733",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 5750 l/min (345 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 98 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar (PN10)"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 55"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Hierro fundido Latón (para F32/160-200, F40/125-160-200, F50/125-160)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Hierro fundido"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/f/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/F_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/F_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "easypress": {
+  "titulo": "EASYPRESS",
+  "tipo": "Dispositivo de control automático",
+  "tecnicas": [
+   [
+    "Presión de reinicio",
+    "1.5 bar (estándar)"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +55 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima",
+    "10 bar"
+   ],
+   [
+    "Voltaje de alimentación",
+    "1~230V"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 65"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/easypress/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/EASYPRESS_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/EASYPRESS_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "e1-e2": {
+  "titulo": "Controles electrónicos E1 / E2",
+  "tipo": "Paneles eléctricos electrónicos para bombas",
+  "tecnicas": [
+   [
+    "Temperatura ambiente",
+    "de -5 °C a +40 °C"
+   ],
+   [
+    "Frecuencia",
+    "50/60 Hz"
+   ],
+   [
+    "Grado de protección IP",
+    "IP55"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/e1-e2/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/E1-E2_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/E1-E2_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "dg-blu": {
+  "titulo": "DG-BLU",
+  "tipo": "Sistema automático de presurización con variador de velocidad (inverter)",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 130 l/min (7.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 60 m"
+   ],
+   [
+    "Alimentación",
+    "1~ 230 V ± 10%"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 8 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [],
+  "pagina": "https://pedrollo.com.mx/product_branch/dg-blu/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/DG-BLU_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/DG-BLU_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "d": {
+  "titulo": "D",
+  "tipo": "Bombas sumergibles de drenaje con rodete semiabierto",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 300 l/min (18 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 26 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Paso de sólidos en suspensión",
+    "hasta Ø 10 mm"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "hasta 5 m (con un cable de alimentación de tamaño adecuado)"
+   ],
+   [
+    "Inmersión mínima para servicio continuo",
+    "– 210 mm para D 8-10-20 – 250 mm para D 30"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Tecnopolímero"
+   ],
+   [
+    "Camisa del motor",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/d/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/D_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/D_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "cp-hasta-25hp": {
+  "titulo": "CP hasta 25HP",
+  "tipo": "Electrobombas centrífugas",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 900 l/min (54 m³/h)"
+   ],
+   [
+    "Altura",
+    "hasta 76 m"
+   ],
+   [
+    "Altura de aspiración manométrica",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "de -10 °C hasta +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "de -10 °C hasta +40 °C"
+   ],
+   [
+    "Presión máxima en el cuerpo de la bomba",
+    "10 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Protección",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo bomba",
+    "Fundición de hierro"
+   ],
+   [
+    "Rodete",
+    "– Acero inoxidable AISI 304 (para CP 160) – Latón (para CP 210, CP 220, CP 230) – Fundición de hierro (para CP 250)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Carcasa",
+    "Fundición de hierro"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/cp-hasta-25hp/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/CP-1_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/CP-1_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "ck": {
+  "titulo": "CK",
+  "tipo": "Electrobombas autocebantes de anillo líquido",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 40 l/min (2.4 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 35 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 9 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C (para diésel/nafta hasta +55 °C)"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodete",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Soporte del motor",
+    "Aluminio con tapa de latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/ck/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/CK_ES_60Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/CK_ES-ficha-tecnica_50Hz.pdf"
+  ]
+ },
+ "al-red": {
+  "titulo": "AL-RED",
+  "tipo": "Bombas centrífugas de acero inoxidable",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 270 l/min (16.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 45 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "– 6 bar para CP 100-130-132-150-158 ST4-6 – 8 bar para CP 170-170M-180-190-200 ST4-6"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Acero inoxidable AISI 304 (CP-ST4) Acero inoxidable AISI 316L (CP-ST6)"
+   ],
+   [
+    "Rodete",
+    "Acero inoxidable AISI 304 (CP-ST4) Acero inoxidable AISI 316L (CP-ST6)"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431 (CP-ST4) Acero inoxidable AISI 316L (CP-ST6)"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304 (CP-ST4) Acero inoxidable AISI 316L (CP-ST6)"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/al-red/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/AL-RED_ES_60Hz.pdf"
+  ]
+ },
+ "6pd": {
+  "titulo": "6PD",
+  "tipo": "Motores sumergibles de 6″",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 4 a 37 kW"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +35 °C"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "200 m"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Soporte superior",
+    "Hierro fundido"
+   ],
+   [
+    "Eje",
+    "Dúplex"
+   ],
+   [
+    "Base",
+    "Acero inoxidable AISI 316"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/6pd/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/6PD_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/6PD_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "4sr": {
+  "titulo": "4SR",
+  "tipo": "Bombas sumergibles de pozo de 4″",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 350 l/min (21 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 576 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +35 °C"
+   ],
+   [
+    "Contenido máximo de arena",
+    "– 200 g/m³ para 4SR-S – 150 g/m³ para 4SR-N"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "– 200 m con motores 4PD – 300 m con motores 4PS"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Boca de impulsión",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "– Derlin® para 4SR-S – Noryl™ para 4SR-N"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Soporte del motor",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/4sr/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4SR_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4SR_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "4pd": {
+  "titulo": "4PD",
+  "tipo": "Motores sumergibles de 4″",
+  "tecnicas": [
+   [
+    "Potencia",
+    "de 0.37 a 7.5 kW"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +40 °C"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "200 m"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Clase de aislamiento",
+    "F"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Soporte superior",
+    "Acero inoxidable AISI 316"
+   ],
+   [
+    "Eje",
+    "Dúplex"
+   ],
+   [
+    "Base",
+    "Acero inoxidable AISI 316"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/4pd/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4PD_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4PD_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "4-block": {
+  "titulo": "4-BLOCK",
+  "tipo": "Bombas sumergibles monobloque de 4″",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 200 l/min (12 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 140 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +35 °C"
+   ],
+   [
+    "Contenido máximo de arena",
+    "200 g/m³"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "100 m"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Boca de impulsión",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "Derlin®"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Soporte del motor",
+    "Tecnopolímero y Latón"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/4-block/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4-BLOCK_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/4-BLOCK_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "3sr": {
+  "titulo": "3SR",
+  "tipo": "Bombas sumergibles de pozo de 3″",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 120 l/min (7.2 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 267 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "hasta +35 °C"
+   ],
+   [
+    "Contenido máximo de arena",
+    "150 g/m³"
+   ],
+   [
+    "Profundidad máxima de funcionamiento bajo el nivel del agua",
+    "100 m"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP 68"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Boca de impulsión",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Camisa de la bomba",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Rodetes",
+    "– Derlin® para 3SR 1-2-4 – Noryl™ para 3SR 5"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Soporte del motor",
+    "Acero inoxidable AISI 304 fundido a precisión"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/3sr/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/3SR_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/3SR_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "2cp": {
+  "titulo": "2CP",
+  "tipo": "Bombas centrífugas de doble rodete",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 450 l/min (27 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 112 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +90 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "entre -10 °C y +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "10 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Parte de entrada",
+    "Hierro fundido"
+   ],
+   [
+    "Parte de salida",
+    "Hierro fundido"
+   ],
+   [
+    "Rodetes",
+    "Latón"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/2cp/",
+  "pdfs": [
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/2CP_ES-ficha-tecnica_50Hz.pdf",
+   "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/ES/2CP_ES-ficha-tecnica_60Hz.pdf"
+  ]
+ },
+ "3-4cp": {
+  "titulo": "3-4CP",
+  "tipo": "Bombas centrífugas multietapa",
+  "tecnicas": [
+   [
+    "Caudal",
+    "hasta 130 l/min (7.8 m³/h)"
+   ],
+   [
+    "Altura manométrica",
+    "hasta 67 m"
+   ],
+   [
+    "Altura manométrica de aspiración",
+    "hasta 7 m"
+   ],
+   [
+    "Temperatura del líquido",
+    "entre -10 °C y +60 °C"
+   ],
+   [
+    "Temperatura ambiente",
+    "hasta +40 °C"
+   ],
+   [
+    "Presión máxima de trabajo",
+    "6 bar"
+   ],
+   [
+    "Motor",
+    "2 polos"
+   ],
+   [
+    "Grado de protección IP",
+    "IP X4"
+   ]
+  ],
+  "constructivas": [
+   [
+    "Cuerpo de la bomba",
+    "Hierro fundido"
+   ],
+   [
+    "Rodetes",
+    "Acero inoxidable AISI 304"
+   ],
+   [
+    "Difusores",
+    "Noryl™"
+   ],
+   [
+    "Eje",
+    "Acero inoxidable AISI 431"
+   ],
+   [
+    "Tapa de la bomba",
+    "Acero inoxidable AISI 304"
+   ]
+  ],
+  "pagina": "https://pedrollo.com.mx/product_branch/3-4cp/",
+  "pdfs": [
+   "https://pedrollo.com.mx/wp-content/uploads/sites/13/2026/03/3-4CP_ES_60Hz.pdf"
+  ]
+ }
+}

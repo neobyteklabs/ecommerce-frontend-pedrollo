@@ -1,0 +1,2231 @@
+{
+ "tfn": {
+  "serie": "TFN",
+  "familia": "ACCESORIOS",
+  "subtipo": "TEFLÓN",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "tfn-1",
+   "tfn-3"
+  ],
+  "web": []
+ },
+ "ar": {
+  "serie": "AR",
+  "familia": "ACCESORIOS",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 9,
+  "hp": null,
+  "modelos": [
+   "ar-12",
+   "ar-13",
+   "ar-12v",
+   "ar-14",
+   "ar-15",
+   "ar-14s",
+   "ar-17",
+   "ar-20r",
+   "ar-30"
+  ],
+  "web": []
+ },
+ "sellos-mecanicos": {
+  "serie": "SELLOS MECÁNICOS",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 15,
+  "hp": null,
+  "modelos": [
+   "sta-12r",
+   "3p10824a",
+   "sta-13r",
+   "3p10022a",
+   "sta-13r-sic",
+   "sta-12r-sic",
+   "sta-20",
+   "st1-14-sic",
+   "st1-13e",
+   "sta-22",
+   "sta-24",
+   "mg1-14d-sic",
+   "sta-19",
+   "sta-20-sic",
+   "sta-22-sic"
+  ],
+  "web": []
+ },
+ "mr": {
+  "serie": "MR",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "TANQUE HORIZONTAL MEMBRANA REEMPLAZABLE PEDROLLO MR (145 PSI)",
+  "n": 15,
+  "hp": null,
+  "modelos": [
+   "mr-005pi",
+   "pmr-005is",
+   "pmr-024is",
+   "pmr-024hs",
+   "pmr-050hs",
+   "pmr-080hs",
+   "pmr-080vs",
+   "pmr-100hs",
+   "pmr-100vs",
+   "pmr-150vs",
+   "pmr-150hs",
+   "pmr-200vs",
+   "pmr-200hs",
+   "pmr-300vs",
+   "pmr-500vs"
+  ],
+  "web": [
+   "tanque-horizontal-mr",
+   "tanque-vertical-mr",
+   "tanque-inline-mr"
+  ]
+ },
+ "vr": {
+  "serie": "VR",
+  "familia": "ACCESORIOS",
+  "subtipo": "VR VÁLVULA DE RETENCIÓN (CHECK)",
+  "n": 8,
+  "hp": null,
+  "modelos": [
+   "vr-1-2",
+   "vr-3-4",
+   "vr-1",
+   "vr-1-1-4",
+   "vr-1-1-2",
+   "vr-2",
+   "vr-3",
+   "vr-4"
+  ],
+  "web": []
+ },
+ "vf": {
+  "serie": "VF",
+  "familia": "ACCESORIOS",
+  "subtipo": "VF VÁLVULA DE FONDO (PICHANCHA)",
+  "n": 7,
+  "hp": null,
+  "modelos": [
+   "vf-3-4",
+   "vf-1",
+   "vf-1-1-4",
+   "vf-1-1-2",
+   "vf-2",
+   "vf-3",
+   "vf-4"
+  ],
+  "web": []
+ },
+ "membranas": {
+  "serie": "MEMBRANAS",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "MEMBRANAS DE REEMPLAZO",
+  "n": 12,
+  "hp": null,
+  "modelos": [
+   "mr-024pi",
+   "mr-024ph",
+   "mr-050",
+   "mr-080",
+   "mr-100",
+   "mr-150",
+   "mr-200",
+   "mr-300",
+   "mr-500",
+   "mr-750",
+   "mr-10c",
+   "mr-20c"
+  ],
+  "web": []
+ },
+ "fn": {
+  "serie": "FN",
+  "familia": "ACCESORIOS",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 12,
+  "hp": null,
+  "modelos": [
+   "fn-18",
+   "fn-14",
+   "fn-20",
+   "fn-24",
+   "fn-24-ku",
+   "fn-18-sic",
+   "fn-32-nu",
+   "fn-24-ku-sic",
+   "fn-32-nud",
+   "fn-35-nud",
+   "fn-40-nu",
+   "fn-24sv"
+  ],
+  "web": []
+ },
+ "df": {
+  "serie": "DF",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "TANQUE VERTICAL DIAFRAGMA FIJO PEDROLLO DF (145 PSI)",
+  "n": 14,
+  "hp": null,
+  "modelos": [
+   "b-pdf",
+   "pdf-18i",
+   "pdf-24h",
+   "pdf-50",
+   "pdf-50h",
+   "pdf-80",
+   "pdf-80h",
+   "pdf-105",
+   "pdf-150",
+   "pdf-200",
+   "pdf-250",
+   "pdf-300",
+   "pdf-450",
+   "pdf-600"
+  ],
+  "web": [
+   "tanque-vertical-de-diafragma-fijo",
+   "tanque-horizontal-de-diafragma-fijo",
+   "tanque-inline-df"
+  ]
+ },
+ "r": {
+  "serie": "R",
+  "familia": "ACCESORIOS",
+  "subtipo": "R CONEXIONES DE 3 Y 5 VÍAS",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "r-3",
+   "r-5"
+  ],
+  "web": []
+ },
+ "sta": {
+  "serie": "STA",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 1,
+  "hp": null,
+  "modelos": [
+   "sta-17"
+  ],
+  "web": []
+ },
+ "st4": {
+  "serie": "ST4",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "st4-16",
+   "st4-25"
+  ],
+  "web": []
+ },
+ "psg": {
+  "serie": "PSG",
+  "familia": "ACCESORIOS",
+  "subtipo": "PRESÓSTATOS",
+  "n": 3,
+  "hp": null,
+  "modelos": [
+   "psg-1",
+   "psg-2",
+   "psg-3"
+  ],
+  "web": []
+ },
+ "tf": {
+  "serie": "TF",
+  "familia": "ACCESORIOS",
+  "subtipo": "TF TUBOS FLEXIBLES",
+  "n": 8,
+  "hp": null,
+  "modelos": [
+   "tfg-5-e",
+   "tfg-6-e",
+   "tf-10-e",
+   "tfg-8-e",
+   "tfg-8",
+   "tfg-10-e",
+   "tfg-12-e",
+   "tfg-14-e"
+  ],
+  "web": []
+ },
+ "st1": {
+  "serie": "ST1",
+  "familia": "ACCESORIOS",
+  "subtipo": "SELLOS MECÁNICOS",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "st1-16",
+   "st1-12"
+  ],
+  "web": []
+ },
+ "vet": {
+  "serie": "VET",
+  "familia": "ACCESORIOS",
+  "subtipo": "VET VÁLVULA DE ESFERA CON TUERCA UNIÓN",
+  "n": 4,
+  "hp": null,
+  "modelos": [
+   "vet-f-1",
+   "vet-f-1-1-4",
+   "vet-f-1-1-2",
+   "vet-p-2"
+  ],
+  "web": []
+ },
+ "easypress": {
+  "serie": "EASYPRESS",
+  "familia": "VARIADORES Y CONTROLES",
+  "subtipo": "EASYPRESS",
+  "n": 6,
+  "hp": null,
+  "modelos": [
+   "ter-easy-2",
+   "ter-easy",
+   "easypress-r-2",
+   "easypress-a",
+   "easypress-r",
+   "easypress-a-2"
+  ],
+  "web": [
+   "easypress"
+  ]
+ },
+ "c-box": {
+  "serie": "C-BOX",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "CONTROL C-BOX",
+  "n": 10,
+  "hp": null,
+  "modelos": [
+   "c-box05-2",
+   "c-box07-2",
+   "c-box10-2",
+   "c-box15-2",
+   "c-box20-2",
+   "c-box30-2",
+   "c-box05",
+   "c-box07",
+   "c-box10",
+   "c-box55-2"
+  ],
+  "web": []
+ },
+ "flo": {
+  "serie": "FLO",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "TANQUE IN LINE PEDROLLO FLO (145 PSI)",
+  "n": 1,
+  "hp": null,
+  "modelos": [
+   "flovarem-3"
+  ],
+  "web": [
+   "flo"
+  ]
+ },
+ "steadypres": {
+  "serie": "STEADYPRES",
+  "familia": "VARIADORES Y CONTROLES",
+  "subtipo": "STEADYPRES VARIADOR DE VELOCIDAD",
+  "n": 4,
+  "hp": null,
+  "modelos": [
+   "tesp-4-0",
+   "tesp-2-0",
+   "steadypres-4-0",
+   "steadypres-2-0"
+  ],
+  "web": [
+   "steadypres-4-0",
+   "steadypres"
+  ]
+ },
+ "up": {
+  "serie": "UP",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "ELECTROBOMBAS SUMERGIBLES MONOBLOQUE",
+  "n": 10,
+  "hp": [
+   1.0,
+   2.0
+  ],
+  "modelos": [
+   "base-para-instalacion-horizontal",
+   "upm-2-2-ge-2",
+   "up-2-2",
+   "upm-4-3-ge-2",
+   "up-4-3",
+   "upm-2-2-ge",
+   "up-4-4",
+   "up-8-3",
+   "upm-4-4-ge-2",
+   "upm-8-3-ge-2"
+  ],
+  "web": [
+   "up"
+  ]
+ },
+ "anodo": {
+  "serie": "ANODO",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "ANODO DE SACRIFICIO",
+  "n": 1,
+  "hp": null,
+  "modelos": [
+   "anodo-4pd"
+  ],
+  "web": []
+ },
+ "easy": {
+  "serie": "EASY",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "EASYSMALL",
+  "n": 1,
+  "hp": [
+   1.5,
+   1.5
+  ],
+  "modelos": [
+   "easy-small"
+  ],
+  "web": [
+   "easysmall"
+  ]
+ },
+ "dgblu": {
+  "serie": "DGBLU",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "DGBLU DUO",
+  "n": 7,
+  "hp": [
+   1.5,
+   1.5
+  ],
+  "modelos": [
+   "tarjeta-electronica-de-expansion",
+   "kit-de-conexion-para-dgblu-duo",
+   "dgblu-3-d",
+   "dgblu-5-2",
+   "dgblu-3-3",
+   "dgblu-3-5",
+   "dgblu-5-5"
+  ],
+  "web": [
+   "dg-blu"
+  ]
+ },
+ "pk": {
+  "serie": "PK",
+  "familia": "PERIFÉRICAS",
+  "subtipo": "ELECTROBOMBAS PERIFÉRICAS",
+  "n": 11,
+  "hp": [
+   0.5,
+   3.0
+  ],
+  "modelos": [
+   "pkm-60-md",
+   "pk-60",
+   "pk-65",
+   "pkm-65",
+   "pkm-80-2",
+   "pkm-80",
+   "pk-80",
+   "pqm-90-d",
+   "pk-200",
+   "pk-300",
+   "pkm-200-d"
+  ],
+  "web": [
+   "pk",
+   "pkm-60md"
+  ]
+ },
+ "rp": {
+  "serie": "RP",
+  "familia": "ACCESORIOS",
+  "subtipo": "RP REGULADOR DE PRESIÓN",
+  "n": 3,
+  "hp": null,
+  "modelos": [
+   "rp-710-02",
+   "rp-710-03",
+   "rp-710-05"
+  ],
+  "web": []
+ },
+ "qem": {
+  "serie": "QEM",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "CONTROL QEM",
+  "n": 10,
+  "hp": null,
+  "modelos": [
+   "qem-050-2",
+   "qem-075-2",
+   "qem-100-2",
+   "qem-150-2",
+   "qem-200-2",
+   "qem-050",
+   "qem-300-2",
+   "qem-075",
+   "qem-100",
+   "qem-550-2"
+  ],
+  "web": [
+   "qem"
+  ]
+ },
+ "pa": {
+  "serie": "PA",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "PRESURIZADORAS AUTOMÁTICAS",
+  "n": 4,
+  "hp": null,
+  "modelos": [
+   "pa-06-1a-1a",
+   "pa-13-1a-1a",
+   "pa-13-2a-1a",
+   "pa-35-1a-1a"
+  ],
+  "web": []
+ },
+ "vx": {
+  "serie": "VX",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "VX SUMERGIBLES VORTEX",
+  "n": 11,
+  "hp": [
+   1.0,
+   7.5
+  ],
+  "modelos": [
+   "soporte-tubo-guia-2",
+   "vxm-10-35-2",
+   "vxm-10-35",
+   "vxm-15-50-2",
+   "vx-15-50-2",
+   "vx-65",
+   "vx-80",
+   "vx-55-65-4",
+   "vx-55-80-4",
+   "vx-75-65-4",
+   "vx-75-80-4"
+  ],
+  "web": [
+   "vx",
+   "vx-65-80"
+  ]
+ },
+ "pro-dg": {
+  "serie": "PRO-DG",
+  "familia": "VARIADORES Y CONTROLES",
+  "subtipo": "PRO DG VARIADOR DE VELOCIDAD",
+  "n": 7,
+  "hp": null,
+  "modelos": [
+   "asskits002",
+   "transductor-de-presion-4-20-ma",
+   "pro-dg-mt11",
+   "pro-dg-mt-11",
+   "pro-dg-tt11",
+   "pro-dg-tt-11",
+   "pro-dg-tt30"
+  ],
+  "web": [
+   "pro-dg"
+  ]
+ },
+ "pks": {
+  "serie": "PKS",
+  "familia": "PERIFÉRICAS",
+  "subtipo": "ELECTROBOMBAS PERIFÉRICAS AUTOCEBANTES",
+  "n": 1,
+  "hp": [
+   0.5,
+   0.5
+  ],
+  "modelos": [
+   "pksm-60"
+  ],
+  "web": [
+   "pks"
+  ]
+ },
+ "hydrofresh-mr": {
+  "serie": "HYDROFRESH MR",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "EQUIPOS HIDRONEUMÁTICOS MONOFÁSICOS 115 V — CON ELECTROBOMBA JET EN \"HIERRO\"",
+  "n": 46,
+  "hp": [
+   0.5,
+   3.0
+  ],
+  "modelos": [
+   "hf-pkm60-m024is",
+   "hf-pkm60-m024hs",
+   "hf-pkm65-m024is",
+   "hf-pkm60-m050hs",
+   "hf-pkm65-m024hs",
+   "hf-jswm1c-m024hs",
+   "hf-jswm1a-m024hs",
+   "hf-3cpm80-m024hs",
+   "hf-jcrm1a-m024hs",
+   "hf-cpm610-m050hs",
+   "hf-jswm1c-m050hs",
+   "hf-jswm1a-m050hs",
+   "hf-3cpm80-m050hs",
+   "hf-jcrm1a-m050hs",
+   "hf-cpm610-m080hs",
+   "hf-jswm1a-m080hs",
+   "hf-jswm2c-m080hs",
+   "hf-jcrm1a-m080hs",
+   "hf-3cpm80-m080hs",
+   "hf-cpm620-m080hs",
+   "hf-jcrm2c-m080hs",
+   "hf-jswm2c-m100hs",
+   "hf-cpm620-m100hs",
+   "hf-jcrm2c-m100hs",
+   "hf-4cpm100-m080hs",
+   "hf-4cpm100-m100hs",
+   "hf-jswm2c-m150hs",
+   "hf-jcrm2c-m150hs",
+   "hf-jswm2a-m150hs",
+   "hf-jcrm2a-m150hs",
+   "hf-jswm2a-m200hs",
+   "hf-jcrm2a-m200hs",
+   "hf-jswm2a-m300vs",
+   "hf-jcrm2a-m300vs",
+   "hf-cpm650m-m150hs",
+   "hf-cpm660m-m150hs",
+   "hf-cpm650m-m200hs",
+   "hf-cpm670m-m150hs",
+   "hf-cpm650m-m300vs",
+   "hf-cpm660m-m200hs",
+   "hf-jswm3bm-m150hs",
+   "hf-cpm670m-m200hs",
+   "hf-cpm660m-m300vs",
+   "hf-cpm670m-m300vs",
+   "hf-jswm3bm-m200hs",
+   "hf-jswm3bm-m300vs"
+  ],
+  "web": [
+   "hydrofresh-mr-jsw",
+   "hydrofresh-mr-cp",
+   "hydrofresh-mr-jcr",
+   "hydrofresh-mr",
+   "hydrofresh-mr-3-4cp"
+  ]
+ },
+ "cp": {
+  "serie": "CP",
+  "familia": "CENTRÍFUGAS",
+  "subtipo": "ELECTROBOMBAS CENTRÍFUGAS",
+  "n": 28,
+  "hp": [
+   0.5,
+   25.0
+  ],
+  "modelos": [
+   "cpm-600",
+   "cpm-610",
+   "cpm-620",
+   "cpm-620-2",
+   "cp-620",
+   "cpm-650m-2",
+   "cpm-650m",
+   "cp-650m",
+   "cp-660m",
+   "cpm-660m-2",
+   "cp-160c",
+   "cpm-660m",
+   "cp-160b",
+   "cpm-670m-2",
+   "cp-670m",
+   "cpm-670m",
+   "cp-160a",
+   "cp-210b",
+   "cp-680c",
+   "cp-700c",
+   "cp-680b",
+   "cp-700b",
+   "cp-680a",
+   "cp-700a",
+   "cpm-680c-2",
+   "cp-750c",
+   "cp-750b",
+   "cp-750a"
+  ],
+  "web": [
+   "cp-hasta-25hp",
+   "cp-hasta-3hp"
+  ]
+ },
+ "top": {
+  "serie": "TOP",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "TOP SUMERGIBLES PARA AGUAS LIMPIAS",
+  "n": 4,
+  "hp": [
+   0.33,
+   1.25
+  ],
+  "modelos": [
+   "top-1",
+   "top-2",
+   "top-3",
+   "top-5"
+  ],
+  "web": [
+   "top"
+  ]
+ },
+ "easypump": {
+  "serie": "EASYPUMP",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "SISTEMA ELECTRÓNICO DE PRESIÓN — CON ELECTROBOMBAS TIPO \"JET\" AUTOCEBANTE EN HIE",
+  "n": 24,
+  "hp": [
+   0.5,
+   1.5
+  ],
+  "modelos": [
+   "ep15-pkm60",
+   "ep15-cpm610",
+   "ep15-jswm1a",
+   "ep15-jswm2c-2",
+   "ep15-jswm2c",
+   "ep15-cpm620",
+   "ep15-3cpm80",
+   "ep15-jcrm1a",
+   "ep15-jswm1a-2",
+   "ep15-3cpm80-2",
+   "ep15-jswm2a-2",
+   "ep15-jcrm2c",
+   "ep15-jswm2a",
+   "ep15-jcrm2c-2",
+   "ep15-topmulti1",
+   "ep15-jcrm2a-2",
+   "ep15-jcrm2a",
+   "ep15-4cpm100-2",
+   "ep15-4cpm100",
+   "ep15-topmulti2",
+   "ep15-topmulti2-2",
+   "ep15-cpm650m",
+   "ep15-topmulti4",
+   "ep15-topmulti4-2"
+  ],
+  "web": [
+   "easypump-jsw",
+   "easypump-jcr",
+   "easypump-top-multi",
+   "easypump-3-4cp",
+   "easypump-cp",
+   "easypump-pk"
+  ]
+ },
+ "jsw": {
+  "serie": "JSW",
+  "familia": "AUTOCEBANTES",
+  "subtipo": "ELECTROBOMBAS \"JET\" AUTOCEBANTES EN HIERRO",
+  "n": 15,
+  "hp": [
+   0.5,
+   3.0
+  ],
+  "modelos": [
+   "jswm-1cx-2",
+   "jswm-1cx",
+   "jswm-1ax",
+   "jswm-2cx-2",
+   "jswm-2cx",
+   "jswm-1ax-2",
+   "jswm-2ax-2",
+   "jsw-2cx",
+   "jswm-2ax",
+   "jsw-2ax",
+   "hfjswm2a-m100hs",
+   "jswm-3bm-2",
+   "jsw-3bm",
+   "jswm-3bm",
+   "jsw-3ah"
+  ],
+  "web": [
+   "jsw-2",
+   "jsw-1",
+   "jsw-3"
+  ]
+ },
+ "4sr-s": {
+  "serie": "4SR-S",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "4SR-S CUERPO HIDRÁULICO PEDROLLO 4\"",
+  "n": 26,
+  "hp": [
+   0.5,
+   10.0
+  ],
+  "modelos": [
+   "4sr25g-5-s",
+   "4sr13g-5-s",
+   "4sr25g-7-s",
+   "4sr13g-7-s",
+   "4sr25g-10-s",
+   "4sr33g-10-s",
+   "4sr33g-15-s",
+   "4sr45g-20-s",
+   "4sr13g-10-s",
+   "4sr25g-15-s",
+   "4sr33g-20-s",
+   "4sr45g-30-s",
+   "4sr13g-15-s",
+   "4sr25g-20-s",
+   "4sr33g-30-s",
+   "4sr13g-20-s",
+   "4sr25g-30-s",
+   "4sr45g-50-s",
+   "4sr13g-30-s",
+   "4sr33g-50-s",
+   "4sr25g-50-s",
+   "4sr45g-75-s",
+   "4sr33g-75-s",
+   "4sr45g-100-s",
+   "4sr13g-50-s",
+   "4sr33g-100-s"
+  ],
+  "web": [
+   "4sr"
+  ]
+ },
+ "top-vortex": {
+  "serie": "TOP VORTEX",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "TOP VORTEX SUMERGIBLES AGUAS SUCIAS CON PASO DE SÓLIDOS",
+  "n": 1,
+  "hp": [
+   0.5,
+   0.5
+  ],
+  "modelos": [
+   "top-2-vortex"
+  ],
+  "web": [
+   "top-vortex"
+  ]
+ },
+ "top-floor": {
+  "serie": "TOP FLOOR",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "TOP FLOOR SUMERGIBLES PARA AGUAS LIMPIAS",
+  "n": 1,
+  "hp": [
+   0.5,
+   0.5
+  ],
+  "modelos": [
+   "top-2-floor"
+  ],
+  "web": [
+   "top-floor"
+  ]
+ },
+ "4pd": {
+  "serie": "4PD",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "MOTORES DE POZO PROFUNDO 4\" BAÑO DE ACEITE — 4PD MOTOR TRIFÁSICO",
+  "n": 46,
+  "hp": [
+   0.5,
+   10.0
+  ],
+  "modelos": [
+   "4pdm-0-5-2",
+   "4pd-0-5-2",
+   "4pdm-0-75-2",
+   "4pdm-0-5",
+   "4pd-0-75-2",
+   "4pdm-0-75",
+   "4pdm-1-2",
+   "4pd-1-2",
+   "4pdm-1",
+   "4pd-1-5-2",
+   "4pdm-1-5-2",
+   "4pd-2-2",
+   "4pdm-0-5-2-c-box05-2",
+   "4pdm-0-75-2-c-box07-2",
+   "4pdm-2-2",
+   "4pdm-1-2-c-box10-2",
+   "4pd-3-2",
+   "4pdm-1-5-2-c-box15-2",
+   "4pd-3-4",
+   "4pdm-0-5-c-box05",
+   "4pdm-3-2",
+   "4pdm-0-75-c-box07",
+   "4pdm-2-2-c-box20-2",
+   "4pdm-1-c-box10",
+   "4pdm-3-2-c-box30-2",
+   "4pd-0-5-2-qet-050-2",
+   "4pd-0-75-2-qet-075-2",
+   "4pd-1-2-qet-100-2",
+   "4pd-1-5-2-qet-150-2",
+   "4pd-2-2-qet-200-2",
+   "4pd-5-5-2",
+   "4pd-5-5-4",
+   "4pd-3-2-qet-300-2",
+   "4pd-3-4-qet-300-4",
+   "4pd-7-5-2",
+   "4pd-7-5-4",
+   "4pdm-5-5-2",
+   "4pd-10-2",
+   "4pd-10-4",
+   "4pd-5-5-4-qet-550-4",
+   "4pd-5-5-2-qet-550-2",
+   "4pd-7-5-4-qet-750-4",
+   "4pdm-5-5-2-c-box55-2",
+   "4pd-7-5-2-qet-750-2",
+   "4pd-10-4-qet-1000-4",
+   "4pd-10-2-qet-1000-2"
+  ],
+  "web": [
+   "4pd"
+  ]
+ },
+ "hydrofresh-df": {
+  "serie": "HYDROFRESH DF",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "EQUIPOS HIDRONEUMÁTICOS MONOFÁSICOS 115 V — ELECTROBOMBA JET EN \"HIERRO FUNDIDO\"",
+  "n": 5,
+  "hp": [
+   0.5,
+   1.0
+  ],
+  "modelos": [
+   "hf-pkm60-d024h",
+   "hf-jswm1a-d050h",
+   "hf-jcrm1a-d050h",
+   "hf-jswm2c-d080h",
+   "hf-jcrm2c-d080h"
+  ],
+  "web": [
+   "hydrofresh-df-jsw",
+   "hydrofresh-df-jcr",
+   "hydrofresh-df"
+  ]
+ },
+ "jcr": {
+  "serie": "JCR",
+  "familia": "AUTOCEBANTES",
+  "subtipo": "ELECTROBOMBAS \"JET\" AUTOCEBANTES EN ACERO INOXIDABLE",
+  "n": 8,
+  "hp": [
+   0.5,
+   1.5
+  ],
+  "modelos": [
+   "jcrm-1c",
+   "jcrm-1a",
+   "jcrm-2c-2",
+   "jcrm-2c",
+   "jcrm-2a-2",
+   "jcr-2c",
+   "jcrm-2a",
+   "jcr-2a"
+  ],
+  "web": [
+   "jcr-2",
+   "jcr-1"
+  ]
+ },
+ "jcrm": {
+  "serie": "JCRm",
+  "familia": "AUTOCEBANTES",
+  "subtipo": "JCR ELECTROBOMBAS “JET” AUTOCEBANTES EN ACERO INOXIDABLE",
+  "n": 1,
+  "hp": [
+   0.5,
+   0.5
+  ],
+  "modelos": [
+   "jcrm-1c-2"
+  ],
+  "web": [
+   "jcr-1"
+  ]
+ },
+ "3-4cp": {
+  "serie": "3-4CP",
+  "familia": "MULTIETAPAS",
+  "subtipo": "ELECTROBOMBAS MULTIETAPAS",
+  "n": 5,
+  "hp": [
+   0.6,
+   1.0
+  ],
+  "modelos": [
+   "3cpm-80",
+   "3cpm-80-2",
+   "4cpm-100-2",
+   "4cp-100",
+   "4cpm-100"
+  ],
+  "web": [
+   "3-4cp"
+  ]
+ },
+ "qet": {
+  "serie": "QET",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "CONTROL QET",
+  "n": 13,
+  "hp": null,
+  "modelos": [
+   "qet-050-2",
+   "qet-075-2",
+   "qet-100-2",
+   "qet-150-2",
+   "qet-200-2",
+   "qet-300-4",
+   "qet-550-4",
+   "qet-300-2",
+   "qet-750-4",
+   "qet-550-2",
+   "qet-750-2",
+   "qet-1000-4",
+   "qet-1000-2"
+  ],
+  "web": [
+   "qet"
+  ]
+ },
+ "jetm": {
+  "serie": "JETm",
+  "familia": "CENTRÍFUGA AUTOCEBANTE",
+  "subtipo": "CENTRÍFUGA AUTOCEBANTE",
+  "n": 1,
+  "hp": null,
+  "modelos": [
+   "future-jetm-2a"
+  ],
+  "web": []
+ },
+ "4sr": {
+  "serie": "4SR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "4SR CUERPO HIDRÁULICO PEDROLLO 4\"",
+  "n": 15,
+  "hp": [
+   1.5,
+   10.0
+  ],
+  "modelos": [
+   "4sr60g-15",
+   "4sr75g-20",
+   "4sr90g-30",
+   "4sr60g-20",
+   "4sr75g-30",
+   "4sr60g-30",
+   "4sr90g-50",
+   "4sr75g-50",
+   "4sr90g-75",
+   "4sr60g-50",
+   "4sr75g-75",
+   "4sr90g-100",
+   "4sr60g-75",
+   "4sr75g-100",
+   "4sr60g-100"
+  ],
+  "web": [
+   "4sr"
+  ]
+ },
+ "top-multi": {
+  "serie": "TOP MULTI",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "TOP MULTI SUMERGIBLES MULTIETAPAS",
+  "n": 5,
+  "hp": [
+   0.5,
+   1.0
+  ],
+  "modelos": [
+   "top-multi-1",
+   "top-multi-2-2",
+   "top-multi-2",
+   "top-multi-4-2",
+   "top-multi-4"
+  ],
+  "web": [
+   "top-multi"
+  ]
+ },
+ "rx-vortex": {
+  "serie": "RX-VORTEX",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "RX-VORTEX SUMERGIBLES EN ACERO INOXIDABLE",
+  "n": 3,
+  "hp": [
+   0.5,
+   0.5
+  ],
+  "modelos": [
+   "rxm-2-20-2",
+   "rxm-2-20",
+   "rx-2-20"
+  ],
+  "web": [
+   "rx-vortex"
+  ]
+ },
+ "sar": {
+  "serie": "SAR",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "SAR (DEPÓSITO DE CAPTACIÓN Y BOMBEO)",
+  "n": 4,
+  "hp": null,
+  "modelos": [
+   "sar-40",
+   "sar-100",
+   "sar-250",
+   "sar-550"
+  ],
+  "web": [
+   "sar-40",
+   "sar-100",
+   "sar-250",
+   "sar-550"
+  ]
+ },
+ "nga": {
+  "serie": "NGA",
+  "familia": "CENTRÍFUGAS",
+  "subtipo": "ELECTROBOMBAS CENTRÍFUGAS DE MEDIANO Y ALTO CAUDAL",
+  "n": 2,
+  "hp": [
+   1.0,
+   1.0
+  ],
+  "modelos": [
+   "ngam-1a-2",
+   "nga-1a"
+  ],
+  "web": [
+   "nga"
+  ]
+ },
+ "4sr-n": {
+  "serie": "4SR-N",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "4SR-N CUERPO HIDRAULICO PEDROLLO 4”",
+  "n": 4,
+  "hp": [
+   3.0,
+   10.0
+  ],
+  "modelos": [
+   "4sr105g-30-n",
+   "4sr105g-50-n",
+   "4sr105g-75-n",
+   "4sr105g-100-n"
+  ],
+  "web": [
+   "4sr"
+  ]
+ },
+ "jdw": {
+  "serie": "JDW",
+  "familia": "AUTOCEBANTES",
+  "subtipo": "ELECTROBOMBA \"JET\" AUTOCEBANTE PARA POZO PROFUNDO",
+  "n": 1,
+  "hp": [
+   1.0,
+   1.0
+  ],
+  "modelos": [
+   "jdwm-1ax-n-d"
+  ],
+  "web": [
+   "jdw"
+  ]
+ },
+ "hf": {
+  "serie": "HF",
+  "familia": "CENTRÍFUGAS",
+  "subtipo": "ELECTROBOMBAS CENTRÍFUGAS DE MEDIANO Y ALTO CAUDAL",
+  "n": 10,
+  "hp": [
+   1.0,
+   10.0
+  ],
+  "modelos": [
+   "hfm-5b-2",
+   "hf-5b",
+   "hf-5a",
+   "hfm-5am-2",
+   "hf-5am",
+   "hf-70a",
+   "hf-6a",
+   "hf-20a",
+   "hf-30b",
+   "hf-30a"
+  ],
+  "web": [
+   "hf-alto-caudal",
+   "hf-medio-caudal"
+  ]
+ },
+ "al-red": {
+  "serie": "AL-RED",
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "subtipo": "ELECTROBOMBAS EN ACERO INOXIDABLE",
+  "n": 7,
+  "hp": [
+   1.0,
+   3.0
+  ],
+  "modelos": [
+   "al-redm-620-4-2",
+   "al-red-620-4",
+   "al-redm-620-4",
+   "al-redm-660m-4-2",
+   "al-red-660m-4",
+   "al-redm-670m-4-2",
+   "al-red-670m-4"
+  ],
+  "web": [
+   "al-red"
+  ]
+ },
+ "ck": {
+  "serie": "CK",
+  "familia": "PERIFÉRICAS",
+  "subtipo": "ELECTROBOMBAS AUTOCEBANTES DE ANILLO LÍQUIDO",
+  "n": 1,
+  "hp": [
+   0.75,
+   0.75
+  ],
+  "modelos": [
+   "ckm-80e-d"
+  ],
+  "web": [
+   "ck"
+  ]
+ },
+ "zx": {
+  "serie": "ZX",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "ZX SUMERGIBLES VORTEX",
+  "n": 1,
+  "hp": [
+   0.85,
+   0.85
+  ],
+  "modelos": [
+   "zxm-1a-40"
+  ],
+  "web": [
+   "zxm-1"
+  ]
+ },
+ "e2": {
+  "serie": "E2",
+  "familia": "VARIADORES Y CONTROLES",
+  "subtipo": "CONTROLES ELECTRÓNICOS",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "e2-mono-18-bivolt",
+   "e2-tri-16"
+  ],
+  "web": [
+   "e1-e2"
+  ]
+ },
+ "prima": {
+  "serie": "PRIMA",
+  "familia": "PISCINAS",
+  "subtipo": "ELECTROBOMBAS AUTOCEBANTES PARA PISCINA",
+  "n": 7,
+  "hp": [
+   0.33,
+   1.5
+  ],
+  "modelos": [
+   "prima-33m",
+   "prima-50m",
+   "prima-75m",
+   "prima-100m-2",
+   "prima-100m",
+   "prima-150m-2",
+   "prima-150m"
+  ],
+  "web": [
+   "prima"
+  ]
+ },
+ "d": {
+  "serie": "D",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "D SUMERGIBLES DE IMPULSOR ABIERTO",
+  "n": 3,
+  "hp": [
+   1.0,
+   1.5
+  ],
+  "modelos": [
+   "dm-10",
+   "dm-30-2",
+   "d-30"
+  ],
+  "web": [
+   "d"
+  ]
+ },
+ "top-multi-tech": {
+  "serie": "TOP MULTI TECH",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "TOP MULTI TECH SISTEMA INTELIGENTE DE PRESIÓN",
+  "n": 4,
+  "hp": [
+   0.75,
+   1.0
+  ],
+  "modelos": [
+   "top-multi-tech-2-2",
+   "top-multi-tech-2",
+   "top-multi-tech-4-2",
+   "top-multi-tech-4"
+  ],
+  "web": [
+   "top-multi-tech"
+  ]
+ },
+ "kit-4sr": {
+  "serie": "KIT 4SR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "KIT ARMADO 4\" CON MOTOR PEDROLLO MONOFÁSICO Y CONTROL \"C-BOX\"",
+  "n": 45,
+  "hp": [
+   0.5,
+   3.0
+  ],
+  "modelos": [
+   "4sr25g-5-s-pd2",
+   "4sr25g-10-s-pd2-3f",
+   "4sr33g-10-s-pd2-3f",
+   "4sr13g-5-s-pd2",
+   "4sr33g-15-s-pd2-3f",
+   "4sr25g-7-s-pd2",
+   "4sr13g-10-s-pd2-3f",
+   "4sr45g-20-s-pd2-3f",
+   "4sr25g-15-s-pd2-3f",
+   "4sr13g-7-s-pd2",
+   "4sr33g-20-s-pd2-3f",
+   "4sr25g-10-s-pd2",
+   "4sr33g-10-s-pd2",
+   "4sr13g-15-s-pd2-3f",
+   "4sr25g-5-s-pd1",
+   "4sr25g-20-s-pd2-3f",
+   "4sr60g-15-pd2-3f",
+   "4sr13g-10-s-pd2",
+   "4sr33g-15-s-pd2",
+   "4sr13g-5-s-pd1",
+   "4sr75g-20-pd2-3f",
+   "4sr25g-7-s-pd1",
+   "4sr25g-15-s-pd2",
+   "4sr45g-30-s-pd2-3f",
+   "4sr13g-7-s-pd1",
+   "4sr60g-20-pd2-3f",
+   "4sr13g-15-s-pd2",
+   "4sr13g-20-s-pd2-3f",
+   "4sr45g-20-s-pd2",
+   "4sr25g-10-s-pd1",
+   "4sr33g-10-s-pd1",
+   "4sr90g-30-pd2-3f",
+   "4sr33g-20-s-pd2",
+   "4sr13g-10-s-pd1",
+   "4sr33g-30-s-pd2",
+   "4sr75g-30-pd2-3f",
+   "4sr33g-30-s-pd2-3f",
+   "4sr25g-20-s-pd2",
+   "4sr25g-30-s-pd2-3f",
+   "4sr60g-30-pd2-3f",
+   "4sr13g-20-s-pd2",
+   "4sr13g-30-s-pd2-3f",
+   "4sr45g-30-s-pd2",
+   "4sr25g-30-s-pd2",
+   "4sr13g-30-s-pd2"
+  ],
+  "web": []
+ },
+ "140pr": {
+  "serie": "140PR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "140PR CUERPO HIDRÁULICO PANELLI SERIE 140PR HIERRO FUNDIDO 6\"",
+  "n": 19,
+  "hp": [
+   10.0,
+   50.0
+  ],
+  "modelos": [
+   "140pr-34n-02",
+   "140pr-24n-05",
+   "140pr-16n-05",
+   "140pr-34n-04",
+   "140pr-24n-07",
+   "140pr-16n-08",
+   "140pr-34n-06",
+   "140pr-24n-09",
+   "140pr-16n-11",
+   "140pr-34n-08",
+   "140pr-24n-12",
+   "140pr-16n-13",
+   "140pr-34n-09",
+   "140pr-24n-14",
+   "140pr-16n-16",
+   "140pr-34n-12",
+   "140pr-24n-19",
+   "140pr-16n-22",
+   "140pr-34n-15"
+  ],
+  "web": [
+   "140pr"
+  ]
+ },
+ "ckrm": {
+  "serie": "CKRm",
+  "familia": "AUTOCEBANTES",
+  "subtipo": "CK ELECTROBOMBAS AUTOCEBANTES DE ANILLO LIQUIDO",
+  "n": 1,
+  "hp": [
+   1.0,
+   1.0
+  ],
+  "modelos": [
+   "ckrm-90"
+  ],
+  "web": [
+   "ck"
+  ]
+ },
+ "e1": {
+  "serie": "E1",
+  "familia": "VARIADORES Y CONTROLES",
+  "subtipo": "CONTROLES ELECTRÓNICOS",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "e1-tri-18",
+   "e1-tri-25"
+  ],
+  "web": [
+   "e1-e2"
+  ]
+ },
+ "vx-st": {
+  "serie": "VX-ST",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "VX-ST SUMERGIBLES VORTEX EN ACERO INOXIDABLE",
+  "n": 4,
+  "hp": [
+   1.0,
+   1.5
+  ],
+  "modelos": [
+   "vxm-10-50-st-2",
+   "vx-10-50-st-2",
+   "vxm-15-50-st-2",
+   "vx-15-50-st-2"
+  ],
+  "web": [
+   "vx-st"
+  ]
+ },
+ "magnifica": {
+  "serie": "MAGNIFICA",
+  "familia": "PISCINAS",
+  "subtipo": "ELECTROBOMBAS AUTOCEBANTES PARA PISCINA",
+  "n": 9,
+  "hp": [
+   0.75,
+   3.0
+  ],
+  "modelos": [
+   "magnifica-2m-2",
+   "magnifica-1m",
+   "magnifica-2m",
+   "magnifica-3m-2",
+   "magnifica-4m-2",
+   "magnifica-4",
+   "magnifica-3m",
+   "magnifica-5m-2",
+   "magnifica-5"
+  ],
+  "web": [
+   "magnifica"
+  ]
+ },
+ "3sr": {
+  "serie": "3SR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "3SR ELECTROBOMBA SUMERGIBLE 3\"",
+  "n": 4,
+  "hp": [
+   0.5,
+   1.5
+  ],
+  "modelos": [
+   "3srm-2-8",
+   "3srm-4-10",
+   "3srm-2-17",
+   "3srm-4-14"
+  ],
+  "web": [
+   "3sr"
+  ]
+ },
+ "4block": {
+  "serie": "4BLOCK",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "ELECTROBOMBAS SUMERGIBLES DE 4\" POZO PROFUNDO MONOBLOCK 2 HILOS",
+  "n": 6,
+  "hp": [
+   0.5,
+   1.5
+  ],
+  "modelos": [
+   "4blockm-4-5-2",
+   "4blockm-2-4",
+   "4blockm-4-3",
+   "4blockm-2-8",
+   "4blockm-4-5",
+   "4blockm-6-6-2"
+  ],
+  "web": [
+   "4-block"
+  ]
+ },
+ "mr-plus": {
+  "serie": "MR PLUS",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "PEDROLLO MR PLUS TANQUE VERTICAL MEMBRANA REEMPLAZABLE PEDROLLO MR (16 BAR)",
+  "n": 7,
+  "hp": null,
+  "modelos": [
+   "pmr-200vp",
+   "pmr-300vp",
+   "pmr-500vp",
+   "pmr-750vp",
+   "pmr-10cvp",
+   "pmr-15cvp",
+   "pmr-20cvp"
+  ],
+  "web": [
+   "tanque-plus-mr"
+  ]
+ },
+ "2cp": {
+  "serie": "2CP",
+  "familia": "MULTIETAPAS",
+  "subtipo": "ELECTROBOMBAS CENTRÍFUGAS CON DOBLE IMPULSOR",
+  "n": 12,
+  "hp": [
+   1.5,
+   15.0
+  ],
+  "modelos": [
+   "2cpm-25-14b-2",
+   "2cpm-25-16b-2",
+   "2cp-25-16b",
+   "2cp-25-16a",
+   "2cpm-25-16a-2",
+   "2cp-40-180c",
+   "2cp-32-210b",
+   "2cp-40-180b",
+   "2cp-32-210a",
+   "2cp-40-180a",
+   "2cpm-40-180c-2",
+   "2cp-40-200a"
+  ],
+  "web": [
+   "2cp"
+  ]
+ },
+ "140ps": {
+  "serie": "140PS",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "140PS CUERPO HIDRÁULICO PANELLI SERIE 140PS HIERRO FUNDIDO 6\"",
+  "n": 7,
+  "hp": [
+   10.0,
+   50.0
+  ],
+  "modelos": [
+   "140ps-42n-03",
+   "140ps-42n-05",
+   "140ps-42n-07",
+   "140ps-42n-09",
+   "140ps-42n-11",
+   "140ps-42n-15",
+   "140ps-42n-18"
+  ],
+  "web": [
+   "140ps"
+  ]
+ },
+ "mk": {
+  "serie": "MK",
+  "familia": "MULTIETAPAS",
+  "subtipo": "ELECTROBOMBAS MULTIETAPAS VERTICALES",
+  "n": 7,
+  "hp": [
+   1.0,
+   3.0
+  ],
+  "modelos": [
+   "mk-5-4",
+   "mkm-8-5-2",
+   "mk-8-5",
+   "mkm-5-7-2",
+   "mk-5-7",
+   "mk-8-6",
+   "mkm-8-6-2"
+  ],
+  "web": [
+   "mk"
+  ]
+ },
+ "nga-pro": {
+  "serie": "NGA-PRO",
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "subtipo": "ELECTROBOMBAS EN ACERO INOXIDABLE",
+  "n": 2,
+  "hp": [
+   1.0,
+   1.0
+  ],
+  "modelos": [
+   "ngam-1a-pro-2",
+   "nga-1a-pro"
+  ],
+  "web": [
+   "nga-pro"
+  ]
+ },
+ "tig-inox": {
+  "serie": "TIG INOX",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "TIG INOX TRITURADORAS SUMERGIBLES ACERO INOXIDABLE",
+  "n": 3,
+  "hp": [
+   1.0,
+   1.75
+  ],
+  "modelos": [
+   "tigm-0-75-2",
+   "tigm-0-75",
+   "tigm-1-3-2"
+  ],
+  "web": [
+   "tritus-inox"
+  ]
+ },
+ "tritus": {
+  "serie": "TRITUS",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "TRITUS TRITURADORAS SUMERGIBLES",
+  "n": 8,
+  "hp": [
+   1.5,
+   5.5
+  ],
+  "modelos": [
+   "tr-1-1-2",
+   "trm-1-1-2",
+   "tr-1-5-2",
+   "tr-1-5-4",
+   "tr-2-2-2",
+   "tr-2-2-4",
+   "tr-4-2",
+   "tr-4-4"
+  ],
+  "web": [
+   "tritus"
+  ]
+ },
+ "vxc": {
+  "serie": "VXC",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "VXC SUMERGIBLES VORTEX",
+  "n": 9,
+  "hp": [
+   2.0,
+   4.0
+  ],
+  "modelos": [
+   "vxc-20-50-2",
+   "vxc-30-50-2",
+   "vxc-30-50-4",
+   "vxcm-20-50-2",
+   "vxc-30-65-2",
+   "vxc-30-65-4",
+   "vxc-40-50-2",
+   "vxc-40-50-4",
+   "vxcm-30-50-2"
+  ],
+  "web": [
+   "vxc-50-65"
+  ]
+ },
+ "pump-master": {
+  "serie": "PUMP MASTER",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "PUMP MASTER PRO",
+  "n": 74,
+  "hp": [
+   1.0,
+   15.0
+  ],
+  "modelos": [
+   "pms-up-2-2-mt",
+   "pms-2cp-25-16b-mt",
+   "pms-up-4-3-mt",
+   "pms-up-4-4-mt",
+   "pms-up-8-3-mt",
+   "pms-2cp-25-16a-mt",
+   "pmd-up-2-2-mt",
+   "pmd-up-4-3-mt",
+   "pmd-up-4-4-mt",
+   "pmd-up-8-3-mt",
+   "pmd-2cp-25-16b-mt",
+   "pmd-2cp-25-16a-mt",
+   "pmd-mk-5-4-mt",
+   "pmd-mk-8-5-mt",
+   "pmd-mk-5-7-mt",
+   "pmd-mk-8-6-mt",
+   "pmps-cp-680c-tt",
+   "pmps-cp-700c-tt",
+   "pmps-cp-680b-tt",
+   "pmps-cp-700b-tt",
+   "pmps-cp-680a-tt",
+   "pmps-cp-700a-tt",
+   "pmps-2cp-40-180c-tt",
+   "pmps-2cp-40-180b-tt",
+   "pmps-2cp-32-210b-tt",
+   "pmps-2cp-40-180a-tt",
+   "pmt-up-2-2-mt",
+   "pmt-up-4-3-mt",
+   "pmt-up-4-4-mt",
+   "pmt-up-8-3-mt",
+   "pmps-ht-15-2-tt",
+   "pmps-ht-10-9-tt",
+   "pmps-ht-15-3-tt",
+   "pmps-ht-30-3-tt",
+   "pmps-ht-15-4-tt",
+   "pmt-2cp-25-16b-mt",
+   "pmt-2cp-25-16a-mt",
+   "pmt-mk-5-4-mt",
+   "pmt-mk-8-5-mt",
+   "pmt-mk-5-7-mt",
+   "pmt-mk-8-6-mt",
+   "pmps-ht-30-4-tt",
+   "pmpd-cp-700c-tt",
+   "pmpd-2cp-32-210b-tt",
+   "pmpd-cp-680c-tt",
+   "pmpd-cp-680b-tt",
+   "pmpd-cp-700b-tt",
+   "pmpd-cp-680a-tt",
+   "pmpd-cp-700a-tt",
+   "pmpd-2cp-40-180c-tt",
+   "pmpd-2cp-40-180b-tt",
+   "pmpd-2cp-40-180a-tt",
+   "pmpd-ht-15-2-tt",
+   "pmpd-ht-10-9-tt",
+   "pmpd-ht-15-3-tt",
+   "pmpd-ht-15-4-tt",
+   "pmpd-ht-30-3-tt",
+   "pmpt-2cp-40-180c-tt",
+   "pmpt-cp-680c-tt",
+   "pmpt-cp-700c-tt",
+   "pmpt-2cp-32-210b-tt",
+   "pmpt-cp-680b-tt",
+   "pmpt-2cp-40-180b-tt",
+   "pmpt-cp-700b-tt",
+   "pmpt-cp-680a-tt",
+   "pmpt-cp-700a-tt",
+   "pmpt-2cp-40-180a-tt",
+   "pmpd-ht-30-4-tt",
+   "pmpt-ht-10-9-tt",
+   "pmpt-ht-15-2-tt",
+   "pmpt-ht-15-3-tt",
+   "pmpt-ht-30-3-tt",
+   "pmpt-ht-15-4-tt",
+   "pmpt-ht-30-4-tt"
+  ],
+  "web": []
+ },
+ "mc": {
+  "serie": "MC",
+  "familia": "SUMERGIBLES PARA DRENAJE",
+  "subtipo": "MC SUMERGIBLES BICANAL",
+  "n": 9,
+  "hp": [
+   2.0,
+   4.0
+  ],
+  "modelos": [
+   "mc-20-50-2",
+   "mc-30-50-2",
+   "mc-30-50-4",
+   "mcm-20-50-2",
+   "mc-40-50-2",
+   "mc-40-50-4",
+   "mc-40-65-2",
+   "mc-40-65-4",
+   "mcm-30-50-2"
+  ],
+  "web": [
+   "mc-50-65"
+  ]
+ },
+ "6pd": {
+  "serie": "6PD",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "6PD MOTOR PEDROLLO (BAÑO DE ACEITE)",
+  "n": 12,
+  "hp": [
+   10.0,
+   50.0
+  ],
+  "modelos": [
+   "6pd-10-2",
+   "6pd-10-4",
+   "6pd-15-2",
+   "6pd-15-4",
+   "6pd-20-2",
+   "6pd-20-4",
+   "6pd-25-2",
+   "6pd-25-4",
+   "6pd-30-2",
+   "6pd-30-4",
+   "6pd-40-4",
+   "6pd-50-4"
+  ],
+  "web": [
+   "6pd"
+  ]
+ },
+ "mr-ultra": {
+  "serie": "MR ULTRA",
+  "familia": "TANQUES PRECARGADOS",
+  "subtipo": "PEDROLLO MR ULTRA TANQUE VERTICAL MEMBRANA REEMPLAZABLE PEDROLLO MR (25 BAR)",
+  "n": 4,
+  "hp": null,
+  "modelos": [
+   "pmr-200vu",
+   "pmr-500vu",
+   "pmr-10cvu",
+   "pmr-20cvu"
+  ],
+  "web": [
+   "tanque-ultra-mr"
+  ]
+ },
+ "p-600": {
+  "serie": "P 600",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "P 600 MOTOR EN HIERRO (PANELLI, BAÑO DE AGUA)",
+  "n": 15,
+  "hp": [
+   10.0,
+   60.0
+  ],
+  "modelos": [
+   "p-610-2",
+   "p-610-4",
+   "p-615-2",
+   "p-615-4",
+   "p-620-2",
+   "p-620-4",
+   "p-625-2",
+   "p-625-4",
+   "p-630-2",
+   "p-630-4",
+   "p-640-2",
+   "p-640-4",
+   "p-650-2",
+   "p-650-4",
+   "p-660-4"
+  ],
+  "web": [
+   "p600"
+  ]
+ },
+ "combipress": {
+  "serie": "COMBIPRESS",
+  "familia": "PRESURIZACIÓN",
+  "subtipo": "COMBIPRESS MULTIETAPAS HORIZONTAL",
+  "n": 26,
+  "hp": [
+   1.0,
+   3.0
+  ],
+  "modelos": [
+   "cb-upm-2-2",
+   "cb-upm-4-3",
+   "cb-upm-4-4",
+   "cb-upm-8-3",
+   "cb-2cpm-25-14b",
+   "cb-2cpm-25-16b",
+   "cb-2cpm-25-16a",
+   "cb-up-2-2-2",
+   "cb-up-4-3-2",
+   "cb-up-4-4-2",
+   "cb-up-8-3-2",
+   "cb-cpm-650m-2",
+   "cb-cpm-660m-2",
+   "cb-mkm-8-5",
+   "cb-mkm-5-7",
+   "cb-cpm-670m-2",
+   "cb-mkm-8-6",
+   "cb-cp-650m-2",
+   "cb-cp-660m-2",
+   "cb-cp-670m-2",
+   "cb-2cp-25-16b-2",
+   "cb-2cp-25-16a-2",
+   "cb-mk-5-4-2",
+   "cb-mk-8-5-2",
+   "cb-mk-5-7-2",
+   "cb-mk-8-6-2"
+  ],
+  "web": []
+ },
+ "kit-140pr": {
+  "serie": "KIT 140PR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "140PR KIT DE 6\" BOMBA CON MOTOR PEDROLLO TRIFÁSICO - 220V",
+  "n": 38,
+  "hp": [
+   10.0,
+   50.0
+  ],
+  "modelos": [
+   "140pr34-6pd-10-2",
+   "140pr24-6pd-10-2",
+   "140pr16-6pd-10-2",
+   "140pr34-6pd-10-4",
+   "140pr24-6pd-10-4",
+   "140pr16-6pd-10-4",
+   "140pr34-6pd-15-2",
+   "140pr24-6pd-15-2",
+   "140pr16-6pd-15-2",
+   "140pr34-6pd-15-4",
+   "140pr24-6pd-15-4",
+   "140pr16-6pd-15-4",
+   "140pr34-6pd-20-2",
+   "140pr24-6pd-20-2",
+   "140pr16-6pd-20-2",
+   "140pr34-6pd-20-4",
+   "140pr24-6pd-20-4",
+   "140pr34-6pd-25-2",
+   "140pr24-6pd-25-2",
+   "140pr16-6pd-20-4",
+   "140pr16-6pd-25-2",
+   "140pr34-6pd-25-4",
+   "140pr24-6pd-25-4",
+   "140pr16-6pd-25-4",
+   "140pr34-6pd-30-2",
+   "140pr24-6pd-30-2",
+   "140pr16-6pd-30-2",
+   "140pr34-6pd-30-4",
+   "140pr24-6pd-30-4",
+   "140pr16-6pd-30-4",
+   "140pr34-6pd-40-4",
+   "140pr24-6pd-40-4",
+   "140pr16-6pd-40-4",
+   "140pr34-p640-2",
+   "140pr24-p640-2",
+   "140pr16-p640-2",
+   "140pr34-6pd-50-4",
+   "140pr34-p650-2"
+  ],
+  "web": []
+ },
+ "kit-140ps": {
+  "serie": "KIT 140PS",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "140PS KIT DE 6\" BOMBA CON MOTOR PEDROLLO TRIFÁSICO - 220V",
+  "n": 14,
+  "hp": [
+   10.0,
+   50.0
+  ],
+  "modelos": [
+   "140ps42-6pd-10-2",
+   "140ps42-6pd-10-4",
+   "140ps42-6pd-15-2",
+   "140ps42-6pd-15-4",
+   "140ps42-6pd-20-2",
+   "140ps42-6pd-20-4",
+   "140ps42-6pd-25-2",
+   "140ps42-6pd-25-4",
+   "140ps42-6pd-30-2",
+   "140ps42-6pd-30-4",
+   "140ps42-6pd-40-4",
+   "140ps42-p640-2",
+   "140ps42-6pd-50-4",
+   "140ps42-p650-2"
+  ],
+  "web": []
+ },
+ "fluid-solar": {
+  "serie": "FLUID SOLAR",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "ELECTROBOMBAS SUMERGIBLES SOLARES 4\"",
+  "n": 2,
+  "hp": null,
+  "modelos": [
+   "fluid-solar-2-6",
+   "fluid-solar-4-8"
+  ],
+  "web": [
+   "fluid-solar"
+  ]
+ },
+ "fg": {
+  "serie": "FG",
+  "familia": "CENTRÍFUGAS",
+  "subtipo": "BOMBAS CENTRÍFUGAS NORMALIZADAS (A EJE LIBRE)",
+  "n": 8,
+  "hp": [
+   4.0,
+   30.0
+  ],
+  "modelos": [
+   "fg-80-160a",
+   "fg-80-160a",
+   "fg-50-250ar",
+   "fg-50-250ar",
+   "fg-65-200ar",
+   "fg-65-200ar",
+   "fg-100-160a",
+   "fg-100-160a"
+  ],
+  "web": [
+   "fg"
+  ]
+ },
+ "px-600": {
+  "serie": "PX 600",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "PX 600 MOTOR AISI 304 (PANELLI, BAÑO DE AGUA)",
+  "n": 15,
+  "hp": [
+   10.0,
+   60.0
+  ],
+  "modelos": [
+   "px-610-2",
+   "px-610-4",
+   "px-615-2",
+   "px-615-4",
+   "px-620-2",
+   "px-620-4",
+   "px-625-2",
+   "px-625-4",
+   "px-630-2",
+   "px-630-4",
+   "px-640-2",
+   "px-640-4",
+   "px-650-2",
+   "px-650-4",
+   "px-660-4"
+  ],
+  "web": [
+   "px600"
+  ]
+ },
+ "ht": {
+  "serie": "HT",
+  "familia": "MULTIETAPAS",
+  "subtipo": "ELECTROBOMBAS MULTIETAPAS VERTICALES",
+  "n": 7,
+  "hp": [
+   5.5,
+   20.0
+  ],
+  "modelos": [
+   "ht-15-2",
+   "ht-10-9",
+   "ht-15-3",
+   "ht-30-3",
+   "ht-15-4",
+   "ht-30-4",
+   "ht-30-6"
+  ],
+  "web": [
+   "ht"
+  ]
+ },
+ "maxima": {
+  "serie": "MAXIMA",
+  "familia": "PISCINAS",
+  "subtipo": "ELECTROBOMBAS AUTOCEBANTES PARA PISCINA",
+  "n": 3,
+  "hp": [
+   5.5,
+   10.0
+  ],
+  "modelos": [
+   "maxima-4-550",
+   "maxima-4-750",
+   "maxima-4-1000"
+  ],
+  "web": [
+   "maxima"
+  ]
+ },
+ "f": {
+  "serie": "F",
+  "familia": "CENTRÍFUGAS",
+  "subtipo": "ELECTROBOMBAS CENTRÍFUGAS NORMALIZADAS",
+  "n": 24,
+  "hp": [
+   7.5,
+   60.0
+  ],
+  "modelos": [
+   "f-50-200c",
+   "f-65-160b",
+   "f-80-160d",
+   "f-50-200b",
+   "f-80-160c",
+   "f-65-200b",
+   "f-50-200a",
+   "f-65-200a",
+   "f-80-160b",
+   "f-50-200ar",
+   "f-65-200ar",
+   "f-80-160a",
+   "f-100-160a",
+   "f-65-125b-i",
+   "f-65-125c-i",
+   "f-80-200b",
+   "f-65-250c",
+   "f-80-200a",
+   "f-80-250b",
+   "f-100-200c",
+   "f-65-250b",
+   "f-65-250a",
+   "f-100-200b",
+   "f-100-200a"
+  ],
+  "web": [
+   "f"
+  ]
+ },
+ "f-inox": {
+  "serie": "F INOX",
+  "familia": "CENTRÍFUGAS EN ACERO INOX.",
+  "subtipo": "ELECTROBOMBAS CENTRIFUGAS NORMALIZADAS EN ACERO INOXIDABLE",
+  "n": 2,
+  "hp": [
+   5.5,
+   10.0
+  ],
+  "modelos": [
+   "f-50-160c-i",
+   "f-50-160a-i"
+  ],
+  "web": [
+   "f-inox"
+  ]
+ },
+ "p-800": {
+  "serie": "P 800",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "P800 MOTOR EN HIERRO (PANELLI, BAÑO DE AGUA 8\")",
+  "n": 5,
+  "hp": [
+   60.0,
+   150.0
+  ],
+  "modelos": [
+   "p-860-4",
+   "p-875-4",
+   "p-8100-4",
+   "p-8125-4",
+   "p-8150-4"
+  ],
+  "web": [
+   "p800"
+  ]
+ },
+ "px-800": {
+  "serie": "PX 800",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "PX800 MOTOR AISI 304 (PANELLI, BAÑO DE AGUA 8\")",
+  "n": 5,
+  "hp": [
+   60.0,
+   150.0
+  ],
+  "modelos": [
+   "px-860-4",
+   "px-875-4",
+   "px-8100-4",
+   "px-8125-4",
+   "px-8150-4"
+  ],
+  "web": [
+   "px800"
+  ]
+ },
+ "p-1000": {
+  "serie": "P 1000",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "P1000 MOTOR EN HIERRO / BAÑO DE AGUA 10\"",
+  "n": 3,
+  "hp": [
+   175.0,
+   250.0
+  ],
+  "modelos": [
+   "p-10175-4",
+   "p-10200-4",
+   "p-10250-4"
+  ],
+  "web": [
+   "p1000"
+  ]
+ },
+ "px-1000": {
+  "serie": "PX 1000",
+  "familia": "POZO PROFUNDO",
+  "subtipo": "PX1000 MOTOR AISI 304 / BAÑO DE AGUA 10\"",
+  "n": 3,
+  "hp": [
+   175.0,
+   250.0
+  ],
+  "modelos": [
+   "px-10175-4",
+   "px-10200-4",
+   "px-10250-4"
+  ],
+  "web": [
+   "px1000"
+  ]
+ }
+}
