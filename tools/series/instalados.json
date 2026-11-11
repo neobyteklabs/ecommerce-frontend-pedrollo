@@ -111,6 +111,14 @@
   "sha256": "d4ec4138ab5824d070817024e931a51f74f1d07d10d8f8e3dc497a862953c1dc",
   "slug": "d"
  },
+ "serie-dgblu-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-dgblu-hero.webp",
+  "sha256": "2d7001c85dcad38671de4f80b66c1d911fcaf00164832ff4ce7f058c9467c962",
+  "slug": "dgblu"
+ },
  "serie-e2-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -126,6 +134,14 @@
   "origen": "serie-easypress-hero.webp",
   "sha256": "35cbd1c2ed4097787a4d87b418c8221102015a6c7d10c15f17baff76b47bbb7a",
   "slug": "easypress"
+ },
+ "serie-easypump-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-easypump-hero.webp",
+  "sha256": "a7c82f47fefbf8eafd63aef925fdb9df61e777853e9e1f4120f4151a86589370",
+  "slug": "easypump"
  },
  "serie-f-hero": {
   "estado": "aprobado",
@@ -151,6 +167,22 @@
   "sha256": "7e0a94c383ff031285f6d4b2efea4eb5619e31e53e731a2e001dd44b7bd10092",
   "slug": "fg"
  },
+ "serie-flo-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-flo-hero.webp",
+  "sha256": "8449a9da491e86f63d92118a95e4b8b7da1231232e64a22797cdfb2a175db5fd",
+  "slug": "flo"
+ },
+ "serie-fluid-solar-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-fluid-solar-hero.webp",
+  "sha256": "65fef7e8535ac83bccbac1bdc06e0d198b0fe5a85b72c74f766406a469e81a56",
+  "slug": "fluid-solar"
+ },
  "serie-hf-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -174,6 +206,14 @@
   "origen": "serie-hydrofresh-df-hero.webp",
   "sha256": "851bfaffa6a0c0390206d529acd66bb83bb6d0fb7cc39da8c8a7d8f54d9d2a06",
   "slug": "hydrofresh-df"
+ },
+ "serie-hydrofresh-mr-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-hydrofresh-mr-hero.webp",
+  "sha256": "ca777e891c86da82573a93c9a8643799897b6425a47bdf3a0d1c1513f8c2d317",
+  "slug": "hydrofresh-mr"
  },
  "serie-jcr-hero": {
   "estado": "aprobado",
@@ -414,6 +454,14 @@
   "origen": "serie-top-multi-tech-hero.webp",
   "sha256": "237ad28682e66983ebf020ae21882d5b495d03c652d721fec44ded5ef5310e84",
   "slug": "top-multi-tech"
+ },
+ "serie-top-vortex-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-top-vortex-hero.webp",
+  "sha256": "9f1d185ec95c579546d6fff56303cf9c238d5ae51bb9c23dfff9a965dfd8d67e",
+  "slug": "top-vortex"
  },
  "serie-tritus-hero": {
   "estado": "aprobado",
