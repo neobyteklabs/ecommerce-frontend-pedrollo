@@ -392,11 +392,11 @@
   "slug": "vx"
  },
  "serie-vx-st-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-vx-st-hero.webp",
-  "sha256": "8bf6a48a8f7cfc932fa9f0164d8445a38ade06836c369d469e4144cc4634440b",
+  "sha256": "f0124f0d7c75c8380f7f8d20d05f921a582c2e545222ba9d24ad8796708983b7",
   "slug": "vx-st"
  },
  "serie-zx-hero": {
