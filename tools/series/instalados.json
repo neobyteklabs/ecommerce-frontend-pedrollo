@@ -456,11 +456,11 @@
   "slug": "top-multi-tech"
  },
  "serie-top-vortex-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-top-vortex-hero.webp",
-  "sha256": "9f1d185ec95c579546d6fff56303cf9c238d5ae51bb9c23dfff9a965dfd8d67e",
+  "sha256": "13855b085e58999e069bae1eea986e8e9cea215726b7eb8f7e50a81558688839",
   "slug": "top-vortex"
  },
  "serie-tritus-hero": {
