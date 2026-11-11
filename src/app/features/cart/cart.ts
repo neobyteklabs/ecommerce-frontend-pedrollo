@@ -1,4 +1,5 @@
 import { Component, inject, input, signal, afterNextRender } from '@angular/core';
+import { BRAND } from '../../core/brand';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService, CartLine } from '../../core/cart';
@@ -57,7 +58,7 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
         @if (cart.hasUnpriced()) { <bsv-alert kind="info" style="margin-top:12px">Hay artículos sin precio confirmado. Al continuar, BSV te enviará la cotización antes de cobrar.</bsv-alert> }
         @if (cart.canCheckout()) { <a class="btn btn-primary btn-lg btn-block" style="margin-top:16px" routerLink="/checkout">Continuar al pago <bsv-icon name="arrowRight" style="--icon:20px" /></a> }
         @else { <span class="btn btn-primary btn-lg btn-block" style="margin-top:16px;opacity:.5;pointer-events:none" aria-disabled="true">Continuar al pago</span><p class="xs muted" style="margin:8px 0 0;text-align:center">Calcula el envío con tu CP; las líneas por cotizar se atienden con un asesor.</p> }
-        <div class="row small muted" style="justify-content:center;margin-top:12px"><bsv-icon name="lock" style="--icon:16px" /> Pago seguro con Stripe · 3D Secure</div>
+        <div class="row small muted" style="justify-content:center;margin-top:12px"><bsv-icon name="lock" style="--icon:16px" /> Pago seguro con {{ pasarela }}</div>
       </aside>
     </div>
   }`,
@@ -65,6 +66,7 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
 export class Cart {
   demo = input<string>();
   cart = inject(CartService); products = inject(ProductService); toast = inject(ToastService); mxn = mxn;
+  pasarela = inject(BRAND).vendedor.pasarela;
   quoting = signal<string | null>(null);
   constructor() { afterNextRender(async () => { if (this.demo()) this.cart.demo(); await this.cart.refreshPrices(); if (this.cart.cp() && this.cart.lines().length) this.cart.resolveShipping(); }); }
 }

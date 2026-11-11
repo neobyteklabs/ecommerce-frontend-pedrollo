@@ -14,7 +14,7 @@ import { Icon } from '../../shared/ui';
       <div class="empty confirm-hero" style="max-width:none"><div class="icon"><bsv-icon name="check" style="--icon:30px" /></div><h1 style="font-size:var(--text-2xl);margin:0">¡Pedido recibido!</h1><p>Número de pedido <strong class="mono" style="color:var(--color-gold)">{{ o.numero }}</strong>. Te enviamos la confirmación a <strong>{{ o.comprador.correo }}</strong> y ahí mismo te avisamos de cada avance.</p></div>
       <div class="grid md-grid-3" style="margin:24px 0;text-align:left">
         <div class="card card-sm"><span class="label">Entrega</span><div style="font-weight:600">{{ o.entrega.calle }} {{ o.entrega.numeroExt }}, {{ o.entrega.colonia }}</div><span class="small muted">{{ o.entrega.cp }} {{ o.entrega.municipio }}, {{ o.entrega.estado }}</span></div>
-        <div class="card card-sm"><span class="label">Pago</span><div style="font-weight:600">{{ mxn(o.total) }}</div><span class="small muted">{{ o.pago?.modo === 'simulado' ? 'Pago simulado (entorno de prueba)' : 'Tarjeta · autorizado con 3D Secure' }}</span></div>
+        <div class="card card-sm"><span class="label">Pago</span><div style="font-weight:600">{{ mxn(o.total) }}</div><span class="small muted">{{ o.pago?.modo === 'simulado' ? 'Pago simulado (entorno de prueba)' : o.pago?.modo === 'stripe' ? 'Tarjeta · autorizado con 3D Secure' : 'Tarjeta · pago confirmado' }}</span></div>
         <div class="card card-sm"><span class="label">Factura</span><div style="font-weight:600">Solicítala con tu número de pedido</div><span class="small muted">Desde «Solicitar factura»</span></div>
       </div>
       <div class="card card-sm" style="text-align:left" data-component="OrderLines"><h3 style="margin:0 0 8px">Artículos</h3>

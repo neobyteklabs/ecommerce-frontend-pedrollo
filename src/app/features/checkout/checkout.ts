@@ -1,11 +1,11 @@
-import { Component, inject, input, computed, signal, afterNextRender, effect, PLATFORM_ID, ElementRef, viewChild } from '@angular/core';
+import { Component, inject, input, computed, signal, afterNextRender, effect, PLATFORM_ID, ElementRef, viewChild, DestroyRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CartService } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
-import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated } from '../../core/api/storefront-api';
+import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated, CardPaymentRequest } from '../../core/api/storefront-api';
 import { loadAddress, saveAddress } from '../../core/address';
 import { BRAND } from '../../core/brand';
 import { Icon, Stepper, Alert } from '../../shared/ui';
@@ -82,6 +82,11 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
                 <p class="small" style="margin:0 0 12px" data-component="MercadoPagoRedirect">Te llevamos a Mercado Pago para completar el pago con tarjeta. Tu pedido <strong>{{ o.numero }}</strong> queda apartado 30 minutos.</p>
                 <a class="btn btn-primary btn-lg btn-block" [href]="o.pago.urlPago" [class.is-loading]="redirecting()">Pagar {{ mxn(o.total) }} con Mercado Pago</a>
               }
+              @if (o.pago.modo === 'mercadopago-tarjeta') {
+                <div class="pay-overlay" data-component="MercadoPagoCard"><div id="mpCardBrick" #mpEl></div>@if (paying()) { <div class="pay-shield"><bsv-pay-progress /></div> }</div>
+                @if (!mpReady()) { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> }
+                <p class="xs muted" style="margin:10px 0 0">Tu pedido <strong>{{ o.numero }}</strong> queda apartado 30 minutos mientras pagas.</p>
+              }
               @if (o.pago.modo === 'stripe') { <div class="pay-overlay"><div #paymentEl data-component="StripePaymentElement"></div>@if (paying()) { <div class="pay-shield"><bsv-pay-progress /></div> }</div>
                 @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">{{ paying() ? 'Procesando pago…' : 'Pagar ' + mxn(o.total) }}</button> }
                 @else { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> } }
@@ -89,7 +94,8 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
               <p class="small muted" style="margin:0 0 12px">Al continuar apartamos tu mercancía 30 minutos mientras pagas.</p>
               <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="creating()" [disabled]="creating()" (click)="createOrder()">Continuar al pago · {{ mxn(total()) }}</button>
             }
-            <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p>
+            @if (order()?.pago?.modo === 'stripe') { <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p> }
+            @else { <p class="xs muted" style="margin:12px 0 0">No se hace ningún cargo hasta que confirmes el pago.</p> }
           </div>
           <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a><a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a></div>
         </div>
@@ -110,6 +116,7 @@ export class Checkout {
   cart = inject(CartService); products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
   private browser = isPlatformBrowser(inject(PLATFORM_ID));
   paymentEl = viewChild<ElementRef<HTMLDivElement>>('paymentEl');
+  mpEl = viewChild<ElementRef<HTMLDivElement>>('mpEl'); mpReady = signal(false); private unmountMp: (() => void) | null = null; private mpMounting = false;
   estados = ESTADOS; mxn = mxn;
   f: Form = this.loadForm();
   submitted = signal(false); couponInput = ''; couponLoading = signal(false);
@@ -132,6 +139,9 @@ export class Checkout {
         if (this.cart.couponCode()) this.cart.applyCoupon(this.cart.couponCode());
       }
     });
+    // Bala 13: monta el formulario de tarjeta de Mercado Pago en cuanto existe su contenedor y el pedido es de ese modo.
+    effect(() => { const el = this.mpEl(); const o = this.order(); if (el && o?.pago.modo === 'mercadopago-tarjeta' && !this.unmountMp && !this.mpMounting) void this.mountMercadoPago(o); });
+    inject(DestroyRef).onDestroy(() => this.unmountMp?.());
     // Monta el Payment Element en cuanto existe el contenedor y hay pedido en modo Stripe.
     effect(() => { const el = this.paymentEl(); const o = this.order(); if (el && o?.pago.modo === 'stripe' && o.pago.clientSecret && !this.elements) this.mountStripe(el.nativeElement, o.pago.clientSecret); });
   }
@@ -166,9 +176,38 @@ export class Checkout {
       // Bala 13: con Mercado Pago el comprador paga en su checkout y regresa a `/checkout/confirmando`. La URL se recuerda en esta pestaña
       // por si vuelve sin pagar; si la redirección no ocurre, queda el botón «Pagar con Mercado Pago».
       if (o.pago.modo === 'mercadopago' && o.pago.urlPago) { rememberPayUrl(o.folio, o.pago.urlPago); this.order.set(o); this.redirecting.set(true); this.goTo(o.pago.urlPago); return; }
+      if (o.pago.modo === 'mercadopago-tarjeta') { this.order.set(o); return; }   // el formulario de tarjeta se monta en esta misma pantalla
       if (o.pago.modo === 'simulado' || !o.pago.clientSecret) { this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } }); return; }
       this.order.set(o);
     } catch (e) { this.handle(e); } finally { this.creating.set(false); }
+  }
+  private async mountMercadoPago(o: OrderCreated) {
+    this.mpMounting = true;
+    try {
+      const { mpPublicKey } = await (await fetch('/__config')).json() as { mpPublicKey?: string };
+      if (!mpPublicKey) throw new Error('sin clave pública');
+      const { mountCardBrick } = await import('./mercadopago');
+      this.unmountMp = await mountCardBrick({ containerId: 'mpCardBrick', publicKey: mpPublicKey, amount: o.total, email: this.f.correo.trim().toLowerCase(),
+        onReady: () => this.mpReady.set(true), onError: () => { /* el formulario muestra sus propios errores de captura */ }, onSubmit: card => this.payWithCard(o, card) });
+    } catch { this.error.set({ title: 'No pudimos cargar el pago', detail: 'Recarga la página o escríbenos por WhatsApp para pagar por transferencia.' }); }
+    finally { this.mpMounting = false; }
+  }
+  /** Manda el token de la tarjeta al backend. Aprobado o en proceso → `/checkout/confirmando`; rechazado → mensaje y el formulario sigue ahí. */
+  async payWithCard(o: OrderCreated, card: CardPaymentRequest): Promise<boolean> {
+    this.paying.set(true); this.error.set(null);
+    try {
+      const r = await this.api.payOrder(o.folio, card);
+      if (r.pago === 'rechazado') { const { rejectionMessage } = await import('./mercadopago'); this.error.set(rejectionMessage(r.detalle)); return false; }
+      this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } });
+      return true;
+    } catch (e) {
+      const st = (e as HttpErrorResponse).status;
+      this.error.set(st === 409 ? { title: 'Tu pedido ya no está apartado', detail: 'Pasaron los 30 minutos o el pedido se canceló. No se hizo ningún cargo. Vuelve al carrito para crearlo de nuevo.' }
+        : st === 429 ? { title: 'Demasiados intentos', detail: 'Espera un minuto y vuelve a intentar.' }
+        : { title: 'No pudimos procesar el pago', detail: 'No se hizo ningún cargo. Intenta de nuevo en un momento o escríbenos por WhatsApp.' });
+      return false;
+    }
+    finally { this.paying.set(false); }
   }
   private async mountStripe(host: HTMLElement, clientSecret: string) {
     try {

@@ -81,7 +81,9 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
 const WRITABLE = new Set(['/api/tienda/v1/carrito/envio', '/api/tienda/v1/cotizaciones', '/api/tienda/v1/carrito/cupon', '/api/tienda/v1/pedidos']);
 /** Bala 5: confirmar el pago de un pedido (idempotente). Limpieza pre-bala 6: aceptar la cotización desde la tienda (idempotente; la segunda
  *  llave va en `?contacto=`, que viaja en `originalUrl`). */
-const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/,
+const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar$/,
+  // Bala 13: cobrar el pedido con la tarjeta tokenizada por el formulario de Mercado Pago (el cuerpo trae el token, nunca la tarjeta).
+  /^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/pagar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/,
   // Bala 7: la solicitud de factura también escribe (y comparte el límite de «seguimiento»).
   /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/factura$/];
 const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re => re.test(path));
@@ -99,7 +101,9 @@ setInterval(() => { const now = Date.now(); for (const k of Object.keys(RATE)) i
 
 /** Config pública del navegador (bala 5): la llave publicable de Stripe NO es secreta; vacía = la tienda cobra en modo simulado. */
 const STRIPE_PUBLISHABLE_KEY = process.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-app.get('/__config', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY }); });
+/** Bala 13: la clave pública de Mercado Pago (`MP_PUBLIC_KEY`) tampoco es secreta; la usa el formulario de tarjeta en el navegador. */
+const MP_PUBLIC_KEY = process.env['MP_PUBLIC_KEY'] ?? '';
+app.get('/__config', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY, mpPublicKey: MP_PUBLIC_KEY }); });
 app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: '64kb' }), async (req, res) => {
   if (!isWritable(req.path)) {
     res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
@@ -109,7 +113,7 @@ app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: 
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
-  if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento'))) {
+  if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.endsWith('/pagar') && limited(req, 'pagar', 12)) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento'))) {
     res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
   }

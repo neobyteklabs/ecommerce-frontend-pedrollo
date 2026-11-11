@@ -61,7 +61,10 @@ export interface CouponResponse { valido: boolean; motivo?: string | null; descu
 export interface OrderBuyer { nombre: string; correo: string; telefono: string; empresa?: string; }
 export interface OrderAddress { cp: string; calle: string; numeroExt: string; numeroInt?: string; colonia: string; municipio: string; estado: string; referencias?: string; }
 export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; }
-export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'mercadopago' | 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null; /** Bala 13: con Mercado Pago, el checkout al que se redirige al comprador. */ urlPago?: string | null }; }
+export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'mercadopago-tarjeta' | 'mercadopago' | 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null; /** Bala 13: con Mercado Pago, el checkout al que se redirige al comprador. */ urlPago?: string | null }; }
+/** Bala 13: lo que entrega el formulario de tarjeta de Mercado Pago (un token de un uso, nunca el número) y lo que contesta el backend. */
+export interface CardPaymentRequest { token: string; paymentMethodId: string; paymentType?: string; installments?: number; email?: string; }
+export interface CardPaymentResult { folio: string; numero: string; estado: 'pagado' | 'pendiente_pago'; pago: 'aprobado' | 'rechazado' | 'pendiente'; detalle: string | null; }
 export interface OrderConfirm { folio: string; numero: string; estado: 'pagado' | 'pendiente_pago' | 'expirado' | 'cancelado'; }
 export interface OrderLineView { modelo: string; descripcion: string; cantidad: number; precioUnitario: number; importe: number; cedis: string | null; sobrePedido: boolean; diasEstimados: number | null; }
 export interface OrderView {
@@ -115,6 +118,8 @@ export class StorefrontApi {
   /** Crea el pedido pendiente de pago (snapshot + reserva). 409 si el precio cambió o no hay existencia. */
   createOrder(body: OrderRequest) { return firstValueFrom(this.http.post<OrderCreated>(`${this.base}/api/tienda/v1/pedidos`, body)); }
   /** Confirma el pago consultando la pasarela; idempotente. */
+  /** Cobra el pedido con la tarjeta tokenizada (Mercado Pago). Rechazada es una respuesta normal (`pago: 'rechazado'`), no un error. */
+  payOrder(folio: string, body: CardPaymentRequest) { return firstValueFrom(this.http.post<CardPaymentResult>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/pagar`, body)); }
   confirmOrder(folio: string) { return firstValueFrom(this.http.post<OrderConfirm>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/confirmar`, {})); }
   /** El pedido para la pantalla de gracias; segunda llave = correo o teléfono del comprador. */
   order(folio: string, contacto: string) {
