@@ -272,19 +272,19 @@
   "slug": "mk"
  },
  "serie-mr-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-mr-hero.webp",
-  "sha256": "943bf8c91ecdc9aed318a196b2d376201ad122daca7c73193f79edbec541e090",
+  "sha256": "5487f3b9380f861212c358240592c1c4d72a8251b1599f9a88fc204100e386ea",
   "slug": "mr"
  },
  "serie-mr-plus-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-mr-plus-hero.webp",
-  "sha256": "93cd5f90f7e30b1c3511d59e00bec92975a9896479bc2481958a21875e1fb70f",
+  "sha256": "b348929789720c5a57353c370b8f9a7e3b958e425ee1350da77bb2ab94ab874b",
   "slug": "mr-plus"
  },
  "serie-mr-ultra-hero": {
@@ -312,11 +312,11 @@
   "slug": "nga-pro"
  },
  "serie-p-1000-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-p-1000-hero.webp",
-  "sha256": "0c6e170ab0ec72a8a15c29482b9693c3c9321c9ac41cc25d8b4926441e36f66c",
+  "sha256": "a5a07025cf7fbd6a7cd6a2bcea4e2e2f5b5f01caced0004514f4a99251956efd",
   "slug": "p-1000"
  },
  "serie-p-600-hero": {
@@ -368,11 +368,11 @@
   "slug": "pro-dg"
  },
  "serie-px-1000-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-px-1000-hero.webp",
-  "sha256": "3626d01b69400d47d0f6f51574316449edf66be8287df9cccb4efa8fe9f83f02",
+  "sha256": "5aa6b3f0f773dad4221bca17257003e5297d001c38ffb2a34ff080e5fd15f348",
   "slug": "px-1000"
  },
  "serie-px-600-hero": {
@@ -384,11 +384,11 @@
   "slug": "px-600"
  },
  "serie-px-800-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-px-800-hero.webp",
-  "sha256": "1072d87ff76fc3aaa4aa46164ac40d51802f412f7b894e9ec0fc6e00e64a70af",
+  "sha256": "8c690eeed33fd336fe4f1c0543b81550df77c43c20d83057c88e637262249157",
   "slug": "px-800"
  },
  "serie-qem-hero": {
