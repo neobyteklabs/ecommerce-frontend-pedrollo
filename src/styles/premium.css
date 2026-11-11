@@ -299,3 +299,13 @@ h1{letter-spacing:-0.035em}
 /* Vídeo inline del hero de serie (bsvInlineMedia): se dibuja sobre la imagen y la sustituye al reproducir */
 .s-hero .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center;opacity:0;transition:opacity .6s var(--ease-out);pointer-events:none}
 .s-hero .hero-video.is-loaded{opacity:1}
+
+/* ====== Heroes de serie instalados por lote (media/series/, 2560×1440, producto en la mitad izquierda) ======
+   La regla de arriba (cover + 12 % a la izquierda) está hecha a la medida de la foto de la 2CP: con estos heroes ampliaba la bomba y la
+   cortaba por la izquierda. Aquí la composición se ve completa: la imagen ocupa el alto del hero, anclada a la izquierda, y su borde
+   derecho se funde con la tinta bajo el panel del texto. */
+@media (min-width:1280px){
+  .s-hero:has(.img-slot.scene.has-img) .img-slot.scene img[src*="media/series/"]{width:auto;max-width:none;height:100%;left:0;object-fit:contain;object-position:left center;
+    -webkit-mask-image:linear-gradient(90deg,#000 62%,transparent 98%);mask-image:linear-gradient(90deg,#000 62%,transparent 98%)}
+  .s-hero:has(.img-slot.scene.has-img img[src*="media/series/"]) .img-slot.scene::after{background:linear-gradient(90deg,rgba(10,13,20,0) 38%,rgba(10,13,20,.7) 58%,rgba(10,13,20,.96) 100%)}
+}
