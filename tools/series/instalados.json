@@ -128,11 +128,11 @@
   "slug": "f-inox"
  },
  "serie-fg-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-fg-hero.webp",
-  "sha256": "e1c45b0570c4781c2692ee95e7a7e4eabd51b0c7b37069d138fef1b3548e7f1d",
+  "sha256": "7e0a94c383ff031285f6d4b2efea4eb5619e31e53e731a2e001dd44b7bd10092",
   "slug": "fg"
  },
  "serie-hf-hero": {
@@ -272,15 +272,15 @@
   "slug": "prima"
  },
  "serie-pro-dg-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-pro-dg-hero.webp",
-  "sha256": "f4dd32831fdd390e6f1088f87b17d25c0a171ad2f58012f7236c47efbc9a363d",
+  "sha256": "40f22e5cd23450798a5b382f75dd31efb9d2fe9497bc8ccd1b22af8caeb1142b",
   "slug": "pro-dg"
  },
  "serie-px-600-hero": {
-  "estado": "aprobado",
+  "estado": "pendiente",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-px-600-hero.webp",
