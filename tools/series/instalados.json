@@ -280,11 +280,11 @@
   "slug": "pro-dg"
  },
  "serie-px-600-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-px-600-hero.webp",
-  "sha256": "1c45bd412b9b8f91b3392c300e910b7bbc0eb09e1677e2f2eb269085cea2e6d6",
+  "sha256": "1cf60948feba931d4ff50ef970a5bcaf99c74e159458d53b37a065f5b05a4f9b",
   "slug": "px-600"
  },
  "serie-qem-hero": {
