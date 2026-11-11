@@ -24,6 +24,7 @@
  "serie-jsw-hero": "media/series/jsw/serie-jsw-hero.webp",
  "serie-magnifica-hero": "media/series/magnifica/serie-magnifica-hero.webp",
  "serie-maxima-hero": "media/series/maxima/serie-maxima-hero.webp",
+ "serie-mc-hero": "media/series/mc/serie-mc-hero.webp",
  "serie-mk-hero": "media/series/mk/serie-mk-hero.webp",
  "serie-mr-ultra-hero": "media/series/mr-ultra/serie-mr-ultra-hero.webp",
  "serie-nga-hero": "media/series/nga/serie-nga-hero.webp",
@@ -41,7 +42,9 @@
  "serie-steadypres-hero": "media/series/steadypres/serie-steadypres-hero.webp",
  "serie-top-floor-hero": "media/series/top-floor/serie-top-floor-hero.webp",
  "serie-top-hero": "media/series/top/serie-top-hero.webp",
+ "serie-top-multi-tech-hero": "media/series/top-multi-tech/serie-top-multi-tech-hero.webp",
  "serie-tritus-hero": "media/series/tritus/serie-tritus-hero.webp",
  "serie-up-hero": "media/series/up/serie-up-hero.webp",
- "serie-vx-hero": "media/series/vx/serie-vx-hero.webp"
+ "serie-vx-hero": "media/series/vx/serie-vx-hero.webp",
+ "serie-zx-hero": "media/series/zx/serie-zx-hero.webp"
 }
