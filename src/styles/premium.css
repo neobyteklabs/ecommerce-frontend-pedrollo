@@ -359,3 +359,22 @@ h1{letter-spacing:-0.035em}
 .is-compact .series-card-copy .pre,.is-compact .series-card-copy .tipo{display:none}
 .is-compact .series-card-copy strong{font-size:var(--text-2xl)}
 .is-compact .series-card-copy .meta{margin:0;padding:0;background:none;backdrop-filter:none;font-weight:500;opacity:.85}
+/* Variante de encabezado (familia): de orilla a orilla de la pantalla, pegada al menú, con controles sobre la imagen. */
+body{overflow-x:clip}
+.is-bleed.series-rail-host{position:relative;width:100vw;margin:0 0 var(--space-4) calc(50% - 50vw)}
+.is-bleed .series-rail-head{position:absolute;inset:auto var(--gutter) 18px auto;z-index:2;margin:0}
+.is-bleed .series-rail-head h2{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.is-bleed .series-rail-nav button{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff;backdrop-filter:blur(8px)}
+.is-bleed .series-rail-nav button:hover{background:rgba(255,255,255,.26)}
+.is-bleed .series-rail{gap:0;border-radius:0}
+.is-bleed .series-card{border-radius:0;aspect-ratio:auto;height:clamp(420px,62vh,640px)}
+/* La composición del hero se ve completa: ocupa el alto, anclada a la izquierda, y su borde derecho se funde con la tinta. */
+@media (min-width:600px){
+  .is-bleed .series-card.has-hero img{width:auto;max-width:none;height:100%;object-fit:contain;object-position:left center;-webkit-mask-image:linear-gradient(90deg,#000 60%,transparent 97%);mask-image:linear-gradient(90deg,#000 60%,transparent 97%)}
+  .is-bleed .series-card::after{background:linear-gradient(90deg,rgba(10,13,20,0) 34%,rgba(10,13,20,.55) 54%,rgba(10,13,20,.9) 100%)}
+  .is-bleed .series-card-copy{width:auto;left:54%;right:max(var(--gutter),calc(50vw - var(--container) / 2 + var(--gutter)));padding:0 0 28px}
+}
+.is-bleed .series-rail-dots{position:absolute;left:0;right:0;bottom:22px;z-index:2;margin:0;pointer-events:none}
+.is-bleed .series-rail-dots button{pointer-events:auto;background:rgba(255,255,255,.35)}
+.is-bleed .series-rail-dots button.is-on{background:#fff}
+@media (max-width:599px){.is-bleed .series-card{height:auto;aspect-ratio:4/5}.is-bleed .series-rail-dots{bottom:10px}}

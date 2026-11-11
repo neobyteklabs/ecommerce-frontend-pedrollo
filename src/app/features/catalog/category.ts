@@ -18,11 +18,12 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot, SeriesRail],
   host: { class: 'container block', 'data-page': 'Categoria' },
   template: `
+  @if (carrusel()) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" [kicker]="cat().name" [bleed]="true" /> }
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
   @if (banner(); as b) {
   <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" cls="banner" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>
   <h1 style="font-size:var(--text-2xl);margin-top:16px">{{ cat().name }} <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} modelos</span></h1>
-  } @else if (hero(); as h) {
+  } @else if (!carrusel() && hero(); as h) {
   <div class="family-hero" data-component="FamilyHero">
     <bsv-img-slot [slot]="'familia-' + slug() + '-hero'" [src]="h.web" [scene]="true" [eager]="true" [alt]="cat().name + ', imagen comercial de familia'" />
     <div class="family-hero-copy"><span class="eyebrow">Familia</span><h1>{{ cat().name }}</h1>@if (h.pending) { <span class="badge badge-warning no-dot">Pendiente de aprobación visual · modo revisión</span> }</div>
@@ -33,8 +34,6 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   }
   @if (serie()) { <p class="small"><a [routerLink]="['/serie', serie()]">Ver página de la serie {{ serieName() }} ›</a></p> }
   <p class="muted" style="max-width:70ch">{{ cat().desc }} Especificaciones del catálogo BSV; disponibilidad por confirmar.</p>
-  @if (!serie() && seriesList().length) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" /> }
-  @if (seriesList().length) { <h2 class="series-rail-sub">{{ serie() ? 'Modelos de la serie ' + serieName() : 'Todos los modelos' }}</h2> }
   <div class="chip-list" style="margin-bottom:24px" data-component="SeriesChips">@for (sr of seriesList(); track sr.slug) { <button class="chip" type="button" [attr.aria-pressed]="serie() === sr.slug" (click)="set('serie', serie() === sr.slug ? null : sr.slug)">{{ sr.name }} <span class="muted">({{ sr.count }})</span></button> }</div>
   <div class="catalog">
     <aside class="filters" [class.is-open]="open()" id="filters" data-component="FilterPanel" aria-label="Filtros">
@@ -92,6 +91,8 @@ export class Category {
 
   series = this.api.series(() => this.slug());
   seriesList = computed(() => this.series.hasValue() ? this.series.value() : []);
+  /** El carrusel de series encabeza la familia; al filtrar por una serie ya no hace falta (queda el enlace a su página). */
+  carrusel = computed(() => !this.serie() && this.seriesList().length > 0);
   serieName = computed(() => this.seriesList().find(s => s.slug === this.serie())?.name ?? this.serie());
   facetsRes = this.api.facets(() => ({ familia: this.slug(), serie: this.serie() ?? undefined }));
   list = this.api.products(() => ({ familia: this.slug(), serie: this.serie() ?? undefined, hp: this.hp() ?? undefined, tension: this.tension() ?? undefined, fase: this.fase() ?? undefined, orden: this.order(), size: Math.min(PAGE * this.pages(), 100), page: 0 }));

@@ -9,6 +9,7 @@ export interface SeriesRef { slug: string; name: string; count?: number | null; 
  * Carrusel de series (11-nov): la página larga de cada serie solo se alcanzaba desde la ficha de un producto. Aquí va al frente.
  *  - Por omisión es protagonista: una serie a la vez a todo lo ancho, con su hero, que cambia sola cada `INTERVALO` ms. Se detiene al pasar
  *    el cursor, al enfocarla con teclado o si el usuario pide menos movimiento; flechas, puntos y deslizamiento con el dedo.
+ *  - `[bleed]="true"` (familia): encabeza la página de orilla a orilla y lleva el nombre de la familia en el texto.
  *  - `[compact]="true"` (búsqueda): varias tarjetas por pantalla, sin avance automático.
  * Toda la tarjeta abre la serie. Sin JavaScript sigue siendo una fila deslizable.
  */
@@ -16,7 +17,7 @@ const INTERVALO = 4500;
 
 @Component({
   selector: 'bsv-series-rail', imports: [RouterLink],
-  host: { class: 'series-rail-host', 'data-component': 'SeriesRail', '[class.is-compact]': 'compact()', '(pointerenter)': 'pausa.set(true)', '(pointerleave)': 'pausa.set(false)', '(focusin)': 'pausa.set(true)', '(focusout)': 'pausa.set(false)' },
+  host: { class: 'series-rail-host', 'data-component': 'SeriesRail', '[class.is-compact]': 'compact()', '[class.is-bleed]': 'bleed()', '(pointerenter)': 'pausa.set(true)', '(pointerleave)': 'pausa.set(false)', '(focusin)': 'pausa.set(true)', '(focusout)': 'pausa.set(false)' },
   template: `
   @if (cards().length) {
   <div class="series-rail-head"><h2>{{ title() }}</h2>
@@ -29,7 +30,7 @@ const INTERVALO = 4500;
     @for (c of cards(); track c.slug; let i = $index) {
       <a class="series-card" [routerLink]="['/serie', c.slug]" [attr.data-serie]="c.slug" [class.has-hero]="c.hero" [attr.aria-label]="'Ver la serie ' + c.name">
         @if (c.img) { <img [src]="c.img" alt="" [attr.loading]="i === 0 && !compact() ? 'eager' : 'lazy'" decoding="async" /> }
-        <span class="series-card-copy"><span class="pre">Serie</span><strong>{{ c.name }}</strong>@if (c.tipo) { <span class="tipo">{{ c.tipo }}</span> }<span class="meta">@if (c.count) { {{ c.count }} {{ c.count === 1 ? 'modelo' : 'modelos' }} · } Ver la serie ›</span></span>
+        <span class="series-card-copy"><span class="pre">@if (kicker(); as k) { {{ k }} · }Serie</span><strong>{{ c.name }}</strong>@if (c.tipo) { <span class="tipo">{{ c.tipo }}</span> }<span class="meta">@if (c.count) { {{ c.count }} {{ c.count === 1 ? 'modelo' : 'modelos' }} · } Ver la serie ›</span></span>
       </a>
     }
   </div>
@@ -40,6 +41,10 @@ const INTERVALO = 4500;
 })
 export class SeriesRail {
   series = input.required<SeriesRef[]>(); title = input('Series'); compact = input(false);
+  /** Encabezado de página (familia): a todo el ancho de la pantalla, sin título aparte, con flechas y puntos sobre la imagen. */
+  bleed = input(false);
+  /** Texto pequeño sobre el nombre de la serie; en la familia es el nombre de la familia («Multietapas · Serie»). */
+  kicker = input<string | null>(null);
   private pista = viewChild<ElementRef<HTMLElement>>('pista');
   actual = signal(0); pausa = signal(false);
   cards = computed(() => this.series().filter(s => s.slug).map(s => {
