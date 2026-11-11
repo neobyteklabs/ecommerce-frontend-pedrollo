@@ -15,6 +15,14 @@
   "sha256": "ee2feaf4c9b8d2b989a102d65e43b2245fef97487a2d85805b000e7f3040c702",
   "slug": "140ps"
  },
+ "serie-3-4cp-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-3-4cp-hero.webp",
+  "sha256": "6ee9293a0a8525233925bd1f05e448dd15e64911657ffc5fb842768764f98d76",
+  "slug": "3-4cp"
+ },
  "serie-3sr-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -62,6 +70,14 @@
   "origen": "serie-al-red-hero.webp",
   "sha256": "2a2cfe0d0dc638149218b8c0b6ab2b79c1d4a49a2988cca4d0c4375da09bd456",
   "slug": "al-red"
+ },
+ "serie-ck-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-ck-hero.webp",
+  "sha256": "0e7f52be6c7d64eec3de2190dc9706352ffb2774a4d09f9e47eecf053e9ce911",
+  "slug": "ck"
  },
  "serie-cp-hero": {
   "estado": "aprobado",
@@ -111,6 +127,14 @@
   "sha256": "14aaaf5472628418c1c35b85ae6459cd7230f9ede20114fde7cb446ff3d7eb98",
   "slug": "jcr"
  },
+ "serie-jdw-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-jdw-hero.webp",
+  "sha256": "74613cd30215a8c74e1a2bccacbe1c74326e5bc56b8877c8d550ba92344c4f97",
+  "slug": "jdw"
+ },
  "serie-jsw-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-10",
@@ -118,6 +142,14 @@
   "origen": "serie-jsw-hero.webp",
   "sha256": "ff027ebc714c390dcb73e7017e7e277de23ea343920bf95205fdd278e2f729f0",
   "slug": "jsw"
+ },
+ "serie-magnifica-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-magnifica-hero.webp",
+  "sha256": "39376a6d108a89d48fa558919ed013018e53fc2eb1cf5276255a1e7005b93120",
+  "slug": "magnifica"
  },
  "serie-mk-hero": {
   "estado": "aprobado",
@@ -135,6 +167,14 @@
   "sha256": "2bd2f5af18167bd37d1025bf4389779bdb599ea9f9f4b5afa2c68ca6522598a5",
   "slug": "mr-ultra"
  },
+ "serie-nga-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-nga-hero.webp",
+  "sha256": "63d97fe2390935534665e33e241170049f04223869aa7b08c368410e5ba92f0e",
+  "slug": "nga"
+ },
  "serie-p-600-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -150,6 +190,14 @@
   "origen": "serie-pk-hero.webp",
   "sha256": "4e350289905ea572308d1c9baad0062c5501e1cfb114f2ab09727d1566d7aa92",
   "slug": "pk"
+ },
+ "serie-pks-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-pks-hero.webp",
+  "sha256": "da72b4ddac73bddaf91eb1b7af31d62fc9bfa8bec26162886323e98c74a12084",
+  "slug": "pks"
  },
  "serie-prima-hero": {
   "estado": "aprobado",
