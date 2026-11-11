@@ -16,8 +16,10 @@ describe('bsv-series-rail', () => {
     expect(cards.length).toBe(2);
     expect(cards[0].getAttribute('href')).toBe('/serie/pk');
     expect(cards[0].textContent).toContain('PK'); expect(cards[0].textContent).toContain('11 modelos'); expect(cards[0].getAttribute('aria-label')).toBe('Ver la serie PK');
-    expect(cards[1].textContent).toMatch(/1 modelo\s*$/);
+    expect(cards[0].textContent).toContain('Bombas de rodete periférico'); expect(cards[1].textContent).toContain('1 modelo ·');
     expect(el.querySelectorAll('.series-rail-nav button').length).toBe(2);
+    expect(el.querySelectorAll('.series-rail-dots button').length).toBe(2);   // un punto por serie
+    expect(el.querySelector('.series-rail-dots button.is-on')).toBeTruthy();
     expect(el.textContent).toContain('Series de prueba');
   });
 
