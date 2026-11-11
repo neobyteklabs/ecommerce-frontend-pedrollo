@@ -25,3 +25,6 @@ export function imageFor(slot: string): string | null {
   const key = slot.split(' · ')[0].trim();
   return IMAGES[key] ?? null;
 }
+
+/** Slugs de las series que ya tienen hero (manifiesto del banco o lote instalado): las que la portada puede presumir. */
+export const seriesWithHero = (): string[] => Object.keys(IMAGES).map(k => /^serie-(.+)-hero$/.exec(k)?.[1]).filter((s): s is string => !!s);

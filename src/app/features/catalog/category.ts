@@ -7,7 +7,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 import { familyBySlug, FAMILIES } from '../../core/catalog';
 import { familyHero } from '../../core/resources';
-import { ImgSlot } from '../../shared/ui';
+import { ImgSlot, SeriesRail } from '../../shared/ui';
 
 const PAGE = 24;
 const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'precio-desc'];
@@ -15,7 +15,7 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
 /** Categoría = familia del catálogo. Desde la bala F1 lista, filtra y ordena desde la API de tienda; los filtros
  *  activos viajan en la URL (?serie=&hp=&tension=&fase=&orden=) para que una búsqueda filtrada se pueda compartir. */
 @Component({
-  selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot],
+  selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot, SeriesRail],
   host: { class: 'container block', 'data-page': 'Categoria' },
   template: `
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
@@ -33,6 +33,8 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   }
   @if (serie()) { <p class="small"><a [routerLink]="['/serie', serie()]">Ver página de la serie {{ serieName() }} ›</a></p> }
   <p class="muted" style="max-width:70ch">{{ cat().desc }} Especificaciones del catálogo BSV; disponibilidad por confirmar.</p>
+  @if (!serie() && seriesList().length) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" lead="Entra a una serie para ver sus prestaciones, de qué está hecha y todos sus modelos." /> }
+  @if (seriesList().length) { <h2 class="series-rail-sub">{{ serie() ? 'Modelos de la serie ' + serieName() : 'Todos los modelos' }}</h2> }
   <div class="chip-list" style="margin-bottom:24px" data-component="SeriesChips">@for (sr of seriesList(); track sr.slug) { <button class="chip" type="button" [attr.aria-pressed]="serie() === sr.slug" (click)="set('serie', serie() === sr.slug ? null : sr.slug)">{{ sr.name }} <span class="muted">({{ sr.count }})</span></button> }</div>
   <div class="catalog">
     <aside class="filters" [class.is-open]="open()" id="filters" data-component="FilterPanel" aria-label="Filtros">

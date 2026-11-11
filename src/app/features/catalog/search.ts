@@ -2,11 +2,11 @@ import { Component, inject, input, computed } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { StorefrontApi } from '../../core/api/storefront-api';
 import { cardFromSummary } from '../../core/api/storefront-view';
-import { Icon, ProductCard, ProductSkeleton, Empty } from '../../shared/ui';
+import { Icon, ProductCard, ProductSkeleton, Empty, SeriesRail, SeriesRef } from '../../shared/ui';
 
 /** Búsqueda desde la API de tienda (bala F1): palabras en AND, orden por relevancia. */
 @Component({
-  selector: 'bsv-search', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty],
+  selector: 'bsv-search', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, SeriesRail],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Busqueda' },
   template: `
   @if (!q()) {
@@ -21,6 +21,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty } from '../../shared/ui';
     <bsv-empty icon="alert" title="No pudimos buscar" data-component="EmptyState/SinConexion">La tienda no respondió. Intenta de nuevo o pide una cotización.<ng-container actions><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
   } @else if (items().length) {
     <p class="muted small" style="margin:0">Resultados para</p><h1 style="font-size:var(--text-2xl)">“{{ q() }}” <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} productos</span></h1>
+    <bsv-series-rail [series]="seriesHit()" title="Series relacionadas" [wrap]="false" />
     <div class="product-grid">@for (p of items(); track p.id) { <bsv-product-card [p]="p" /> }</div>
   } @else {
     <h1 style="font-size:var(--text-2xl)">Sin resultados para “{{ q() }}”</h1>
@@ -35,6 +36,8 @@ export class Search {
   hits = this.api.products(() => this.q().trim() ? { q: this.q().trim(), size: 48 } : undefined);
   items = computed(() => this.hits.hasValue() ? this.hits.value().content.map(cardFromSummary) : []);
   total = computed(() => this.hits.hasValue() ? this.hits.value().totalElements : 0);
+  /** Las series de los resultados, en orden de aparición (máx. 6): el camino corto a la página de la serie. */
+  seriesHit = computed<SeriesRef[]>(() => { const m = new Map<string, SeriesRef>(); for (const p of this.items()) { if (p.serie && !m.has(p.serie)) m.set(p.serie, { slug: p.serie, name: p.serieName }); } return [...m.values()].slice(0, 6); });
   frequent = ['2CP', 'PK 60', 'CP 160', '4SR', 'TOP', 'JSW'];
   private suggestions = this.api.products(() => ({ familia: 'multietapas', orden: 'serie', size: 4 }));
   suggested = computed(() => this.suggestions.hasValue() ? this.suggestions.value().content.map(cardFromSummary) : []);

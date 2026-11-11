@@ -5,13 +5,15 @@ import { FAMILIES } from '../../core/catalog';
 import { familyHero } from '../../core/resources';
 import { StorefrontApi, StoreBanners } from '../../core/api/storefront-api';
 import { cardFromSummary } from '../../core/api/storefront-view';
-import { Icon, ImgSlot, ProductCard, ProductSkeleton } from '../../shared/ui';
+import { Icon, ImgSlot, ProductCard, ProductSkeleton, SeriesRail, SeriesRef } from '../../shared/ui';
+import { seriesWithHero } from '../../core/images';
+import { SERIES } from '../../core/catalog';
 import { Reveal } from '../../shared/directives/motion';
 
 const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], categoria: {} };
 
 @Component({
-  selector: 'bsv-home', imports: [RouterLink, Icon, ImgSlot, ProductCard, ProductSkeleton, Reveal],
+  selector: 'bsv-home', imports: [RouterLink, Icon, ImgSlot, ProductCard, ProductSkeleton, Reveal, SeriesRail],
   host: { 'data-page': 'Home' },
   template: `
   <section class="hero hero-center" data-component="Hero">
@@ -35,6 +37,10 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
   <section class="container" style="display:grid;gap:var(--space-3);padding-top:var(--space-5)" data-component="Section/Franja">
     @for (b of banners().franja; track $index) { <bsv-img-slot cls="franja" slot="franja" [banner]="b" [scene]="true" style="aspect-ratio:20/3;min-height:0;width:100%" /> }
   </section>
+  }
+
+  @if (seriesDestacadas.length) {
+  <section class="section container" style="padding-bottom:0" data-component="Section/Series"><bsv-series-rail [series]="seriesDestacadas" title="Conoce las series" lead="Cada serie tiene su página: para qué sirve, qué entrega y todos sus modelos con precio." [wrap]="false" /></section>
   }
 
   <section class="section container" data-component="Section/Categorias">
@@ -75,6 +81,8 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
 export class Home {
   products = inject(ProductService); private api = inject(StorefrontApi); private router = inject(Router);
   cats = FAMILIES;
+  /** Series con hero ya instalado y contenido de página; la 2CP (campaña) va primero. */
+  seriesDestacadas: SeriesRef[] = seriesWithHero().filter(x => SERIES[x]).sort((a, b) => (a === '2cp' ? -1 : b === '2cp' ? 1 : 0)).slice(0, 12).map(x => ({ slug: x, name: SERIES[x].name.replace(/^Serie /, '') }));
   /** Bala 11: banners del admin por hueco. Sin respuesta (o vacíos), la home queda como siempre: el manifiesto estático es el respaldo. */
   private bannersRes = this.api.banners();
   banners = computed<StoreBanners>(() => this.bannersRes.hasValue() ? this.bannersRes.value() : NO_BANNERS);

@@ -51,7 +51,9 @@ describe('Home · banners (bala 11)', () => {
     const franja = q(el, '[data-component="Section/Franja"]')!;
     expect(franja.querySelector('img')!.getAttribute('alt')).toBe('Toda la tienda en descuento');
     expect(franja.previousElementSibling!.getAttribute('data-component')).toBe('Hero');
-    expect(franja.nextElementSibling!.getAttribute('data-component')).toBe('Section/Categorias');
+    // 11-nov: entre la franja y las categorías va el riel de series (la franja sigue pegada al hero).
+    expect(franja.nextElementSibling!.getAttribute('data-component')).toBe('Section/Series');
+    expect(franja.nextElementSibling!.nextElementSibling!.getAttribute('data-component')).toBe('Section/Categorias');
   });
 
   it('el banner de marca sustituye la imagen y, sin enlace propio, va a /serie/2cp', async () => {
