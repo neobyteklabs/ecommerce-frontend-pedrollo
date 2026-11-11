@@ -112,11 +112,11 @@
   "slug": "d"
  },
  "serie-e2-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-e2-hero.webp",
-  "sha256": "9cac8df8ad7706009c8fca4b1ded777ebe189a5d7f3ca5edacab2be2f62ae19e",
+  "sha256": "9dc18dfb244d6c261fc1df8f42960fdb176a43b2f47acf4b65c6cc925cf78b2d",
   "slug": "e2"
  },
  "serie-f-hero": {
@@ -292,7 +292,7 @@
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-pro-dg-hero.webp",
-  "sha256": "40f22e5cd23450798a5b382f75dd31efb9d2fe9497bc8ccd1b22af8caeb1142b",
+  "sha256": "56c78f314758071eb7f07cc3127a8dc7fb4073a350c3b8677fbcf7d228249387",
   "slug": "pro-dg"
  },
  "serie-px-600-hero": {
@@ -328,11 +328,11 @@
   "slug": "rx-vortex"
  },
  "serie-sar-hero": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-sar-hero.webp",
-  "sha256": "9178b8d72f53c3f0a516da676ed6b5f6439bd79a978f6cd08b1391a1ed66e846",
+  "sha256": "35d051080c1a7a1dcfa61f839cd1379a240887f0a31616fc0419dcca5b9b8eaf",
   "slug": "sar"
  },
  "serie-steadypres-hero": {
@@ -396,7 +396,7 @@
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-vx-st-hero.webp",
-  "sha256": "83100f60e1908b4b8c2ab1b635fca9704ac8c2c8d18f414c68fb62f5a640a447",
+  "sha256": "8bf6a48a8f7cfc932fa9f0164d8445a38ade06836c369d469e4144cc4634440b",
   "slug": "vx-st"
  },
  "serie-zx-hero": {
