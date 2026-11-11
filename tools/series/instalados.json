@@ -55,6 +55,22 @@
   "sha256": "6fbd31194eaad97c81dd5980b4634eaf6e647b29c787e52276b3210db2fee831",
   "slug": "4sr"
  },
+ "serie-4sr-n-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-4sr-n-hero.webp",
+  "sha256": "ad14296e84a37b9768ae93cb251ff9721598ba76933fe25a0c964faee0aaf918",
+  "slug": "4sr-n"
+ },
+ "serie-4sr-s-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-4sr-s-hero.webp",
+  "sha256": "87211a076145197268801490947bb3280382b75dd05ea48c74abef446e58fa69",
+  "slug": "4sr-s"
+ },
  "serie-6pd-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -151,6 +167,14 @@
   "sha256": "39376a6d108a89d48fa558919ed013018e53fc2eb1cf5276255a1e7005b93120",
   "slug": "magnifica"
  },
+ "serie-maxima-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-maxima-hero.webp",
+  "sha256": "e32a3b619988044632875e152adbce0fb2a952e56206ab77eff85a977ac39ddb",
+  "slug": "maxima"
+ },
  "serie-mk-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -183,6 +207,14 @@
   "sha256": "95e6033a9bf88320d594c470c42ef1fd75529f62bf88abceb9a146286ba4e0e3",
   "slug": "p-600"
  },
+ "serie-p-800-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-p-800-hero.webp",
+  "sha256": "b9f24ca8ad42ef2ba612bf252a5bd184cbee9d5ad2425cace3ed4d29499c75ed",
+  "slug": "p-800"
+ },
  "serie-pk-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-10",
@@ -207,6 +239,14 @@
   "sha256": "a8e9526a6d56afc955368279071faec1a3143ef79927d3c3c3df35e6d3e822d5",
   "slug": "prima"
  },
+ "serie-px-600-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-px-600-hero.webp",
+  "sha256": "1c45bd412b9b8f91b3392c300e910b7bbc0eb09e1677e2f2eb269085cea2e6d6",
+  "slug": "px-600"
+ },
  "serie-qem-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -222,6 +262,14 @@
   "origen": "serie-qet-hero.webp",
   "sha256": "581bd491bcb142e4049c94dbb86de0eff6d212c6bcaaf3eb978ea1b90dc0fb7b",
   "slug": "qet"
+ },
+ "serie-rx-vortex-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-rx-vortex-hero.webp",
+  "sha256": "5d0c3bf51db2400231f5ddd9b1a42466b3545ca84c262dfff8fb13dc3719698a",
+  "slug": "rx-vortex"
  },
  "serie-steadypres-hero": {
   "estado": "aprobado",
