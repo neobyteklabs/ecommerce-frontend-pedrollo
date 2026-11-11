@@ -119,6 +119,14 @@
   "sha256": "9dc18dfb244d6c261fc1df8f42960fdb176a43b2f47acf4b65c6cc925cf78b2d",
   "slug": "e2"
  },
+ "serie-easypress-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-easypress-hero.webp",
+  "sha256": "35cbd1c2ed4097787a4d87b418c8221102015a6c7d10c15f17baff76b47bbb7a",
+  "slug": "easypress"
+ },
  "serie-f-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -223,6 +231,22 @@
   "sha256": "200acf9d4721fc9e52c146bc55e8062e7b7bcbb4717192c8314e18c1e49e24ca",
   "slug": "mk"
  },
+ "serie-mr-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-mr-hero.webp",
+  "sha256": "943bf8c91ecdc9aed318a196b2d376201ad122daca7c73193f79edbec541e090",
+  "slug": "mr"
+ },
+ "serie-mr-plus-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-mr-plus-hero.webp",
+  "sha256": "93cd5f90f7e30b1c3511d59e00bec92975a9896479bc2481958a21875e1fb70f",
+  "slug": "mr-plus"
+ },
  "serie-mr-ultra-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -246,6 +270,14 @@
   "origen": "serie-nga-pro-hero.webp",
   "sha256": "648d8280e86efd7b47a4c6fa6b3c8bc31ab7182bcdda340c4ba391c0c9a6b895",
   "slug": "nga-pro"
+ },
+ "serie-p-1000-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-p-1000-hero.webp",
+  "sha256": "0c6e170ab0ec72a8a15c29482b9693c3c9321c9ac41cc25d8b4926441e36f66c",
+  "slug": "p-1000"
  },
  "serie-p-600-hero": {
   "estado": "aprobado",
@@ -295,6 +327,14 @@
   "sha256": "56c78f314758071eb7f07cc3127a8dc7fb4073a350c3b8677fbcf7d228249387",
   "slug": "pro-dg"
  },
+ "serie-px-1000-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-px-1000-hero.webp",
+  "sha256": "3626d01b69400d47d0f6f51574316449edf66be8287df9cccb4efa8fe9f83f02",
+  "slug": "px-1000"
+ },
  "serie-px-600-hero": {
   "estado": "pendiente",
   "fecha": "2026-11-11",
@@ -302,6 +342,14 @@
   "origen": "serie-px-600-hero.webp",
   "sha256": "1cf60948feba931d4ff50ef970a5bcaf99c74e159458d53b37a065f5b05a4f9b",
   "slug": "px-600"
+ },
+ "serie-px-800-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-px-800-hero.webp",
+  "sha256": "1072d87ff76fc3aaa4aa46164ac40d51802f412f7b894e9ec0fc6e00e64a70af",
+  "slug": "px-800"
  },
  "serie-qem-hero": {
   "estado": "aprobado",
