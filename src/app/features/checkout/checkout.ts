@@ -7,8 +7,10 @@ import { CartService } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
 import { StorefrontApi, OrderAddress, OrderBuyer, OrderConflict, OrderCreated } from '../../core/api/storefront-api';
 import { loadAddress, saveAddress } from '../../core/address';
+import { BRAND } from '../../core/brand';
 import { Icon, Stepper, Alert } from '../../shared/ui';
 import { PayProgress } from './pay-progress';
+import { rememberPayUrl } from './pay-url';
 import type { Stripe, StripeElements } from '@stripe/stripe-js';
 
 const ESTADOS = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas', 'Chihuahua', 'Ciudad de México', 'Coahuila', 'Colima', 'Durango', 'Estado de México', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'];
@@ -74,8 +76,12 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
             @if (cart.coupon(); as c) { @if (c.valido) { <p class="small" style="margin:8px 0 0;color:var(--color-success,green)">Cupón {{ cart.couponCode() }} aplicado: −{{ mxn(c.descuento) }}</p> } @else { <p class="small" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ c.motivo || 'Cupón no válido.' }} <span class="muted">Revisa el código tal como te lo enviaron, letra por letra.</span></p> } }
           </form>
           <div class="card card-sm" data-component="Payment"><h3 style="margin:0 0 8px">Pago con tarjeta</h3>
-            <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> Procesado por Stripe con 3D Secure. Nunca vemos el número completo de tu tarjeta.</div>
+            <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> @if (order()?.pago?.modo === 'stripe') { Procesado por Stripe con 3D Secure. } @else { Pago seguro con {{ pasarela }}. } Nunca vemos el número completo de tu tarjeta.</div>
             @if (order(); as o) {
+              @if (o.pago.modo === 'mercadopago') {
+                <p class="small" style="margin:0 0 12px" data-component="MercadoPagoRedirect">Te llevamos a Mercado Pago para completar el pago con tarjeta. Tu pedido <strong>{{ o.numero }}</strong> queda apartado 30 minutos.</p>
+                <a class="btn btn-primary btn-lg btn-block" [href]="o.pago.urlPago" [class.is-loading]="redirecting()">Pagar {{ mxn(o.total) }} con Mercado Pago</a>
+              }
               @if (o.pago.modo === 'stripe') { <div class="pay-overlay"><div #paymentEl data-component="StripePaymentElement"></div>@if (paying()) { <div class="pay-shield"><bsv-pay-progress /></div> }</div>
                 @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">{{ paying() ? 'Procesando pago…' : 'Pagar ' + mxn(o.total) }}</button> }
                 @else { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> } }
@@ -108,6 +114,9 @@ export class Checkout {
   f: Form = this.loadForm();
   submitted = signal(false); couponInput = ''; couponLoading = signal(false);
   creating = signal(false); paying = signal(false); stripeReady = signal(false);
+  redirecting = signal(false); pasarela = inject(BRAND).vendedor.pasarela;
+  /** Sale de la tienda hacia la pasarela (aparte para poder sustituirlo en pruebas). */
+  goTo(url: string) { location.assign(url); }
   order = signal<OrderCreated | null>(null);
   error = signal<{ title: string; detail: string } | null>(null);
   total = computed(() => this.cart.totalWithCoupon() + (this.cart.shipping() ?? 0));
@@ -154,6 +163,9 @@ export class Checkout {
       const body = { comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) };
       const o = await this.api.createOrder(body);
       this.remember(o.folio); saveAddress(this.address());   // F14: la próxima cotización o compra la prellena
+      // Bala 13: con Mercado Pago el comprador paga en su checkout y regresa a `/checkout/confirmando`. La URL se recuerda en esta pestaña
+      // por si vuelve sin pagar; si la redirección no ocurre, queda el botón «Pagar con Mercado Pago».
+      if (o.pago.modo === 'mercadopago' && o.pago.urlPago) { rememberPayUrl(o.folio, o.pago.urlPago); this.order.set(o); this.redirecting.set(true); this.goTo(o.pago.urlPago); return; }
       if (o.pago.modo === 'simulado' || !o.pago.clientSecret) { this.router.navigate(['/checkout/confirmando'], { queryParams: { folio: o.folio, c: this.f.correo.trim() } }); return; }
       this.order.set(o);
     } catch (e) { this.handle(e); } finally { this.creating.set(false); }

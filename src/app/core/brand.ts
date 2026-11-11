@@ -24,5 +24,5 @@ export const BRAND = new InjectionToken<Brand>('BRAND', {
   providedIn: 'root',
   factory: () => ({ id: 'pedrollo', name: 'Pedrollo', tagline: 'Distribuidor autorizado en México', logo: 'brand/dual-horizontal.svg', logoCompact: 'brand/dual-horizontal-limpio.svg', logoOnDark: 'brand/dual-horizontal-blanco.svg',
     // PENDIENTE DE CONFIRMAR con la constancia de situación fiscal: nombre exacto, RFC (opcional mostrarlo) y domicilio.
-    vendedor: { nombreComercial: 'Bombas y Sistemas Vega', siglas: 'BSV', razonSocial: 'Manuel Dioney Vega Cruz', figura: 'persona-fisica', rfc: null, domicilio: 'Tlalnepantla de Baz, Estado de México', pasarela: 'Stripe' } }),
+    vendedor: { nombreComercial: 'Bombas y Sistemas Vega', siglas: 'BSV', razonSocial: 'Manuel Dioney Vega Cruz', figura: 'persona-fisica', rfc: null, domicilio: 'Tlalnepantla de Baz, Estado de México', pasarela: 'Mercado Pago' } }),
 });

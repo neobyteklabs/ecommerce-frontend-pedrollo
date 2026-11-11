@@ -61,7 +61,7 @@ export interface CouponResponse { valido: boolean; motivo?: string | null; descu
 export interface OrderBuyer { nombre: string; correo: string; telefono: string; empresa?: string; }
 export interface OrderAddress { cp: string; calle: string; numeroExt: string; numeroInt?: string; colonia: string; municipio: string; estado: string; referencias?: string; }
 export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; }
-export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null }; }
+export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'mercadopago' | 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null; /** Bala 13: con Mercado Pago, el checkout al que se redirige al comprador. */ urlPago?: string | null }; }
 export interface OrderConfirm { folio: string; numero: string; estado: 'pagado' | 'pendiente_pago' | 'expirado' | 'cancelado'; }
 export interface OrderLineView { modelo: string; descripcion: string; cantidad: number; precioUnitario: number; importe: number; cedis: string | null; sobrePedido: boolean; diasEstimados: number | null; }
 export interface OrderView {
