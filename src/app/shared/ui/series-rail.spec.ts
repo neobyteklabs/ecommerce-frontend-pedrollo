@@ -10,13 +10,14 @@ describe('bsv-series-rail', () => {
     return f.nativeElement as HTMLElement;
   }
 
-  it('una tarjeta por serie, con enlace a su página, tipo y conteo', () => {
+  it('una tarjeta por serie, con enlace a su página, nombre y conteo', () => {
     const el = monta([{ slug: 'pk', name: 'PK', count: 11 }, { slug: 'kit-4sr', name: 'KIT 4SR', count: 1 }]);
     const cards = el.querySelectorAll('a.series-card');
     expect(cards.length).toBe(2);
     expect(cards[0].getAttribute('href')).toBe('/serie/pk');
-    expect(cards[0].textContent).toContain('Serie PK'); expect(cards[0].textContent).toContain('Bombas de rodete periférico'); expect(cards[0].textContent).toContain('11 modelos');
-    expect(cards[1].textContent).toContain('1 modelo ·');
+    expect(cards[0].textContent).toContain('PK'); expect(cards[0].textContent).toContain('11 modelos'); expect(cards[0].getAttribute('aria-label')).toBe('Ver la serie PK');
+    expect(cards[1].textContent).toMatch(/1 modelo\s*$/);
+    expect(el.querySelectorAll('.series-rail-nav button').length).toBe(2);
     expect(el.textContent).toContain('Series de prueba');
   });
 

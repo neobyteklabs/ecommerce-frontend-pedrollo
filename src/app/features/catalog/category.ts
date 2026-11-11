@@ -33,7 +33,7 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   }
   @if (serie()) { <p class="small"><a [routerLink]="['/serie', serie()]">Ver página de la serie {{ serieName() }} ›</a></p> }
   <p class="muted" style="max-width:70ch">{{ cat().desc }} Especificaciones del catálogo BSV; disponibilidad por confirmar.</p>
-  @if (!serie() && seriesList().length) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" lead="Entra a una serie para ver sus prestaciones, de qué está hecha y todos sus modelos." /> }
+  @if (!serie() && seriesList().length) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" /> }
   @if (seriesList().length) { <h2 class="series-rail-sub">{{ serie() ? 'Modelos de la serie ' + serieName() : 'Todos los modelos' }}</h2> }
   <div class="chip-list" style="margin-bottom:24px" data-component="SeriesChips">@for (sr of seriesList(); track sr.slug) { <button class="chip" type="button" [attr.aria-pressed]="serie() === sr.slug" (click)="set('serie', serie() === sr.slug ? null : sr.slug)">{{ sr.name }} <span class="muted">({{ sr.count }})</span></button> }</div>
   <div class="catalog">

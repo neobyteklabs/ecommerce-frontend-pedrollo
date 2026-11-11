@@ -310,24 +310,27 @@ h1{letter-spacing:-0.035em}
   .s-hero:has(.img-slot.scene.has-img img[src*="media/series/"]) .img-slot.scene::after{background:linear-gradient(90deg,rgba(10,13,20,0) 38%,rgba(10,13,20,.7) 58%,rgba(10,13,20,.96) 100%)}
 }
 
-/* ====== Riel de series (11-nov): la página de serie al frente en familia, búsqueda y portada ====== */
+/* ====== Carrusel de series (11-nov): la página de serie al frente en familia, búsqueda y portada ====== */
 .series-rail-host{display:block;margin:var(--space-5) 0 var(--space-6)}
-.series-rail-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:var(--space-4)}
+.series-rail-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:var(--space-4)}
 .series-rail-head h2{margin:0;font-size:var(--text-xl);letter-spacing:-.02em}
-.series-rail-head p{margin:0;font-size:var(--text-sm)}
 .series-rail-sub{font-size:var(--text-xl);letter-spacing:-.02em;margin:var(--space-6) 0 var(--space-3)}
-.series-rail{display:grid;gap:var(--space-4);grid-auto-flow:column;grid-auto-columns:minmax(240px,78%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;-webkit-overflow-scrolling:touch}
-.series-rail.is-wrap{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));grid-auto-columns:auto;overflow:visible;padding-bottom:0}
-@media (min-width:768px){.series-rail{grid-auto-columns:minmax(280px,31%)}}
-@media (min-width:1280px){.series-rail{grid-auto-columns:minmax(280px,23.5%)}}
-.series-card{scroll-snap-align:start;display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;background:var(--color-ink);color:var(--color-on-ink);text-decoration:none;border:1px solid rgba(255,255,255,.08);transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out)}
-.series-card:hover,.series-card:focus-visible{transform:translateY(-3px);box-shadow:0 18px 40px -18px rgba(10,13,20,.55)}
-.series-card-img{display:block;aspect-ratio:16/9;background:radial-gradient(70% 70% at 40% 40%,rgba(91,141,239,.22),transparent 70%),var(--color-ink);overflow:hidden}
-.series-card-img img{width:100%;height:100%;object-fit:contain;padding:14px;display:block}
-/* El hero trae la bomba en la mitad izquierda: se recorta ahí para que el equipo llene la tarjeta. */
-.series-card.has-hero .series-card-img img{object-fit:cover;object-position:22% 55%;padding:0}
-.series-card:not(.has-hero) .series-card-img{background:var(--color-ivory)}
-.series-card-copy{display:grid;gap:4px;padding:14px 16px 16px}
-.series-card-copy strong{font-size:var(--text-lg);letter-spacing:-.02em}
-.series-card-copy .tipo{font-size:var(--text-sm);color:var(--color-ink-muted);min-height:2.6em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.series-card-copy .meta{font-size:var(--text-sm);font-weight:600;color:#9db9ff}
+.series-rail-nav{display:none;gap:8px}
+@media (min-width:768px){.series-rail-nav:not([hidden]){display:flex}}
+.series-rail-nav button{width:44px;height:44px;border-radius:999px;border:1px solid var(--color-border);background:#fff;color:var(--color-text);font-size:24px;line-height:1;cursor:pointer;transition:background .2s,opacity .2s}
+.series-rail-nav button:hover:not(:disabled){background:var(--color-ivory)}
+.series-rail-nav button:disabled{opacity:.35;cursor:default}
+.series-rail{display:grid;grid-auto-flow:column;grid-auto-columns:82%;gap:var(--space-4);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;outline-offset:4px}
+.series-rail::-webkit-scrollbar{display:none}
+@media (min-width:768px){.series-rail{grid-auto-columns:calc((100% - var(--space-4)) / 2)}}
+@media (min-width:1280px){.series-rail{grid-auto-columns:calc((100% - 2 * var(--space-4)) / 3)}}
+.series-card{position:relative;display:block;scroll-snap-align:start;aspect-ratio:16/10;border-radius:var(--radius-xl);overflow:hidden;background:radial-gradient(70% 70% at 40% 40%,rgba(91,141,239,.22),transparent 70%),var(--color-ink);color:#fff;text-decoration:none}
+.series-card img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;padding:8% 8% 22%;transition:transform .6s var(--ease-out)}
+/* El hero trae la bomba en la mitad izquierda: se encuadra ahí para que el equipo llene la tarjeta. */
+.series-card.has-hero img{object-fit:cover;object-position:20% 58%;padding:0}
+.series-card:not(.has-hero){background:var(--color-ivory)}
+.series-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,13,20,0) 52%,rgba(10,13,20,.82) 100%)}
+.series-card:hover img,.series-card:focus-visible img{transform:scale(1.05)}
+.series-card-copy{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:18px 20px}
+.series-card-copy strong{font-size:var(--text-2xl);letter-spacing:-.03em;line-height:1.05}
+.series-card-copy span{font-size:var(--text-sm);opacity:.85;white-space:nowrap}
