@@ -103,6 +103,14 @@
   "sha256": "fb98c6fede3d7f9dad1ccb523d9282085a36d6ed107f566b5cf96a6544da0a57",
   "slug": "cp"
  },
+ "serie-d-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-d-hero.webp",
+  "sha256": "d4ec4138ab5824d070817024e931a51f74f1d07d10d8f8e3dc497a862953c1dc",
+  "slug": "d"
+ },
  "serie-f-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -119,6 +127,14 @@
   "sha256": "853d678100ff695de07e1cae5a5e4a5b6da6be52fb7bbc076ca9e8be8a6d5f02",
   "slug": "f-inox"
  },
+ "serie-fg-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-fg-hero.webp",
+  "sha256": "e1c45b0570c4781c2692ee95e7a7e4eabd51b0c7b37069d138fef1b3548e7f1d",
+  "slug": "fg"
+ },
  "serie-hf-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -134,6 +150,14 @@
   "origen": "serie-ht-hero.webp",
   "sha256": "8395b95bc2c87744f2c73781c256bfdba83c202ed70a415e19be50ff450559e3",
   "slug": "ht"
+ },
+ "serie-hydrofresh-df-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-hydrofresh-df-hero.webp",
+  "sha256": "851bfaffa6a0c0390206d529acd66bb83bb6d0fb7cc39da8c8a7d8f54d9d2a06",
+  "slug": "hydrofresh-df"
  },
  "serie-jcr-hero": {
   "estado": "aprobado",
@@ -199,6 +223,14 @@
   "sha256": "63d97fe2390935534665e33e241170049f04223869aa7b08c368410e5ba92f0e",
   "slug": "nga"
  },
+ "serie-nga-pro-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-nga-pro-hero.webp",
+  "sha256": "648d8280e86efd7b47a4c6fa6b3c8bc31ab7182bcdda340c4ba391c0c9a6b895",
+  "slug": "nga-pro"
+ },
  "serie-p-600-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -238,6 +270,14 @@
   "origen": "serie-prima-hero.webp",
   "sha256": "a8e9526a6d56afc955368279071faec1a3143ef79927d3c3c3df35e6d3e822d5",
   "slug": "prima"
+ },
+ "serie-pro-dg-hero": {
+  "estado": "pendiente",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-pro-dg-hero.webp",
+  "sha256": "f4dd32831fdd390e6f1088f87b17d25c0a171ad2f58012f7236c47efbc9a363d",
+  "slug": "pro-dg"
  },
  "serie-px-600-hero": {
   "estado": "pendiente",
@@ -294,6 +334,14 @@
   "origen": "serie-top-hero.webp",
   "sha256": "cbed5d32b89a0c8b4c66c1e1e2b6c5119b390f2d5f1c08a3d6bd7a4900a3a915",
   "slug": "top"
+ },
+ "serie-tritus-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-tritus-hero.webp",
+  "sha256": "e1166d035525fc3b83b7364b24e206ec95f6e9f82b59252c522a7ee7096cf608",
+  "slug": "tritus"
  },
  "serie-up-hero": {
   "estado": "aprobado",
