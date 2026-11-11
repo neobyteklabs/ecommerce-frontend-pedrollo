@@ -20,13 +20,13 @@ const INTERVALO = 4500;
   host: { class: 'series-rail-host', 'data-component': 'SeriesRail', '[class.is-compact]': 'compact()', '[class.is-bleed]': 'bleed()', '(pointerenter)': 'pausa.set(true)', '(pointerleave)': 'pausa.set(false)', '(focusin)': 'pausa.set(true)', '(focusout)': 'pausa.set(false)' },
   template: `
   @if (cards().length) {
-  <div class="series-rail-head"><h2>{{ title() }}</h2>
+  <div class="series-rail-head"><h2>{{ titulo() }}</h2>
     <div class="series-rail-nav" [hidden]="cards().length < 2">
       <button type="button" aria-label="Serie anterior" (click)="mover(-1)">‹</button>
       <button type="button" aria-label="Serie siguiente" (click)="mover(1)">›</button>
     </div>
   </div>
-  <div class="series-rail" #pista (scroll)="medir()" tabindex="0" role="group" aria-roledescription="carrusel" [attr.aria-label]="title()">
+  <div class="series-rail" #pista (scroll)="medir()" tabindex="0" role="group" aria-roledescription="carrusel" [attr.aria-label]="titulo()">
     @for (c of cards(); track c.slug; let i = $index) {
       <a class="series-card" [routerLink]="['/serie', c.slug]" [attr.data-serie]="c.slug" [class.has-hero]="c.hero" [attr.aria-label]="'Ver la serie ' + c.name">
         @if (c.img) { <img [src]="c.img" alt="" [attr.loading]="i === 0 && !compact() ? 'eager' : 'lazy'" decoding="async" /> }
@@ -40,7 +40,8 @@ const INTERVALO = 4500;
   }`,
 })
 export class SeriesRail {
-  series = input.required<SeriesRef[]>(); title = input('Series'); compact = input(false);
+  series = input.required<SeriesRef[]>(); /** `titulo` y no `title`: como atributo estático, `title` se queda en el elemento y el navegador lo muestra como tooltip al pasar el cursor. */
+  titulo = input('Series'); compact = input(false);
   /** Encabezado de página (familia): a todo el ancho de la pantalla, sin título aparte, con flechas y puntos sobre la imagen. */
   bleed = input(false);
   /** Texto pequeño sobre el nombre de la serie; en la familia es el nombre de la familia («Multietapas · Serie»). */

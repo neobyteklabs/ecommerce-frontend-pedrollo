@@ -6,7 +6,7 @@ import { SeriesRail } from './series-rail';
 describe('bsv-series-rail', () => {
   function monta(series: { slug: string; name: string; count?: number }[]) {
     TestBed.configureTestingModule({ imports: [SeriesRail], providers: [provideRouter([])] });
-    const f = TestBed.createComponent(SeriesRail); f.componentRef.setInput('series', series); f.componentRef.setInput('title', 'Series de prueba'); f.detectChanges();
+    const f = TestBed.createComponent(SeriesRail); f.componentRef.setInput('series', series); f.componentRef.setInput('titulo', 'Series de prueba'); f.detectChanges();
     return f.nativeElement as HTMLElement;
   }
 

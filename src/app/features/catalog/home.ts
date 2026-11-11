@@ -40,7 +40,7 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
   }
 
   @if (seriesDestacadas.length) {
-  <section class="section container" style="padding-bottom:0" data-component="Section/Series"><bsv-series-rail [series]="seriesDestacadas" title="Conoce las series" /></section>
+  <section class="section container" style="padding-bottom:0" data-component="Section/Series"><bsv-series-rail [series]="seriesDestacadas" titulo="Conoce las series" /></section>
   }
 
   <section class="section container" data-component="Section/Categorias">

@@ -18,7 +18,7 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot, SeriesRail],
   host: { class: 'container block', 'data-page': 'Categoria' },
   template: `
-  @if (carrusel()) { <bsv-series-rail [series]="seriesList()" [title]="'Series de ' + cat().name" [kicker]="cat().name" [bleed]="true" /> }
+  @if (carrusel()) { <bsv-series-rail [series]="seriesList()" [titulo]="'Series de ' + cat().name" [kicker]="cat().name" [bleed]="true" /> }
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
   @if (banner(); as b) {
   <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" cls="banner" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>

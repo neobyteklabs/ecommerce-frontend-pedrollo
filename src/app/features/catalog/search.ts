@@ -21,7 +21,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty, SeriesRail, SeriesRef } from
     <bsv-empty icon="alert" title="No pudimos buscar" data-component="EmptyState/SinConexion">La tienda no respondió. Intenta de nuevo o pide una cotización.<ng-container actions><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
   } @else if (items().length) {
     <p class="muted small" style="margin:0">Resultados para</p><h1 style="font-size:var(--text-2xl)">“{{ q() }}” <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} productos</span></h1>
-    <bsv-series-rail [series]="seriesHit()" title="Series relacionadas" [compact]="true" />
+    <bsv-series-rail [series]="seriesHit()" titulo="Series relacionadas" [compact]="true" />
     <div class="product-grid">@for (p of items(); track p.id) { <bsv-product-card [p]="p" /> }</div>
   } @else {
     <h1 style="font-size:var(--text-2xl)">Sin resultados para “{{ q() }}”</h1>
