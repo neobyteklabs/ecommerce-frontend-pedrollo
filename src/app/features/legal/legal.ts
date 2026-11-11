@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../core/toast';
+import { BRAND, sellerLine } from '../../core/brand';
 import { Icon } from '../../shared/ui';
 
 @Component({
@@ -10,9 +11,9 @@ import { Icon } from '../../shared/ui';
     <nav class="account-nav" aria-label="Legales" data-component="LegalNav"><a routerLink="/legal" fragment="terminos">Términos y condiciones</a><a routerLink="/legal" fragment="privacidad">Aviso de privacidad</a><a routerLink="/legal" fragment="envios">Envíos y devoluciones</a><a routerLink="/legal" fragment="contacto">Contacto</a></nav>
     <div class="stack" style="max-width:760px">
       <section class="card" id="terminos" data-component="LegalSection"><h1 style="font-size:var(--text-2xl)">Términos y condiciones</h1><p class="muted small">Última actualización: 1 de octubre de 2026</p>
-        <h4>1. Quién vende</h4><p>Esta tienda es operada por Bombas y Sistemas Vega, S.A. de C.V. (BSV), distribuidor autorizado de la marca en México, con domicilio en Tlalnepantla de Baz, Estado de México.</p>
+        <h4>1. Quién vende</h4><p>Esta tienda es operada por {{ quien }}, distribuidor autorizado de la marca en México, con domicilio en {{ v.domicilio }}.@if (v.rfc) { RFC {{ v.rfc }}. } Las facturas de tus compras las emite {{ v.razonSocial }}.</p>
         <h4>2. Precios y disponibilidad</h4><p>Los precios se muestran en pesos mexicanos con IVA incluido. Pueden cambiar sin previo aviso; el precio válido es el que ves al momento de pagar. Los artículos "sobre pedido" se surten en 5 a 7 días hábiles.</p>
-        <h4>3. Pago</h4><p>Aceptamos tarjetas de crédito y débito procesadas por Stripe. BSV no almacena datos completos de tarjetas.</p>
+        <h4>3. Pago</h4><p>Aceptamos tarjetas de crédito y débito procesadas por {{ v.pasarela }}. BSV no almacena datos completos de tarjetas.</p>
         <h4>4. Garantía</h4><p>Los equipos cuentan con garantía de fábrica de 12 meses contra defectos de fabricación. No cubre daños por operación en seco, voltaje incorrecto o instalación inadecuada.</p></section>
       <section class="card" id="privacidad" data-component="LegalSection"><h2>Aviso de privacidad</h2><p>BSV es responsable del tratamiento de tus datos personales. Los usamos para procesar pedidos, emitir facturas, enviar notificaciones del pedido y atender garantías. No los vendemos ni los compartimos con fines publicitarios. Puedes ejercer tus derechos ARCO escribiendo a <a href="mailto:privacidad@bombasvega.mx">privacidad&#64;bombasvega.mx</a>.</p></section>
       <section class="card" id="envios" data-component="LegalSection"><h2>Envíos y devoluciones</h2><h4>Envíos</h4><p>Enviamos a toda la República por paquetería asegurada (Estafeta, DHL). Existencia local sale en 24–48 h. Envío gratis en pedidos mayores a $5,000 en la zona metropolitana. Puedes recoger sin costo en CEDIS Tlalnepantla, Puebla, Guadalajara y Mérida.</p><h4>Devoluciones</h4><p>Tienes 30 días naturales desde la entrega para solicitar una devolución desde tu cuenta. El equipo debe estar completo y sin uso, salvo falla de fábrica. Te enviamos guía prepagada y reembolsamos a tu método de pago en 5–10 días hábiles tras recibirlo.</p></section>
@@ -30,4 +31,4 @@ import { Icon } from '../../shared/ui';
         </form></section>
     </div></div>`,
 })
-export class Legal { toast = inject(ToastService); }
+export class Legal { toast = inject(ToastService); v = inject(BRAND).vendedor; quien = sellerLine(this.v); }
