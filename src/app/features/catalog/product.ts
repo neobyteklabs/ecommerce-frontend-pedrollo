@@ -10,7 +10,7 @@ import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm, PdfModal } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 import { StorefrontApi, GallerySection, StoreDocument } from '../../core/api/storefront-api';
-import { cardFromProduct } from '../../core/api/storefront-view';
+import { cardFromProduct, productFromApi } from '../../core/api/storefront-view';
 
 /** «850 KB», «1.2 MB»: el peso de un PDF para el comprador. */
 export function pesoLegible(bytes: number): string { return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`; }
@@ -117,6 +117,8 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
     <div class="product-grid">@for (r of related(); track r.id; let i = $index) { <bsv-product-card [p]="r" bsvReveal="scale" [revealIndex]="i" /> }</div>
   </section>
   }
+  } @else if (remote.isLoading()) {
+  <section class="section" aria-busy="true"><p class="muted">Cargando producto…</p></section>
   } @else {
   <section class="section"><h1>Producto no encontrado</h1><p class="muted"><a routerLink="/categoria/centrifugas">Ver catálogo</a></p></section>
   }`,
@@ -124,7 +126,8 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
 export class ProductPage {
   id = input.required<string>();
   products = inject(ProductService); private cart = inject(CartService); toast = inject(ToastService); brand = inject(BRAND);
-  p = computed(() => this.products.byId(this.id())); related = computed(() => this.products.related(this.id()).map(cardFromProduct));
+  /** Del manifiesto local si lo conoce; si no, de la API de tienda (todo producto publicado tiene ficha, no solo la muestra del manifiesto). */
+  p = computed(() => this.products.byId(this.id()) ?? (this.remote.hasValue() && this.remote.value() ? productFromApi(this.remote.value()!) : undefined)); related = computed(() => this.products.related(this.id()).map(cardFromProduct));
   /** El precio viene de la API de tienda (bala 1). Nunca se cae a la demo local: un fallback silencioso escondería que la bala falló. */
   private api = inject(StorefrontApi);
   remote = this.api.product(() => this.id());
