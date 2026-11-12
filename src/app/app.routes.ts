@@ -17,8 +17,8 @@ export const routes: Routes = [
   { path: 'cuenta', canActivate: [authGuard], children: [
     { path: '', loadComponent: () => import('./features/account/profile').then(m => m.Profile), title: 'Mi cuenta' },
     { path: 'pedidos', loadComponent: () => import('./features/account/orders').then(m => m.Orders), title: 'Mis pedidos' },
-    { path: 'pedidos/:id', loadComponent: () => import('./features/account/order-detail').then(m => m.OrderDetail), title: 'Detalle del pedido' },
-    { path: 'devolucion', loadComponent: () => import('./features/account/return').then(m => m.Return), title: 'Devoluciones' },
+    { path: 'pedidos/:id', pathMatch: 'full', redirectTo: 'pedidos' },
+    { path: 'devolucion', pathMatch: 'full', redirectTo: '/terminos' },
   ] },
   { path: 'terminos', loadComponent: () => import('./features/legal/terms').then(m => m.Terms), title: 'Términos y condiciones' },
   { path: 'privacidad', loadComponent: () => import('./features/legal/privacy').then(m => m.Privacy), title: 'Aviso de privacidad' },

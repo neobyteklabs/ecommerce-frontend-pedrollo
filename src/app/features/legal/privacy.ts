@@ -28,6 +28,7 @@ import { POLITICA } from '../../core/legal';
 
       <section class="card" id="datos"><h2>Qué datos recabamos</h2>
         <ul><li><strong>De identificación y contacto:</strong> nombre, empresa (si la indicas), correo electrónico y teléfono.</li>
+          <li><strong>De tu cuenta, si decides crearla:</strong> entras con tu cuenta de Google y de ella recibimos tu nombre, tu correo y un identificador de tu cuenta. No recibimos tu contraseña ni tus contactos, y no publicamos nada en tu nombre. Crear una cuenta es opcional: puedes comprar sin ella.</li>
           <li><strong>De entrega:</strong> el domicilio al que enviamos tu pedido.</li>
           <li><strong>Fiscales:</strong> razón social, RFC, régimen, código postal fiscal y uso de CFDI, solo si pides factura.</li>
           <li><strong>Del pedido:</strong> lo que compraste o cotizaste, importes y el estado del pago. De tu tarjeta solo conocemos lo que el procesador nos informa (aprobado o rechazado y por qué); el número completo y el código de seguridad los captura {{ v.pasarela }} y nunca llegan a nuestros sistemas.</li></ul>

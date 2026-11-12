@@ -1,27 +1,80 @@
-import { Component, inject, input, computed } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, computed, inject, input, signal, viewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { SessionService } from '../../core/session';
 import { Icon, Alert } from '../../shared/ui';
 
+/** Lo mínimo del SDK de Google Identity Services que se usa aquí. */
+interface GoogleId { initialize(o: { client_id: string; callback: (r: { credential?: string }) => void; ux_mode?: string; auto_select?: boolean }): void; renderButton(el: HTMLElement, o: Record<string, unknown>): void; cancel(): void; }
+const GSI_SRC = 'https://accounts.google.com/gsi/client';
+
+/**
+ * Entrar con Google (bala 9). El botón es el oficial de Google: entrega una credencial firmada que se manda al servidor de la tienda;
+ * el back-office la verifica y la sesión queda en una cookie que esta página no puede leer. Registrarse y entrar son el mismo acto.
+ * La cuenta es opcional: se puede comprar sin ella.
+ */
 @Component({
   selector: 'bsv-login', imports: [RouterLink, Icon, Alert],
   host: { class: 'container block', 'data-page': 'Login' },
   template: `<div class="auth" data-component="AuthCard">
-    @if (expired()) { <bsv-alert kind="info" title="Tu sesión expiró" icon="clock" style="text-align:left;margin-bottom:20px" data-component="Alert/SesionExpirada">Por seguridad cerramos la sesión tras 30 minutos sin actividad. Tu carrito se guardó. Inicia sesión para continuar.</bsv-alert> }
-    <div class="empty" style="padding:0 0 20px"><div class="icon"><bsv-icon [name]="gate() ? 'lock' : 'user'" style="--icon:30px" /></div>
-      <h2 style="margin:0">{{ gate() ? 'Necesitas una cuenta para comprar' : 'Entra a tu cuenta' }}</h2>
-      <p>{{ gate() ? 'Así podemos enviarte el rastreo, la factura y guardar tus direcciones. Toma 10 segundos: no hay contraseñas.' : 'Sin contraseñas. Usa tu cuenta de Google o Facebook.' }}</p></div>
-    <div class="stack-sm">
-      <button class="btn btn-oauth btn-lg btn-block" type="button" (click)="login()" data-component="Button/OAuthGoogle"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.5 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 7.1-10 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.7-4.1-13.6-9.9l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continuar con Google</button>
-      <button class="btn btn-oauth btn-lg btn-block" type="button" (click)="login()" data-component="Button/OAuthFacebook"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg> Continuar con Facebook</button>
-    </div>
-    <p class="xs muted" style="margin:20px 0 0">Al continuar aceptas los <a routerLink="/terminos">términos</a> y el <a routerLink="/privacidad">aviso de privacidad</a>. No publicamos nada en tu nombre.</p>
-    @if (gate()) { <p class="small" style="margin:16px 0 0"><a routerLink="/carrito">Volver al carrito</a></p> }
+    <div class="empty" style="padding:0 0 20px"><div class="icon"><bsv-icon name="user" style="--icon:30px" /></div>
+      <h1 style="margin:0;font-size:var(--text-xl)">Entra a tu cuenta</h1>
+      <p>Con tu cuenta de Google, sin contraseñas nuevas. Si es tu primera vez, la cuenta se crea al entrar.</p></div>
+    @if (error()) { <bsv-alert kind="danger" title="No pudimos iniciar tu sesión" icon="alert" style="text-align:left;margin-bottom:16px" data-component="Alert/LoginError">{{ error() }}</bsv-alert> }
+    @switch (estado()) {
+      @case ('cargando') { <p class="muted small" data-testid="login-cargando">Preparando el acceso…</p> }
+      @case ('listo') { <div #boton class="google-btn" data-testid="login-google" [attr.aria-busy]="entrando()"></div>@if (entrando()) { <p class="muted small">Verificando tu cuenta…</p> } }
+      @case ('sin-cuentas') { <bsv-alert kind="info" title="Las cuentas aún no están disponibles" icon="info" style="text-align:left" data-testid="login-sin-cuentas">Mientras tanto puedes comprar como invitado y seguir tu pedido con su número y tu correo.</bsv-alert> }
+      @case ('fallo') { <bsv-alert kind="warning" title="No se pudo cargar el acceso con Google" icon="alert" style="text-align:left" data-testid="login-fallo">Revisa tu conexión o desactiva el bloqueador para este sitio y vuelve a intentarlo. También puedes comprar como invitado.</bsv-alert> }
+    }
+    <p class="small" style="margin:20px 0 0">¿Solo quieres ver un pedido? <a routerLink="/seguimiento">Rastréalo con su número</a>, sin cuenta.</p>
+    <p class="xs muted" style="margin:12px 0 0">Al entrar aceptas los <a routerLink="/terminos">términos</a> y el <a routerLink="/privacidad">aviso de privacidad</a>. De Google recibimos tu nombre y tu correo; no publicamos nada en tu nombre.</p>
   </div>`,
+  styles: [`.google-btn{display:flex;justify-content:center;min-height:44px}`],
 })
-export class Login {
-  next = input('/cuenta'); expired = input<string>();
-  gate = computed(() => (this.next() ?? '/cuenta').startsWith('/checkout'));
-  private s = inject(SessionService); private r = inject(Router);
-  login() { this.s.login(); this.r.navigateByUrl(this.next() ?? '/cuenta'); }
+export class Login implements AfterViewInit, OnDestroy {
+  next = input('/cuenta');
+  private s = inject(SessionService); private r = inject(Router); private browser = isPlatformBrowser(inject(PLATFORM_ID));
+  private boton = viewChild<ElementRef<HTMLElement>>('boton');
+  estado = signal<'cargando' | 'listo' | 'sin-cuentas' | 'fallo'>('cargando'); error = signal<string | null>(null); entrando = signal(false);
+  private destino = computed(() => { const n = this.next() ?? '/cuenta'; return n.startsWith('/') && !n.startsWith('//') ? n : '/cuenta'; });
+  private google: GoogleId | null = null;
+
+  async ngAfterViewInit() {
+    if (!this.browser) { return; }
+    if (await this.s.load()) { void this.r.navigateByUrl(this.destino()); return; }
+    try {
+      const { googleClientId } = await (await fetch('/__config')).json() as { googleClientId?: string | null };
+      if (!googleClientId) { this.estado.set('sin-cuentas'); return; }
+      this.google = await cargarGoogle();
+      this.google.initialize({ client_id: googleClientId, callback: r => void this.entrar(r.credential), ux_mode: 'popup', auto_select: false });
+      this.estado.set('listo');
+      // El contenedor del botón aparece en el siguiente ciclo de render.
+      setTimeout(() => { const el = this.boton()?.nativeElement; if (el && this.google) { this.google.renderButton(el, { type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'pill', locale: 'es-419', width: 320 }); } });
+    } catch { this.estado.set('fallo'); }
+  }
+
+  private async entrar(credential?: string) {
+    if (!credential) { this.error.set('Google no entregó la credencial. Inténtalo de nuevo.'); return; }
+    this.entrando.set(true); this.error.set(null);
+    try { await this.s.signIn(credential); await this.r.navigateByUrl(this.destino()); }
+    catch (e) { this.error.set((e as Error).message); }
+    finally { this.entrando.set(false); }
+  }
+
+  ngOnDestroy() { try { this.google?.cancel(); } catch { /* nada que cancelar */ } }
+}
+
+let cargando: Promise<GoogleId> | null = null;
+/** Carga el SDK de Google una sola vez. Falla si lo bloquea la red o una extensión. */
+function cargarGoogle(): Promise<GoogleId> {
+  const ya = (window as unknown as { google?: { accounts?: { id?: GoogleId } } }).google?.accounts?.id;
+  if (ya) { return Promise.resolve(ya); }
+  cargando ??= new Promise<GoogleId>((ok, mal) => {
+    const s = document.createElement('script'); s.src = GSI_SRC; s.async = true; s.defer = true;
+    s.onload = () => { const g = (window as unknown as { google?: { accounts?: { id?: GoogleId } } }).google?.accounts?.id; if (g) { ok(g); } else { cargando = null; mal(new Error('sdk')); } };
+    s.onerror = () => { cargando = null; mal(new Error('red')); };
+    document.head.appendChild(s);
+  });
+  return cargando;
 }

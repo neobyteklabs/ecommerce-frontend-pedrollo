@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import { mediaHandler } from './media-proxy';
+import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -49,6 +50,78 @@ app.all('/media/{*splat}', (req, res) => {
   };
   return media(req, out);
 });
+
+/**
+ * Bala 9 · cuenta del comprador (ver account-proxy.ts). Van ANTES del proxy genérico: son las únicas rutas que tocan la cookie
+ * de sesión. El navegador recibe quién es; la sesión firmada no sale de este servidor.
+ */
+const secureOf = (req: express.Request) => req.secure || req.headers['x-forwarded-proto']?.toString().split(',')[0]?.trim() === 'https';
+const backoffice = (path: string, init: RequestInit & { session?: string | null } = {}) => {
+  const headers: Record<string, string> = { 'X-Store-Key': STORE_KEY, Accept: 'application/json', ...(init.headers as Record<string, string> ?? {}) };
+  if (init.session) headers['X-Buyer-Session'] = init.session;
+  return fetch(`${BACKOFFICE_URL}/api/tienda/v1/cuenta${path}`, { ...init, headers, signal: AbortSignal.timeout(8000) });
+};
+const noStore = (res: express.Response) => res.setHeader('Cache-Control', 'no-store');
+const sinSesion = (res: express.Response, req: express.Request) => { res.setHeader('Set-Cookie', clearedCookie(secureOf(req))); res.status(401).json({ code: 'UNAUTHORIZED', message: 'Entra con tu cuenta.', timestamp: new Date().toISOString() }); };
+const cuentaCaida = (res: express.Response) => res.status(503).json({ code: 'CATALOG_UNAVAILABLE', message: 'La tienda no pudo consultar el back-office.', timestamp: new Date().toISOString() });
+
+app.post('/__cuenta/entrar', express.json({ limit: '16kb' }), async (req, res) => {
+  noStore(res);
+  if (req.header('X-Tienda') !== '1') { res.status(403).json({ code: 'FORBIDDEN', message: 'Petición no permitida.', timestamp: new Date().toISOString() }); return; }
+  if (CONFIG_ERROR) { res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() }); return; }
+  if (limited(req, 'entrar', 12)) { res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() }); return; }
+  const credential = typeof req.body?.credential === 'string' ? req.body.credential : '';
+  try {
+    const up = await backoffice('/sesion', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ credential }) });
+    const body = await up.json().catch(() => null) as { sesion?: string } | null;
+    const comprador = up.ok ? buyerOf(body) : null;
+    if (!comprador || !looksLikeSession(body?.sesion)) { res.status(up.status === 404 ? 404 : 401).json({ code: 'UNAUTHORIZED', message: 'No pudimos verificar tu cuenta de Google. Inténtalo de nuevo.', timestamp: new Date().toISOString() }); return; }
+    res.setHeader('Set-Cookie', sessionCookie(body!.sesion!, secureOf(req)));
+    res.json({ comprador });
+  } catch { cuentaCaida(res); }
+});
+app.get('/__cuenta/yo', async (req, res) => {
+  noStore(res);
+  const session = readSessionCookie(req.headers.cookie);
+  // Sin cookie no es un error: es un visitante. 200 con `comprador: null`, para no llenar la consola de 401 en cada visita.
+  if (!session || CONFIG_ERROR) { res.json({ comprador: null }); return; }
+  try {
+    const up = await backoffice('', { session });
+    const body = await up.json().catch(() => null) as { sesion?: string } | null;
+    const comprador = up.ok ? buyerOf(body) : null;
+    if (!comprador) { if (up.status >= 500) { cuentaCaida(res); } else { sinSesion(res, req); } return; }
+    if (looksLikeSession(body?.sesion)) res.setHeader('Set-Cookie', sessionCookie(body!.sesion!, secureOf(req)));
+    res.json({ comprador });
+  } catch { cuentaCaida(res); }
+});
+app.get('/__cuenta/pedidos', async (req, res) => {
+  noStore(res);
+  const session = readSessionCookie(req.headers.cookie);
+  if (!session || CONFIG_ERROR) { res.status(401).json({ code: 'UNAUTHORIZED', message: 'Entra con tu cuenta.', timestamp: new Date().toISOString() }); return; }
+  try {
+    const up = await backoffice('/pedidos', { session });
+    if (up.status === 401 || up.status === 404) { sinSesion(res, req); return; }
+    if (!up.ok) { cuentaCaida(res); return; }
+    res.json(await up.json());
+  } catch { cuentaCaida(res); }
+});
+app.post('/__cuenta/salir', (req, res) => {
+  noStore(res);
+  if (req.header('X-Tienda') !== '1') { res.status(403).json({ code: 'FORBIDDEN', message: 'Petición no permitida.', timestamp: new Date().toISOString() }); return; }
+  res.setHeader('Set-Cookie', clearedCookie(secureOf(req))); res.status(204).end();
+});
+/** El identificador de cliente de Google de la tienda (público). Se pregunta al back-office y se recuerda 5 minutos; null = la tienda no tiene cuentas. */
+let googleClientId: { value: string | null; at: number } | null = null;
+async function googleClientIdNow(): Promise<string | null> {
+  if (CONFIG_ERROR) { return null; }
+  if (googleClientId && Date.now() - googleClientId.at < 5 * 60_000) { return googleClientId.value; }
+  try {
+    const up = await backoffice('/config');
+    const body = up.ok ? await up.json().catch(() => null) as { googleClientId?: string } | null : null;
+    if (up.ok || up.status === 404) { googleClientId = { value: typeof body?.googleClientId === 'string' ? body.googleClientId : null, at: Date.now() }; return googleClientId.value; }
+  } catch { /* se reintenta en la siguiente petición */ }
+  return googleClientId?.value ?? null;
+}
 
 /** Proxy GET hacia la API de tienda (ficha, listados, pedido y seguimiento por folio + contacto, PDF). Devuelve estado, Content-Type y cuerpo tal cual. */
 app.get('/api/tienda/{*splat}', async (req, res) => {
@@ -103,7 +176,7 @@ setInterval(() => { const now = Date.now(); for (const k of Object.keys(RATE)) i
 const STRIPE_PUBLISHABLE_KEY = process.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 /** Bala 13: la clave pública de Mercado Pago (`MP_PUBLIC_KEY`) tampoco es secreta; la usa el formulario de tarjeta en el navegador. */
 const MP_PUBLIC_KEY = process.env['MP_PUBLIC_KEY'] ?? '';
-app.get('/__config', (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY, mpPublicKey: MP_PUBLIC_KEY }); });
+app.get('/__config', async (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY, mpPublicKey: MP_PUBLIC_KEY, googleClientId: await googleClientIdNow() }); });
 app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: '64kb' }), async (req, res) => {
   if (!isWritable(req.path)) {
     res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
