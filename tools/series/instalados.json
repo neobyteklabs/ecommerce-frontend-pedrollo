@@ -135,6 +135,14 @@
   "sha256": "2d7001c85dcad38671de4f80b66c1d911fcaf00164832ff4ce7f058c9467c962",
   "slug": "dgblu"
  },
+ "serie-e1-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-e1-hero.webp",
+  "sha256": "7933867c26b7a04b00f0453fe2ef40d45fa3b6d41094068b76a37101fc4e80eb",
+  "slug": "e1"
+ },
  "serie-e2-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -142,6 +150,14 @@
   "origen": "serie-e2-hero.webp",
   "sha256": "9dc18dfb244d6c261fc1df8f42960fdb176a43b2f47acf4b65c6cc925cf78b2d",
   "slug": "e2"
+ },
+ "serie-easy-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-easy-hero.webp",
+  "sha256": "1471850350e88edbea1f2bd05543f681fe93637244e69f49da20f357698eef5b",
+  "slug": "easy"
  },
  "serie-easypress-hero": {
   "estado": "aprobado",
@@ -254,6 +270,14 @@
   "origen": "serie-jdw-hero.webp",
   "sha256": "74613cd30215a8c74e1a2bccacbe1c74326e5bc56b8877c8d550ba92344c4f97",
   "slug": "jdw"
+ },
+ "serie-jetm-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-jetm-hero.webp",
+  "sha256": "49875b99db210fc119949f2116ccddc69d5c5639cb1a951c49a9fae644170d37",
+  "slug": "jetm"
  },
  "serie-jsw-hero": {
   "estado": "aprobado",
