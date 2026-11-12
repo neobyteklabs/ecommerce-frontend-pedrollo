@@ -53,7 +53,7 @@ import { POLITICA } from '../../core/legal';
         <p>Si consideras que tu derecho a la protección de datos fue vulnerado, puedes acudir ante la autoridad federal competente en la materia.</p></section>
 
       <section class="card" id="cookies"><h2>Cookies y almacenamiento local</h2>
-        <p>La tienda usa almacenamiento local y cookies técnicas necesarias para funcionar: recordar tu carrito, tu código postal y tu pedido en curso. El formulario de pago carga componentes de {{ v.pasarela }}, que usa sus propias cookies para prevenir fraude. No usamos cookies de publicidad de terceros.</p></section>
+        <p>La tienda usa almacenamiento local y cookies técnicas necesarias para funcionar: recordar tu carrito, tu código postal y tu pedido en curso. También guarda en tu navegador un identificador al azar, que no dice quién eres, para saber cuántos visitantes hay en la tienda en un momento dado. El formulario de pago carga componentes de {{ v.pasarela }}, que usa sus propias cookies para prevenir fraude. No usamos cookies de publicidad de terceros.</p></section>
 
       <section class="card" id="seguridad"><h2>Seguridad y conservación</h2>
         <p>Mantenemos medidas administrativas, técnicas y físicas razonables para proteger tus datos contra daño, pérdida, alteración o acceso no autorizado. Los conservamos el tiempo necesario para las finalidades descritas y los plazos que exige la legislación fiscal y mercantil.</p>

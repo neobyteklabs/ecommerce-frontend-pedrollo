@@ -110,6 +110,21 @@ app.post('/__cuenta/salir', (req, res) => {
   if (req.header('X-Tienda') !== '1') { res.status(403).json({ code: 'FORBIDDEN', message: 'Petición no permitida.', timestamp: new Date().toISOString() }); return; }
   res.setHeader('Set-Cookie', clearedCookie(secureOf(req))); res.status(204).end();
 });
+/**
+ * Presencia (sección «Actividad» del portal): el navegador avisa «sigo aquí» y este servidor lo pasa al back-office con la llave
+ * de tienda. Si el visitante tiene cuenta lo decide ESTE servidor por la cookie de sesión, no el navegador. Siempre 204: la
+ * presencia nunca le falla a la página. El límite por IP es amplio a propósito: una oficina entera sale por la misma IP.
+ */
+app.post('/__latido', express.json({ limit: '1kb' }), (req, res) => {
+  noStore(res);
+  res.status(204).end();
+  const v = typeof req.body?.v === 'string' ? req.body.v : '';
+  if (CONFIG_ERROR || req.header('X-Tienda') !== '1' || !/^[a-f0-9]{32}$/.test(v) || limited(req, 'latido', 600)) { return; }
+  fetch(`${BACKOFFICE_URL}/api/tienda/v1/presencia`, {
+    method: 'POST', headers: { 'X-Store-Key': STORE_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ visitante: v, conCuenta: !!readSessionCookie(req.headers.cookie) }), signal: AbortSignal.timeout(4000),
+  }).catch(() => undefined);
+});
 /** El identificador de cliente de Google de la tienda (público). Se pregunta al back-office y se recuerda 5 minutos; null = la tienda no tiene cuentas. */
 let googleClientId: { value: string | null; at: number } | null = null;
 async function googleClientIdNow(): Promise<string | null> {
