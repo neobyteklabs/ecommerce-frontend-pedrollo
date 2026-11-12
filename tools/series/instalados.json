@@ -263,6 +263,30 @@
   "sha256": "ff027ebc714c390dcb73e7017e7e277de23ea343920bf95205fdd278e2f729f0",
   "slug": "jsw"
  },
+ "serie-kit-140pr-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-kit-140pr-hero.webp",
+  "sha256": "b5ae05f845d8755be160a7811b2035f49ae8c80ea6e712bb474997ccbf93b39c",
+  "slug": "kit-140pr"
+ },
+ "serie-kit-140ps-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-kit-140ps-hero.webp",
+  "sha256": "ee2feaf4c9b8d2b989a102d65e43b2245fef97487a2d85805b000e7f3040c702",
+  "slug": "kit-140ps"
+ },
+ "serie-kit-4sr-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-kit-4sr-hero.webp",
+  "sha256": "6fbd31194eaad97c81dd5980b4634eaf6e647b29c787e52276b3210db2fee831",
+  "slug": "kit-4sr"
+ },
  "serie-magnifica-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
