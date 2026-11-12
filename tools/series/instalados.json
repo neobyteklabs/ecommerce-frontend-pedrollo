@@ -39,12 +39,52 @@
   "sha256": "62dd69bdc0fef7b5092d2bc485d3603faf717fbf79fdfcb834baa6bd2e01b9d6",
   "slug": "4block"
  },
+ "serie-4pd-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4pd-construccion.webp",
+  "sha256": "afd1ece2f67ead978b31941ce96a02a1158ba7c93887b0690976d3c65e0b5c8a",
+  "slug": "4pd"
+ },
  "serie-4pd-hero": {
   "estado": "aprobado",
-  "fecha": "2026-11-11",
+  "fecha": "2026-11-12",
   "medidas": "2560x1440",
   "origen": "serie-4pd-hero.webp",
-  "sha256": "d0be1b1d371a50384c4c6e92e09eae56bf3a8694d2f5edf6aa0355b8802abac7",
+  "sha256": "03cca24265d99de8e8038500a6faf203e8c2e2da2cb3c3abe2ef47f84ea3f289",
+  "slug": "4pd"
+ },
+ "serie-4pd-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4pd-limites.webp",
+  "sha256": "f3d8f73c393a4213b3eea78b613dba4fc95c494a148852091042c1c643e098e8",
+  "slug": "4pd"
+ },
+ "serie-4pd-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4pd-modelos.webp",
+  "sha256": "eea97195f0a1708d86d9e71b31181ac3967ae8dbdd98a2e492c13111b3ef50b5",
+  "slug": "4pd"
+ },
+ "serie-4pd-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4pd-motor.webp",
+  "sha256": "d07a752aba6c872b8bec5b9b3dcfed96e55ee2e48ed0f0eca179e6185b0642ec",
+  "slug": "4pd"
+ },
+ "serie-4pd-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4pd-prestaciones.webp",
+  "sha256": "ddb6e8ca5370318a2c5d4b3ce79f8d60e15dbb8d596cea38d62adb223ea0743c",
   "slug": "4pd"
  },
  "serie-4sr-hero": {
@@ -247,6 +287,38 @@
   "sha256": "ca777e891c86da82573a93c9a8643799897b6425a47bdf3a0d1c1513f8c2d317",
   "slug": "hydrofresh-mr"
  },
+ "serie-hydrofresh-mr-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-hydrofresh-mr-limites.webp",
+  "sha256": "0b8d2c1a42c3d1b44a51ca4701012ebc312e77de4b65d8566335b8245b099fcf",
+  "slug": "hydrofresh-mr"
+ },
+ "serie-hydrofresh-mr-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-hydrofresh-mr-modelos.webp",
+  "sha256": "45fbc99df199447b259e0d432af4aa68fa6f033de491b93c68ef020da7c196a2",
+  "slug": "hydrofresh-mr"
+ },
+ "serie-hydrofresh-mr-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-hydrofresh-mr-motor.webp",
+  "sha256": "8d47001955738980a94d5a3015a448197ae9fbea9b77a4b54431eb2c3776be78",
+  "slug": "hydrofresh-mr"
+ },
+ "serie-hydrofresh-mr-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-hydrofresh-mr-prestaciones.webp",
+  "sha256": "31e568f9dd656cf52045408d87478a75cbc0925f71e996e42cfc41b952b46b66",
+  "slug": "hydrofresh-mr"
+ },
  "serie-jcr-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -305,10 +377,18 @@
  },
  "serie-kit-4sr-hero": {
   "estado": "aprobado",
-  "fecha": "2026-11-11",
+  "fecha": "2026-11-12",
   "medidas": "2560x1440",
   "origen": "serie-kit-4sr-hero.webp",
-  "sha256": "6fbd31194eaad97c81dd5980b4634eaf6e647b29c787e52276b3210db2fee831",
+  "sha256": "58a12562733cd172a4348f8faf9a1894a78525dce280a1827e84658f8a23ffdf",
+  "slug": "kit-4sr"
+ },
+ "serie-kit-4sr-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-kit-4sr-modelos.webp",
+  "sha256": "274982ef22f42c750ef47125ff7c67f6569d80287b66c305b6db3e38b298054a",
   "slug": "kit-4sr"
  },
  "serie-magnifica-hero": {
