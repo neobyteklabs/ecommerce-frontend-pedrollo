@@ -15,7 +15,7 @@ export interface StorefrontPrice {
   before?: number; promotion?: { label: string; until: string };
 }
 /** Disponibilidad (bala 4): dos estados; `carrito` = hay existencia en algún CEDIS, `cotizar` = no hay, se pide cotización. */
-export interface StorefrontAvailability { state: 'carrito' | 'cotizar'; }
+export interface StorefrontAvailability { state: 'carrito' | 'cotizar'; reason?: 'solo-cotizacion' | 'sin-existencia'; }
 /** Envío por código postal (bala 4): el back-office resuelve por línea de qué CEDIS sale y cuánto tarda; nunca bloquea. */
 export interface ShippingLine { slug: string; estado: 'carrito' | 'cotizar'; parcial: boolean; cedis: string | null; dias: number | null; costoEnvio: number | null; solicitado: number; disponible: number; }
 export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; }

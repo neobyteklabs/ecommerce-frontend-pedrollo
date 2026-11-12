@@ -66,7 +66,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
         @else if (price() != null) { <bsv-price [total]="price()!" /> }
         @else { <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Pendiente de la lista de precios BSV. Mientras tanto, cotiza con un asesor.</span>
           @if (apiDown()) { <span class="badge badge-warning no-dot" style="margin-top:6px">sin conexión con la tienda</span> }</div> }
-        <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="avail() === 'carrito' ? 'truck' : 'phone'" style="--icon:20px" /> {{ availLabel(avail()) }}</div>
+        <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="avail() === 'carrito' ? 'truck' : 'phone'" style="--icon:20px" /> {{ availLabel(avail(), availReason()) }}</div>
         @if (price() != null && avail() === 'carrito') {
           <div class="row-qty"><label class="label">Cantidad</label><bsv-qty [(value)]="qty" /></div>
           <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="adding()" (click)="add()"><bsv-icon name="cart" style="--icon:20px" /> Agregar al carrito</button>
@@ -137,6 +137,7 @@ export class ProductPage {
   apiDown = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return !!e && e.status !== 404; });
   /** Disponibilidad real (bala 4): `carrito` o `cotizar`; sin respuesta, se muestra «por confirmar» y se ofrece cotizar. */
   avail = computed(() => this.remote.hasValue() ? (this.remote.value()?.availability?.state ?? null) : null);
+  availReason = computed(() => this.remote.hasValue() ? (this.remote.value()?.availability?.reason ?? null) : null);
   quoting = signal(false);
   hasStory = computed(() => !!SERIES[this.p()?.serie ?? '']);
   series = computed(() => seriesBySlug(this.p()?.serie ?? ''));

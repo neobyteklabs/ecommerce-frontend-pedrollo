@@ -26,7 +26,10 @@ const titleCase = (s: string) => s.toLowerCase().replace(/(^|\s|\()([a-záéíó
 
 export const PRODUCTS: Product[] = RESOURCES.flatMap(f => f.series.flatMap(s => s.modelos.map(m => toProduct(f, s, m))));
 
-export const availLabel = (a: Availability | null) => a === 'carrito' ? 'En existencia' : a === 'cotizar' ? 'Sobre pedido · cotiza con un asesor' : 'Disponibilidad por confirmar';
+/** `reason` viene solo en la ficha (bala 14): un equipo de venta por cotización puede tener existencia, así que no dice «sobre pedido». */
+export const availLabel = (a: Availability | null, reason?: string | null) => a === 'carrito' ? 'En existencia'
+  : a === 'cotizar' ? (reason === 'solo-cotizacion' ? 'Venta por cotización · un asesor confirma envío y entrega' : 'Sobre pedido · cotiza con un asesor')
+  : 'Disponibilidad por confirmar';
 export const mxn = (n: number | null | undefined) => n == null ? 'Por confirmar' : '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const IVA = 0.16;
 export const specLine = (p: Product) => p.validated ? [p.hp != null ? `${p.hp} HP` : null, p.kw != null ? `${p.kw} kW` : null, p.phase, p.voltages.length ? p.voltages.join(' / ') : null].filter(Boolean).join(' · ') : 'Especificaciones pendientes de ficha 60 Hz';
