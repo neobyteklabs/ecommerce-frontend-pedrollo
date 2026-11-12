@@ -95,6 +95,14 @@
   "sha256": "0e7f52be6c7d64eec3de2190dc9706352ffb2774a4d09f9e47eecf053e9ce911",
   "slug": "ck"
  },
+ "serie-ckrm-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-ckrm-hero.webp",
+  "sha256": "0561a0bda4288ba70a3158821726bc91501e45c4cbb30240f3ad0c051f6cb30c",
+  "slug": "ckrm"
+ },
  "serie-cp-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-10",
@@ -110,6 +118,14 @@
   "origen": "serie-d-hero.webp",
   "sha256": "d4ec4138ab5824d070817024e931a51f74f1d07d10d8f8e3dc497a862953c1dc",
   "slug": "d"
+ },
+ "serie-df-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-df-hero.webp",
+  "sha256": "02576919404f20e68a3b820c2e9e5a7b5a6ae3ba4db77e177c0f9237a93486e0",
+  "slug": "df"
  },
  "serie-dgblu-hero": {
   "estado": "aprobado",
@@ -222,6 +238,14 @@
   "origen": "serie-jcr-hero.webp",
   "sha256": "14aaaf5472628418c1c35b85ae6459cd7230f9ede20114fde7cb446ff3d7eb98",
   "slug": "jcr"
+ },
+ "serie-jcrm-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-jcrm-hero.webp",
+  "sha256": "83e9e5fc4ca921400ff18d77ad9fd019fc8bb56c10d8ab4c4aa95d7944ac2ffb",
+  "slug": "jcrm"
  },
  "serie-jdw-hero": {
   "estado": "aprobado",
@@ -431,6 +455,14 @@
   "sha256": "3f879555292cdf43b37aadc1e4f5d2b5025a077f860e744ca9cd1c02abe079fd",
   "slug": "steadypres"
  },
+ "serie-tig-inox-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-tig-inox-hero.webp",
+  "sha256": "6af33b6b9a232150311c043d4c17b8c69af4e0d72fdb4b610feb976e25463c6b",
+  "slug": "tig-inox"
+ },
  "serie-top-floor-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -446,6 +478,14 @@
   "origen": "serie-top-hero.webp",
   "sha256": "cbed5d32b89a0c8b4c66c1e1e2b6c5119b390f2d5f1c08a3d6bd7a4900a3a915",
   "slug": "top"
+ },
+ "serie-top-multi-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-top-multi-hero.webp",
+  "sha256": "d3d50ac90e5318183674b96d49bf2539859a72b14a16ce71fb21c5b41ca91197",
+  "slug": "top-multi"
  },
  "serie-top-multi-tech-hero": {
   "estado": "aprobado",
@@ -494,6 +534,14 @@
   "origen": "serie-vx-st-hero.webp",
   "sha256": "f0124f0d7c75c8380f7f8d20d05f921a582c2e545222ba9d24ad8796708983b7",
   "slug": "vx-st"
+ },
+ "serie-vxc-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-vxc-hero.webp",
+  "sha256": "5911684974b9a6fd91e1762efcac5df5e9252c223cb29aaa42bdf548848899aa",
+  "slug": "vxc"
  },
  "serie-zx-hero": {
   "estado": "aprobado",
