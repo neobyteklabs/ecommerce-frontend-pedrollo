@@ -103,12 +103,52 @@
   "sha256": "ad14296e84a37b9768ae93cb251ff9721598ba76933fe25a0c964faee0aaf918",
   "slug": "4sr-n"
  },
+ "serie-4sr-s-construccion": {
+  "estado": "pendiente",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4sr-s-construccion.webp",
+  "sha256": "f2a8def06628fce617c85e1bc8762cd54ea25fd176cef6faf3ce99df5516628e",
+  "slug": "4sr-s"
+ },
  "serie-4sr-s-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-4sr-s-hero.webp",
   "sha256": "87211a076145197268801490947bb3280382b75dd05ea48c74abef446e58fa69",
+  "slug": "4sr-s"
+ },
+ "serie-4sr-s-limites": {
+  "estado": "pendiente",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4sr-s-limites.webp",
+  "sha256": "d4e1d4d8dc9a59c8d53ac14da121d0aa9c1ad15808a7907098935abfa98803f4",
+  "slug": "4sr-s"
+ },
+ "serie-4sr-s-modelos": {
+  "estado": "pendiente",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4sr-s-modelos.webp",
+  "sha256": "f3343939a97c914ad512c699d4e4ac314bcdad5ce1bf8ec91ae71b34c7e01c5d",
+  "slug": "4sr-s"
+ },
+ "serie-4sr-s-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4sr-s-motor.webp",
+  "sha256": "a35cec890a96b07d1bb94ffb2113a7e5d7239eafcf5ae29226bbe1deccaf56bb",
+  "slug": "4sr-s"
+ },
+ "serie-4sr-s-prestaciones": {
+  "estado": "pendiente",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-4sr-s-prestaciones.webp",
+  "sha256": "efc1b732efbfd391a7abf41c8f046ea30d2ad0bcc3b7b7b38c944f86495961da",
   "slug": "4sr-s"
  },
  "serie-6pd-hero": {
@@ -143,12 +183,52 @@
   "sha256": "0561a0bda4288ba70a3158821726bc91501e45c4cbb30240f3ad0c051f6cb30c",
   "slug": "ckrm"
  },
+ "serie-cp-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-cp-construccion.webp",
+  "sha256": "8b5afa0ac017ef18f15b13a3efd88fd856d0498a752047617514c54fbd92fb77",
+  "slug": "cp"
+ },
  "serie-cp-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-10",
   "medidas": "2560x1440",
   "origen": "serie-cp-hero.webp",
   "sha256": "fb98c6fede3d7f9dad1ccb523d9282085a36d6ed107f566b5cf96a6544da0a57",
+  "slug": "cp"
+ },
+ "serie-cp-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-cp-limites.webp",
+  "sha256": "1db69502147bd34b096c54ceae7f86e752769a2763609170f6333d5919821034",
+  "slug": "cp"
+ },
+ "serie-cp-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-cp-modelos.webp",
+  "sha256": "0a98f826e63b71bd207e6a53432bc8edd85fcca7f869097842f98347380edb1f",
+  "slug": "cp"
+ },
+ "serie-cp-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-cp-motor.webp",
+  "sha256": "b7ee29f45978ed3f4a08f43d448071c5a8cd8ab1bfc183bfd1cdd0a5f5f20526",
+  "slug": "cp"
+ },
+ "serie-cp-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-cp-prestaciones.webp",
+  "sha256": "0cef05c3c5e91d358345f556c5f1bc585a83bd89eb007582cd62c6d473c752c0",
   "slug": "cp"
  },
  "serie-d-hero": {
@@ -365,6 +445,14 @@
   "medidas": "2560x1440",
   "origen": "serie-kit-140pr-hero.webp",
   "sha256": "b5ae05f845d8755be160a7811b2035f49ae8c80ea6e712bb474997ccbf93b39c",
+  "slug": "kit-140pr"
+ },
+ "serie-kit-140pr-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-12",
+  "medidas": "1600x1200",
+  "origen": "serie-kit-140pr-modelos.webp",
+  "sha256": "943537d7262dc58dc32190b7eab89d88c029f1abb1d30a2c6b84fd418dcc61f7",
   "slug": "kit-140pr"
  },
  "serie-kit-140ps-hero": {
