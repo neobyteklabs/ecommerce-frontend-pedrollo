@@ -20,6 +20,9 @@ export const routes: Routes = [
     { path: 'pedidos/:id', loadComponent: () => import('./features/account/order-detail').then(m => m.OrderDetail), title: 'Detalle del pedido' },
     { path: 'devolucion', loadComponent: () => import('./features/account/return').then(m => m.Return), title: 'Devoluciones' },
   ] },
-  { path: 'legal', loadComponent: () => import('./features/legal/legal').then(m => m.Legal), title: 'Ayuda y legales' },
+  { path: 'terminos', loadComponent: () => import('./features/legal/terms').then(m => m.Terms), title: 'Términos y condiciones' },
+  { path: 'privacidad', loadComponent: () => import('./features/legal/privacy').then(m => m.Privacy), title: 'Aviso de privacidad' },
+  { path: 'contacto', loadComponent: () => import('./features/legal/legal').then(m => m.Legal), title: 'Contacto' },
+  { path: 'legal', pathMatch: 'full', redirectTo: 'terminos' },
   { path: '**', redirectTo: '' },
 ];
