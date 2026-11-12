@@ -335,6 +335,14 @@
   "sha256": "ace7837f3aab8a0fcbb4c8b48cf3d01dc1643ee4451ee864e9e905d0f4cb1aba",
   "slug": "mc"
  },
+ "serie-membranas-hero": {
+  "estado": "aprobado",
+  "fecha": "2026-11-11",
+  "medidas": "2560x1440",
+  "origen": "serie-membranas-hero.webp",
+  "sha256": "1cea0e5fcfcf3b6b5677ccfe6a44ef231ebc834fcb5bd18ff19aa4cd60a27822",
+  "slug": "membranas"
+ },
  "serie-mk-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
