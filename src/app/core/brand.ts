@@ -23,6 +23,10 @@ export const sellerLine = (v: Seller) => v.figura === 'persona-fisica'
 export const BRAND = new InjectionToken<Brand>('BRAND', {
   providedIn: 'root',
   factory: () => ({ id: 'pedrollo', name: 'Pedrollo', tagline: 'Distribuidor autorizado en México', logo: 'brand/dual-horizontal.svg', logoCompact: 'brand/dual-horizontal-limpio.svg', logoOnDark: 'brand/dual-horizontal-blanco.svg',
-    // PENDIENTE DE CONFIRMAR con la constancia de situación fiscal: nombre exacto, RFC (opcional mostrarlo) y domicilio.
+    // Confirmado contra la constancia de situación fiscal de agosto de 2026 (recibida el 12-nov): el nombre es exacto, el
+    // contribuyente está ACTIVO y tributa como persona física con actividades empresariales y profesionales.
+    // `rfc` se deja en null A PROPÓSITO: es el RFC personal de una persona física y publicarlo en la tienda no es obligatorio;
+    // va en la factura. `domicilio` es la localidad, no la calle: el domicilio fiscal es personal, y la dirección que se
+    // publica para el comprador es la de la matriz (`core/legal.ts`). Cambiar cualquiera de los dos es decisión de Manuel.
     vendedor: { nombreComercial: 'Bombas y Sistemas Vega', siglas: 'BSV', razonSocial: 'Manuel Dioney Vega Cruz', figura: 'persona-fisica', rfc: null, domicilio: 'Tlalnepantla de Baz, Estado de México', pasarela: 'Mercado Pago' } }),
 });
