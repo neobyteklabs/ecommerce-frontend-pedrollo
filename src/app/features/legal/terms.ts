@@ -55,17 +55,18 @@ import { POLITICA } from '../../core/legal';
 
       <section class="card" id="devoluciones" data-component="ReturnPolicy"><h2>6. Devoluciones y cancelaciones</h2>
         <h3 style="font-size:var(--text-lg)">Cancelar un pedido</h3>
-        <p>Puedes cancelar un pedido pagado mientras no haya salido a entrega y te reembolsamos el total. Si ya salió, aplica lo que sigue.</p>
+        <p>Puedes cancelar un pedido pagado mientras no haya salido a entrega. La cancelación tiene un <strong>cargo del {{ c.cargoPct }} % del total del pedido</strong> por gastos de papeleo y documentación; te reembolsamos el resto. Si el pedido ya salió, aplica lo que sigue.</p>
         <h3 style="font-size:var(--text-lg)">Devolver un producto</h3>
         <p>Tienes <strong>{{ d.plazoDias }} días naturales</strong> desde que lo recibes para solicitar la devolución, con estas condiciones:</p>
         <ul><li>el equipo está <strong>sin instalar y sin uso</strong>;</li>
           <li>conserva su empaque original, accesorios, manuales y póliza de garantía;</li>
-          <li>presentas tu número de pedido.</li></ul>
+          <li>presentas tu número de pedido;</li>
+          <li>si el motivo es una imperfección o un defecto, adjuntas evidencia (fotografías o video) donde se aprecie.</li></ul>
         <p><strong>No se aceptan en devolución</strong> los equipos que ya fueron instalados o puestos en operación, ni los que se surtieron sobre pedido especial o con una configuración hecha a tu medida mediante cotización, salvo que tengan un defecto de fábrica (en ese caso aplica la garantía).</p>
         <h3 style="font-size:var(--text-lg)">Cómo solicitarla</h3>
-        <p>Escríbenos a <a [href]="'mailto:' + p.correoVentas">{{ p.correoVentas }}</a> o por <a [href]="p.whatsapp" rel="noopener" target="_blank">WhatsApp</a> con tu número de pedido, el motivo y fotografías del equipo y su empaque. Te respondemos con las instrucciones y la dirección de entrega.</p>
+        <p>Escríbenos a <a [href]="'mailto:' + p.correoVentas">{{ p.correoVentas }}</a> o por <a [href]="p.whatsapp" rel="noopener" target="_blank">WhatsApp</a> con tu número de pedido, el motivo y la evidencia: fotografías o video del equipo, de su empaque y de la imperfección que reportas. Sin evidencia no podemos dar trámite a la solicitud. Te respondemos con las instrucciones y la dirección de entrega.</p>
         <h3 style="font-size:var(--text-lg)">Quién paga el envío de regreso</h3>
-        <p>Si el producto llegó defectuoso, dañado o no es el que pediste, el envío de regreso corre por nuestra cuenta. Si la devolución es por otro motivo (por ejemplo, ya no lo necesitas o elegiste un modelo que no era), el envío de regreso lo cubres tú.</p>
+        <p>El embarque de regreso corre por tu cuenta: tú contratas y pagas la paquetería o el flete hasta la dirección que te indiquemos, y el equipo viaja bajo tu responsabilidad hasta que lo recibimos.</p>
         <h3 style="font-size:var(--text-lg)">Reembolso</h3>
         <p>Recibido el equipo, lo revisamos y, si cumple las condiciones, te reembolsamos al mismo medio con el que pagaste dentro de los {{ d.reembolsoDiasHabiles }} días hábiles siguientes. El tiempo en que tu banco lo refleja depende de él. Si prefieres cambiarlo por otro modelo, un asesor te ayuda y solo se ajusta la diferencia.</p>
         <p class="muted small">Lo anterior no limita los derechos que la Ley Federal de Protección al Consumidor te reconoce en compras a distancia.</p></section>
@@ -91,4 +92,4 @@ import { POLITICA } from '../../core/legal';
       <p class="muted small">¿Dudas sobre estos términos? Escríbenos a <a [href]="'mailto:' + p.correoVentas">{{ p.correoVentas }}</a> o llámanos al <a [href]="'tel:' + p.telefono.tel">{{ p.telefono.texto }}</a>.</p>
     </article></div>`,
 })
-export class Terms { brand = inject(BRAND); v = this.brand.vendedor; quien = sellerLine(this.v); p = POLITICA; d = POLITICA.devolucion; }
+export class Terms { brand = inject(BRAND); v = this.brand.vendedor; quien = sellerLine(this.v); p = POLITICA; d = POLITICA.devolucion; c = POLITICA.cancelacion; }

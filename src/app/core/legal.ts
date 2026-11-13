@@ -16,6 +16,10 @@ export const POLITICA = {
     /** Horas para reportar un paquete dañado o incompleto. */
     reporteDanoHoras: 48,
   },
+  cancelacion: {
+    /** % del total del pedido que se retiene al cancelar, por papeleo y documentación (definido por Manuel, 12-nov-2026). */
+    cargoPct: 4,
+  },
   /** Minutos que el pedido conserva su reserva de inventario mientras se paga. */
   reservaMinutos: 30,
   /** A dónde se escriben las solicitudes sobre datos personales (el mismo buzón del aviso de privacidad del grupo). */
