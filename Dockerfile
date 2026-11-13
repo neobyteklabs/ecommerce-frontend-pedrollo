@@ -21,8 +21,9 @@ FROM node:24-alpine
 WORKDIR /app
 ENV NODE_ENV=production PORT=4000
 
-# server/ es el proceso; browser/ son los estaticos que sirve (incluye public/media,
-# que hoy es casi todo el peso de la imagen).
+# server/ es el proceso; browser/ son los estaticos que sirve. public/media NO entra
+# (.dockerignore): en produccion vive en S3 y el CDN lo sirve en /media/*. Una
+# imagen corrida sin CDN delante responde 404 en esas rutas.
 COPY --chown=node:node dist/bsv-tienda-angular/server ./server
 COPY --chown=node:node dist/bsv-tienda-angular/browser ./browser
 

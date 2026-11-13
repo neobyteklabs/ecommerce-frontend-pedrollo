@@ -2,3 +2,5 @@
 *
 !dist/bsv-tienda-angular/server
 !dist/bsv-tienda-angular/browser
+# public/media (~310 MB) va a S3 desde el workflow de despliegue; el CDN lo sirve en /media/*.
+dist/bsv-tienda-angular/browser/media

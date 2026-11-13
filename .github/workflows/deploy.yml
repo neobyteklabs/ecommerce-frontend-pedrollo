@@ -1,0 +1,121 @@
+# ============================================================
+# Tienda Pedrollo: test -> ng build -> media a S3 -> imagen arm64 en ECR ->
+# redespliegue por SSM.
+#
+# Mismo patron que el CRM: OIDC, sin llaves guardadas. `master` ES produccion:
+# un push despliega. El trabajo diario va en `develop` (gitflow).
+#
+# Los archivos propios de la tienda (public/media, ~310 MB) NO viajan en la
+# imagen (.dockerignore): se sincronizan al bucket y el CDN los sirve en
+# /media/*. Datos de _docs/PLAN-INFRA-ecommerce.md §16.1 y §22.
+# ============================================================
+name: Desplegar tienda Pedrollo
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  # Dos despliegues simultaneos dejarian la instancia en un estado indefinido.
+  group: deploy-tienda-pedrollo
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: mx-central-1
+  ECR_REPO: 169134209283.dkr.ecr.mx-central-1.amazonaws.com/bsv-cotizador-tienda-pedrollo
+  MEDIA_BUCKET: bsv-cotizador-tienda-media
+  # La caja del ecommerce, NO la del CRM.
+  INSTANCE_ID: i-0183193ffed8d874a
+  REMOTE_UP_SCRIPT: /usr/local/bin/bsv-tienda-up.sh
+  # Provisional: el nombre por omision de la distribucion. Cambia a
+  # https://pedrollobombas.com en el corte del dominio.
+  SMOKE_URL: https://d3t4kv7n9msmtr.cloudfront.net/robots.txt
+
+permissions:
+  id-token: write # imprescindible para OIDC
+  contents: read
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+
+      - run: npm ci
+      # El gate corre aqui tambien, no solo en CI.
+      - run: npm test -- --watch=false
+      - run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::169134209283:role/bsv-cotizador-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sincronizar la media propia a S3
+        # ANTES de la imagen: cuando el Node nuevo empiece a responder, lo que
+        # referencia ya debe existir en el bucket.
+        #
+        # La distribucion no usa origin_path, asi que /media/x se busca en la
+        # key media/x. SIN --delete: una pestana abierta durante el despliegue
+        # sigue pidiendo lo viejo. --size-only porque cada build reescribe las
+        # fechas y sin el se subirian los 310 MB cada vez.
+        #
+        # Los nombres no llevan huella, asi que el cache es de un dia, no de un
+        # anio: una foto corregida con el mismo nombre tarda eso en verse.
+        run: |
+          aws s3 sync dist/bsv-tienda-angular/browser/media "s3://$MEDIA_BUCKET/media/" \
+            --size-only --cache-control "public,max-age=86400"
+
+      - uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Construir y publicar la imagen
+        run: |
+          # El tag es el sha del commit: el rollback necesita un tag inmutable.
+          # Sin RUN en el Dockerfile no hace falta qemu.
+          docker buildx build --platform linux/arm64 \
+            -t "$ECR_REPO:$GITHUB_SHA" -t "$ECR_REPO:latest" --push .
+
+      - name: Redesplegar en la instancia
+        run: |
+          CMD=$(aws ssm send-command \
+            --instance-ids "$INSTANCE_ID" \
+            --document-name AWS-RunShellScript \
+            --timeout-seconds 1800 \
+            --parameters "commands=[\"sudo $REMOTE_UP_SCRIPT $GITHUB_SHA\"]" \
+            --query Command.CommandId --output text)
+          echo "Comando SSM: $CMD"
+
+          for _ in $(seq 1 90); do
+            sleep 10
+            ESTADO=$(aws ssm get-command-invocation --command-id "$CMD" \
+              --instance-id "$INSTANCE_ID" --query Status --output text 2>/dev/null || echo Pending)
+            case "$ESTADO" in
+              Success) echo "Despliegue correcto"; exit 0 ;;
+              Failed|Cancelled|TimedOut)
+                echo "::error::El despliegue fallo con estado $ESTADO"
+                aws ssm get-command-invocation --command-id "$CMD" \
+                  --instance-id "$INSTANCE_ID" --query StandardOutputContent --output text | tail -40
+                aws ssm get-command-invocation --command-id "$CMD" \
+                  --instance-id "$INSTANCE_ID" --query StandardErrorContent --output text
+                exit 1 ;;
+            esac
+          done
+          echo "::error::El despliegue no concluyo en 15 minutos"
+          exit 1
+
+      - name: Comprobacion de humo
+        run: |
+          # robots.txt lo genera el Node: prueba CDN -> Caddy -> SSR sin depender
+          # del backend ni del catalogo.
+          for _ in $(seq 1 6); do
+            curl -fsS "$SMOKE_URL" | grep -qi user-agent && { echo "Tienda OK"; exit 0; }
+            sleep 10
+          done
+          echo "::error::$SMOKE_URL no respondio"
+          exit 1
