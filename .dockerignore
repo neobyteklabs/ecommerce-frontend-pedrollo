@@ -1,0 +1,4 @@
+# Solo el build entra a la imagen.
+*
+!dist/bsv-tienda-angular/server
+!dist/bsv-tienda-angular/browser
