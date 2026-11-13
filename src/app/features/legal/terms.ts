@@ -55,7 +55,7 @@ import { POLITICA } from '../../core/legal';
 
       <section class="card" id="devoluciones" data-component="ReturnPolicy"><h2>6. Devoluciones y cancelaciones</h2>
         <h3 style="font-size:var(--text-lg)">Cancelar un pedido</h3>
-        <p>Puedes cancelar un pedido pagado mientras no haya salido a entrega. La cancelación tiene un <strong>cargo del {{ c.cargoPct }} % del total del pedido</strong> por gastos de papeleo y documentación; te reembolsamos el resto. Si el pedido ya salió, aplica lo que sigue.</p>
+        <p>Puedes cancelar un pedido pagado mientras no haya salido a entrega. La cancelación tiene un <strong>cargo del {{ c.cargoPct }} % del importe de los productos</strong> por gastos de papeleo y documentación. El cargo no se calcula sobre el envío: como el pedido no salió, el envío que pagaste se te reembolsa completo, junto con el resto del importe. Si el pedido ya salió, aplica lo que sigue.</p>
         <h3 style="font-size:var(--text-lg)">Devolver un producto</h3>
         <p>Tienes <strong>{{ d.plazoDias }} días naturales</strong> desde que lo recibes para solicitar la devolución, con estas condiciones:</p>
         <ul><li>el equipo está <strong>sin instalar y sin uso</strong>;</li>

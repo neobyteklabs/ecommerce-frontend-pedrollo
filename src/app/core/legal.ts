@@ -17,7 +17,7 @@ export const POLITICA = {
     reporteDanoHoras: 48,
   },
   cancelacion: {
-    /** % del total del pedido que se retiene al cancelar, por papeleo y documentación (definido por Manuel, 12-nov-2026). */
+    /** % del importe de los PRODUCTOS (no del envío) que se retiene al cancelar, por papeleo y documentación (definido por Manuel, 12-nov-2026). */
     cargoPct: 4,
   },
   /** Minutos que el pedido conserva su reserva de inventario mientras se paga. */
