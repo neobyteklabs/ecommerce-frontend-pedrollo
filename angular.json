@@ -31,7 +31,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["localhost", "127.0.0.1", "192.168.68.103", "*.trycloudflare.com", "pedrollobombas.com", "www.pedrollobombas.com"]
+              "allowedHosts": ["localhost", "127.0.0.1", "192.168.68.103", "*.trycloudflare.com", "pedrollobombas.com", "www.pedrollobombas.com", "test.pedrollobombas.com"]
             },
             "ssr": {
               "entry": "src/server.ts"
