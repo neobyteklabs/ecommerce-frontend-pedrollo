@@ -16,7 +16,7 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
   @if (!cart.lines().length) {
     <h1 style="font-size:var(--text-2xl)">Tu carrito</h1>
     <bsv-empty icon="cart" title="Tu carrito está vacío" data-component="EmptyState/Carrito">Agrega bombas, motores o refacciones. Los precios incluyen IVA y la factura se solicita en línea con el número de tu pedido.
-      <ng-container actions><a class="btn btn-primary" routerLink="/categoria/centrifugas">Ver catálogo</a><a class="btn btn-ghost" routerLink="/cuenta/pedidos">Ver mis pedidos</a></ng-container></bsv-empty>
+      <ng-container actions><a class="btn btn-primary" routerLink="/catalogo">Ver catálogo</a><a class="btn btn-ghost" routerLink="/cuenta/pedidos">Ver mis pedidos</a></ng-container></bsv-empty>
   } @else {
     <h1 style="font-size:var(--text-2xl)">Tu carrito <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ cart.count() }} {{ cart.count() === 1 ? 'artículo' : 'artículos' }}</span></h1>
     @if (cart.changed().length) {
@@ -37,13 +37,13 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
                 @if (s.estado === 'carrito' && !s.parcial) { <div class="small" style="color:var(--color-success)"><bsv-icon name="truck" style="--icon:16px;vertical-align:-3px" /> En existencia · entrega estimada {{ s.dias }} {{ s.dias === 1 ? 'día' : 'días' }}</div> }
                 @else if (s.estado === 'carrito' && s.parcial) { <div class="small" style="color:var(--color-warning)"><bsv-icon name="alert" style="--icon:16px;vertical-align:-3px" /> Solo {{ s.disponible }} de {{ s.solicitado }} en existencia ({{ s.dias }} días); el resto sobre pedido</div> }
                 @else { <div class="small muted"><bsv-icon name="phone" style="--icon:16px;vertical-align:-3px" /> Sin existencia: por cotizar</div>
-                  @if (quoting() === l.id) { <bsv-quote-form style="margin-top:8px" [slug]="l.id" [model]="p.model" [initialQty]="l.qty" [initialCp]="cart.cp()" (cancel)="quoting.set(null)" (sent)="quoting.set(null); toast.show('Cotización ' + $event + ' enviada', 'success')" /> }
+                  @if (quoting() === l.id) { <bsv-quote-form style="margin-top:8px" [slug]="l.id" [model]="p.model" [initialQty]="l.qty" [initialCp]="cart.cp()" (cancel)="quoting.set(null)" (sent)="toast.show('Cotización ' + $event + ' enviada', 'success')" /> }
                   @else { <button class="btn btn-secondary btn-sm" type="button" style="margin-top:6px" (click)="quoting.set(l.id)">Cotizar esta línea</button> } }
               }
             </div>
             <div class="line-actions"><bsv-qty [value]="l.qty" (valueChange)="cart.setQty(l.id, $event)" /><span class="line-total num" style="min-width:110px">{{ s?.estado === 'cotizar' || cart.unitPrice(l) == null ? 'Por cotizar' : mxn(cart.unitPrice(l)! * l.qty) }}</span><button class="icon-btn" type="button" [attr.aria-label]="'Quitar ' + p.model" (click)="cart.remove(l.id); toast.show(p.model + ' eliminado')"><bsv-icon name="trash" /></button></div>
           </div> }
-        <div style="padding:16px 0"><a routerLink="/categoria/centrifugas"><bsv-icon name="arrowLeft" style="--icon:18px;vertical-align:-3px" /> Seguir comprando</a></div>
+        <div style="padding:16px 0"><a routerLink="/catalogo"><bsv-icon name="arrowLeft" style="--icon:18px;vertical-align:-3px" /> Seguir comprando</a></div>
       </div>
       <aside class="card summary" data-component="OrderSummary">
         <h3>Resumen</h3>

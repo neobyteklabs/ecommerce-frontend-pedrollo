@@ -15,12 +15,14 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
 
 /** Categoría = familia del catálogo. Desde la bala F1 lista, filtra y ordena desde la API de tienda; los filtros
  *  activos viajan en la URL (?serie=&hp=&tension=&fase=&orden=) para que una búsqueda filtrada se pueda compartir. */
+import { NotFound } from '../errors/not-found';
 @Component({
-  selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot, SeriesRail],
+  selector: 'bsv-category', imports: [RouterLink, Icon, ProductCard, ProductSkeleton, Empty, Reveal, ImgSlot, SeriesRail, NotFound],
   host: { class: 'container block', 'data-page': 'Categoria' },
   template: `
+  @if (!known()) { <bsv-not-found titulo="No encontramos esa categoría" detalle="No hay una familia con ese nombre. Recorre el catálogo completo o busca por modelo." /> } @else {
   @if (carrusel()) { <bsv-series-rail [series]="seriesList()" [titulo]="'Series de ' + cat().name" [kicker]="cat().name" [bleed]="true" /> }
-  <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/categoria/centrifugas">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
+  <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a routerLink="/catalogo">Catálogo</a></li><li aria-current="page">{{ cat().name }}</li></ol></nav>
   @if (banner(); as b) {
   <div class="family-hero" data-component="FamilyHero"><bsv-img-slot [slot]="'categoria-' + slug()" [banner]="b" cls="banner" [scene]="true" [eager]="true" style="aspect-ratio:4/1;min-height:0;width:100%" /></div>
   <h1 style="font-size:var(--text-2xl);margin-top:16px">{{ cat().name }} <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} modelos</span></h1>
@@ -75,7 +77,8 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
       @if (hasMore()) { <div style="display:flex;justify-content:center;margin-top:24px"><button class="btn btn-secondary" type="button" [class.is-loading]="list.isLoading()" (click)="pages.set(pages() + 1)">Ver más ({{ total() - items().length }} restantes)</button></div> }
       }
     </div>
-  </div>`,
+  </div>
+  }`,
 })
 export class Category {
   slug = input('centrifugas');
@@ -88,6 +91,8 @@ export class Category {
   private bannersRes = this.api.banners();
   banner = computed<StoreBanner | null>(() => this.bannersRes.hasValue() ? this.bannersRes.value().categoria?.[this.slug()]?.[0] ?? null : null);
   cat = computed(() => familyBySlug(this.slug()) ?? FAMILIES[0]);
+  /** Un slug que no es familia no se disfraza de Periféricas: muestra «no encontrado» (404 en el servidor). */
+  known = computed(() => !!familyBySlug(this.slug()));
   /** El título de la pestaña (y el que leen los buscadores) es el de la familia, no un «Catálogo» igual para las doce. */
   private title = inject(Title);
   private _t = effect(() => this.title.setTitle(`${this.cat().name} Pedrollo · Bombas y Sistemas Vega`));

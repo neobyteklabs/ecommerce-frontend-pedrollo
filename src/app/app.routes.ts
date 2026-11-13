@@ -24,5 +24,6 @@ export const routes: Routes = [
   { path: 'privacidad', loadComponent: () => import('./features/legal/privacy').then(m => m.Privacy), title: 'Aviso de privacidad' },
   { path: 'contacto', loadComponent: () => import('./features/legal/legal').then(m => m.Legal), title: 'Contacto' },
   { path: 'legal', pathMatch: 'full', redirectTo: 'terminos' },
-  { path: '**', redirectTo: '' },
+  { path: 'catalogo', loadComponent: () => import('./features/catalog/catalog').then(m => m.Catalog), title: 'Catálogo Pedrollo · Bombas y Sistemas Vega' },
+  { path: '**', loadComponent: () => import('./features/errors/not-found').then(m => m.NotFound), title: 'Página no encontrada' },
 ];

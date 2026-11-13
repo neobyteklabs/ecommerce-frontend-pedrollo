@@ -226,6 +226,8 @@
 .header-search{display:none}
 @media (min-width:768px){.header-search{display:block;max-width:640px;width:100%;justify-self:center}}
 .header-actions{display:flex;gap:var(--space-1);align-items:center}
+/* El botón «Menú» es de móvil: en escritorio ya están la barra de categorías y «Cuenta». `.icon-btn` fija su display y le ganaba a `.hide-desktop`. */
+@media (min-width:768px){.header-actions .hide-desktop{display:none}}
 .icon-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;min-height:44px;padding:0 10px;border-radius:var(--radius-md);background:transparent;border:0;color:var(--color-text);text-decoration:none;font-weight:500;font-size:var(--text-sm)}
 .icon-btn:hover{background:var(--color-surface-alt);color:var(--color-text)}
 .icon-btn svg{width:24px;height:24px}

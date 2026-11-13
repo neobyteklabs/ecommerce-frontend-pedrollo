@@ -13,8 +13,9 @@ import { InlineMedia } from '../../shared/directives/inline-media';
 
 /** Página de serie. Con contenido narrativo (SERIES) se muestra el formato tipo Apple;
  *  sin él, un formato genérico construido solo con el manifiesto: foto oficial, ficha 60 Hz y modelos. */
+import { NotFound } from '../errors/not-found';
 @Component({
-  selector: 'bsv-series', imports: [RouterLink, LowerCasePipe, Icon, ImgSlot, ProductCard, Reveal, Spotlight, CountUp, InlineMedia],
+  selector: 'bsv-series', imports: [RouterLink, LowerCasePipe, Icon, ImgSlot, ProductCard, Reveal, Spotlight, CountUp, InlineMedia, NotFound],
   host: { 'data-page': 'Serie', class: 'block' },
   template: `
   @if (res(); as r) {
@@ -105,7 +106,7 @@ import { InlineMedia } from '../../shared/directives/inline-media';
   }
   <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz. Los modelos que aún no tienen ficha validada se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios en pesos mexicanos con IVA incluido. La existencia y el tiempo de entrega se confirman con tu código postal en el carrito.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
   } @else {
-  <section class="container section"><h1>Serie no encontrada</h1><p class="muted">No hay una serie con ese identificador. <a routerLink="/categoria/centrifugas">Ver catálogo</a>.</p></section>
+  <bsv-not-found titulo="No encontramos esa serie" detalle="No hay una serie con ese identificador. Búscala por nombre o recorre el catálogo." />
   }`,
 })
 export class Series {

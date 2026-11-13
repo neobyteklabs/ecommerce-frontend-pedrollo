@@ -44,7 +44,7 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
   }
 
   <section class="section container" data-component="Section/Categorias">
-    <div class="section-title" bsvReveal><div><span class="eyebrow">Catálogo</span><h2 style="margin-top:8px">Compra por categoría</h2></div><a routerLink="/categoria/centrifugas">Ver todo el catálogo</a></div>
+    <div class="section-title" bsvReveal><div><span class="eyebrow">Catálogo</span><h2 style="margin-top:8px">Compra por categoría</h2></div><a routerLink="/catalogo">Ver todo el catálogo</a></div>
     <div class="grid grid-2 md-grid-3 lg-grid-4">
       @for (c of cats; track c.slug; let i = $index) {
         <a class="cat-card" [routerLink]="['/categoria', c.slug]" bsvReveal [revealIndex]="i"><bsv-img-slot [slot]="'cat-' + c.slug + ' · foto representativa pendiente'" [product]="true" [alt]="c.name + ', foto representativa de la familia'" /><strong>{{ c.name }}</strong><span>{{ c.desc }}</span></a>
@@ -53,7 +53,7 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
   </section>
 
   <section class="section container" style="padding-top:0" data-component="Section/Destacados">
-    <div class="section-title" bsvReveal><div><span class="eyebrow">Selección</span><h2 style="margin-top:8px">Los más vendidos</h2></div><a routerLink="/categoria/multietapas">Ver más</a></div>
+    <div class="section-title" bsvReveal><div><span class="eyebrow">Multietapas</span><h2 style="margin-top:8px">Más presión con el mismo motor</h2></div><a routerLink="/categoria/multietapas">Ver todas</a></div>
     <div class="product-grid">@for (p of featured(); track p.id; let i = $index) { <bsv-product-card [p]="p" bsvReveal="scale" [revealIndex]="i" /> }@if (featuredRes.isLoading()) { <bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /> }</div>
   </section>
 

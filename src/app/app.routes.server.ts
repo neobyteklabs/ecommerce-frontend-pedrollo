@@ -15,5 +15,17 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'buscar', renderMode: RenderMode.Server },
   { path: 'seguimiento', renderMode: RenderMode.Server },
   { path: 'seguimiento/:folio', renderMode: RenderMode.Server },
-  { path: '**', renderMode: RenderMode.Client },
+  { path: 'catalogo', renderMode: RenderMode.Prerender },
+  // Sesión o carrito: en el cliente.
+  { path: 'carrito', renderMode: RenderMode.Client },
+  { path: 'login', renderMode: RenderMode.Client },
+  { path: 'checkout', renderMode: RenderMode.Client },
+  { path: 'checkout/confirmando', renderMode: RenderMode.Client },
+  { path: 'pedido/:folio/gracias', renderMode: RenderMode.Client },
+  { path: 'cuenta', renderMode: RenderMode.Client },
+  { path: 'cuenta/pedidos', renderMode: RenderMode.Client },
+  { path: 'cuenta/pedidos/:id', renderMode: RenderMode.Client },
+  { path: 'cuenta/devolucion', renderMode: RenderMode.Client },
+  // Lo que no existe se resuelve en el servidor para poder responder 404 (ver features/errors/not-found.ts).
+  { path: '**', renderMode: RenderMode.Server },
 ];

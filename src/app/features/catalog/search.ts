@@ -26,7 +26,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty, SeriesRail, SeriesRef } from
   } @else {
     <h1 style="font-size:var(--text-2xl)">Sin resultados para “{{ q() }}”</h1>
     <bsv-empty icon="search" title="No encontramos ese modelo" data-component="EmptyState/Busqueda">Revisa la ortografía o busca por potencia o uso. También podemos cotizarlo si es un equipo especial.
-      <ng-container actions><a class="btn btn-primary" routerLink="/categoria/centrifugas">Ver todo el catálogo</a><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
+      <ng-container actions><a class="btn btn-primary" routerLink="/catalogo">Ver todo el catálogo</a><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
     @if (suggested().length) { <h3>Quizá buscabas</h3><div class="product-grid">@for (p of suggested(); track p.id) { <bsv-product-card [p]="p" /> }</div> }
   }`,
 })

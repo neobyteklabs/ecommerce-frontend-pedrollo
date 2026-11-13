@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import { isMediaKeyPath, mediaHandler } from './media-proxy';
+import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage } from './sitemap';
 import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -39,6 +40,27 @@ if (CONFIG_ERROR) {
     '',
   ].join('\n'));
 }
+
+/**
+ * robots.txt y sitemap.xml (ver sitemap.ts). `CANONICAL_HOST` es el único dominio que se deja indexar; cualquier otro nombre por el
+ * que se sirva la tienda (la URL provisional, la IP, el del balanceador) responde «Disallow: /». El mapa se guarda una hora en memoria.
+ */
+const CANONICAL_HOST = (process.env['CANONICAL_HOST'] ?? 'pedrollobombas.com').toLowerCase();
+app.get('/robots.txt', (req, res) => { res.type('text/plain').setHeader('Cache-Control', 'public, max-age=3600'); res.send(robotsTxt(req.headers.host, CANONICAL_HOST)); });
+let sitemapCache: { at: number; xml: string } | null = null;
+app.get('/sitemap.xml', async (_req, res) => {
+  try {
+    if (!sitemapCache || Date.now() - sitemapCache.at > 3_600_000) {
+      const page = async (n: number): Promise<SitemapPage> => {
+        const up = await fetch(`${BACKOFFICE_URL}/api/tienda/v1/productos?size=100&page=${n}`, { headers: { 'X-Store-Key': STORE_KEY, Accept: 'application/json' } });
+        if (!up.ok) throw new Error('listado ' + up.status);
+        return await up.json() as SitemapPage;
+      };
+      sitemapCache = { at: Date.now(), xml: sitemapXml('https://' + CANONICAL_HOST, await sitemapPaths(page)) };
+    }
+    res.type('application/xml').setHeader('Cache-Control', 'public, max-age=3600'); res.send(sitemapCache.xml);
+  } catch { res.status(503).setHeader('Cache-Control', 'no-store').setHeader('Retry-After', '300'); res.end(); }
+});
 
 /** Bala 11, C0: las imágenes de tienda y los banners que sube el portal (ver media-proxy.ts). Solo GET; cualquier otro método, 405. */
 const media = mediaHandler(BACKOFFICE_URL);

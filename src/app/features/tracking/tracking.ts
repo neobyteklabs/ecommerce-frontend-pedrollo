@@ -86,7 +86,7 @@ import { ToastService } from '../../core/toast';
             } @else { <p class="small" style="margin:0 0 12px">¿Necesitas factura?</p> }
             @if (t.acciones.includes('factura')) { <button class="btn btn-secondary btn-block" style="margin-top:12px" type="button" data-component="InvoiceRequestButton" (click)="invoicing.set(true)"><bsv-icon name="receipt" style="--icon:18px" /> Solicitar factura</button> }
           </div> }
-        @if (t.estado === 'cerrada' || t.estado === 'vencida') { <a class="btn btn-primary btn-block" routerLink="/categoria/centrifugas">Cotizar de nuevo</a> }
+        @if (t.estado === 'cerrada' || t.estado === 'vencida') { <a class="btn btn-primary btn-block" routerLink="/catalogo">Cotizar de nuevo</a> }
         <a class="btn btn-ghost btn-block" routerLink="/seguimiento">Consultar otro folio</a>
       </aside>
     </div>

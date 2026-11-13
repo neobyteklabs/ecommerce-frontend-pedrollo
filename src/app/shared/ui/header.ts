@@ -35,7 +35,7 @@ import { FAMILIES, NAV_FAMILIES } from '../../core/catalog';
       <form class="mobile-search" role="search" (submit)="go($event, qm.value)"><label class="sr-only" for="qm">Buscar</label><div class="input-group"><bsv-icon name="search" style="--icon:20px" /><input #qm id="qm" name="q" type="search" placeholder="Buscar modelo, HP o uso…" /></div></form>
       <nav class="header-nav" aria-label="Categorías" data-component="MainNav">
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Inicio</a>
-        @for (c of cats; track c.slug) { <a [routerLink]="['/categoria', c.slug]" routerLinkActive ariaCurrentWhenActive="page">{{ c.name }}</a> }<a routerLink="/categoria/accesorios">Más…</a>
+        @for (c of cats; track c.slug) { <a [routerLink]="['/categoria', c.slug]" routerLinkActive ariaCurrentWhenActive="page">{{ c.name }}</a> }<a routerLink="/catalogo" routerLinkActive ariaCurrentWhenActive="page">Más…</a>
       </nav>
     </div>
   </header>

@@ -20,8 +20,9 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
 /** Ficha de producto. Galería por pestañas: Fotografía · Curvas de rendimiento · Componentes · Ficha técnica.
  *  Fotografía principal = foto oficial referencial de la serie (no verificada por modelo). Recortes técnicos tal cual
  *  vienen del paquete de la serie; los marcados "pendiente aprobacion" solo se ven en modo revisión. */
+import { NotFound } from '../errors/not-found';
 @Component({
-  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal, QuoteForm, PdfModal],
+  selector: 'bsv-product', imports: [RouterLink, Icon, ImgSlot, ProductCard, Price, Qty, Alert, Reveal, QuoteForm, PdfModal, NotFound],
   host: { class: 'container block', 'data-page': 'Producto' },
   template: `
   @if (p(); as p) {
@@ -119,8 +120,11 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
   }
   } @else if (remote.isLoading()) {
   <section class="section" aria-busy="true"><p class="muted">Cargando producto…</p></section>
+  } @else if (apiDown()) {
+  <!-- La tienda no contestó: no es un «no existe» (un 404 aquí haría que un buscador diera de baja el producto por una caída). -->
+  <section class="section"><bsv-alert kind="warning" title="No pudimos cargar este producto">La tienda no respondió. Intenta de nuevo en un momento o <a href="https://wa.me/525572589681" target="_blank" rel="noopener">pide una cotización</a>.</bsv-alert></section>
   } @else {
-  <section class="section"><h1>Producto no encontrado</h1><p class="muted"><a routerLink="/categoria/centrifugas">Ver catálogo</a></p></section>
+  <bsv-not-found titulo="No encontramos ese producto" detalle="Puede que el modelo ya no esté publicado o que la dirección esté mal escrita. Búscalo por modelo o recorre el catálogo." />
   }`,
 })
 export class ProductPage {
