@@ -10,7 +10,7 @@ import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm, PdfModal } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
 import { StorefrontApi, GallerySection, StoreDocument } from '../../core/api/storefront-api';
-import { cardFromProduct, productFromApi } from '../../core/api/storefront-view';
+import { cardFromProduct, cardFromSummary, productFromApi } from '../../core/api/storefront-view';
 
 /** «850 KB», «1.2 MB»: el peso de un PDF para el comprador. */
 export function pesoLegible(bytes: number): string { return bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`; }
@@ -57,14 +57,14 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
       <div>
         <div class="row" style="margin-bottom:8px"><span class="model" style="color:var(--color-primary);font-size:var(--text-lg)">{{ p.model }}</span>
           @if (p.validated) { <span class="badge badge-success">Ficha 60 Hz validada</span> } @else { <span class="badge badge-warning">Especificaciones pendientes</span> }
-          @if (!p.enCrm) { <span class="badge badge-neutral no-dot">No confirmado en CRM</span> }</div>
+          @if (!p.enCrm && products.reviewMode()) { <span class="badge badge-neutral no-dot">No confirmado en CRM</span> }</div>
         <h1 style="font-size:var(--text-2xl)">{{ p.name }}</h1>
         <p class="muted">{{ specLine(p) }} · Marca {{ brand.name }}@if (hasStory()) { · <a [routerLink]="['/serie', p.serie]">Conoce la serie {{ p.serieName }} ›</a> }</p>
       </div>
       <div class="buy-box" data-component="BuyBox">
         @if (remote.isLoading()) { <div class="price-block" aria-busy="true"><span class="main" style="font-size:var(--text-2xl)">Consultando precio…</span><span class="breakdown">Un momento.</span></div> }
         @else if (price() != null) { <bsv-price [total]="price()!" /> }
-        @else { <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Pendiente de la lista de precios BSV. Mientras tanto, cotiza con un asesor.</span>
+        @else { <div class="price-block"><span class="main" style="font-size:var(--text-2xl)">Precio por confirmar</span><span class="breakdown">Cotiza con un asesor y te confirmamos precio y entrega.</span>
           @if (apiDown()) { <span class="badge badge-warning no-dot" style="margin-top:6px">sin conexión con la tienda</span> }</div> }
         <div class="small" style="display:flex;gap:8px;align-items:center"><bsv-icon [name]="avail() === 'carrito' ? 'truck' : 'phone'" style="--icon:20px" /> {{ availLabel(avail(), availReason()) }}</div>
         @if (price() != null && avail() === 'carrito') {
@@ -76,7 +76,7 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
           <button class="btn btn-primary btn-lg btn-block" type="button" (click)="quoting.set(true)"><bsv-icon name="mail" style="--icon:20px" /> Cotizar {{ p.model }}</button>
         }
         <a class="btn btn-ghost btn-block" [href]="'https://wa.me/525572589681?text=Hola, quiero cotizar ' + p.model"><bsv-icon name="phone" style="--icon:20px" /> ¿Compra por volumen? Habla con un asesor</a>
-        <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>Garantía de fábrica Pedrollo</li><li>Factura CFDI 4.0 desde tu cuenta</li><li>Envío asegurado a todo México</li></ul>
+        <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>Garantía de fábrica Pedrollo</li><li>Factura CFDI 4.0 con el número de tu pedido</li><li>Envío asegurado a todo México</li></ul>
       </div>
     </div>
   </div>
@@ -97,14 +97,14 @@ interface GalleryItem { slot: string; src: string | null; kind: 'catalog' | 'sce
           <tr><th scope="row">Curvas y tablas</th><td>@if (cutsOk()) { Pestañas "Curvas de rendimiento" y "Ficha técnica" (página {{ p.cuts?.pdf_pagina_curva }} del PDF) } @else { <span class="ex">Ver la ficha técnica (PDF)</span> }</td></tr>
         </tbody></table>
         } @else {
-        <bsv-alert kind="warning" title="Especificaciones pendientes">{{ p.nota || 'Este modelo del CRM no se localizó en la ficha técnica 60 Hz del banco. No se muestran datos estimados.' }}</bsv-alert>
+        <bsv-alert kind="warning" title="Especificaciones pendientes">@if (products.reviewMode()) { {{ p.nota || 'Modelo no localizado en la ficha técnica 60 Hz del banco.' }} } @else { Estamos validando la ficha técnica de este modelo y no mostramos datos estimados. Si necesitas un dato, un asesor te lo confirma. }</bsv-alert>
         }
         @if (p.nota && p.validated) { <p class="small muted" style="margin-top:8px">{{ p.nota }}</p> }
       </div>
       <div class="stack" bsvReveal [revealIndex]="1">
         <div><h3>Descargas</h3><div class="stack-sm">
           @if (p.technical) { <a class="download" [href]="p.technical" target="_blank" rel="noopener" data-component="DownloadCard"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ p.serieName }} · 60 Hz</strong><span>PDF · español · México · original sin modificar</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
-          @else { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Placeholder · pendiente en el banco de recursos</span></div></div> }
+          @else { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Aún no disponible en línea · pídela a tu asesor</span></div></div> }
           @for (o of otherPdfs(); track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
         </div></div>
         <p class="xs muted">Fotografía principal: imagen oficial referencial de la serie {{ p.serieName }}; no es una fotografía verificada de este modelo. Recortes técnicos: tomados tal cual de la ficha 60 Hz, sin redibujo.</p>
@@ -127,10 +127,16 @@ export class ProductPage {
   id = input.required<string>();
   products = inject(ProductService); private cart = inject(CartService); toast = inject(ToastService); brand = inject(BRAND);
   /** Del manifiesto local si lo conoce; si no, de la API de tienda (todo producto publicado tiene ficha, no solo la muestra del manifiesto). */
-  p = computed(() => this.products.byId(this.id()) ?? (this.remote.hasValue() && this.remote.value() ? productFromApi(this.remote.value()!) : undefined)); related = computed(() => this.products.related(this.id()).map(cardFromProduct));
+  p = computed(() => this.products.byId(this.id()) ?? (this.remote.hasValue() && this.remote.value() ? productFromApi(this.remote.value()!) : undefined));
   /** El precio viene de la API de tienda (bala 1). Nunca se cae a la demo local: un fallback silencioso escondería que la bala falló. */
   private api = inject(StorefrontApi);
   remote = this.api.product(() => this.id());
+  /** «Otros modelos de la serie» sale de la API (precio y disponibilidad reales). El manifiesto local solo es el respaldo si la API no contesta:
+   *  sus tarjetas no traen precio y todas decían «Precio por confirmar», aunque el producto lo tuviera. */
+  private relatedRes = this.api.products(() => { const s = this.p()?.serie; return s ? { serie: s, orden: 'serie', size: 5 } : undefined; });
+  related = computed(() => this.relatedRes.hasValue()
+    ? this.relatedRes.value().content.filter(x => x.slug !== this.id()).slice(0, 4).map(cardFromSummary)
+    : this.relatedRes.isLoading() ? [] : this.products.related(this.id()).map(cardFromProduct));
   /** `hasValue()` primero: en Angular 22 leer `value()` de un resource en error lanza ResourceValueError y rompe el render. */
   price = computed(() => this.remote.hasValue() ? (this.remote.value()?.price?.amount ?? null) : null);
   /** Error distinto de 404 (slug no publicado): el back-office o el proxy no contestaron. */

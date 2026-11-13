@@ -26,7 +26,7 @@ import { InlineMedia } from '../../shared/directives/inline-media';
     @if (r.comercial.video; as vid) { <video class="hero-video" bsvInlineMedia [src]="vid" anchor=".s-hero" load="150vh" play="60vh" mode="play" [loop]="true" muted playsinline preload="none" aria-hidden="true"></video> }
     <div class="container copy-wrap"><div class="copy"><span class="kicker">{{ c.kicker }}</span><h1>{{ c.headline[0] }} <span class="grad">{{ c.headline[1] }}</span></h1><p class="sub">{{ c.sub }}</p><div class="row" style="margin-top:8px"><a class="btn-link" href="#detalle">Mira lo más destacado ›</a></div></div></div>
   </section>
-  <div class="buy-pill" [class.is-shown]="pill()" data-component="BuyPill"><span><b>{{ r.n_productos_crm }} modelos</b> en catálogo BSV<small>Precio y disponibilidad por confirmar</small></span><a class="btn" href="#comparar">Comparar</a></div>
+  <div class="buy-pill" [class.is-shown]="pill()" data-component="BuyPill"><span><b>{{ r.n_productos_crm }} modelos</b> en catálogo BSV<small>Precios en MXN con IVA incluido</small></span><a class="btn" href="#comparar">Comparar</a></div>
 
   <section class="s-section" style="padding-top:var(--space-6)" data-component="Highlights"><div class="container"><div class="highlights">@for (h of c.highlights; track h) { <a href="#especificaciones">{{ h }}</a> }</div></div></section>
 
@@ -57,7 +57,7 @@ import { InlineMedia } from '../../shared/directives/inline-media';
     <bsv-img-slot [slot]="'serie-' + r.slug + '-hero · hero cinematográfico pendiente · 2560×1440'" [scene]="true" [eager]="true" [alt]="'Serie ' + r.serie + ', imagen representativa'" />
     <div class="container copy-wrap"><div class="copy"><span class="kicker">Serie {{ r.serie }} · {{ fam()?.nombre | lowercase }}</span><h1>Serie <span class="grad">{{ r.serie }}</span></h1><p class="sub">{{ r.n_productos_crm }} modelos en el catálogo BSV. Especificaciones tomadas de la ficha técnica 60 Hz; precio y disponibilidad por confirmar.</p></div></div>
   </section>
-  <div class="buy-pill" [class.is-shown]="pill()" data-component="BuyPill"><span><b>{{ r.n_productos_crm }} modelos</b> en catálogo BSV<small>Precio y disponibilidad por confirmar</small></span><a class="btn" href="#comparar">Ver modelos</a></div>
+  <div class="buy-pill" [class.is-shown]="pill()" data-component="BuyPill"><span><b>{{ r.n_productos_crm }} modelos</b> en catálogo BSV<small>Precios en MXN con IVA incluido</small></span><a class="btn" href="#comparar">Ver modelos</a></div>
   <section class="s-section light" id="detalle" data-component="SeriesOfficial"><div class="container">
     <div class="detail"><bsv-img-slot [slot]="'catalog-' + r.slug + ' · foto oficial de la serie pendiente'" [product]="true" [alt]="'Serie ' + r.serie + ', foto oficial'" style="background:#fff" bsvReveal="scale" />
       <div bsvReveal [revealIndex]="1"><span class="eyebrow">Recurso técnico</span><h2 style="margin-top:8px">Foto oficial y ficha 60 Hz</h2><p class="muted">La foto es la oficial de la serie en pedrollo.com.mx; representa a la serie, no a un modelo exacto. @if (r.tecnico.foto_oficial_fuente) { <a [href]="r.tecnico.foto_oficial_fuente" target="_blank" rel="noopener">Fuente</a> }</p>
@@ -103,7 +103,7 @@ import { InlineMedia } from '../../shared/directives/inline-media';
     <div class="row" style="margin-top:var(--space-5)">@if (r.tecnico.ficha_60hz) { <a class="download" [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ r.serie }} · 60 Hz</strong><span>PDF · México</span></div></a> }@for (o of r.tecnico.otros_pdf; track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div></a> }</div>
   </div></section>
   }
-  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz incluida en el banco de imágenes. Los modelos sin coincidencia en la ficha se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios y disponibilidad: pendientes de la lista BSV. No se muestran valores estimados.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
+  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz. Los modelos que aún no tienen ficha validada se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios en pesos mexicanos con IVA incluido. La existencia y el tiempo de entrega se confirman con tu código postal en el carrito.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
   } @else {
   <section class="container section"><h1>Serie no encontrada</h1><p class="muted">No hay una serie con ese identificador. <a routerLink="/categoria/centrifugas">Ver catálogo</a>.</p></section>
   }`,

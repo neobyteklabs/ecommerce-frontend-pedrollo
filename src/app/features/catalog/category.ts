@@ -1,4 +1,5 @@
-import { Component, inject, input, signal, computed } from '@angular/core';
+import { Component, inject, input, signal, computed, effect } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../core/products';
 import { StorefrontApi, ListingOrder, StoreBanner } from '../../core/api/storefront-api';
@@ -33,7 +34,7 @@ const ORDERS: ListingOrder[] = ['serie', 'hp-asc', 'hp-desc', 'precio-asc', 'pre
   <h1 style="font-size:var(--text-2xl)">{{ cat().name }} <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} modelos</span></h1>
   }
   @if (serie()) { <p class="small"><a [routerLink]="['/serie', serie()]">Ver página de la serie {{ serieName() }} ›</a></p> }
-  <p class="muted" style="max-width:70ch">{{ cat().desc }} Especificaciones del catálogo BSV; disponibilidad por confirmar.</p>
+  <p class="muted" style="max-width:70ch">{{ cat().desc }}</p>
   <div class="chip-list" style="margin-bottom:24px" data-component="SeriesChips">@for (sr of seriesList(); track sr.slug) { <button class="chip" type="button" [attr.aria-pressed]="serie() === sr.slug" (click)="set('serie', serie() === sr.slug ? null : sr.slug)">{{ sr.name }} <span class="muted">({{ sr.count }})</span></button> }</div>
   <div class="catalog">
     <aside class="filters" [class.is-open]="open()" id="filters" data-component="FilterPanel" aria-label="Filtros">
@@ -87,6 +88,9 @@ export class Category {
   private bannersRes = this.api.banners();
   banner = computed<StoreBanner | null>(() => this.bannersRes.hasValue() ? this.bannersRes.value().categoria?.[this.slug()]?.[0] ?? null : null);
   cat = computed(() => familyBySlug(this.slug()) ?? FAMILIES[0]);
+  /** El título de la pestaña (y el que leen los buscadores) es el de la familia, no un «Catálogo» igual para las doce. */
+  private title = inject(Title);
+  private _t = effect(() => this.title.setTitle(`${this.cat().name} Pedrollo · Bombas y Sistemas Vega`));
   order = computed<ListingOrder>(() => (ORDERS as string[]).includes(this.orden() ?? '') ? this.orden() as ListingOrder : 'serie');
 
   series = this.api.series(() => this.slug());

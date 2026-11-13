@@ -95,8 +95,6 @@ export class CartService {
     finally { this.shippingLoading.set(false); }
   }
 
-  /** Demo del flujo: dos modelos reales del catálogo. */
-  demo() { if (this.count()) return; this.add('2cp-32-210a', 1); this.add('pk-60', 2); }
 
   private load(): CartLine[] { if (!this.browser) return []; try { return JSON.parse(localStorage.getItem('bsv.cart') || '[]'); } catch { return []; } }
   private loadSession(k: string): string | null { if (!this.browser) return null; try { return sessionStorage.getItem(k); } catch { return null; } }

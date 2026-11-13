@@ -1,4 +1,4 @@
-import { Component, inject, input, signal, afterNextRender } from '@angular/core';
+import { Component, inject, signal, afterNextRender } from '@angular/core';
 import { BRAND } from '../../core/brand';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -15,10 +15,10 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
   template: `
   @if (!cart.lines().length) {
     <h1 style="font-size:var(--text-2xl)">Tu carrito</h1>
-    <bsv-empty icon="cart" title="Tu carrito está vacío" data-component="EmptyState/Carrito">Agrega bombas, motores o refacciones. Los precios incluyen IVA y la factura se solicita desde tu cuenta.
-      <ng-container actions><a class="btn btn-primary" routerLink="/categoria/centrifugas">Ver catálogo</a><a class="btn btn-ghost" routerLink="/cuenta/pedidos">Repetir un pedido anterior</a></ng-container></bsv-empty>
+    <bsv-empty icon="cart" title="Tu carrito está vacío" data-component="EmptyState/Carrito">Agrega bombas, motores o refacciones. Los precios incluyen IVA y la factura se solicita en línea con el número de tu pedido.
+      <ng-container actions><a class="btn btn-primary" routerLink="/categoria/centrifugas">Ver catálogo</a><a class="btn btn-ghost" routerLink="/cuenta/pedidos">Ver mis pedidos</a></ng-container></bsv-empty>
   } @else {
-    <h1 style="font-size:var(--text-2xl)">Tu carrito <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ cart.count() }} artículos</span></h1>
+    <h1 style="font-size:var(--text-2xl)">Tu carrito <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ cart.count() }} {{ cart.count() === 1 ? 'artículo' : 'artículos' }}</span></h1>
     @if (cart.changed().length) {
       <bsv-alert kind="warning" [title]="cart.changed().length === 1 ? 'El precio de ' + products.byId(cart.changed()[0].id)!.model + ' cambió' : 'Algunos de tus productos cambiaron de precio'" style="margin-bottom:16px" data-component="Alert/PrecioCambio">
         @for (l of cart.changed(); track l.id) { <div>{{ products.byId(l.id)!.model }}: lo agregaste a {{ mxn(l.changedFrom) }} y hoy es {{ mxn(l.priceAtAdd) }}.</div> }
@@ -64,9 +64,8 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
   }`,
 })
 export class Cart {
-  demo = input<string>();
   cart = inject(CartService); products = inject(ProductService); toast = inject(ToastService); mxn = mxn;
   pasarela = inject(BRAND).vendedor.pasarela;
   quoting = signal<string | null>(null);
-  constructor() { afterNextRender(async () => { if (this.demo()) this.cart.demo(); await this.cart.refreshPrices(); if (this.cart.cp() && this.cart.lines().length) this.cart.resolveShipping(); }); }
+  constructor() { afterNextRender(async () => { await this.cart.refreshPrices(); if (this.cart.cp() && this.cart.lines().length) this.cart.resolveShipping(); }); }
 }

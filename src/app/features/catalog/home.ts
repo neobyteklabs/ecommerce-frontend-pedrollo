@@ -28,7 +28,7 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
       <form class="hero-search" role="search" data-component="SearchBar/Hero" (submit)="go($event, hq.value)">
         <label class="sr-only" for="hq">Buscar producto</label>
         <div class="input-group"><bsv-icon name="search" style="--icon:20px" /><input #hq id="hq" type="search" placeholder="Modelo, HP o uso: PKm 60, 1 HP, pozo profundo…" /><button class="btn btn-primary btn-sm" type="submit">Buscar</button></div>
-        <div class="hero-sug">Búsquedas frecuentes: <a routerLink="/buscar" [queryParams]="{ q: 'PKm 60' }">PKm 60</a><a routerLink="/buscar" [queryParams]="{ q: 'CPm 158' }">CPm 158</a><a routerLink="/buscar" [queryParams]="{ q: 'sumergible pozo' }">sumergible para pozo</a><a routerLink="/buscar" [queryParams]="{ q: 'presurizador' }">presurizador</a></div>
+        <div class="hero-sug">Búsquedas frecuentes: <a routerLink="/buscar" [queryParams]="{ q: 'PKm 60' }">PKm 60</a><a routerLink="/buscar" [queryParams]="{ q: 'CP 160' }">CP 160</a><a routerLink="/buscar" [queryParams]="{ q: 'sumergible pozo' }">sumergible para pozo</a><a routerLink="/buscar" [queryParams]="{ q: 'presurizador' }">presurizador</a></div>
       </form>
     </div>
   </section>
@@ -61,7 +61,7 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
     <div class="container trust">
       <div class="trust-item" bsvReveal [revealIndex]="0"><bsv-icon name="shield" style="--icon:28px" /><div><strong>Distribuidor autorizado</strong><span>Garantía de fábrica y refacciones originales.</span></div></div>
       <div class="trust-item" bsvReveal [revealIndex]="1"><bsv-icon name="truck" style="--icon:28px" /><div><strong>Envío a todo México</strong><span>Existencia local sale en 24–48 h. Sobre pedido en 5–7 días.</span></div></div>
-      <div class="trust-item" bsvReveal [revealIndex]="2"><bsv-icon name="receipt" style="--icon:28px" /><div><strong>Factura disponible</strong><span>CFDI 4.0 desde tu cuenta, sin llamar a nadie.</span></div></div>
+      <div class="trust-item" bsvReveal [revealIndex]="2"><bsv-icon name="receipt" style="--icon:28px" /><div><strong>Factura disponible</strong><span>CFDI 4.0 en línea con el número de tu pedido, sin llamar a nadie.</span></div></div>
     </div>
   </section>
 

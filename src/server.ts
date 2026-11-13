@@ -6,7 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
-import { mediaHandler } from './media-proxy';
+import { isMediaKeyPath, mediaHandler } from './media-proxy';
 import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -42,7 +42,10 @@ if (CONFIG_ERROR) {
 
 /** Bala 11, C0: las imágenes de tienda y los banners que sube el portal (ver media-proxy.ts). Solo GET; cualquier otro método, 405. */
 const media = mediaHandler(BACKOFFICE_URL);
-app.all('/media/{*splat}', (req, res) => {
+app.all('/media/{*splat}', (req, res, next) => {
+  // Solo las keys del back-office pasan por el proxy. Lo demás de /media son los archivos propios de la tienda (public/media: fotos de
+  // catálogo, heroes de serie, fichas PDF) y los sirve express.static más abajo; sin este `next()` todos daban 404 fuera de `ng serve`.
+  if (!isMediaKeyPath(req.path)) return next();
   const out = {
     status: (c: number) => { res.status(c); return out; },
     setHeader: (n: string, v: string) => res.setHeader(n, v),
@@ -232,6 +235,9 @@ app.use(
     redirect: false,
   }),
 );
+
+/** Un archivo de /media que no existe es un 404, no una página: sin esto caía al render de Angular y respondía con una redirección al inicio. */
+app.use('/media', (_req, res) => { res.status(404).setHeader('Cache-Control', 'no-store'); res.end(); });
 
 /**
  * Handle all other requests by rendering the Angular application.

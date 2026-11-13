@@ -5,6 +5,10 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 export const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Server },
   { path: 'legal', renderMode: RenderMode.Prerender },
+  // Páginas de texto fijo: prerenderizadas, para que el contenido legal y de contacto exista en el HTML (buscadores, vistas previas).
+  { path: 'terminos', renderMode: RenderMode.Prerender },
+  { path: 'privacidad', renderMode: RenderMode.Prerender },
+  { path: 'contacto', renderMode: RenderMode.Prerender },
   { path: 'categoria/:slug', renderMode: RenderMode.Server },
   { path: 'serie/:serie', renderMode: RenderMode.Server },
   { path: 'producto/:id', renderMode: RenderMode.Server },
