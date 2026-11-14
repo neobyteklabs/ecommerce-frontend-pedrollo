@@ -43,6 +43,7 @@ button{cursor:pointer}
 .img-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .img-slot.has-img{border-style:solid;border-color:var(--color-border)}
 .img-slot.has-img::before{display:none}
+.img-slot:not([data-slot]):not(.has-img){border-color:transparent}
 .img-slot.product{background:var(--color-surface);aspect-ratio:1/1;min-height:0}
 .img-slot.product img{object-fit:contain;padding:8%}
 

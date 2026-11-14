@@ -40,7 +40,7 @@ import { NotFound } from '../errors/not-found';
         <p class="xs muted" style="margin:4px 0 0">{{ cur.caption }}@if (cur.pending) { <span class="badge badge-warning no-dot" style="margin-left:6px">Pendiente de aprobación</span> }</p>
         @if (items.length > 1) { <div class="thumbs">@for (it of items; track it.slot; let i = $index) { <bsv-img-slot [slot]="it.slot" [src]="it.src" [product]="it.kind === 'catalog'" [scene]="it.kind === 'scene'" [class.technical]="it.kind === 'technical'" [class.is-active]="i === thumb()" tabindex="0" role="button" [attr.aria-label]="it.caption" (click)="thumb.set(i)" (keydown.enter)="thumb.set(i)" /> }</div> }
       } @else {
-        <div class="img-slot technical" [attr.data-slot]="emptyTabLabel()" style="aspect-ratio:4/3"></div>
+        <div class="img-slot technical" [attr.data-slot]="products.reviewMode() ? emptyTabLabel() : null" style="aspect-ratio:4/3"></div>
       }
       @if (docsDeLaPestana().length) {
         <ul class="docs" data-component="Documentos" style="list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px">
@@ -57,7 +57,7 @@ import { NotFound } from '../errors/not-found';
     <div class="stack">
       <div>
         <div class="row" style="margin-bottom:8px"><span class="model" style="color:var(--color-primary);font-size:var(--text-lg)">{{ p.model }}</span>
-          @if (p.validated) { <span class="badge badge-success">Ficha 60 Hz validada</span> } @else { <span class="badge badge-warning">Especificaciones pendientes</span> }
+          @if (p.validated) { <span class="badge badge-success">Ficha 60 Hz validada</span> } @else if (products.reviewMode()) { <span class="badge badge-warning">Especificaciones pendientes</span> }
           @if (!p.enCrm && products.reviewMode()) { <span class="badge badge-neutral no-dot">No confirmado en CRM</span> }</div>
         <h1 style="font-size:var(--text-2xl)">{{ p.name }}</h1>
         <p class="muted">{{ specLine(p) }} · Marca {{ brand.name }}@if (hasStory()) { · <a [routerLink]="['/serie', p.serie]">Conoce la serie {{ p.serieName }} ›</a> }</p>
@@ -98,16 +98,23 @@ import { NotFound } from '../errors/not-found';
           <tr><th scope="row">Curvas y tablas</th><td>@if (cutsOk()) { Pestañas "Curvas de rendimiento" y "Ficha técnica" (página {{ p.cuts?.pdf_pagina_curva }} del PDF) } @else { <span class="ex">Ver la ficha técnica (PDF)</span> }</td></tr>
         </tbody></table>
         } @else {
-        <bsv-alert kind="warning" title="Especificaciones pendientes">@if (products.reviewMode()) { {{ p.nota || 'Modelo no localizado en la ficha técnica 60 Hz del banco.' }} } @else { Estamos validando la ficha técnica de este modelo y no mostramos datos estimados. Si necesitas un dato, un asesor te lo confirma. }</bsv-alert>
+        @if (products.reviewMode()) { <bsv-alert kind="warning" title="Especificaciones pendientes">{{ p.nota || 'Modelo no localizado en la ficha técnica 60 Hz del banco.' }}</bsv-alert> }
+        @else {
+        <table class="spec-table" data-component="SpecTable"><tbody>
+          <tr><th scope="row">Modelo</th><td class="mono">{{ p.model }}</td></tr>
+          <tr><th scope="row">Serie</th><td>{{ p.serieName }}</td></tr>
+          <tr><th scope="row">Frecuencia</th><td>60 Hz · México</td></tr>
+        </tbody></table>
+        }
         }
         @if (p.nota && p.validated) { <p class="small muted" style="margin-top:8px">{{ p.nota }}</p> }
       </div>
       <div class="stack" bsvReveal [revealIndex]="1">
-        <div><h3>Descargas</h3><div class="stack-sm">
+        @if (p.technical || otherPdfs().length || products.reviewMode()) { <div><h3>Descargas</h3><div class="stack-sm">
           @if (p.technical) { <a class="download" [href]="p.technical" target="_blank" rel="noopener" data-component="DownloadCard"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ p.serieName }} · 60 Hz</strong><span>PDF · español · México · original sin modificar</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
-          @else { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Aún no disponible en línea · pídela a tu asesor</span></div></div> }
+          @else if (products.reviewMode()) { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Sin ficha en el banco</span></div></div> }
           @for (o of otherPdfs(); track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
-        </div></div>
+        </div></div> }
         <p class="xs muted">Fotografía principal: imagen oficial referencial de la serie {{ p.serieName }}; no es una fotografía verificada de este modelo. Recortes técnicos: tomados tal cual de la ficha 60 Hz, sin redibujo.</p>
       </div>
     </div>
@@ -168,7 +175,7 @@ export class ProductPage {
       .map(({ im, i }) => ({ slot: `tienda-${p.id}-${i}`, src: im.url, kind, alt: im.alt || `${p.model}, imagen de tienda`, caption: 'Imagen de tienda' }));
     foto.push(...tienda('foto', 'scene'));
     if (c?.foto_modelo && c.foto_modelo_verificada) foto.push({ slot: `foto-${p.id}`, src: c.foto_modelo, kind: 'catalog', alt: `${p.model}, fotografía verificada`, caption: 'Fotografía verificada del modelo.' });
-    foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Serie ${p.serieName}, imagen referencial`, caption: p.catalog ? 'Imagen referencial de la familia (pedrollo.com.mx). No es fotografía verificada de este modelo.' : 'Placeholder: imagen referencial pendiente.' });
+    if (p.catalog || rev) foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Serie ${p.serieName}, imagen referencial`, caption: p.catalog ? 'Imagen referencial de la familia (pedrollo.com.mx). No es fotografía verificada de este modelo.' : 'Placeholder: imagen referencial pendiente.' });
     p.gallery.forEach((g, i) => foto.push({ slot: `serie-${p.serie}-${i === 0 ? 'hero' : 'banner'}`, src: g, kind: 'scene', alt: `Serie ${p.serieName}, imagen comercial`, caption: 'Imagen comercial representativa de la serie.' }));
     // Paquetes multimedia de familia (catálogo 1:1 + detalles macro). Publicables solo si están aprobados; en revisión, etiquetados.
     for (const mm of this.series()?.comercial.multimedia ?? []) {
@@ -178,7 +185,7 @@ export class ProductPage {
       for (const a of mm.macro) foto.push({ slot: `mm-macro-${p.serie}-${a.etiqueta}`, src: a.path, kind: 'catalog', alt: `${a.etiqueta}, detalle de la serie ${p.serieName}`, caption: `Detalle macro · ${a.etiqueta} · recorte de la foto de referencia de familia (píxeles originales). No es fotografía verificada de este modelo.`, pending: pendMM });
     }
     // Con al menos una imagen de tienda en `foto` ya hay fotografía del modelo: el mosaico «pendiente» no se pinta.
-    if (!(c?.foto_modelo && c.foto_modelo_verificada) && !foto.some(x => x.slot.startsWith('tienda-'))) foto.push({ slot: `foto-${p.id} · fotografía original del modelo · pendiente`, src: null, kind: 'placeholder', alt: '', caption: 'Placeholder: fotografía original específica del modelo, pendiente.' });
+    if (rev && !(c?.foto_modelo && c.foto_modelo_verificada) && !foto.some(x => x.slot.startsWith('tienda-'))) foto.push({ slot: `foto-${p.id} · fotografía original del modelo · pendiente`, src: null, kind: 'placeholder', alt: '', caption: 'Placeholder: fotografía original específica del modelo, pendiente.' });
     const curvas: GalleryItem[] = [...tienda('curvas', 'technical'), ...(ok ? ([
       { slot: `curva-${p.id}`, src: c!.curva, kind: 'technical' as const, alt: `Curvas de rendimiento ${p.model}`, caption: `Curvas H-Q, NPSH y P2 · ficha 60 Hz, página ${c!.pdf_pagina_curva ?? '—'} · recorte fiel del PDF. La gráfica incluye las variantes de su grupo; consultar la etiqueta ${p.model}.`, pending: pend },
       { slot: `tabla-${p.id}`, src: c!.tabla_prestaciones, kind: 'technical' as const, alt: `Tabla de prestaciones ${p.model}`, caption: 'Tabla de prestaciones HS = 0 m · ficha 60 Hz · recorte fiel del PDF.', pending: pend },

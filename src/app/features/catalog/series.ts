@@ -41,7 +41,7 @@ import { NotFound } from '../errors/not-found';
   <section class="s-section light" id="rendimiento" data-component="Performance"><div class="container">
     <div class="s-head"><span class="eyebrow" bsvReveal>Rendimiento</span><h2 bsvReveal [revealIndex]="1">{{ c.perf.head }}</h2><p bsvReveal [revealIndex]="2">{{ c.perf.lead }}</p></div>
     <div class="stats">@for (s of c.perf.stats; track s.pre; let i = $index) { <div class="stat" bsvReveal [revealIndex]="i"><span class="pre">{{ s.pre }}</span><div class="big grad" bsvCountUp>{{ s.big }}</div><span class="post">{{ s.post }}</span><br /><span class="fn">{{ s.fn }}</span></div> }</div>
-    <bsv-img-slot [slot]="'curva-' + r.slug + ' · curvas H-Q de la ficha 60 Hz · pendiente de recortar del PDF'" style="margin-top:var(--space-7);aspect-ratio:16/7;min-height:0;width:100%" bsvReveal />
+    @if (products$.reviewMode()) { <bsv-img-slot [slot]="'curva-' + r.slug + ' · curvas H-Q de la ficha 60 Hz · pendiente de recortar del PDF'" style="margin-top:var(--space-7);aspect-ratio:16/7;min-height:0;width:100%" bsvReveal /> }
     <p class="muted small" style="margin-top:12px">Curvas de prestaciones HS = 0 m, tolerancia según EN ISO 9906 Grado 3B. @if (r.tecnico.ficha_60hz) { <a [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener">Abrir ficha técnica 60 Hz (PDF)</a> }</p>
   </div></section>
   }
@@ -56,13 +56,13 @@ import { NotFound } from '../errors/not-found';
   } @else {
   <section class="s-hero" id="top" data-component="SeriesHero">
     <bsv-img-slot [slot]="'serie-' + r.slug + '-hero · hero cinematográfico pendiente · 2560×1440'" [scene]="true" [eager]="true" [alt]="'Serie ' + r.serie + ', imagen representativa'" />
-    <div class="container copy-wrap"><div class="copy"><span class="kicker">Serie {{ r.serie }} · {{ fam()?.nombre | lowercase }}</span><h1>Serie <span class="grad">{{ r.serie }}</span></h1><p class="sub">{{ r.n_productos_crm }} modelos en el catálogo BSV. Especificaciones tomadas de la ficha técnica 60 Hz; precio y disponibilidad por confirmar.</p></div></div>
+    <div class="container copy-wrap"><div class="copy"><span class="kicker">Serie {{ r.serie }} · {{ fam()?.nombre | lowercase }}</span><h1>Serie <span class="grad">{{ r.serie }}</span></h1><p class="sub">{{ r.n_productos_crm }} modelos en el catálogo BSV. Especificaciones tomadas de la ficha técnica 60 Hz.</p></div></div>
   </section>
   <div class="buy-pill" [class.is-shown]="pill()" data-component="BuyPill"><span><b>{{ r.n_productos_crm }} modelos</b> en catálogo BSV<small>Precios en MXN con IVA incluido</small></span><a class="btn" href="#comparar">Ver modelos</a></div>
   <section class="s-section light" id="detalle" data-component="SeriesOfficial"><div class="container">
     <div class="detail"><bsv-img-slot [slot]="'catalog-' + r.slug + ' · foto oficial de la serie pendiente'" [product]="true" [alt]="'Serie ' + r.serie + ', foto oficial'" style="background:#fff" bsvReveal="scale" />
       <div bsvReveal [revealIndex]="1"><span class="eyebrow">Recurso técnico</span><h2 style="margin-top:8px">Foto oficial y ficha 60 Hz</h2><p class="muted">La foto es la oficial de la serie en pedrollo.com.mx; representa a la serie, no a un modelo exacto. @if (r.tecnico.foto_oficial_fuente) { <a [href]="r.tecnico.foto_oficial_fuente" target="_blank" rel="noopener">Fuente</a> }</p>
-        @if (r.tecnico.ficha_60hz) { <a class="download" [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ r.serie }} · 60 Hz</strong><span>PDF · México</span></div></a> } @else { <div class="alert alert-warning"><bsv-icon name="info" style="--icon:20px" /><div><strong>Sin ficha 60 Hz en el banco</strong>Placeholder: pendiente de conseguir la ficha técnica para México.</div></div> }
+        @if (r.tecnico.ficha_60hz) { <a class="download" [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ r.serie }} · 60 Hz</strong><span>PDF · México</span></div></a> } @else if (products$.reviewMode()) { <div class="alert alert-warning"><bsv-icon name="info" style="--icon:20px" /><div><strong>Sin ficha 60 Hz en el banco</strong>Placeholder: pendiente de conseguir la ficha técnica para México.</div></div> }
       </div></div>
   </div></section>
   }
@@ -92,7 +92,7 @@ import { NotFound } from '../errors/not-found';
   </div></section>
   }
   <section class="s-section ivory" id="comparar" data-component="CompareModels"><div class="container">
-    <div class="s-head"><span class="eyebrow" bsvReveal>Modelos</span><h2 bsvReveal [revealIndex]="1">{{ c()?.compare?.head ?? 'Modelos de la serie ' + r.serie }}</h2><p bsvReveal [revealIndex]="2">{{ c()?.compare?.lead ?? 'Modelos registrados en el CRM de BSV. Las especificaciones se validaron contra la ficha técnica 60 Hz; donde no aparecen, quedan pendientes.' }}</p></div>
+    <div class="s-head"><span class="eyebrow" bsvReveal>Modelos</span><h2 bsvReveal [revealIndex]="1">{{ c()?.compare?.head ?? 'Modelos de la serie ' + r.serie }}</h2><p bsvReveal [revealIndex]="2">{{ c()?.compare?.lead ?? 'Modelos registrados en el CRM de BSV. Las especificaciones se validaron contra la ficha técnica 60 Hz.' }}</p></div>
     <div class="product-grid">@for (p of products(); track p.id; let i = $index) { <bsv-product-card [p]="p" bsvReveal="scale" [revealIndex]="i % 4" /> }</div>
     @if (r.modelos_en_ficha_60hz.length) { <p class="small muted" style="margin-top:var(--space-5)">Modelos que aparecen en la ficha 60 Hz: {{ r.modelos_en_ficha_60hz.join(' · ') }}.</p> }
   </div></section>
@@ -104,7 +104,7 @@ import { NotFound } from '../errors/not-found';
     <div class="row" style="margin-top:var(--space-5)">@if (r.tecnico.ficha_60hz) { <a class="download" [href]="r.tecnico.ficha_60hz" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ r.serie }} · 60 Hz</strong><span>PDF · México</span></div></a> }@for (o of r.tecnico.otros_pdf; track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div></a> }</div>
   </div></section>
   }
-  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz. Los modelos que aún no tienen ficha validada se muestran con especificaciones pendientes.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios en pesos mexicanos con IVA incluido. La existencia y el tiempo de entrega se confirman con tu código postal en el carrito.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
+  <div class="container s-foot" data-component="Footnotes"><ol><li>Las especificaciones provienen de la ficha técnica Pedrollo 60 Hz.</li><li>Las imágenes cinematográficas (hero y banner) son recursos comerciales representativos de la serie; la foto principal de cada producto es la oficial de la serie.</li><li>Precios en pesos mexicanos con IVA incluido. La existencia y el tiempo de entrega se confirman con tu código postal en el carrito.</li>@if (c()?.source; as src) { <li>{{ src }}</li> }</ol></div>
   } @else {
   <bsv-not-found titulo="No encontramos esa serie" detalle="No hay una serie con ese identificador. Búscala por nombre o recorre el catálogo." />
   }`,

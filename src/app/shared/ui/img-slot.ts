@@ -1,8 +1,9 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { imageFor } from '../../core/images';
 import { StoreBanner } from '../../core/api/storefront-api';
+import { ReviewService } from '../../core/review';
 /** Hueco de imagen con nombre. Resuelve la imagen desde core/images.ts por el nombre del hueco,
  *  o recibe [src] explícito. [scene]=true para fotos con fondo propio (cover en vez de contain).
  *  Bala 11: con [banner] pinta el banner del admin (`<picture>` con la versión móvil si la hay, y enlace si trae) e ignora el manifiesto;
@@ -10,7 +11,7 @@ import { StoreBanner } from '../../core/api/storefront-api';
 @Component({
   selector: 'bsv-img-slot',
   imports: [NgTemplateOutlet, RouterLink],
-  host: { '[class]': 'classes()', '[attr.data-slot]': 'slot()' },
+  host: { '[class]': 'classes()', '[attr.data-slot]': 'review.on() ? slot() : null' },
   template: `
     <ng-template #pic let-b><picture>@if (b.urlMovil) { <source media="(max-width: 767px)" [srcset]="b.urlMovil" /> }<img [src]="b.url" [alt]="b.alt" [attr.loading]="eager() ? 'eager' : 'lazy'" [attr.fetchpriority]="eager() ? 'high' : null" decoding="async" /></picture></ng-template>
     @if (banner(); as b) {
@@ -21,6 +22,8 @@ import { StoreBanner } from '../../core/api/storefront-api';
     } @else if (url(); as u) { <img [src]="u" [alt]="alt()" [attr.loading]="eager() ? 'eager' : 'lazy'" [attr.fetchpriority]="eager() ? 'high' : null" decoding="async" /> }`,
 })
 export class ImgSlot {
+  /** El nombre del hueco es una nota interna: solo se pinta en modo revisión. Al público, un hueco sin imagen queda liso. */
+  protected review = inject(ReviewService);
   slot = input.required<string>(); src = input<string | null>(null); alt = input(''); product = input(false); scene = input(false); eager = input(false);
   /** Banner del admin (bala 11). Con banner manda sobre `src` y el manifiesto. */
   banner = input<StoreBanner | null>(null);

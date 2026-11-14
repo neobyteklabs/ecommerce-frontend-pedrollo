@@ -43,13 +43,12 @@ describe('Ficha · imágenes por sección (bala 12)', () => {
     expect(Array.from(el.querySelectorAll('.thumbs img')).map(i => i.getAttribute('src'))).not.toContain(img('b', 'curvas').url);
   });
 
-  it('con una imagen de tienda en foto ya no se pinta el mosaico «fotografía original pendiente»', async () => {
-    const con = await ficha({ imagenes: [img('a', 'foto')] });
-    expect(con.el.innerHTML).not.toContain('fotografía original del modelo');
-    const sin = await ficha({ imagenes: [img('b', 'curvas')] });
-    expect(sin.el.innerHTML).toContain('fotografía original del modelo');   // una imagen de curvas no es fotografía del modelo
-    const nada = await ficha({});
-    expect(nada.el.innerHTML).toContain('fotografía original del modelo');
+  it('el mosaico «fotografía original pendiente» es una nota interna: al público nunca se le pinta', async () => {
+    for (const data of [{ imagenes: [img('a', 'foto')] }, { imagenes: [img('b', 'curvas')] }, {}]) {
+      const { el } = await ficha(data);
+      expect(el.innerHTML).not.toContain('fotografía original del modelo');
+      expect(el.innerHTML).not.toContain('Placeholder');
+    }
   });
 
   it('el orden relativo dentro de la sección es el del admin', async () => {

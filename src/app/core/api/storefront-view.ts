@@ -24,14 +24,14 @@ export function cardFromSummary(p: StorefrontProductSummary): CardItem {
     id: p.slug, model: p.model, name: `Serie ${p.series ?? '—'}${familyName ? ' · ' + familyName : ''}`,
     serie: serieSlug, serieName: p.series ?? '', catalog: imageFor(`catalog-${serieSlug}`),
     price: p.price?.amount ?? null, before: p.price?.before ?? null, promoLabel: p.price?.promotion?.label ?? null,
-    avail: p.availability?.state ?? null, specs: specs || 'Especificaciones pendientes', specsPending: !specs,
+    avail: p.availability?.state ?? null, specs: specs || 'Pedrollo · 60 Hz', specsPending: !specs,
     imagen: p.imagen ?? null,
   };
 }
 
 export function cardFromProduct(p: Product): CardItem {
   const specs = p.validated ? [p.hp != null ? `${p.hp} HP` : null, p.kw != null ? `${p.kw} kW` : null, p.phase, p.voltages.length ? p.voltages.join(' / ') : null].filter(Boolean).join(' · ') : '';
-  return { id: p.id, model: p.model, name: p.name, serie: p.serie, serieName: p.serieName, catalog: p.catalog, price: p.price, before: null, promoLabel: null, avail: p.avail, specs: specs || 'Especificaciones pendientes de ficha 60 Hz', specsPending: !p.validated };
+  return { id: p.id, model: p.model, name: p.name, serie: p.serie, serieName: p.serieName, catalog: p.catalog, price: p.price, before: null, promoLabel: null, avail: p.avail, specs: specs || 'Pedrollo · 60 Hz', specsPending: !p.validated };
 }
 
 /**

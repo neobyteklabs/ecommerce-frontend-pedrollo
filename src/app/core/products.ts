@@ -32,7 +32,7 @@ export const availLabel = (a: Availability | null, reason?: string | null) => a 
   : 'Disponibilidad por confirmar';
 export const mxn = (n: number | null | undefined) => n == null ? 'Por confirmar' : '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const IVA = 0.16;
-export const specLine = (p: Product) => p.validated ? [p.hp != null ? `${p.hp} HP` : null, p.kw != null ? `${p.kw} kW` : null, p.phase, p.voltages.length ? p.voltages.join(' / ') : null].filter(Boolean).join(' · ') : 'Especificaciones pendientes de ficha 60 Hz';
+export const specLine = (p: Product) => p.validated ? [p.hp != null ? `${p.hp} HP` : null, p.kw != null ? `${p.kw} kW` : null, p.phase, p.voltages.length ? p.voltages.join(' / ') : null].filter(Boolean).join(' · ') : `Serie ${p.serieName}`;
 
 /** Un recorte técnico se publica solo si está aprobado, o en modo revisión. */
 export const cutsVisible = (c: ModelCuts | null | undefined, review: boolean) => !!c && (c.aprobado || review);
