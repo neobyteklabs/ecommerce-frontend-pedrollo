@@ -1,0 +1,6 @@
+<svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cotizador Vega">
+  <rect width="360" height="360" rx="80" fill="#16225e"/>
+  <path d="M90 100 L180 240" stroke="#29a9e0" stroke-width="42" stroke-linecap="round"/>
+  <path d="M270 100 L180 240" stroke="#ffffff" stroke-width="42" stroke-linecap="round"/>
+  <path d="M180 68 C220 106 226 124 226 140 C226 166 205 184 180 184 C155 184 134 166 134 140 C134 124 140 106 180 68 Z" fill="#7fdcf5"/>
+</svg>
