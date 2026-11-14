@@ -7,7 +7,8 @@ describe('imageFor (huecos de imagen)', () => {
     expect(imageFor('serie-2cp-hero · hero cinematográfico pendiente · 2560×1440')).toContain('media/comercial/');
   });
   it('un hueco sin imagen instalada queda como placeholder (null)', () => {
-    expect(imageFor('serie-pk-prestaciones · imagen pendiente')).toBeNull();
+    // Un hueco con forma válida pero de una serie que no existe: no depende de qué lotes de imágenes estén instalados.
+    expect(imageFor('serie-noexiste-prestaciones · imagen pendiente')).toBeNull();
     expect(imageFor('serie-noexiste-hero')).toBeNull();
   });
 });
