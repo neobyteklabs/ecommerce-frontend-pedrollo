@@ -110,8 +110,8 @@ import { NotFound } from '../errors/not-found';
         @if (p.nota && p.validated) { <p class="small muted" style="margin-top:8px">{{ p.nota }}</p> }
       </div>
       <div class="stack" bsvReveal [revealIndex]="1">
-        @if (p.technical || otherPdfs().length || products.reviewMode()) { <div><h3>Descargas</h3><div class="stack-sm">
-          @if (p.technical) { <a class="download" [href]="p.technical" target="_blank" rel="noopener" data-component="DownloadCard"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ p.serieName }} · 60 Hz</strong><span>PDF · español · México · original sin modificar</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
+        @if (ficha() || otherPdfs().length || products.reviewMode()) { <div><h3>Descargas</h3><div class="stack-sm">
+          @if (ficha(); as fic) { <a class="download" [href]="fic" target="_blank" rel="noopener" data-component="DownloadCard"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica {{ p.serieName }} · 60 Hz</strong><span>PDF · español · México · original sin modificar</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
           @else if (products.reviewMode()) { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Sin ficha en el banco</span></div></div> }
           @for (o of otherPdfs(); track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
         </div></div> }
@@ -158,7 +158,9 @@ export class ProductPage {
   quoting = signal(false);
   hasStory = computed(() => !!SERIES[this.p()?.serie ?? '']);
   series = computed(() => seriesBySlug(this.p()?.serie ?? ''));
-  otherPdfs = computed(() => this.series()?.tecnico.otros_pdf ?? []);
+  /** Ficha 60 Hz del producto: la del modelo en el manifiesto; si el producto no está en él, la de su serie. */
+  ficha = computed(() => this.p()?.technical ?? this.series()?.tecnico.ficha_60hz ?? null);
+  otherPdfs = computed(() => (this.series()?.tecnico.otros_pdf ?? []).filter(o => o !== this.ficha()));
   cutsOk = computed(() => cutsVisible(this.p()?.cuts, this.products.reviewMode()));
   gtab = linkedSignal<string, string>({ source: () => this.id(), computation: () => 'foto' });
   thumb = linkedSignal<string, number>({ source: () => this.gtab(), computation: () => 0 });
