@@ -1192,11 +1192,11 @@
   "slug": "up"
  },
  "serie-vx-construccion": {
-  "estado": "pendiente",
-  "fecha": "2026-11-14",
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
   "medidas": "1600x1200",
   "origen": "serie-vx-construccion.webp",
-  "sha256": "176bb636096da7132effff141fe93fe8b2a4587039ac77c4da920a79f5034336",
+  "sha256": "dd9a9a089e1eb01dd04b13177900f443dd63f453beab677232ea82b78f343618",
   "slug": "vx"
  },
  "serie-vx-hero": {
@@ -1208,35 +1208,35 @@
   "slug": "vx"
  },
  "serie-vx-limites": {
-  "estado": "pendiente",
-  "fecha": "2026-11-14",
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
   "medidas": "1600x1200",
   "origen": "serie-vx-limites.webp",
-  "sha256": "4434311e48acde6cd831e924ebccac4beb2338aa5f6ce3476d591be090c5a612",
+  "sha256": "dad2af0581f6dcdd8ef579d2cf298ce407dab1b5d1449ebd32411ca123a1276b",
   "slug": "vx"
  },
  "serie-vx-modelos": {
-  "estado": "pendiente",
-  "fecha": "2026-11-14",
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
   "medidas": "1600x1200",
   "origen": "serie-vx-modelos.webp",
-  "sha256": "8a356039b37f2f16e8c17b788b7ef27148c3a7a8ce8142432ec63be560399848",
+  "sha256": "7b1b2025a79a5352fc1f0e150509b042923855f36d02c4f34fea56c25869e00e",
   "slug": "vx"
  },
  "serie-vx-motor": {
-  "estado": "pendiente",
-  "fecha": "2026-11-14",
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
   "medidas": "1600x1200",
   "origen": "serie-vx-motor.webp",
-  "sha256": "0e9de799abe7f030fdec7673f9417724870c19df2dc94eb0b7b2218986cd54b8",
+  "sha256": "ec0bce87186a2accfe1ada92ceabb3945f9407dd59bec276b0e9f5cfd6007791",
   "slug": "vx"
  },
  "serie-vx-prestaciones": {
-  "estado": "pendiente",
-  "fecha": "2026-11-14",
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
   "medidas": "1600x1200",
   "origen": "serie-vx-prestaciones.webp",
-  "sha256": "3376f4ae91a3bf592ae306ebb68714404dbc4f147c86e6b404e0b50de545f495",
+  "sha256": "97a099f9fe91b358d3fe664d2aa74519fbced66de856af4cfefa3f6379b641a9",
   "slug": "vx"
  },
  "serie-vx-st-hero": {
