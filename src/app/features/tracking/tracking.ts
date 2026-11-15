@@ -1,4 +1,4 @@
-import { Component, inject, input, computed, signal, viewChild } from '@angular/core';
+import { Component, inject, input, computed, signal, viewChild, effect, untracked } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { StorefrontApi, TrackingResponse, TrackingState, OrderAddress, InvoiceState, InvoiceRequested } from '../../core/api/storefront-api';
@@ -128,6 +128,14 @@ import { ToastService } from '../../core/toast';
 })
 export class Tracking {
   folio = input<string>(); c = input<string>();
+  /** `?factura=1`: quien llega desde «Solicitar factura» (confirmación del pedido) encuentra el formulario abierto. Una sola vez por visita. */
+  factura = input<string>(); private autoOpened = false;
+  private openInvoice = effect(() => {
+    if (this.factura() !== '1' || this.autoOpened || !this.remote.hasValue()) { return; }
+    const t = this.remote.value();
+    this.autoOpened = true;
+    if (t.tipo === 'pedido' && t.acciones.includes('factura')) { untracked(() => this.invoicing.set(true)); }
+  });
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
   invoicing = signal(false); invoiceNotice = signal<string | null>(null); invoiceCmp = viewChild(InvoiceFormComponent);
   /** La remisión y la cotización se ven en un modal, sin sacar al comprador de la tienda (Felipe, 6-nov). Solo URLs relativas de la propia tienda. */

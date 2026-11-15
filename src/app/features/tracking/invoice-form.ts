@@ -7,8 +7,22 @@ import { REGIMENES, USOS_CFDI } from './invoice-catalogs';
 
 /** Mismo patrón que `InvoiceCatalogs` del backend (RFC en mayúsculas, 12 o 13 caracteres). */
 export const RFC_PATTERN = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/;
-type Field = 'rfc' | 'razonSocial' | 'regimen' | 'cpFiscal' | 'usoCfdi' | 'correo' | 'comentarios';
-const FIELDS: readonly Field[] = ['rfc', 'razonSocial', 'regimen', 'cpFiscal', 'usoCfdi', 'correo', 'comentarios'];
+type Field = 'rfc' | 'razonSocial' | 'regimen' | 'cpFiscal' | 'usoCfdi' | 'correo' | 'comentarios' | 'formaPago' | 'constancia';
+const FIELDS: readonly Field[] = ['rfc', 'razonSocial', 'regimen', 'cpFiscal', 'usoCfdi', 'correo', 'comentarios', 'formaPago', 'constancia'];
+/** Formas de pago del SAT de un pedido de tienda (se paga con tarjeta en línea). Mismas claves que `InvoiceCatalogs.FORMAS_PAGO` del backend. */
+export const FORMAS_PAGO = [{ clave: '04', nombre: 'Tarjeta de crédito' }, { clave: '28', nombre: 'Tarjeta de débito' }] as const;
+/** Mismo tope que el backend: la constancia es un PDF del SAT de una o dos páginas. */
+export const MAX_CONSTANCIA_BYTES = 4 * 1024 * 1024;
+
+/** El archivo en base64, sin el prefijo `data:`. */
+function toBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => { const s = String(r.result); resolve(s.slice(s.indexOf(',') + 1)); };
+    r.onerror = () => reject(r.error);
+    r.readAsDataURL(file);
+  });
+}
 
 /** El formulario fiscal de «Solicitar factura» (bala 7): va dentro del modal del seguimiento. La tienda no timbra; el backend avisa a contabilidad.
  *  Validación local antes del POST; un 400 del servidor marca el campo que nombra la primera palabra de su `message`. */
@@ -25,8 +39,12 @@ const FIELDS: readonly Field[] = ['rfc', 'razonSocial', 'regimen', 'cpFiscal', '
       <div class="field" [class.has-error]="bad('cpFiscal')"><label for="inv-cp">Código postal fiscal *</label><input id="inv-cp" class="input" name="cpFiscal" [(ngModel)]="f.cpFiscal" inputmode="numeric" maxlength="5" autocomplete="postal-code" /><span class="error-msg">{{ msg('cpFiscal') }}</span></div>
       <div class="field" [class.has-error]="bad('regimen')"><label for="inv-reg">Régimen fiscal *</label><select id="inv-reg" class="select" name="regimen" [(ngModel)]="f.regimen"><option value="">Elige tu régimen</option>@for (r of regimenes; track r.clave) { <option [value]="r.clave">{{ r.clave }} · {{ r.nombre }}</option> }</select><span class="error-msg">{{ msg('regimen') }}</span></div>
       <div class="field" [class.has-error]="bad('usoCfdi')"><label for="inv-uso">Uso de CFDI *</label><select id="inv-uso" class="select" name="usoCfdi" [(ngModel)]="f.usoCfdi">@for (u of usos; track u.clave) { <option [value]="u.clave">{{ u.clave }} · {{ u.nombre }}</option> }</select><span class="error-msg">{{ msg('usoCfdi') }}</span></div>
+      <div class="field" [class.has-error]="bad('formaPago')"><label for="inv-fp">¿Con qué tarjeta pagaste? *</label><select id="inv-fp" class="select" name="formaPago" [(ngModel)]="f.formaPago"><option value="">Elige la forma de pago</option>@for (p of formasPago; track p.clave) { <option [value]="p.clave">{{ p.clave }} · {{ p.nombre }}</option> }</select><span class="error-msg">{{ msg('formaPago') }}</span><span class="hint small muted">Método de pago: PUE · pago en una sola exhibición.</span></div>
       <div class="field" [class.has-error]="bad('correo')"><label for="inv-mail">Correo para recibirla *</label><input id="inv-mail" class="input" name="correo" type="email" [(ngModel)]="f.correo" maxlength="200" autocomplete="email" /><span class="error-msg">{{ msg('correo') }}</span></div>
     </div>
+    <div class="field" [class.has-error]="bad('constancia')" data-component="InvoiceCertificate"><label for="inv-csf">Constancia de situación fiscal <span class="muted" style="font-weight:400">(opcional · PDF de hasta 4 MB)</span></label>
+      <input id="inv-csf" class="input" type="file" name="constancia" accept="application/pdf,.pdf" (change)="pickFile($event)" />
+      <span class="error-msg">{{ msg('constancia') }}</span><span class="hint small muted">Ayuda a contabilidad a timbrar sin errores. Solo la ve nuestro equipo de contabilidad.</span></div>
     <div class="field" [class.has-error]="bad('comentarios')"><label for="inv-obs">Comentarios para contabilidad <span class="muted" style="font-weight:400">(opcional)</span></label><textarea id="inv-obs" class="textarea" name="comentarios" [(ngModel)]="f.comentarios" maxlength="500" style="min-height:72px" placeholder="Ej. requiero complemento de pago"></textarea><span class="error-msg">{{ msg('comentarios') }}</span></div>
     @if (formError()) { <bsv-alert kind="danger">{{ formError() }}</bsv-alert> }
     <div class="row" style="gap:8px;justify-content:flex-end;flex-wrap:wrap">
@@ -39,8 +57,11 @@ export class InvoiceFormComponent {
   folio = input.required<string>(); contacto = input.required<string>(); numero = input<string>(''); total = input<number | null>(null);
   /** La respuesta del POST más el correo al que se pidió (el servidor no lo devuelve). */
   enviada = output<InvoiceRequested & { correo: string }>(); cancelar = output<void>();
-  private api = inject(StorefrontApi); mxn = mxn; regimenes = REGIMENES; usos = USOS_CFDI;
-  f = { rfc: '', razonSocial: '', regimen: '', cpFiscal: '', usoCfdi: 'G03', correo: '', comentarios: '' };
+  private api = inject(StorefrontApi); mxn = mxn; regimenes = REGIMENES; usos = USOS_CFDI; formasPago = FORMAS_PAGO;
+  f = { rfc: '', razonSocial: '', regimen: '', cpFiscal: '', usoCfdi: 'G03', correo: '', comentarios: '', formaPago: '' };
+  /** La constancia elegida (opcional). Se lee al enviar. */
+  file = signal<File | null>(null);
+  pickFile(e: Event) { this.file.set((e.target as HTMLInputElement).files?.[0] ?? null); this.server.update(s => ({ ...s, constancia: undefined })); }
   private submitted = signal(false); private server = signal<Partial<Record<Field, string>>>({});
   sending = signal(false); formError = signal<string | null>(null);
 
@@ -58,6 +79,10 @@ export class InvoiceFormComponent {
       case 'regimen': return REGIMENES.some(r => r.clave === v.regimen) ? null : 'Elige tu régimen fiscal.';
       case 'usoCfdi': return USOS_CFDI.some(u => u.clave === v.usoCfdi) ? null : 'Elige el uso de CFDI.';
       case 'correo': return v.correo.includes('@') && v.correo.trim().length <= 200 ? null : 'Escribe un correo válido.';
+      case 'formaPago': return FORMAS_PAGO.some(p => p.clave === v.formaPago) ? null : 'Elige si pagaste con tarjeta de crédito o de débito.';
+      case 'constancia': { const a = this.file(); if (!a) { return null; }
+        if (a.size > MAX_CONSTANCIA_BYTES) { return 'La constancia pesa más de 4 MB. Descárgala de nuevo del SAT o envíala después a contabilidad.'; }
+        return a.type === 'application/pdf' || a.name.toLowerCase().endsWith('.pdf') ? null : 'La constancia debe ser un archivo PDF.'; }
       default: return null;
     }
   }
@@ -72,8 +97,10 @@ export class InvoiceFormComponent {
     try {
       const v = this.f;
       const correo = v.correo.trim();
+      const archivo = this.file();
+      const constancia = archivo ? { nombre: archivo.name, base64: await toBase64(archivo) } : undefined;
       const res = await this.api.requestInvoice(this.folio(), this.contacto(), { rfc: v.rfc.trim().toUpperCase(), razonSocial: v.razonSocial.trim(), regimen: v.regimen,
-        cpFiscal: v.cpFiscal.trim(), usoCfdi: v.usoCfdi, correo, comentarios: v.comentarios.trim() });
+        cpFiscal: v.cpFiscal.trim(), usoCfdi: v.usoCfdi, correo, comentarios: v.comentarios.trim(), formaPago: v.formaPago, ...(constancia ? { constancia } : {}) });
       this.enviada.emit({ ...res, correo });
     } catch (err: unknown) {
       const e2 = err as { status?: number; error?: { message?: string } };
@@ -83,6 +110,7 @@ export class InvoiceFormComponent {
       else if (e2.status === 400) { this.formError.set(message || 'Revisa los datos fiscales.'); }
       else if (e2.status === 409) { this.formError.set(message || 'No se puede pedir la factura de este folio.'); }
       else if (e2.status === 404) { this.formError.set('No encontramos este pedido con ese contacto.'); }
+      else if (e2.status === 413) { this.server.set({ constancia: 'La constancia es demasiado grande. Envía la solicitud sin ella y mándala después a contabilidad.' }); }
       else { this.formError.set('La tienda no respondió. Intenta de nuevo.'); }
     } finally { this.sending.set(false); }
   }

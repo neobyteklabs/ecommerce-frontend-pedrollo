@@ -90,7 +90,8 @@ export interface TrackingResponse {
 }
 /** Bala 7: `solicitada` y `enviada_contabilidad` se ven igual; `sin_contabilidad` = la tienda la guardó pero no salió correo; `rechazada` se puede volver a pedir. */
 export type InvoiceState = 'solicitada' | 'enviada_contabilidad' | 'sin_contabilidad' | 'facturada' | 'rechazada';
-export interface InvoiceForm { rfc: string; razonSocial: string; regimen: string; cpFiscal: string; usoCfdi: string; correo: string; comentarios?: string; }
+/** `formaPago`: clave del SAT (04 tarjeta de crédito, 28 tarjeta de débito). `constancia`: la constancia de situación fiscal en PDF, opcional. */
+export interface InvoiceForm { rfc: string; razonSocial: string; regimen: string; cpFiscal: string; usoCfdi: string; correo: string; comentarios?: string; formaPago: string; constancia?: { nombre: string; base64: string }; }
 export interface InvoiceRequested { estado: InvoiceState; creado: string; yaSolicitada: boolean; }
 
 /** Añade X-Store-Key solo cuando hay llave (SSR) y la petición va al back-office. En el bundle del navegador STORE_KEY es '' y no hace nada. */

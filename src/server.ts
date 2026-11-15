@@ -217,7 +217,17 @@ const STRIPE_PUBLISHABLE_KEY = process.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 /** Bala 13: la clave pública de Mercado Pago (`MP_PUBLIC_KEY`) tampoco es secreta; la usa el formulario de tarjeta en el navegador. */
 const MP_PUBLIC_KEY = process.env['MP_PUBLIC_KEY'] ?? '';
 app.get('/__config', async (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY, mpPublicKey: MP_PUBLIC_KEY, googleClientId: await googleClientIdNow() }); });
-app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: '64kb' }), async (req, res) => {
+/** La solicitud de factura es la única escritura que puede traer un archivo: la constancia de situación fiscal (PDF de hasta 4 MB, en base64 ≈ 5.4 MB). */
+const INVOICE_RE = /^\/api\/tienda\/v1\/seguimiento\/[^/]+\/factura$/;
+const rawSmall = express.raw({ type: 'application/json', limit: '64kb' });
+const rawInvoice = express.raw({ type: 'application/json', limit: '6mb' });
+/** Un cuerpo más grande que el tope responde 413 en JSON (el formulario lo traduce); sin esto caía al manejador de errores con una página HTML. */
+const tooLarge: express.ErrorRequestHandler = (err, _req, res, next) => {
+  if ((err as { type?: string }).type !== 'entity.too.large') { next(err); return; }
+  res.status(413).json({ code: 'PAYLOAD_TOO_LARGE', message: 'El archivo es demasiado grande.', timestamp: new Date().toISOString() });
+};
+const rawBody: express.RequestHandler = (req, res, next) => (INVOICE_RE.test(req.path) ? rawInvoice : rawSmall)(req, res, next);
+app.post('/api/tienda/{*splat}', rawBody, tooLarge, async (req: express.Request, res: express.Response) => {
   if (!isWritable(req.path)) {
     res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
     return;
@@ -233,7 +243,7 @@ app.post('/api/tienda/{*splat}', express.raw({ type: 'application/json', limit: 
   try {
     const headers: Record<string, string> = { 'X-Store-Key': STORE_KEY, Accept: 'application/json', 'Content-Type': 'application/json' };
     const idem = req.header('Idempotency-Key'); if (idem) headers['Idempotency-Key'] = idem;
-    const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(8000) });
+    const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(INVOICE_RE.test(req.path) ? 30000 : 8000) });
     res.status(upstream.status);
     const type = upstream.headers.get('content-type');
     if (type) res.setHeader('Content-Type', type);
