@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'login', loadComponent: () => import('./features/auth/login').then(m => m.Login), title: 'Iniciar sesión' },
   { path: 'checkout', loadComponent: () => import('./features/checkout/checkout').then(m => m.Checkout), title: 'Pagar' },
   { path: 'checkout/confirmando', loadComponent: () => import('./features/checkout/confirming').then(m => m.Confirming), title: 'Confirmando tu pago' },
+  { path: 'pedido/:folio/transferencia', loadComponent: () => import('./features/checkout/transfer').then(m => m.Transfer), title: 'Pago por transferencia' },
   { path: 'pedido/:folio/gracias', loadComponent: () => import('./features/checkout/thanks').then(m => m.Thanks), title: 'Pedido recibido' },
   { path: 'seguimiento', loadComponent: () => import('./features/tracking/tracking').then(m => m.Tracking), title: 'Seguimiento' },
   { path: 'seguimiento/:folio', loadComponent: () => import('./features/tracking/tracking').then(m => m.Tracking), title: 'Seguimiento' },

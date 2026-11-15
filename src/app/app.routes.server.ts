@@ -22,6 +22,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'checkout', renderMode: RenderMode.Client },
   { path: 'checkout/confirmando', renderMode: RenderMode.Client },
   { path: 'pedido/:folio/gracias', renderMode: RenderMode.Client },
+  { path: 'pedido/:folio/transferencia', renderMode: RenderMode.Client },
   { path: 'cuenta', renderMode: RenderMode.Client },
   { path: 'cuenta/pedidos', renderMode: RenderMode.Client },
   { path: 'cuenta/pedidos/:id', renderMode: RenderMode.Client },

@@ -53,6 +53,22 @@ describe('InvoiceFormComponent', () => {
     expect(cmp.sending()).toBe(false);
   });
 
+  it('un pedido pagado por transferencia no pregunta la forma de pago: va fija en 03', async () => {
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    const fixture = TestBed.createComponent(InvoiceFormComponent);
+    fixture.componentRef.setInput('folio', 'F-1'); fixture.componentRef.setInput('contacto', 'ana@example.com'); fixture.componentRef.setInput('formasPago', ['03']);
+    fixture.detectChanges(); await Promise.resolve(); fixture.detectChanges();
+    const cmp = fixture.componentInstance; const el = fixture.nativeElement as HTMLElement; const http = TestBed.inject(HttpTestingController);
+    expect(el.querySelector('select#inv-fp')).toBeNull();
+    expect(el.querySelector<HTMLInputElement>('input#inv-fp')!.value).toContain('03 · Transferencia');
+    llenar(cmp); cmp.f.formaPago = '03';
+    const p = cmp.submit(new Event('submit'));
+    const req = http.expectOne(r => r.url === URL);
+    expect((req.request.body as { formaPago: string }).formaPago).toBe('03');
+    req.flush({ estado: 'enviada_contabilidad', creado: '2026-11-06T12:00:00Z', yaSolicitada: false }, { status: 201, statusText: 'Created' });
+    await p;
+  });
+
   it('sin forma de pago no hace POST y marca el campo', async () => {
     const { fixture, cmp, el, http } = setup(); llenar(cmp); cmp.f.formaPago = '';
     await cmp.submit(new Event('submit')); fixture.detectChanges();

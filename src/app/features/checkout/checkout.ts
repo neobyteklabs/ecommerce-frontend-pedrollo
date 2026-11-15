@@ -97,7 +97,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
             @if (order()?.pago?.modo === 'stripe') { <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p> }
             @else { <p class="xs muted" style="margin:12px 0 0">No se hace ningún cargo hasta que confirmes el pago.</p> }
           </div>
-          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a><a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a></div>
+          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a>@if (transferOk()) { <button class="btn btn-ghost" type="button" data-component="TransferButton" [disabled]="creating() || paying()" (click)="payByTransfer()">Prefiero pagar por transferencia</button> } @else { <a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a> }</div>
         </div>
       }
     </div>
@@ -131,6 +131,8 @@ export class Checkout {
 
   constructor() {
     afterNextRender(() => {
+      // Pago por transferencia: solo se ofrece si la tienda lo configuró en el portal. Si la consulta falla, queda el enlace a WhatsApp.
+      this.api.transferAvailability().then(a => this.transferOk.set(a.disponible)).catch(() => this.transferOk.set(false));
       this.couponInput = this.cart.couponCode();
       if (this.step() === 2) {
         if (!this.valid()) { this.router.navigate(['/checkout'], { queryParams: { step: 1 } }); return; }
@@ -165,6 +167,30 @@ export class Checkout {
     this.router.navigate(['/checkout'], { queryParams: { step: 2 } });
   }
   async applyCoupon() { this.couponLoading.set(true); try { await this.cart.applyCoupon(this.couponInput); } finally { this.couponLoading.set(false); } }
+
+  transferOk = signal(false);
+  /**
+   * Pagar por transferencia: crea el pedido si todavía no existe, lo cambia a transferencia (48 h de apartado) y lleva a la página con los datos
+   * bancarios. El carrito se vacía aquí: la mercancía ya está apartada a nombre de ese pedido.
+   */
+  async payByTransfer() {
+    this.error.set(null); this.creating.set(true);
+    try {
+      const correo = this.f.correo.trim();
+      let folio = this.order()?.folio;
+      if (!folio) {
+        const o = await this.api.createOrder({ comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) });
+        this.remember(o.folio); saveAddress(this.address()); folio = o.folio;
+      }
+      await this.api.chooseTransfer(folio, correo);
+      this.cart.clear(); if (this.browser) { sessionStorage.removeItem('bsv.checkout'); sessionStorage.removeItem('bsv.pago.' + folio); }
+      this.router.navigate(['/pedido', folio, 'transferencia'], { queryParams: { c: correo } });
+    } catch (e) {
+      const err = e as HttpErrorResponse;
+      if (err.status === 503) { this.transferOk.set(false); this.error.set({ title: 'El pago por transferencia no está disponible ahora', detail: 'Paga con tarjeta o escríbenos por WhatsApp.' }); }
+      else { this.handle(e); }
+    } finally { this.creating.set(false); }
+  }
 
   /** Crea el pedido (snapshot + reserva 30 min). Con Stripe, el pago se confirma en el Payment Element; simulado, va directo a confirmar. */
   async createOrder() {

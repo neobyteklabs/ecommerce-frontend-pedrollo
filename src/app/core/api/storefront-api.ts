@@ -80,7 +80,8 @@ export interface TrackingResponse {
   folio: string; numero: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
   entregadoEn?: string | null; recibio?: string | null;
   asesor?: { nombre: string; telefono: string | null; whatsapp: string | null } | null;
-  pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[] } | null;
+  /** `formasPago`: claves del SAT que admite la factura de este pedido según cómo se pagó (03 transferencia; 04 y 28 tarjeta). */
+  pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[]; formasPago?: string[] } | null;
   cotizacion?: { folio: string; total: number; moneda: string; vigencia: string | null; documento: string | null } | null;
   envios: TrackingShipment[]; acciones: string[];
   /** F14: solo viaja (true) en una cotización sin dirección ni en el lead ni guardada: el modal de aceptar la pide. */
@@ -89,6 +90,13 @@ export interface TrackingResponse {
   factura?: { estado: InvoiceState; creado: string; correo: string } | null;
 }
 /** Bala 7: `solicitada` y `enviada_contabilidad` se ven igual; `sin_contabilidad` = la tienda la guardó pero no salió correo; `rechazada` se puede volver a pedir. */
+/** El avance del pago por transferencia. `pago` es nulo si el pedido no se paga así; `banco` y `vence`, solo mientras el pedido sigue abierto. */
+export interface TransferView {
+  folio: string; numero: string; estado: 'pendiente_pago' | 'pagado' | 'cancelado' | 'expirado'; total: number; moneda: string;
+  pago: 'pendiente' | 'en_revision' | 'rechazado' | 'pagado' | null; nota: string | null; vence: string | null;
+  banco: { banco: string; titular: string; cuenta: string | null; clabe: string; instrucciones: string | null; referencia: string } | null;
+  comprobante: { nombre: string; tipo: string; subido: string; total: number } | null;
+}
 export type InvoiceState = 'solicitada' | 'enviada_contabilidad' | 'sin_contabilidad' | 'facturada' | 'rechazada';
 /** `formaPago`: clave del SAT (04 tarjeta de crédito, 28 tarjeta de débito). `constancia`: la constancia de situación fiscal en PDF, opcional. */
 export interface InvoiceForm { rfc: string; razonSocial: string; regimen: string; cpFiscal: string; usoCfdi: string; correo: string; comentarios?: string; formaPago: string; constancia?: { nombre: string; base64: string }; }
@@ -122,6 +130,16 @@ export class StorefrontApi {
   /** Cobra el pedido con la tarjeta tokenizada (Mercado Pago). Rechazada es una respuesta normal (`pago: 'rechazado'`), no un error. */
   payOrder(folio: string, body: CardPaymentRequest) { return firstValueFrom(this.http.post<CardPaymentResult>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/pagar`, body)); }
   confirmOrder(folio: string) { return firstValueFrom(this.http.post<OrderConfirm>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/confirmar`, {})); }
+  // ---- pago por transferencia: el comprador se identifica con folio + contacto, como en el seguimiento ----
+  /** ¿La tienda ofrece pagar por transferencia? `horas`: cuánto aparta la mercancía. */
+  transferAvailability() { return firstValueFrom(this.http.get<{ disponible: boolean; horas: number }>(`${this.base}/api/tienda/v1/transferencia`)); }
+  /** Elige transferencia para un pedido pendiente: lo aparta 48 h y devuelve los datos bancarios. Idempotente. 503 si la tienda no la ofrece; 409 si el pedido ya cerró. */
+  chooseTransfer(folio: string, contacto: string) { return firstValueFrom(this.http.post<TransferView>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/transferencia`, {}, { params: { contacto } })); }
+  transferView(folio: string, contacto: string) { return firstValueFrom(this.http.get<TransferView>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/transferencia`, { params: { contacto } })); }
+  /** Sube el comprobante (PDF, JPG o PNG en base64): el pago pasa a revisión. 400 con el motivo si el archivo no sirve; 409 si el pedido ya venció. */
+  uploadTransferProof(folio: string, contacto: string, file: { nombre: string; base64: string }) {
+    return firstValueFrom(this.http.post<TransferView>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}/transferencia/comprobante`, file, { params: { contacto } }));
+  }
   /** El pedido para la pantalla de gracias; segunda llave = correo o teléfono del comprador. */
   order(folio: string, contacto: string) {
     return firstValueFrom(this.http.get<OrderView>(`${this.base}/api/tienda/v1/pedidos/${encodeURIComponent(folio)}`, { params: { contacto } }));

@@ -121,7 +121,7 @@ import { ToastService } from '../../core/toast';
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="invoice-title" data-component="InvoiceModal" (click)="backdrop($event, !invoiceCmp()?.sending(), invoicing)">
       <div class="modal-panel">
         <h3 id="invoice-title" style="margin:0 0 12px">Solicitar factura</h3>
-        <bsv-invoice-form [folio]="k.folio" [contacto]="k.contacto" [numero]="remote.value().numero || remote.value().folio" [total]="remote.value().pedido?.total ?? null" (enviada)="invoiceSent($event)" (cancelar)="invoicing.set(false)" />
+        <bsv-invoice-form [folio]="k.folio" [contacto]="k.contacto" [numero]="remote.value().numero || remote.value().folio" [total]="remote.value().pedido?.total ?? null" [formasPago]="remote.value().pedido?.formasPago ?? ['04', '28']" (enviada)="invoiceSent($event)" (cancelar)="invoicing.set(false)" />
       </div>
     </div>
   }`,

@@ -1,28 +1,20 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StorefrontApi, InvoiceRequested } from '../../core/api/storefront-api';
 import { mxn } from '../../core/products';
 import { Alert, Icon } from '../../shared/ui';
 import { REGIMENES, USOS_CFDI } from './invoice-catalogs';
+import { toBase64 } from '../../core/files';
 
 /** Mismo patrón que `InvoiceCatalogs` del backend (RFC en mayúsculas, 12 o 13 caracteres). */
 export const RFC_PATTERN = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/;
 type Field = 'rfc' | 'razonSocial' | 'regimen' | 'cpFiscal' | 'usoCfdi' | 'correo' | 'comentarios' | 'formaPago' | 'constancia';
 const FIELDS: readonly Field[] = ['rfc', 'razonSocial', 'regimen', 'cpFiscal', 'usoCfdi', 'correo', 'comentarios', 'formaPago', 'constancia'];
 /** Formas de pago del SAT de un pedido de tienda (se paga con tarjeta en línea). Mismas claves que `InvoiceCatalogs.FORMAS_PAGO` del backend. */
-export const FORMAS_PAGO = [{ clave: '04', nombre: 'Tarjeta de crédito' }, { clave: '28', nombre: 'Tarjeta de débito' }] as const;
+export const FORMAS_PAGO = [{ clave: '03', nombre: 'Transferencia electrónica de fondos' }, { clave: '04', nombre: 'Tarjeta de crédito' }, { clave: '28', nombre: 'Tarjeta de débito' }] as const;
 /** Mismo tope que el backend: la constancia es un PDF del SAT de una o dos páginas. */
 export const MAX_CONSTANCIA_BYTES = 4 * 1024 * 1024;
 
-/** El archivo en base64, sin el prefijo `data:`. */
-function toBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => { const s = String(r.result); resolve(s.slice(s.indexOf(',') + 1)); };
-    r.onerror = () => reject(r.error);
-    r.readAsDataURL(file);
-  });
-}
 
 /** El formulario fiscal de «Solicitar factura» (bala 7): va dentro del modal del seguimiento. La tienda no timbra; el backend avisa a contabilidad.
  *  Validación local antes del POST; un 400 del servidor marca el campo que nombra la primera palabra de su `message`. */
@@ -39,7 +31,7 @@ function toBase64(file: File): Promise<string> {
       <div class="field" [class.has-error]="bad('cpFiscal')"><label for="inv-cp">Código postal fiscal *</label><input id="inv-cp" class="input" name="cpFiscal" [(ngModel)]="f.cpFiscal" inputmode="numeric" maxlength="5" autocomplete="postal-code" /><span class="error-msg">{{ msg('cpFiscal') }}</span></div>
       <div class="field" [class.has-error]="bad('regimen')"><label for="inv-reg">Régimen fiscal *</label><select id="inv-reg" class="select" name="regimen" [(ngModel)]="f.regimen"><option value="">Elige tu régimen</option>@for (r of regimenes; track r.clave) { <option [value]="r.clave">{{ r.clave }} · {{ r.nombre }}</option> }</select><span class="error-msg">{{ msg('regimen') }}</span></div>
       <div class="field" [class.has-error]="bad('usoCfdi')"><label for="inv-uso">Uso de CFDI *</label><select id="inv-uso" class="select" name="usoCfdi" [(ngModel)]="f.usoCfdi">@for (u of usos; track u.clave) { <option [value]="u.clave">{{ u.clave }} · {{ u.nombre }}</option> }</select><span class="error-msg">{{ msg('usoCfdi') }}</span></div>
-      <div class="field" [class.has-error]="bad('formaPago')"><label for="inv-fp">¿Con qué tarjeta pagaste? *</label><select id="inv-fp" class="select" name="formaPago" [(ngModel)]="f.formaPago"><option value="">Elige la forma de pago</option>@for (p of formasPago; track p.clave) { <option [value]="p.clave">{{ p.clave }} · {{ p.nombre }}</option> }</select><span class="error-msg">{{ msg('formaPago') }}</span><span class="hint small muted">Método de pago: PUE · pago en una sola exhibición.</span></div>
+      <div class="field" [class.has-error]="bad('formaPago')"><label for="inv-fp">{{ opciones().length > 1 ? '¿Con qué tarjeta pagaste? *' : 'Forma de pago' }}</label>@if (opciones().length > 1) { <select id="inv-fp" class="select" name="formaPago" [(ngModel)]="f.formaPago"><option value="">Elige la forma de pago</option>@for (p of opciones(); track p.clave) { <option [value]="p.clave">{{ p.clave }} · {{ p.nombre }}</option> }</select> } @else { <input id="inv-fp" class="input" name="formaPagoFija" [value]="opciones()[0].clave + ' · ' + opciones()[0].nombre" readonly /> }<span class="error-msg">{{ msg('formaPago') }}</span><span class="hint small muted">Método de pago: PUE · pago en una sola exhibición.</span></div>
       <div class="field" [class.has-error]="bad('correo')"><label for="inv-mail">Correo para recibirla *</label><input id="inv-mail" class="input" name="correo" type="email" [(ngModel)]="f.correo" maxlength="200" autocomplete="email" /><span class="error-msg">{{ msg('correo') }}</span></div>
     </div>
     <div class="field" [class.has-error]="bad('constancia')" data-component="InvoiceCertificate"><label for="inv-csf">Constancia de situación fiscal <span class="muted" style="font-weight:400">(opcional · PDF de hasta 4 MB)</span></label>
@@ -55,9 +47,12 @@ function toBase64(file: File): Promise<string> {
 })
 export class InvoiceFormComponent {
   folio = input.required<string>(); contacto = input.required<string>(); numero = input<string>(''); total = input<number | null>(null);
+  /** Las claves que admite este pedido según cómo se pagó (las manda el seguimiento): 03 si fue por transferencia; 04 y 28 si fue con tarjeta. */
+  formasPago = input<readonly string[]>(['04', '28']);
+  opciones = computed(() => { const o = FORMAS_PAGO.filter(p => this.formasPago().includes(p.clave)); return o.length ? o : FORMAS_PAGO.filter(p => p.clave !== '03'); });
   /** La respuesta del POST más el correo al que se pidió (el servidor no lo devuelve). */
   enviada = output<InvoiceRequested & { correo: string }>(); cancelar = output<void>();
-  private api = inject(StorefrontApi); mxn = mxn; regimenes = REGIMENES; usos = USOS_CFDI; formasPago = FORMAS_PAGO;
+  private api = inject(StorefrontApi); mxn = mxn; regimenes = REGIMENES; usos = USOS_CFDI;
   f = { rfc: '', razonSocial: '', regimen: '', cpFiscal: '', usoCfdi: 'G03', correo: '', comentarios: '', formaPago: '' };
   /** La constancia elegida (opcional). Se lee al enviar. */
   file = signal<File | null>(null);
@@ -65,7 +60,8 @@ export class InvoiceFormComponent {
   private submitted = signal(false); private server = signal<Partial<Record<Field, string>>>({});
   sending = signal(false); formError = signal<string | null>(null);
 
-  constructor() { queueMicrotask(() => { if (!this.f.correo && this.contacto().includes('@')) { this.f.correo = this.contacto().trim(); } }); }
+  constructor() { queueMicrotask(() => { if (!this.f.correo && this.contacto().includes('@')) { this.f.correo = this.contacto().trim(); }
+    if (this.opciones().length === 1) { this.f.formaPago = this.opciones()[0].clave; } }); }
 
   /** RFC siempre en mayúsculas mientras se escribe. */
   upperRfc(e: Event) { const el = e.target as HTMLInputElement; el.value = el.value.toUpperCase(); this.f.rfc = el.value; }
@@ -79,7 +75,7 @@ export class InvoiceFormComponent {
       case 'regimen': return REGIMENES.some(r => r.clave === v.regimen) ? null : 'Elige tu régimen fiscal.';
       case 'usoCfdi': return USOS_CFDI.some(u => u.clave === v.usoCfdi) ? null : 'Elige el uso de CFDI.';
       case 'correo': return v.correo.includes('@') && v.correo.trim().length <= 200 ? null : 'Escribe un correo válido.';
-      case 'formaPago': return FORMAS_PAGO.some(p => p.clave === v.formaPago) ? null : 'Elige si pagaste con tarjeta de crédito o de débito.';
+      case 'formaPago': return this.opciones().some(p => p.clave === v.formaPago) ? null : 'Elige si pagaste con tarjeta de crédito o de débito.';
       case 'constancia': { const a = this.file(); if (!a) { return null; }
         if (a.size > MAX_CONSTANCIA_BYTES) { return 'La constancia pesa más de 4 MB. Descárgala de nuevo del SAT o envíala después a contabilidad.'; }
         return a.type === 'application/pdf' || a.name.toLowerCase().endsWith('.pdf') ? null : 'La constancia debe ser un archivo PDF.'; }

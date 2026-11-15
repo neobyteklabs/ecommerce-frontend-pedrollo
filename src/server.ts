@@ -164,6 +164,7 @@ async function googleClientIdNow(): Promise<string | null> {
 }
 
 /** Proxy GET hacia la API de tienda (ficha, listados, pedido y seguimiento por folio + contacto, PDF). Devuelve estado, Content-Type y cuerpo tal cual. */
+const FILE_BY_TOKEN_RE = /^\/api\/tienda\/v1\/(facturas\/constancia|pagos\/comprobante)\/[0-9a-f]{64}$/;
 app.get('/api/tienda/{*splat}', async (req, res) => {
   if (CONFIG_ERROR) {
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
@@ -175,7 +176,9 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
   }
   try {
     const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, {
-      headers: { 'X-Store-Key': STORE_KEY, Accept: req.path.endsWith('.pdf') ? 'application/pdf' : 'application/json' },
+      // Los archivos que se abren con el token de un correo (constancia fiscal, comprobante de transferencia) no terminan en .pdf y pueden ser
+      // PDF o imagen: con `Accept: application/json` el back-office respondería 406.
+      headers: { 'X-Store-Key': STORE_KEY, Accept: req.path.endsWith('.pdf') ? 'application/pdf' : FILE_BY_TOKEN_RE.test(req.path) ? '*/*' : 'application/json' },
       signal: AbortSignal.timeout(15000),
     });
     res.status(upstream.status);
@@ -198,7 +201,9 @@ const WRITABLE_RE = [/^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/confirmar
   // Bala 13: cobrar el pedido con la tarjeta tokenizada por el formulario de Mercado Pago (el cuerpo trae el token, nunca la tarjeta).
   /^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/pagar$/, /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/aceptar$/,
   // Bala 7: la solicitud de factura también escribe (y comparte el límite de «seguimiento»).
-  /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/factura$/];
+  /^\/api\/tienda\/v1\/seguimiento\/[A-Za-z0-9-]{1,64}\/factura$/,
+  // Pago por transferencia: elegirla sobre un pedido pendiente y subir el comprobante (la segunda llave va en `?contacto=`).
+  /^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/transferencia$/, /^\/api\/tienda\/v1\/pedidos\/[A-Za-z0-9-]{1,64}\/transferencia\/comprobante$/];
 const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re => re.test(path));
 
 /** Límite por IP, en memoria (bala 5): crear pedidos y consultar seguimiento no deben servir para enumerar folios ni
@@ -217,16 +222,19 @@ const STRIPE_PUBLISHABLE_KEY = process.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 /** Bala 13: la clave pública de Mercado Pago (`MP_PUBLIC_KEY`) tampoco es secreta; la usa el formulario de tarjeta en el navegador. */
 const MP_PUBLIC_KEY = process.env['MP_PUBLIC_KEY'] ?? '';
 app.get('/__config', async (_req, res) => { res.setHeader('Cache-Control', 'no-store'); res.json({ stripePublishableKey: STRIPE_PUBLISHABLE_KEY, mpPublicKey: MP_PUBLIC_KEY, googleClientId: await googleClientIdNow() }); });
-/** La solicitud de factura es la única escritura que puede traer un archivo: la constancia de situación fiscal (PDF de hasta 4 MB, en base64 ≈ 5.4 MB). */
+/** Las dos escrituras que pueden traer un archivo en base64: la solicitud de factura (constancia de situación fiscal, PDF de hasta 4 MB ≈ 5.4 MB)
+ *  y el comprobante de una transferencia (PDF o imagen de hasta 8 MB ≈ 10.7 MB). */
 const INVOICE_RE = /^\/api\/tienda\/v1\/seguimiento\/[^/]+\/factura$/;
+const PROOF_RE = /^\/api\/tienda\/v1\/pedidos\/[^/]+\/transferencia\/comprobante$/;
 const rawSmall = express.raw({ type: 'application/json', limit: '64kb' });
 const rawInvoice = express.raw({ type: 'application/json', limit: '6mb' });
+const rawProof = express.raw({ type: 'application/json', limit: '12mb' });
 /** Un cuerpo más grande que el tope responde 413 en JSON (el formulario lo traduce); sin esto caía al manejador de errores con una página HTML. */
 const tooLarge: express.ErrorRequestHandler = (err, _req, res, next) => {
   if ((err as { type?: string }).type !== 'entity.too.large') { next(err); return; }
   res.status(413).json({ code: 'PAYLOAD_TOO_LARGE', message: 'El archivo es demasiado grande.', timestamp: new Date().toISOString() });
 };
-const rawBody: express.RequestHandler = (req, res, next) => (INVOICE_RE.test(req.path) ? rawInvoice : rawSmall)(req, res, next);
+const rawBody: express.RequestHandler = (req, res, next) => (PROOF_RE.test(req.path) ? rawProof : INVOICE_RE.test(req.path) ? rawInvoice : rawSmall)(req, res, next);
 app.post('/api/tienda/{*splat}', rawBody, tooLarge, async (req: express.Request, res: express.Response) => {
   if (!isWritable(req.path)) {
     res.status(405).json({ code: 'METHOD_NOT_ALLOWED', message: 'La API de tienda es de solo lectura.', timestamp: new Date().toISOString() });
@@ -236,14 +244,14 @@ app.post('/api/tienda/{*splat}', rawBody, tooLarge, async (req: express.Request,
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
-  if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.endsWith('/pagar') && limited(req, 'pagar', 12)) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento'))) {
+  if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.endsWith('/pagar') && limited(req, 'pagar', 12)) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento')) || (/\/transferencia(\/comprobante)?$/.test(req.path) && limited(req, 'transferencia', 20))) {
     res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
   }
   try {
     const headers: Record<string, string> = { 'X-Store-Key': STORE_KEY, Accept: 'application/json', 'Content-Type': 'application/json' };
     const idem = req.header('Idempotency-Key'); if (idem) headers['Idempotency-Key'] = idem;
-    const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(INVOICE_RE.test(req.path) ? 30000 : 8000) });
+    const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(INVOICE_RE.test(req.path) || PROOF_RE.test(req.path) ? 30000 : 8000) });
     res.status(upstream.status);
     const type = upstream.headers.get('content-type');
     if (type) res.setHeader('Content-Type', type);
