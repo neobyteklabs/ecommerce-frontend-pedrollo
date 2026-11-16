@@ -551,12 +551,52 @@
   "sha256": "65fef7e8535ac83bccbac1bdc06e0d198b0fe5a85b72c74f766406a469e81a56",
   "slug": "fluid-solar"
  },
+ "serie-hf-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-hf-construccion.webp",
+  "sha256": "cc1e40682cc7758c5d56d00f569df464b0bd6f61ab03faf85a5e743a418768bc",
+  "slug": "hf"
+ },
  "serie-hf-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-hf-hero.webp",
   "sha256": "88d22e6a4c161a5a61c18442f7104ffb15593deb6af7f50a14e9f95b6547b075",
+  "slug": "hf"
+ },
+ "serie-hf-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-hf-limites.webp",
+  "sha256": "6b2dd208ffc14c49958560bdcde29a3a950b0efc1d32175dd83eb1daace8e063",
+  "slug": "hf"
+ },
+ "serie-hf-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-hf-modelos.webp",
+  "sha256": "0db5b76f1b33d438122cff5c45652203e2c2cda011cb88461182ddb33590da62",
+  "slug": "hf"
+ },
+ "serie-hf-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-hf-motor.webp",
+  "sha256": "60fc3c38301d01f65478486e01ccba9702936d969c1a60fcf7a5335f0b9ebe64",
+  "slug": "hf"
+ },
+ "serie-hf-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-hf-prestaciones.webp",
+  "sha256": "ed41c43f361021f94fc08597ace4caf991ded5be8e17fb1e4e700bc136913583",
   "slug": "hf"
  },
  "serie-ht-hero": {
@@ -1063,6 +1103,38 @@
   "sha256": "9f970a51e5c70dd0c68d5ce39edf6be8397fdd976dce98f035d9e226ecb51ef1",
   "slug": "qem"
  },
+ "serie-qem-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-qem-limites.webp",
+  "sha256": "ba3089d292ec8b9ac7eed286280656d0cdcc1b4d407af40761281b4294ac4503",
+  "slug": "qem"
+ },
+ "serie-qem-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-qem-modelos.webp",
+  "sha256": "617d2388c87bb5b618cf49acb05eaeb8c1d1f3ef2fc166b592e98b993d4b4dad",
+  "slug": "qem"
+ },
+ "serie-qem-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-qem-motor.webp",
+  "sha256": "3e21dd734d00239331beaca561c9c23041e0db6577351de0d50ca2f63a3ec1bb",
+  "slug": "qem"
+ },
+ "serie-qem-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-qem-prestaciones.webp",
+  "sha256": "75195d155dbf5addb7471688626c96b7e766eea4a6d503f145eb1f21cbb3caac",
+  "slug": "qem"
+ },
  "serie-qet-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
@@ -1183,12 +1255,52 @@
   "sha256": "e1166d035525fc3b83b7364b24e206ec95f6e9f82b59252c522a7ee7096cf608",
   "slug": "tritus"
  },
+ "serie-up-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-up-construccion.webp",
+  "sha256": "cf3ae93216eb07edea6b355001ba95039a4ec12cb610ef8b40eb7acf5afaa5b9",
+  "slug": "up"
+ },
  "serie-up-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-up-hero.webp",
   "sha256": "d29f605f0ff4e3f6bab49659ef4e201ec222f9fddcca56f9e6b1e4c0c3a81d29",
+  "slug": "up"
+ },
+ "serie-up-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-up-limites.webp",
+  "sha256": "10a4ccb319665c3bc56158dd3d3cfbf95c816d6e43210c30e253560db3ca1393",
+  "slug": "up"
+ },
+ "serie-up-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-up-modelos.webp",
+  "sha256": "d5638ee617a98dcdbaf8a21947b47477159222e73bb3c77354edc631b38f3a83",
+  "slug": "up"
+ },
+ "serie-up-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-up-motor.webp",
+  "sha256": "95dfd79d4157c567d8b1a0e100d5b1f292659202b81a1987a47f76d32065a4bf",
+  "slug": "up"
+ },
+ "serie-up-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-15",
+  "medidas": "1600x1200",
+  "origen": "serie-up-prestaciones.webp",
+  "sha256": "70d390495338ca89734fa41e44183e58d23424b2cb7e810bc157bba82715f5cc",
   "slug": "up"
  },
  "serie-vx-construccion": {
