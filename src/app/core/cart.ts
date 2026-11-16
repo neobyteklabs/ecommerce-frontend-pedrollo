@@ -44,6 +44,10 @@ export class CartService {
   readonly couponCode = signal<string>(this.loadSession('bsv.cupon') ?? '');
   readonly coupon = signal<CouponResponse | null>(null);
   /** Con cupón válido, los totales son los del backend (descuento antes de IVA); sin cupón, los locales. */
+  /** La compra mínima en línea de la tienda, que llega con el envío; nulo = sin mínimo (o aún sin cotizar el envío). */
+  readonly minPurchase = computed<number | null>(() => this.shippingResult()?.compraMinima ?? null);
+  /** Lo que falta en productos para alcanzar la compra mínima; 0 si ya se alcanza o no hay mínimo. */
+  readonly missingForMinimum = computed(() => { const m = this.minPurchase(); return m == null ? 0 : Math.max(0, Math.round((m - this.totalWithCoupon()) * 100) / 100); });
   readonly totalWithCoupon = computed(() => { const c = this.coupon(); return c?.valido ? c.total : this.total(); });
   readonly ivaWithCoupon = computed(() => { const c = this.coupon(); return c?.valido && c.iva != null ? c.iva : this.iva(); });
   readonly priceChanged = computed(() => this.changed()[0] ?? null);

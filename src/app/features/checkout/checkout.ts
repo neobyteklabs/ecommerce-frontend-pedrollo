@@ -91,13 +91,19 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
                 @if (stripeReady()) { <button class="btn btn-primary btn-lg btn-block" style="margin-top:16px" type="button" [class.is-loading]="paying()" [disabled]="paying()" (click)="confirmStripe()">{{ paying() ? 'Procesando pago…' : 'Pagar ' + mxn(o.total) }}</button> }
                 @else { <div class="btn btn-secondary is-loading btn-block" style="margin-top:16px"></div> } }
             } @else {
+              @if (cart.missingForMinimum() > 0) {
+                <div class="notice" data-testid="compra-minima" style="margin:0 0 12px;padding:12px 14px;border:1px solid var(--warn-border, #f0c36d);background:var(--warn-bg, #fff8e6);border-radius:10px">
+                  <strong>La compra mínima en línea es de {{ mxn(cart.minPurchase()!) }} en productos.</strong>
+                  <div class="small" style="margin-top:4px">Tu pedido suma {{ mxn(cart.totalWithCoupon()) }}: te faltan {{ mxn(cart.missingForMinimum()) }}. <a routerLink="/catalogo">Agrega productos</a> o escríbenos desde <a routerLink="/contacto">Contacto</a> y te cotizamos con gusto.</div>
+                </div>
+              }
               <p class="small muted" style="margin:0 0 12px">Al continuar apartamos tu mercancía 30 minutos mientras pagas.</p>
-              <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="creating()" [disabled]="creating()" (click)="createOrder()">Continuar al pago · {{ mxn(total()) }}</button>
+              <button class="btn btn-primary btn-lg btn-block" type="button" [class.is-loading]="creating()" [disabled]="creating() || cart.missingForMinimum() > 0" (click)="createOrder()">Continuar al pago · {{ mxn(total()) }}</button>
             }
             @if (order()?.pago?.modo === 'stripe') { <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p> }
             @else { <p class="xs muted" style="margin:12px 0 0">No se hace ningún cargo hasta que confirmes el pago.</p> }
           </div>
-          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a>@if (transferOk()) { <button class="btn btn-ghost" type="button" data-component="TransferButton" [disabled]="creating() || paying()" (click)="payByTransfer()">Prefiero pagar por transferencia</button> } @else { <a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a> }</div>
+          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a>@if (transferOk()) { <button class="btn btn-ghost" type="button" data-component="TransferButton" [disabled]="creating() || paying() || cart.missingForMinimum() > 0" (click)="payByTransfer()">Prefiero pagar por transferencia</button> } @else { <a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a> }</div>
         </div>
       }
     </div>
@@ -259,6 +265,7 @@ export class Checkout {
     const err = e as HttpErrorResponse; const body = (err.error ?? {}) as OrderConflict & { message?: string };
     if (err.status === 409 && body.code === 'PRECIO_CAMBIO') { this.cart.applyPriceChanges(body.lineas ?? []); this.error.set({ title: 'Cambió el precio de un artículo', detail: 'Actualizamos el total con los precios de hoy. Revísalo y vuelve a continuar al pago.' }); return; }
     if (err.status === 409 && body.code === 'SIN_EXISTENCIA') { this.cart.shippingResult.set(null); this.error.set({ title: 'Ya no hay existencia suficiente', detail: 'Alguien apartó esa mercancía hace un momento. Ajusta la cantidad en el carrito o pide cotización de esa línea.' }); return; }
+    if (err.status === 400 && body.code === 'COMPRA_MINIMA') { this.error.set({ title: 'Tu pedido no alcanza la compra mínima en línea', detail: body.message || 'Agrega productos o pide una cotización.' }); return; }
     if (err.status === 429) { this.error.set({ title: 'Demasiados intentos', detail: 'Espera un minuto y vuelve a intentar.' }); return; }
     this.error.set({ title: 'No pudimos crear el pedido', detail: body.message || 'Revisa tu conexión e intenta de nuevo. Si el problema sigue, escríbenos por WhatsApp.' });
   }

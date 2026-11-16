@@ -18,7 +18,7 @@ export interface StorefrontPrice {
 export interface StorefrontAvailability { state: 'carrito' | 'cotizar'; reason?: 'solo-cotizacion' | 'sin-existencia'; }
 /** Envío por código postal (bala 4): el back-office resuelve por línea de qué CEDIS sale y cuánto tarda; nunca bloquea. */
 export interface ShippingLine { slug: string; estado: 'carrito' | 'cotizar'; parcial: boolean; cedis: string | null; dias: number | null; costoEnvio: number | null; solicitado: number; disponible: number; }
-export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; }
+export interface ShippingResponse { zona: string | null; zonaNombre: string | null; lineas: ShippingLine[]; costoEnvio: number | null; costoPorConfirmar: boolean; /** Compra mínima en línea de la tienda (productos con IVA y cupón, sin envío); nulo = sin mínimo. */ compraMinima?: number | null; }
 /** «Cotizar» (bala 4): llega al CRM como lead; nombre y al menos correo o teléfono son obligatorios. */
 export interface QuoteRequest { slug: string; cantidad: number; nombre: string; correo?: string; telefono?: string; cp?: string; mensaje?: string; entrega?: OrderAddress; }
 /** `numero` (`COT-000015`) es lo que se le enseña al comprador; `folio` es el UUID interno, que el seguimiento también acepta. */
