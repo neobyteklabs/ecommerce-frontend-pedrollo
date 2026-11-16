@@ -527,12 +527,52 @@
   "sha256": "7af37777b8cbf1bcd566f604bc03403c2f279b29086e859fa25b8f7b03825f69",
   "slug": "f"
  },
+ "serie-fg-construccion": {
+  "estado": "pendiente",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-fg-construccion.webp",
+  "sha256": "5ce69c52d6c08f06c179f51f3f4c836200ca006de564005c5396ed83923a4ea6",
+  "slug": "fg"
+ },
  "serie-fg-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-fg-hero.webp",
   "sha256": "7e0a94c383ff031285f6d4b2efea4eb5619e31e53e731a2e001dd44b7bd10092",
+  "slug": "fg"
+ },
+ "serie-fg-limites": {
+  "estado": "pendiente",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-fg-limites.webp",
+  "sha256": "9e694362a5e95693b57c92ea1d057446b08fee3424968b8d7e14f13e1e9fb6ff",
+  "slug": "fg"
+ },
+ "serie-fg-modelos": {
+  "estado": "pendiente",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-fg-modelos.webp",
+  "sha256": "1a3861e524920588d6dac1af59a6c34905adf70a3849b16d22fac27f613a9be9",
+  "slug": "fg"
+ },
+ "serie-fg-motor": {
+  "estado": "pendiente",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-fg-motor.webp",
+  "sha256": "01ef0b4622d9b51a9f07d8d4af4e31e3ec6c66898376ce4ad092e388ca17a40c",
+  "slug": "fg"
+ },
+ "serie-fg-prestaciones": {
+  "estado": "pendiente",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-fg-prestaciones.webp",
+  "sha256": "217d74f264724e2864b4a3c872b8c35f08e1ec6dc66c1289f1d4b56566433e6e",
   "slug": "fg"
  },
  "serie-flo-hero": {
@@ -655,12 +695,52 @@
   "sha256": "31e568f9dd656cf52045408d87478a75cbc0925f71e996e42cfc41b952b46b66",
   "slug": "hydrofresh-mr"
  },
+ "serie-jcr-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-jcr-construccion.webp",
+  "sha256": "50463a640e9f0757a68c6a04f998945640a6e80a06700da22c2609f4f6d8201b",
+  "slug": "jcr"
+ },
  "serie-jcr-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-jcr-hero.webp",
   "sha256": "14aaaf5472628418c1c35b85ae6459cd7230f9ede20114fde7cb446ff3d7eb98",
+  "slug": "jcr"
+ },
+ "serie-jcr-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-jcr-limites.webp",
+  "sha256": "2276fc08907c6fbf537d77f7f61a7d769776914b27cdeffce7767803a9ccb9a3",
+  "slug": "jcr"
+ },
+ "serie-jcr-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-jcr-modelos.webp",
+  "sha256": "7d19c1274ac31924d7b8404ee55527c9b583aa0aad8c97cf1c359acc53ebc33c",
+  "slug": "jcr"
+ },
+ "serie-jcr-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-jcr-motor.webp",
+  "sha256": "d549b3a3ce3f609e3f683a3b4a74de9a472b1894f9a8629269b32f42274158fd",
+  "slug": "jcr"
+ },
+ "serie-jcr-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-jcr-prestaciones.webp",
+  "sha256": "1a7993b13c852b3720843450f2fe6ab55b2c66b32e748cb5b621569b1d59589c",
   "slug": "jcr"
  },
  "serie-jcrm-hero": {
@@ -1327,12 +1407,52 @@
   "sha256": "13855b085e58999e069bae1eea986e8e9cea215726b7eb8f7e50a81558688839",
   "slug": "top-vortex"
  },
+ "serie-tritus-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-tritus-construccion.webp",
+  "sha256": "e99cf1703b8ad2c874651643db7d00d678069534230a1a16310cc954aed03fc1",
+  "slug": "tritus"
+ },
  "serie-tritus-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-tritus-hero.webp",
   "sha256": "e1166d035525fc3b83b7364b24e206ec95f6e9f82b59252c522a7ee7096cf608",
+  "slug": "tritus"
+ },
+ "serie-tritus-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-tritus-limites.webp",
+  "sha256": "53998703c5b634107853e1c5f53a3a6fa6f5d88ca6fbdf837b309ba2263fb06e",
+  "slug": "tritus"
+ },
+ "serie-tritus-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-tritus-modelos.webp",
+  "sha256": "2e8eb4b0c45d3bbdbbd8b20a9c2395d1de8ca3c9bf4939fb3fd934b3ec462d19",
+  "slug": "tritus"
+ },
+ "serie-tritus-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-tritus-motor.webp",
+  "sha256": "fe6926655bcad290059518185f83b27d7431c8ae8d23f74521d5cb54bf0f24c5",
+  "slug": "tritus"
+ },
+ "serie-tritus-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-tritus-prestaciones.webp",
+  "sha256": "b7251c57d8d6bc78b2812fe4d0c461aaf457e7d22e00a7219c8d3c04efe262df",
   "slug": "tritus"
  },
  "serie-up-construccion": {
