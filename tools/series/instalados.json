@@ -783,12 +783,52 @@
   "sha256": "9c681b8b6a811cfa75f0c6e853409227e0acca468a96b82d1ad5bbd5ac987f28",
   "slug": "kit-4sr"
  },
+ "serie-magnifica-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-magnifica-construccion.webp",
+  "sha256": "c154d78cc987ae179229ce0fb271d9210eb112f770e5e23ec0dc2a64d6259fbd",
+  "slug": "magnifica"
+ },
  "serie-magnifica-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-magnifica-hero.webp",
   "sha256": "39376a6d108a89d48fa558919ed013018e53fc2eb1cf5276255a1e7005b93120",
+  "slug": "magnifica"
+ },
+ "serie-magnifica-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-magnifica-limites.webp",
+  "sha256": "e6eeac6b7ca16a1241afa1e24e9315219eeba721986d3d12a2781d524a0164a7",
+  "slug": "magnifica"
+ },
+ "serie-magnifica-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-magnifica-modelos.webp",
+  "sha256": "2a3e992623b70cb3e46b0311f30a8a6cd409bc9f7957bc45d2ae17e235b00a00",
+  "slug": "magnifica"
+ },
+ "serie-magnifica-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-magnifica-motor.webp",
+  "sha256": "246714ddc00b9543e7941725fdfc7f284312026a87f48d8abd02aba387a1df85",
+  "slug": "magnifica"
+ },
+ "serie-magnifica-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-magnifica-prestaciones.webp",
+  "sha256": "7a5ac91fd7e3a830f78833a6a544ce8b9b62b7518acd841a4917a11253459e1f",
   "slug": "magnifica"
  },
  "serie-maxima-hero": {
@@ -799,12 +839,52 @@
   "sha256": "e32a3b619988044632875e152adbce0fb2a952e56206ab77eff85a977ac39ddb",
   "slug": "maxima"
  },
+ "serie-mc-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-mc-construccion.webp",
+  "sha256": "c3022444f65a6eb33f624a02d5ff00f8cc2200fb3e330ee981dac7656733d1ea",
+  "slug": "mc"
+ },
  "serie-mc-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-mc-hero.webp",
   "sha256": "ace7837f3aab8a0fcbb4c8b48cf3d01dc1643ee4451ee864e9e905d0f4cb1aba",
+  "slug": "mc"
+ },
+ "serie-mc-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-mc-limites.webp",
+  "sha256": "8a2c74019cf15ca5a2432feeb269314ff269bcbea6ee7926d54ae1250188a913",
+  "slug": "mc"
+ },
+ "serie-mc-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-mc-modelos.webp",
+  "sha256": "05d00cf95fce983e0ae4260c256046350026b8c7de8073edd67bcb34f76e5c38",
+  "slug": "mc"
+ },
+ "serie-mc-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-mc-motor.webp",
+  "sha256": "605b815731e138de36cf39e60652f56a89d965cb6b234afa56b000a76935e7be",
+  "slug": "mc"
+ },
+ "serie-mc-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-mc-prestaciones.webp",
+  "sha256": "568767e483d144007f0a18f90fcd157bfdb9a72dbe7ed4a2df38b7223bc3f36a",
   "slug": "mc"
  },
  "serie-membranas-hero": {
@@ -1359,12 +1439,52 @@
   "sha256": "f0124f0d7c75c8380f7f8d20d05f921a582c2e545222ba9d24ad8796708983b7",
   "slug": "vx-st"
  },
+ "serie-vxc-construccion": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-vxc-construccion.webp",
+  "sha256": "34a82d7fa078e2f2343e3a9f816504a6f79b4a01a25ea53eb968d7decd54567f",
+  "slug": "vxc"
+ },
  "serie-vxc-hero": {
   "estado": "aprobado",
   "fecha": "2026-11-11",
   "medidas": "2560x1440",
   "origen": "serie-vxc-hero.webp",
   "sha256": "5911684974b9a6fd91e1762efcac5df5e9252c223cb29aaa42bdf548848899aa",
+  "slug": "vxc"
+ },
+ "serie-vxc-limites": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-vxc-limites.webp",
+  "sha256": "83a452a52b3da8500c80018e2814082f8cde6416950719dd8f4ad3cdc7a8144f",
+  "slug": "vxc"
+ },
+ "serie-vxc-modelos": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-vxc-modelos.webp",
+  "sha256": "83bb9eeb72e1726d7f69e1e6e3fb1321bf87a71ed725e9cd1e1e9ccc414ad65e",
+  "slug": "vxc"
+ },
+ "serie-vxc-motor": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-vxc-motor.webp",
+  "sha256": "37cf86e3fbd781679397501426314f487377174ff30fe39fedcd327b3bb74b20",
+  "slug": "vxc"
+ },
+ "serie-vxc-prestaciones": {
+  "estado": "aprobado",
+  "fecha": "2026-11-16",
+  "medidas": "1600x1200",
+  "origen": "serie-vxc-prestaciones.webp",
+  "sha256": "68e612f0b7befb61aa912aa6dca73cdc8bc8e1be2a39431e50003355fed5d31f",
   "slug": "vxc"
  },
  "serie-zx-hero": {
