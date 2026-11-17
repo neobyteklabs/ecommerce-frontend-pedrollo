@@ -7,7 +7,10 @@ import { StorefrontApi, ShippingResponse, ShippingLine, CouponResponse } from '.
  *  al refrescar (bala 4, Manuel: avisar y actualizar); se limpia con «Entendido». */
 export interface CartLine { id: string; qty: number; priceAtAdd: number | null; fromApi?: boolean; changedFrom?: number | null;
   /** Bala 12: la imagen de tienda (primera de «foto») guardada al agregar; sin ella, la línea usa la foto técnica del modelo. */
-  imagen?: string | null; }
+  imagen?: string | null;
+  /** Modelo y nombre guardados al agregar. La lista de productos que viaja con la tienda es una foto de cuando se generó: un producto
+   *  publicado después solo existe en la API, y sin esto la línea no tendría con qué pintarse. */
+  model?: string; name?: string; }
 
 /** Carrito en signals; persiste en localStorage solo en navegador (SSR-safe). El CP y el envío resuelto viven en sessionStorage. */
 @Injectable({ providedIn: 'root' })
@@ -58,11 +61,19 @@ export class CartService {
     effect(() => { if (this.browser) { const c = this.couponCode(); if (c) sessionStorage.setItem('bsv.cupon', c); else sessionStorage.removeItem('bsv.cupon'); } });
   }
 
-  add(id: string, qty = 1, price: number | null = null, imagen: string | null = null) {
-    const p = this.products.byId(id); if (!p) return;
+  /** Lo que el carrito y el pago pintan de una línea: lo guardado al agregar y, si falta, la lista local; nunca queda sin modelo. */
+  view(l: Pick<CartLine, 'id' | 'model' | 'name'>): { model: string; name: string; catalog: string | null } {
+    const p = this.products.byId(l.id);
+    return { model: l.model ?? p?.model ?? l.id.toUpperCase(), name: l.name ?? p?.name ?? '', catalog: p?.catalog ?? null };
+  }
+
+  /** `info`: modelo y nombre tal como los muestra la ficha. Devuelve si la línea entró (un id desconocido y sin `info` no entra). */
+  add(id: string, qty = 1, price: number | null = null, imagen: string | null = null, info: { model: string; name: string } | null = null): boolean {
+    if (!info && !this.products.byId(id)) return false;
     const fromApi = price != null;
-    this.lines.update(ls => { const l = ls.find(x => x.id === id); return l ? ls.map(x => x.id === id ? { ...x, qty: x.qty + qty, ...(fromApi ? { priceAtAdd: price, fromApi } : {}), ...(imagen ? { imagen } : {}) } : x) : [...ls, { id, qty, priceAtAdd: fromApi ? price : p.price, ...(fromApi ? { fromApi } : {}), ...(imagen ? { imagen } : {}) }]; });
+    this.lines.update(ls => { const l = ls.find(x => x.id === id); return l ? ls.map(x => x.id === id ? { ...x, qty: x.qty + qty, ...(fromApi ? { priceAtAdd: price, fromApi } : {}), ...(imagen ? { imagen } : {}), ...(info ?? {}) } : x) : [...ls, { id, qty, priceAtAdd: fromApi ? price : (this.products.byId(id)?.price ?? null), ...(fromApi ? { fromApi } : {}), ...(imagen ? { imagen } : {}), ...(info ?? {}) }]; });
     this.shippingResult.set(null);
+    return true;
   }
   setQty(id: string, qty: number) { this.lines.update(ls => ls.map(x => x.id === id ? { ...x, qty } : x).filter(x => x.qty > 0)); this.shippingResult.set(null); }
   remove(id: string) { this.lines.update(ls => ls.filter(x => x.id !== id)); this.shippingResult.set(null); }

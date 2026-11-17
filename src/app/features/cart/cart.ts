@@ -21,13 +21,13 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
   } @else {
     <h1 style="font-size:var(--text-2xl)">Tu carrito <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ cart.count() }} {{ cart.count() === 1 ? 'artículo' : 'artículos' }}</span></h1>
     @if (cart.changed().length) {
-      <bsv-alert kind="warning" [title]="cart.changed().length === 1 ? 'El precio de ' + products.byId(cart.changed()[0].id)!.model + ' cambió' : 'Algunos de tus productos cambiaron de precio'" style="margin-bottom:16px" data-component="Alert/PrecioCambio">
-        @for (l of cart.changed(); track l.id) { <div>{{ products.byId(l.id)!.model }}: lo agregaste a {{ mxn(l.changedFrom) }} y hoy es {{ mxn(l.priceAtAdd) }}.</div> }
+      <bsv-alert kind="warning" [title]="cart.changed().length === 1 ? 'El precio de ' + cart.view(cart.changed()[0]).model + ' cambió' : 'Algunos de tus productos cambiaron de precio'" style="margin-bottom:16px" data-component="Alert/PrecioCambio">
+        @for (l of cart.changed(); track l.id) { <div>{{ cart.view(l).model }}: lo agregaste a {{ mxn(l.changedFrom) }} y hoy es {{ mxn(l.priceAtAdd) }}.</div> }
         El total ya refleja los precios actuales.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" (click)="cart.acknowledgePrices()">Entendido</button></div></bsv-alert>
     }
     <div class="cart-layout">
       <div class="card" style="padding-block:0">
-        @for (l of cart.lines(); track l.id) { @let p = products.byId(l.id)!; @let s = cart.shippingOf(l);
+        @for (l of cart.lines(); track l.id) { @let p = cart.view(l); @let s = cart.shippingOf(l);
           <div class="cart-line" data-component="CartLine" [class.is-quote]="s?.estado === 'cotizar'">
             <bsv-img-slot [slot]="l.id" [src]="l.imagen ?? p.catalog" [product]="true" [alt]="p.model" />
             <div>
@@ -82,7 +82,7 @@ export class Cart {
   quoting = signal<string | null>(null);
   /** El carrito completo, ya escrito, para pedir la cotización: el asesor no tiene que preguntar qué ni cuánto. */
   cotizarPorWhatsApp() {
-    const lineas = this.cart.lines().map(l => `${l.qty} × ${this.products.byId(l.id)?.model ?? l.id.toUpperCase()}`).join(', ');
+    const lineas = this.cart.lines().map(l => `${l.qty} × ${this.cart.view(l).model}`).join(', ');
     const cp = this.cart.cp() ? ` Código postal de envío: ${this.cart.cp()}.` : '';
     return `${POLITICA.whatsapp}?text=${encodeURIComponent(`Hola, quiero cotizar este carrito de la tienda: ${lineas}.${cp}`)}`;
   }

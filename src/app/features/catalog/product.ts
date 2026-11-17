@@ -261,5 +261,8 @@ export class ProductPage {
     this.seo.set({ path, description, image: foto, type: 'product',
       jsonLd: productJsonLd({ path, model: p.model, name: p.name, description, image: foto, price: precio, inStock: enExistencia, seller: this.brand.vendedor.nombreComercial }) });
   });
-  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty(), this.price(), this.primeraFoto()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
+  add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); const p = this.p(); if (!p) { return; }
+    // El aviso dice lo que pasó de verdad: antes anunciaba «agregado» aunque el carrito hubiera rechazado la línea.
+    if (this.cart.add(this.id(), this.qty(), this.price(), this.primeraFoto(), { model: p.model, name: p.name })) { this.toast.show(p.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }
+    else { this.toast.show('No pudimos agregar ' + p.model + ' al carrito. Intenta de nuevo.', 'danger'); } }, 600); }
 }

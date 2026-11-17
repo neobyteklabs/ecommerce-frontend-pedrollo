@@ -30,3 +30,35 @@ describe('carrito · compra mínima en línea', () => {
     expect(cart.missingForMinimum()).toBe(0);
   });
 });
+
+/** Un producto publicado después de generar la tienda solo existe en la API: tiene que poder comprarse igual. */
+describe('carrito · producto que no viaja en la lista local', () => {
+  let cart: CartService;
+  beforeEach(() => {
+    localStorage.clear(); sessionStorage.clear();
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    cart = TestBed.inject(CartService);
+  });
+
+  it('entra con el modelo y el nombre de la ficha, y el carrito los pinta', () => {
+    expect(cart.add('modelo-solo-en-api', 2, 1500, null, { model: 'PKm 60-MD', name: 'Serie PK · Periféricas' })).toBe(true);
+    expect(cart.lines()).toEqual([{ id: 'modelo-solo-en-api', qty: 2, priceAtAdd: 1500, fromApi: true, model: 'PKm 60-MD', name: 'Serie PK · Periféricas' }]);
+    expect(cart.view(cart.lines()[0])).toEqual({ model: 'PKm 60-MD', name: 'Serie PK · Periféricas', catalog: null });
+    expect(cart.total()).toBe(3000);
+  });
+
+  it('agregarlo otra vez suma la cantidad', () => {
+    cart.add('modelo-solo-en-api', 1, 1500, null, { model: 'PKm 60-MD', name: 'Serie PK' });
+    cart.add('modelo-solo-en-api', 2, 1500, null, { model: 'PKm 60-MD', name: 'Serie PK' });
+    expect(cart.lines().length).toBe(1); expect(cart.lines()[0].qty).toBe(3);
+  });
+
+  it('un id desconocido y sin datos de ficha no entra, y lo dice', () => {
+    expect(cart.add('no-existe')).toBe(false); expect(cart.lines()).toEqual([]);
+  });
+
+  it('una línea vieja, sin modelo guardado, se pinta con el id y no rompe el carrito', () => {
+    expect(cart.view({ id: 'no-existe' })).toEqual({ model: 'NO-EXISTE', name: '', catalog: null });
+  });
+});

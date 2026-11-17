@@ -57,13 +57,13 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
       } @else {
         <h1 style="font-size:var(--text-2xl)">Revisión y pago</h1>
         <div class="stack">
-          @if (cart.priceChanged(); as pc) { <bsv-alert kind="warning" title="Cambió el precio de {{ products.byId(pc.id)?.model }}" data-component="Alert/PrecioCambio">Lo tenías a {{ mxn(pc.changedFrom!) }} y hoy es {{ mxn(cart.unitPrice(pc)!) }}. El total ya refleja los precios actuales; revísalo antes de pagar.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" (click)="cart.acknowledgePrices()">Entendido</button></div></bsv-alert> }
+          @if (cart.priceChanged(); as pc) { <bsv-alert kind="warning" title="Cambió el precio de {{ cart.view(pc).model }}" data-component="Alert/PrecioCambio">Lo tenías a {{ mxn(pc.changedFrom!) }} y hoy es {{ mxn(cart.unitPrice(pc)!) }}. El total ya refleja los precios actuales; revísalo antes de pagar.<div class="actions"><button class="btn btn-secondary btn-sm" type="button" (click)="cart.acknowledgePrices()">Entendido</button></div></bsv-alert> }
           @if (error(); as e) { <bsv-alert kind="danger" [title]="e.title" data-component="Alert/Checkout">{{ e.detail }}</bsv-alert> }
           <div class="card card-sm" data-component="ReviewLines"><h3 style="margin:0 0 8px">Artículos</h3>
             @for (l of cart.checkoutLines(); track l.id) {
               @let s = cart.shippingOf(l);
               <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border);align-items:flex-start;gap:12px">
-                <div><span class="model">{{ products.byId(l.id)?.model }}</span> × {{ l.qty }}
+                <div><span class="model">{{ cart.view(l).model }}</span> × {{ l.qty }}
                   @if (s?.parcial) { <div class="muted">{{ s!.disponible }} salen de CEDIS en {{ s!.dias }} días · {{ l.qty - s!.disponible }} sobre pedido, un asesor confirma la fecha</div> }
                   @else if (s?.dias != null) { <div class="muted">Sale de CEDIS · entrega estimada {{ s!.dias }} días</div> }
                 </div>
@@ -108,7 +108,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
       }
     </div>
     <aside class="card summary" data-component="OrderSummary"><h3>Tu pedido</h3>
-      @for (l of cart.checkoutLines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ products.byId(l.id)?.model }}</span> × {{ l.qty }}</span><span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span></div> }
+      @for (l of cart.checkoutLines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ cart.view(l).model }}</span> × {{ l.qty }}</span><span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span></div> }
       <div class="lines" style="margin-top:12px"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span>
         @if (cart.coupon()?.valido) { <span>Cupón {{ cart.couponCode() }}</span><span class="num">−{{ mxn(cart.coupon()!.descuento) }}</span> }
         <span>IVA 16 %</span><span class="num">{{ mxn(cart.ivaWithCoupon()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Por confirmar' : cart.shipping() ? mxn(cart.shipping()!) : 'Gratis') : 'Según CP' }}</span><span class="total">Total</span><span class="total num">{{ mxn(total()) }}</span></div>
