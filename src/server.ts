@@ -140,6 +140,17 @@ app.post('/__cuenta/salir', (req, res) => {
  * de tienda. Si el visitante tiene cuenta lo decide ESTE servidor por la cookie de sesión, no el navegador. Siempre 204: la
  * presencia nunca le falla a la página. El límite por IP es amplio a propósito: una oficina entera sale por la misma IP.
  */
+/**
+ * De dónde late el visitante, APROXIMADO (mapa de «Actividad»). Lo dice el borde (CloudFront) por la dirección de red: es una
+ * ciudad, no un domicilio, y el navegador no opina. Sin esas cabeceras —en local, o si el borde no las reenvía— no hay lugar y el
+ * latido cuenta igual. El back-office redondea las coordenadas y no guarda nada.
+ */
+function viewerPlace(req: express.Request): { lat?: number; lon?: number; pais?: string; ciudad?: string } {
+  const h = (n: string) => { const x = req.header(n); if (!x) { return undefined; } try { return decodeURIComponent(x).slice(0, 60); } catch { return x.slice(0, 60); } };
+  const lat = Number(req.header('cloudfront-viewer-latitude')), lon = Number(req.header('cloudfront-viewer-longitude'));
+  if (!req.header('cloudfront-viewer-latitude') || !Number.isFinite(lat) || !Number.isFinite(lon)) { return {}; }
+  return { lat, lon, pais: h('cloudfront-viewer-country-name') ?? h('cloudfront-viewer-country'), ciudad: h('cloudfront-viewer-city') };
+}
 app.post('/__latido', express.json({ limit: '1kb' }), (req, res) => {
   noStore(res);
   res.status(204).end();
@@ -147,7 +158,7 @@ app.post('/__latido', express.json({ limit: '1kb' }), (req, res) => {
   if (CONFIG_ERROR || req.header('X-Tienda') !== '1' || !/^[a-f0-9]{32}$/.test(v) || limited(req, 'latido', 600)) { return; }
   fetch(`${BACKOFFICE_URL}/api/tienda/v1/presencia`, {
     method: 'POST', headers: { 'X-Store-Key': STORE_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ visitante: v, conCuenta: !!readSessionCookie(req.headers.cookie) }), signal: AbortSignal.timeout(4000),
+    body: JSON.stringify({ visitante: v, conCuenta: !!readSessionCookie(req.headers.cookie), ...viewerPlace(req) }), signal: AbortSignal.timeout(4000),
   }).catch(() => undefined);
 });
 /** El identificador de cliente de Google de la tienda (público). Se pregunta al back-office y se recuerda 5 minutos; null = la tienda no tiene cuentas. */
