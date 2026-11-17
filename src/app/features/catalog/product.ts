@@ -26,7 +26,7 @@ import { NotFound } from '../errors/not-found';
   host: { class: 'container block', 'data-page': 'Producto' },
   template: `
   @if (p(); as p) {
-  @if (!products.isPublishable(p)) {
+  @if (!publicable()) {
     <section class="section"><bsv-alert kind="warning" title="Modelo no publicado">Este modelo aparece en la ficha técnica 60 Hz pero no está confirmado en el catálogo BSV. Visible solo en modo revisión.</bsv-alert></section>
   } @else {
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a [routerLink]="['/categoria', p.family]">{{ p.familyName }}</a></li><li><a [routerLink]="['/serie', p.serie]">Serie {{ p.serieName }}</a></li><li aria-current="page">{{ p.model }}</li></ol></nav>
@@ -139,6 +139,9 @@ export class ProductPage {
   products = inject(ProductService); private cart = inject(CartService); toast = inject(ToastService); brand = inject(BRAND);
   /** Del manifiesto local si lo conoce; si no, de la API de tienda (todo producto publicado tiene ficha, no solo la muestra del manifiesto). */
   p = computed(() => this.products.byId(this.id()) ?? (this.remote.hasValue() && this.remote.value() ? productFromApi(this.remote.value()!) : undefined));
+  /** Manda la tienda viva: si el back-office lo tiene publicado, se muestra aunque el manifiesto local (una foto de cuando se generó) lo
+   *  marque «no confirmado». Mientras la API carga no se pinta el aviso, para que no parpadee. */
+  publicable = computed(() => { const p = this.p(); return !!p && (this.products.isPublishable(p) || this.remote.isLoading() || (this.remote.hasValue() && !!this.remote.value())); });
   /** El precio viene de la API de tienda (bala 1). Nunca se cae a la demo local: un fallback silencioso escondería que la bala falló. */
   private api = inject(StorefrontApi);
   remote = this.api.product(() => this.id());
