@@ -59,7 +59,7 @@ import { NotFound } from '../errors/not-found';
           <button class="btn btn-secondary btn-sm hide-desktop" type="button" style="min-height:44px" (click)="open.set(true)"><bsv-icon name="filter" style="--icon:20px" /> Filtros ({{ activeChips().length }})</button>
           <label class="sr-only" for="sort">Ordenar</label>
           <select id="sort" class="select" style="width:auto;min-height:44px" [value]="order()" (change)="set('orden', $any($event.target).value)">
-            <option value="serie">Por serie</option><option value="hp-asc">Potencia: menor a mayor</option><option value="hp-desc">Potencia: mayor a menor</option><option value="precio-asc">Precio: menor a mayor</option><option value="precio-desc">Precio: mayor a menor</option>
+            <option value="precio-asc">Precio: menor a mayor</option><option value="precio-desc">Precio: mayor a menor</option><option value="serie">Por serie</option><option value="hp-asc">Potencia: menor a mayor</option><option value="hp-desc">Potencia: mayor a menor</option>
           </select>
         </div>
       </div>
@@ -103,7 +103,8 @@ export class Category {
     this.title.setTitle(`${c.name} Pedrollo · Precios y modelos · Bombas y Sistemas Vega`);
     this.seo.set({ path: `/categoria/${this.slug()}`, description: `${c.name} Pedrollo${n ? ` (${n} modelos)` : ''}. ${c.desc} Precio en línea, ficha técnica, factura y envío a todo México.` });
   });
-  order = computed<ListingOrder>(() => (ORDERS as string[]).includes(this.orden() ?? '') ? this.orden() as ListingOrder : 'serie');
+  /** Sin orden en la URL, lo más accesible primero (como un anaquel): nadie entra a una familia para ver primero lo más caro. */
+  order = computed<ListingOrder>(() => (ORDERS as string[]).includes(this.orden() ?? '') ? this.orden() as ListingOrder : 'precio-asc');
 
   series = this.api.series(() => this.slug());
   seriesList = computed(() => this.series.hasValue() ? this.series.value() : []);

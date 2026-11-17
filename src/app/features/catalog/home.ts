@@ -90,7 +90,7 @@ export class Home {
   /** El banner de marca; sin enlace propio, va a la serie de la campaña como el hueco fijo. */
   marca = computed(() => { const b = this.banners()['banner-marca'][0]; return b ? { ...b, enlace: b.enlace ?? '/serie/2cp' } : null; });
   /** Destacados desde la API (bala F1): la campaña activa es la 2CP, así que manda MULTIETAPAS hasta que exista `destacado`. */
-  featuredRes = this.api.products(() => ({ familia: 'multietapas', orden: 'serie', size: 8 }));
+  featuredRes = this.api.products(() => ({ familia: 'multietapas', orden: 'precio-asc', size: 8 }));
   featured = computed(() => this.featuredRes.hasValue() ? this.featuredRes.value().content.map(cardFromSummary) : []);
   promos = computed(() => FAMILIES.map(f => ({ slug: f.slug, name: f.name, hero: familyHero(f.slug, this.products.reviewMode()) })).filter((x): x is { slug: string; name: string; hero: NonNullable<ReturnType<typeof familyHero>> } => !!x.hero));
   go(e: Event, q: string) { e.preventDefault(); this.router.navigate(['/buscar'], { queryParams: { q } }); }

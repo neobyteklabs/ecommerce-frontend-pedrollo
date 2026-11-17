@@ -142,7 +142,7 @@ export class ProductPage {
   remote = this.api.product(() => this.id());
   /** «Otros modelos de la serie» sale de la API (precio y disponibilidad reales). El manifiesto local solo es el respaldo si la API no contesta:
    *  sus tarjetas no traen precio y todas decían «Precio por confirmar», aunque el producto lo tuviera. */
-  private relatedRes = this.api.products(() => { const s = this.p()?.serie; return s ? { serie: s, orden: 'serie', size: 5 } : undefined; });
+  private relatedRes = this.api.products(() => { const s = this.p()?.serie; return s ? { serie: s, orden: 'precio-asc', size: 5 } : undefined; });
   related = computed(() => this.relatedRes.hasValue()
     ? this.relatedRes.value().content.filter(x => x.slug !== this.id()).slice(0, 4).map(cardFromSummary)
     : this.relatedRes.isLoading() ? [] : this.products.related(this.id()).map(cardFromProduct));

@@ -39,7 +39,7 @@ export class Search {
   /** Las series de los resultados, en orden de aparición (máx. 6): el camino corto a la página de la serie. */
   seriesHit = computed<SeriesRef[]>(() => { const m = new Map<string, SeriesRef>(); for (const p of this.items()) { if (p.serie && !m.has(p.serie)) m.set(p.serie, { slug: p.serie, name: p.serieName }); } return [...m.values()].slice(0, 6); });
   frequent = ['2CP', 'PK 60', 'CP 160', '4SR', 'TOP', 'JSW'];
-  private suggestions = this.api.products(() => ({ familia: 'multietapas', orden: 'serie', size: 4 }));
+  private suggestions = this.api.products(() => ({ familia: 'multietapas', orden: 'precio-asc', size: 4 }));
   suggested = computed(() => this.suggestions.hasValue() ? this.suggestions.value().content.map(cardFromSummary) : []);
   go(e: Event, q: string) { e.preventDefault(); this.router.navigate(['/buscar'], { queryParams: { q } }); }
 }

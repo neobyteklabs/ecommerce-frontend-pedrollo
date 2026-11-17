@@ -122,7 +122,7 @@ export class Series {
   c = computed(() => SERIES[this.serie()] ?? null);
   private api = inject(StorefrontApi);
   /** Modelos de la serie desde la API de tienda (bala F1); el resto de la página sigue del manifiesto local. */
-  productsRes = this.api.products(() => ({ serie: this.serie(), orden: 'serie', size: 100 }));
+  productsRes = this.api.products(() => ({ serie: this.serie(), orden: 'precio-asc', size: 100 }));
   products = computed(() => this.productsRes.hasValue() ? this.productsRes.value().content.map(cardFromSummary) : []);
   /** Recortes compartidos de la serie (despiece, características, dimensiones), publicables solo si todos los modelos con recortes están aprobados o en modo revisión. */
   cutsPending = computed(() => { const ms = this.res()?.modelos ?? []; return ms.some(m => m.recortes && !m.recortes.aprobado); });
