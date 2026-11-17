@@ -528,11 +528,11 @@
   "slug": "f"
  },
  "serie-fg-construccion": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-16",
   "medidas": "1600x1200",
   "origen": "serie-fg-construccion.webp",
-  "sha256": "5ce69c52d6c08f06c179f51f3f4c836200ca006de564005c5396ed83923a4ea6",
+  "sha256": "a6f89c337d5feaf6ad2137e315929c09f688fcc91b1bf5123268605bb6fa7723",
   "slug": "fg"
  },
  "serie-fg-hero": {
@@ -544,35 +544,35 @@
   "slug": "fg"
  },
  "serie-fg-limites": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-16",
   "medidas": "1600x1200",
   "origen": "serie-fg-limites.webp",
-  "sha256": "9e694362a5e95693b57c92ea1d057446b08fee3424968b8d7e14f13e1e9fb6ff",
+  "sha256": "44af111222909295d4f7336d25a9e9402bc527ff192c2f56477b67ef0ae3ad7f",
   "slug": "fg"
  },
  "serie-fg-modelos": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-16",
   "medidas": "1600x1200",
   "origen": "serie-fg-modelos.webp",
-  "sha256": "1a3861e524920588d6dac1af59a6c34905adf70a3849b16d22fac27f613a9be9",
+  "sha256": "565bd043271d51a1fc53896058655fe828c7c601ca76468ef654e33daa1fb150",
   "slug": "fg"
  },
  "serie-fg-motor": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-16",
   "medidas": "1600x1200",
   "origen": "serie-fg-motor.webp",
-  "sha256": "01ef0b4622d9b51a9f07d8d4af4e31e3ec6c66898376ce4ad092e388ca17a40c",
+  "sha256": "326a562d0678c755ba7abc6ef28b4052e06f16ed2d5b571bcb8803a879e8daef",
   "slug": "fg"
  },
  "serie-fg-prestaciones": {
-  "estado": "pendiente",
+  "estado": "aprobado",
   "fecha": "2026-11-16",
   "medidas": "1600x1200",
   "origen": "serie-fg-prestaciones.webp",
-  "sha256": "217d74f264724e2864b4a3c872b8c35f08e1ec6dc66c1289f1d4b56566433e6e",
+  "sha256": "51dbc8cc5ecd2f2338bdd75cba94fd8678aa371dacc6eaaf0abff2569eb50fff",
   "slug": "fg"
  },
  "serie-flo-hero": {
