@@ -11,7 +11,7 @@ import { FAMILIES, NAV_FAMILIES } from '../../core/catalog';
   selector: 'bsv-header', imports: [RouterLink, RouterLinkActive, Icon],
   template: `
   <header class="site-header" data-component="Header">
-    <div class="topbar">Distribuidor autorizado {{ brand.name }} · Envío a todo México · Factura disponible · <a href="tel:+525572589681">55 7258 9681</a></div>
+    <div class="topbar">Distribuidor autorizado {{ brand.name }} · Envío a todo México · Factura disponible · <a href="tel:+525610631274">56 1063 1274</a></div>
     <div class="container">
       <div class="header-main">
         <a class="brand" routerLink="/" [attr.aria-label]="brand.name + ', inicio'" data-component="Brand/Logo">
@@ -59,7 +59,7 @@ import { FAMILIES, NAV_FAMILIES } from '../../core/catalog';
       <a routerLink="/contacto" routerLinkActive="active"><bsv-icon name="mail" style="--icon:20px" /> Contacto</a>
       <a routerLink="/terminos" routerLinkActive="active"><bsv-icon name="file" style="--icon:20px" /> Términos, envíos y devoluciones</a>
       <a routerLink="/privacidad" routerLinkActive="active"><bsv-icon name="shield" style="--icon:20px" /> Aviso de privacidad</a>
-      <a href="tel:+525572589681"><bsv-icon name="phone" style="--icon:20px" /> 55 7258 9681</a>
+      <a href="tel:+525610631274"><bsv-icon name="phone" style="--icon:20px" /> 56 1063 1274</a>
     </nav>
   </aside>`,
 })

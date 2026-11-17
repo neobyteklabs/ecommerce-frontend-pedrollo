@@ -76,7 +76,7 @@ import { NotFound } from '../errors/not-found';
         } @else {
           <button class="btn btn-primary btn-lg btn-block" type="button" (click)="quoting.set(true)"><bsv-icon name="mail" style="--icon:20px" /> Cotizar {{ p.model }}</button>
         }
-        <a class="btn btn-ghost btn-block" [href]="'https://wa.me/525572589681?text=Hola, quiero cotizar ' + p.model"><bsv-icon name="phone" style="--icon:20px" /> ¿Compra por volumen? Habla con un asesor</a>
+        <a class="btn btn-ghost btn-block" [href]="'https://wa.me/525610631274?text=Hola, quiero cotizar ' + p.model"><bsv-icon name="phone" style="--icon:20px" /> ¿Compra por volumen? Habla con un asesor</a>
         <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>Garantía de fábrica Pedrollo</li><li>Factura CFDI 4.0 con el número de tu pedido</li><li>Envío asegurado a todo México</li></ul>
       </div>
     </div>
@@ -129,7 +129,7 @@ import { NotFound } from '../errors/not-found';
   <section class="section" aria-busy="true"><p class="muted">Cargando producto…</p></section>
   } @else if (apiDown()) {
   <!-- La tienda no contestó: no es un «no existe» (un 404 aquí haría que un buscador diera de baja el producto por una caída). -->
-  <section class="section"><bsv-alert kind="warning" title="No pudimos cargar este producto">La tienda no respondió. Intenta de nuevo en un momento o <a href="https://wa.me/525572589681" target="_blank" rel="noopener">pide una cotización</a>.</bsv-alert></section>
+  <section class="section"><bsv-alert kind="warning" title="No pudimos cargar este producto">La tienda no respondió. Intenta de nuevo en un momento o <a href="https://wa.me/525610631274" target="_blank" rel="noopener">pide una cotización</a>.</bsv-alert></section>
   } @else {
   <bsv-not-found titulo="No encontramos ese producto" detalle="Puede que el modelo ya no esté publicado o que la dirección esté mal escrita. Búscalo por modelo o recorre el catálogo." />
   }`,

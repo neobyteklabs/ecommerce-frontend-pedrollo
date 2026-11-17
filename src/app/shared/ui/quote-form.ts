@@ -40,7 +40,7 @@ import { Icon } from './icon';
       @if (error()) { <bsv-alert kind="danger" style="margin-top:12px">{{ error() }}</bsv-alert> }
       <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap">
         <button class="btn btn-primary" type="submit" [class.is-loading]="sending()" [disabled]="sending()"><bsv-icon name="mail" style="--icon:18px" /> Enviar solicitud</button>
-        <a class="btn btn-ghost" [href]="'https://wa.me/525572589681?text=Hola, quiero cotizar ' + model()"><bsv-icon name="phone" style="--icon:18px" /> Prefiero WhatsApp</a>
+        <a class="btn btn-ghost" [href]="'https://wa.me/525610631274?text=Hola, quiero cotizar ' + model()"><bsv-icon name="phone" style="--icon:18px" /> Prefiero WhatsApp</a>
         @if (cancelable()) { <button class="btn btn-ghost" type="button" (click)="cancel.emit()">Cancelar</button> }
       </div>
     </form>

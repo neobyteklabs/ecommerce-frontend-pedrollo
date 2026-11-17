@@ -64,7 +64,7 @@ import { NotFound } from '../errors/not-found';
       </div>
       @if (list.error()) {
         <bsv-empty icon="alert" title="No pudimos cargar el catálogo" data-component="EmptyState/SinConexion">La tienda no respondió. Intenta de nuevo en un momento o cotiza con un asesor.
-          <ng-container actions><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
+          <ng-container actions><a class="btn btn-secondary" href="https://wa.me/525610631274"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
       } @else {
       <div class="product-grid">
         @for (p of items(); track p.id; let i = $index) { <bsv-product-card [p]="p" bsvReveal="scale" [revealIndex]="i % 4" /> }

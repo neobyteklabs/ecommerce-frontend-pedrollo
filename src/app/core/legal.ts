@@ -24,9 +24,9 @@ export const POLITICA = {
   reservaMinutos: 30,
   /** A dónde se escriben las solicitudes sobre datos personales (el mismo buzón del aviso de privacidad del grupo). */
   correoPrivacidad: 'soporte@grupoempresarialvega.com',
-  correoVentas: 'ventas@bombasvega.mx',
-  telefono: { texto: '55 7258 9681', tel: '+525572589681' },
-  whatsapp: 'https://wa.me/525572589681',
+  correoVentas: 'ventas@grupoempresarialvega.com',
+  telefono: { texto: '56 1063 1274', tel: '+525610631274' },
+  whatsapp: 'https://wa.me/525610631274',
   jurisdiccion: 'Tlalnepantla de Baz, Estado de México',
 } as const;
 

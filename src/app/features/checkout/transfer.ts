@@ -24,7 +24,7 @@ const PROOF_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
         <div class="empty confirm-hero" style="max-width:none" data-component="TransferPaid"><div class="icon"><bsv-icon name="check" style="--icon:30px" /></div><h1 style="font-size:var(--text-2xl);margin:0">¡Depósito confirmado!</h1><p>Tu pedido <strong class="mono">{{ v.numero }}</strong> ya está pagado y sigue su curso.</p>
           <div class="row" style="justify-content:center;flex-wrap:wrap"><a class="btn btn-primary btn-lg" [routerLink]="['/seguimiento', v.folio]" [queryParams]="{ c: c() }"><bsv-icon name="truck" style="--icon:20px" /> Seguir mi pedido</a><a class="btn btn-secondary btn-lg" [routerLink]="['/seguimiento', v.folio]" [queryParams]="{ c: c(), factura: 1 }">Solicitar factura</a></div></div>
       } @else if (v.estado !== 'pendiente_pago') {
-        <div class="empty" data-component="TransferClosed"><h1 style="font-size:var(--text-2xl)">Este pedido ya no está apartado</h1><p>El plazo para transferir venció y la mercancía se liberó. Si ya habías transferido, escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a> con tu número de pedido <span class="mono">{{ v.numero }}</span> y lo resolvemos.</p><a class="btn btn-primary" routerLink="/catalogo">Volver al catálogo</a></div>
+        <div class="empty" data-component="TransferClosed"><h1 style="font-size:var(--text-2xl)">Este pedido ya no está apartado</h1><p>El plazo para transferir venció y la mercancía se liberó. Si ya habías transferido, escríbenos por <a href="https://wa.me/525610631274">WhatsApp</a> con tu número de pedido <span class="mono">{{ v.numero }}</span> y lo resolvemos.</p><a class="btn btn-primary" routerLink="/catalogo">Volver al catálogo</a></div>
       } @else if (v.pago === null) {
         <div class="empty" data-component="TransferNotChosen"><h1 style="font-size:var(--text-2xl)">Este pedido no se paga por transferencia</h1><p>Regresa al pago para terminarlo con tarjeta.</p><a class="btn btn-primary" routerLink="/checkout" [queryParams]="{ step: 2 }">Ir al pago</a></div>
       } @else {
@@ -62,7 +62,7 @@ const PROOF_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
       }
     </div>
   } @else if (missing()) {
-    <div class="empty"><h1 style="font-size:var(--text-2xl)">No encontramos ese pedido</h1><p>Revisa el enlace de tu correo. Si el problema sigue, escríbenos por <a href="https://wa.me/525572589681">WhatsApp</a>.</p><a class="btn btn-primary" routerLink="/catalogo">Ir al catálogo</a></div>
+    <div class="empty"><h1 style="font-size:var(--text-2xl)">No encontramos ese pedido</h1><p>Revisa el enlace de tu correo. Si el problema sigue, escríbenos por <a href="https://wa.me/525610631274">WhatsApp</a>.</p><a class="btn btn-primary" routerLink="/catalogo">Ir al catálogo</a></div>
   } @else if (unavailable()) {
     <div class="empty"><h1 style="font-size:var(--text-2xl)">No pudimos cargar tu pedido</h1><p>La tienda no respondió. Recarga la página en un momento; tu pedido sigue apartado.</p></div>
   } @else { <div class="btn btn-secondary is-loading" style="margin:40px auto;width:160px"></div> }`,

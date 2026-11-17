@@ -18,7 +18,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty, SeriesRail, SeriesRef } from
     <div class="product-grid"><bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /><bsv-product-skeleton /></div>
   } @else if (hits.error()) {
     <h1 style="font-size:var(--text-2xl)">“{{ q() }}”</h1>
-    <bsv-empty icon="alert" title="No pudimos buscar" data-component="EmptyState/SinConexion">La tienda no respondió. Intenta de nuevo o pide una cotización.<ng-container actions><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
+    <bsv-empty icon="alert" title="No pudimos buscar" data-component="EmptyState/SinConexion">La tienda no respondió. Intenta de nuevo o pide una cotización.<ng-container actions><a class="btn btn-secondary" href="https://wa.me/525610631274"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
   } @else if (items().length) {
     <p class="muted small" style="margin:0">Resultados para</p><h1 style="font-size:var(--text-2xl)">“{{ q() }}” <span class="muted" style="font-weight:500;font-size:var(--text-lg)">· {{ total() }} productos</span></h1>
     <bsv-series-rail [series]="seriesHit()" titulo="Series relacionadas" [compact]="true" />
@@ -26,7 +26,7 @@ import { Icon, ProductCard, ProductSkeleton, Empty, SeriesRail, SeriesRef } from
   } @else {
     <h1 style="font-size:var(--text-2xl)">Sin resultados para “{{ q() }}”</h1>
     <bsv-empty icon="search" title="No encontramos ese modelo" data-component="EmptyState/Busqueda">Revisa la ortografía o busca por potencia o uso. También podemos cotizarlo si es un equipo especial.
-      <ng-container actions><a class="btn btn-primary" routerLink="/catalogo">Ver todo el catálogo</a><a class="btn btn-secondary" href="https://wa.me/525572589681"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
+      <ng-container actions><a class="btn btn-primary" routerLink="/catalogo">Ver todo el catálogo</a><a class="btn btn-secondary" href="https://wa.me/525610631274"><bsv-icon name="phone" style="--icon:20px" /> Pedir cotización</a></ng-container></bsv-empty>
     @if (suggested().length) { <h3>Quizá buscabas</h3><div class="product-grid">@for (p of suggested(); track p.id) { <bsv-product-card [p]="p" /> }</div> }
   }`,
 })

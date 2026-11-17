@@ -103,7 +103,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
             @if (order()?.pago?.modo === 'stripe') { <p class="xs muted" style="margin:12px 0 0">Tu banco puede pedirte confirmar la compra en su app (3D Secure). No se hace ningún cargo hasta que confirmes.</p> }
             @else { <p class="xs muted" style="margin:12px 0 0">No se hace ningún cargo hasta que confirmes el pago.</p> }
           </div>
-          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a>@if (transferOk()) { <button class="btn btn-ghost" type="button" data-component="TransferButton" [disabled]="creating() || paying() || cart.missingForMinimum() > 0" (click)="payByTransfer()">Prefiero pagar por transferencia</button> } @else { <a class="btn btn-ghost" href="https://wa.me/525572589681">Prefiero pagar por transferencia con un asesor</a> }</div>
+          <div class="between" style="flex-wrap:wrap"><a class="btn btn-ghost" routerLink="/checkout" [queryParams]="{ step: 1 }"><bsv-icon name="arrowLeft" style="--icon:20px" /> Datos</a>@if (transferOk()) { <button class="btn btn-ghost" type="button" data-component="TransferButton" [disabled]="creating() || paying() || cart.missingForMinimum() > 0" (click)="payByTransfer()">Prefiero pagar por transferencia</button> } @else { <a class="btn btn-ghost" href="https://wa.me/525610631274">Prefiero pagar por transferencia con un asesor</a> }</div>
         </div>
       }
     </div>
