@@ -27,7 +27,9 @@ import { NotFound } from '../errors/not-found';
   template: `
   @if (p(); as p) {
   @if (!publicable()) {
-    <section class="section"><bsv-alert kind="warning" title="Modelo no publicado">Este modelo aparece en la ficha técnica 60 Hz pero no está confirmado en el catálogo BSV. Visible solo en modo revisión.</bsv-alert></section>
+    <!-- El manifiesto lo conoce pero la tienda no lo tiene publicado: para el público no existe. Si la tienda no contestó, no se afirma eso. -->
+    @if (apiDown()) { <section class="section"><bsv-alert kind="warning" title="No pudimos cargar este producto">La tienda no respondió. Intenta de nuevo en un momento.</bsv-alert></section> }
+    @else { <bsv-not-found titulo="No encontramos ese producto" detalle="Puede que el modelo ya no esté publicado o que la dirección esté mal escrita. Búscalo por modelo o recorre el catálogo." /> }
   } @else {
   <nav aria-label="Migas de pan"><ol class="breadcrumb" data-component="Breadcrumb"><li><a routerLink="/">Inicio</a></li><li><a [routerLink]="['/categoria', p.family]">{{ p.familyName }}</a></li><li><a [routerLink]="['/serie', p.serie]">Serie {{ p.serieName }}</a></li><li aria-current="page">{{ p.model }}</li></ol></nav>
   @if (products.reviewMode()) { <bsv-alert kind="info" title="Modo revisión activo" style="margin-bottom:16px">Se muestran recursos pendientes de aprobación con etiqueta. Público no los ve. <a href="?revision=0">Salir</a></bsv-alert> }
