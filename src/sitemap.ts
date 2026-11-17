@@ -41,3 +41,15 @@ export function sitemapXml(origin: string, paths: string[]): string {
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + paths.map(p => `  <url><loc>${esc(origin + p)}</loc></url>`).join('\n') + '\n</urlset>\n';
 }
+
+/**
+ * A dónde mandar a quien entra por `www.<canónico>`: la misma ruta en el dominio sin `www`. `null` si no toca redirigir
+ * (ya está en el canónico, o es otro nombre —la URL provisional, localhost— que no se toca). Un solo nombre evita que la
+ * tienda exista dos veces para los buscadores y para quien comparte un enlace.
+ */
+export function wwwRedirect(host: string | undefined, canonical: string, url: string): string | null {
+  const h = (host ?? '').toLowerCase().replace(/:\d+$/, '');
+  if (h !== 'www.' + canonical.toLowerCase()) { return null; }
+  // `url` es la ruta con su consulta. Solo se acepta una ruta local: `//otro.sitio` no puede colarse como destino.
+  return 'https://' + canonical.toLowerCase() + (url.startsWith('/') && !url.startsWith('//') ? url : '/');
+}

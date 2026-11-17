@@ -1,4 +1,4 @@
-import { isCanonicalHost, robotsTxt, sitemapPaths, sitemapXml } from './sitemap';
+import { isCanonicalHost, robotsTxt, sitemapPaths, sitemapXml, wwwRedirect } from './sitemap';
 
 describe('robots y sitemap', () => {
   it('solo el dominio canónico (con o sin www, con puerto) se deja indexar', () => {
@@ -7,6 +7,14 @@ describe('robots y sitemap', () => {
     expect(isCanonicalHost('test.pedrollobombas.com', 'pedrollobombas.com')).toBe(false);
     expect(robotsTxt('test.pedrollobombas.com', 'pedrollobombas.com')).toBe('User-agent: *\nDisallow: /\n');
     expect(robotsTxt(undefined, 'pedrollobombas.com')).toContain('Disallow: /\n');
+  });
+
+  it('www redirige a la misma ruta sin www; los demás nombres no se tocan', () => {
+    const C = 'pedrollobombas.com';
+    expect(wwwRedirect('www.pedrollobombas.com', C, '/producto/cpm-620?x=1')).toBe('https://pedrollobombas.com/producto/cpm-620?x=1');
+    expect(wwwRedirect('WWW.Pedrollobombas.com:443', C, '/')).toBe('https://pedrollobombas.com/');
+    expect(wwwRedirect('www.pedrollobombas.com', C, '//otro.sitio/x')).toBe('https://pedrollobombas.com/');
+    for (const h of ['pedrollobombas.com', 'd3t4kv7n9msmtr.cloudfront.net', 'localhost:4201', 'www.otro.com', undefined]) { expect(wwwRedirect(h, C, '/x')).toBeNull(); }
   });
 
   it('el robots del dominio canónico protege lo personal y anuncia el mapa', () => {

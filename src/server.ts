@@ -7,7 +7,7 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import { isMediaKeyPath, mediaHandler } from './media-proxy';
-import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage } from './sitemap';
+import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage, wwwRedirect } from './sitemap';
 import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -46,6 +46,14 @@ if (CONFIG_ERROR) {
  * que se sirva la tienda (la URL provisional, la IP, el del balanceador) responde «Disallow: /». El mapa se guarda una hora en memoria.
  */
 const CANONICAL_HOST = (process.env['CANONICAL_HOST'] ?? 'pedrollobombas.com').toLowerCase();
+// `www` no es otra tienda: redirige (permanente) a la misma ruta sin `www`. Va antes de todo lo demás. 308 para lo que no es
+// lectura, para que un POST no se convierta en GET por el camino.
+app.use((req, res, next) => {
+  const to = wwwRedirect(req.headers.host, CANONICAL_HOST, req.originalUrl);
+  if (!to) { next(); return; }
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.redirect(req.method === 'GET' || req.method === 'HEAD' ? 301 : 308, to);
+});
 app.get('/robots.txt', (req, res) => { res.type('text/plain').setHeader('Cache-Control', 'public, max-age=3600'); res.send(robotsTxt(req.headers.host, CANONICAL_HOST)); });
 let sitemapCache: { at: number; xml: string } | null = null;
 app.get('/sitemap.xml', async (_req, res) => {
