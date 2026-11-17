@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CartService, CartLine } from '../../core/cart';
 import { ProductService, mxn } from '../../core/products';
 import { ToastService } from '../../core/toast';
+import { POLITICA } from '../../core/legal';
 import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
 
 /** Carrito (bala 4): pide el código postal, resuelve el envío por línea con la API (días, parciales, por cotizar) y avisa
@@ -36,9 +37,12 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
               @if (s) {
                 @if (s.estado === 'carrito' && !s.parcial) { <div class="small" style="color:var(--color-success)"><bsv-icon name="truck" style="--icon:16px;vertical-align:-3px" /> En existencia · entrega estimada {{ s.dias }} {{ s.dias === 1 ? 'día' : 'días' }}</div> }
                 @else if (s.estado === 'carrito' && s.parcial) { <div class="small" style="color:var(--color-warning)"><bsv-icon name="alert" style="--icon:16px;vertical-align:-3px" /> Solo {{ s.disponible }} de {{ s.solicitado }} en existencia ({{ s.dias }} días); el resto sobre pedido</div> }
-                @else { <div class="small muted"><bsv-icon name="phone" style="--icon:16px;vertical-align:-3px" /> Sin existencia: por cotizar</div>
+                @else { <div class="small muted"><bsv-icon name="phone" style="--icon:16px;vertical-align:-3px" /> Sin existencia: por cotizar</div> }
+                <!-- Se cotiza lo que no hay y, si el carrito no llega a la compra mínima, cualquier línea: ese pedido no se paga en línea. -->
+                @if (s.estado === 'cotizar' || cart.missingForMinimum() > 0) {
                   @if (quoting() === l.id) { <bsv-quote-form style="margin-top:8px" [slug]="l.id" [model]="p.model" [initialQty]="l.qty" [initialCp]="cart.cp()" (cancel)="quoting.set(null)" (sent)="toast.show('Cotización ' + $event + ' enviada', 'success')" /> }
-                  @else { <button class="btn btn-secondary btn-sm" type="button" style="margin-top:6px" (click)="quoting.set(l.id)">Cotizar esta línea</button> } }
+                  @else { <button class="btn btn-secondary btn-sm" type="button" style="margin-top:6px" (click)="quoting.set(l.id)">Cotizar esta línea</button> }
+                }
               }
             </div>
             <div class="line-actions"><bsv-qty [value]="l.qty" (valueChange)="cart.setQty(l.id, $event)" /><span class="line-total num" style="min-width:110px">{{ s?.estado === 'cotizar' || cart.unitPrice(l) == null ? 'Por cotizar' : mxn(cart.unitPrice(l)! * l.qty) }}</span><button class="icon-btn" type="button" [attr.aria-label]="'Quitar ' + p.model" (click)="cart.remove(l.id); toast.show(p.model + ' eliminado')"><bsv-icon name="trash" /></button></div>
@@ -56,7 +60,16 @@ import { Icon, ImgSlot, Qty, Alert, Empty, QuoteForm } from '../../shared/ui';
         <div class="lines"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span><span>IVA 16 %</span><span class="num">{{ mxn(cart.iva()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Se confirma al pagar' : (cart.shipping() === 0 ? 'Gratis' : mxn(cart.shipping()))) : 'Calcula con tu CP' }}</span><span class="total">Total</span><span class="total num">{{ cart.hasUnpriced() ? 'Por cotizar' : mxn(cart.total() + (cart.shipping() ?? 0)) }}</span></div>
         @if (cart.hasQuoteOnly()) { <bsv-alert kind="info" style="margin-top:12px">Las líneas sin existencia no entran al total: cotízalas y un asesor te confirma precio y entrega.</bsv-alert> }
         @if (cart.hasUnpriced()) { <bsv-alert kind="info" style="margin-top:12px">Hay artículos sin precio confirmado. Al continuar, BSV te enviará la cotización antes de cobrar.</bsv-alert> }
-        @if (cart.canCheckout()) { <a class="btn btn-primary btn-lg btn-block" style="margin-top:16px" routerLink="/checkout">Continuar al pago <bsv-icon name="arrowRight" style="--icon:20px" /></a> }
+        @if (cart.canCheckout() && cart.missingForMinimum() > 0) {
+          <!-- Debajo de la compra mínima no se paga en línea: aquí mismo se dice y se ofrece cotizar, no al final del pago. -->
+          <div data-testid="carrito-compra-minima" style="margin-top:16px;padding:12px 14px;border:1px solid var(--warn-border, #f0c36d);background:var(--warn-bg, #fff8e6);border-radius:10px">
+            <strong>La compra mínima en línea es de {{ mxn(cart.minPurchase()!) }} en productos.</strong>
+            <div class="small" style="margin-top:4px">Tu carrito suma {{ mxn(cart.totalWithCoupon()) }}: te faltan {{ mxn(cart.missingForMinimum()) }}. Agrega productos para pagar en línea, o pídenos la cotización y un asesor te atiende.</div>
+          </div>
+          <a class="btn btn-primary btn-lg btn-block" style="margin-top:12px" [href]="cotizarPorWhatsApp()" target="_blank" rel="noopener" data-testid="carrito-cotizar">Cotizar mi carrito por WhatsApp</a>
+          <a class="btn btn-secondary btn-block" style="margin-top:8px" routerLink="/catalogo">Agregar más productos</a>
+        }
+        @else if (cart.canCheckout()) { <a class="btn btn-primary btn-lg btn-block" style="margin-top:16px" routerLink="/checkout">Continuar al pago <bsv-icon name="arrowRight" style="--icon:20px" /></a> }
         @else { <span class="btn btn-primary btn-lg btn-block" style="margin-top:16px;opacity:.5;pointer-events:none" aria-disabled="true">Continuar al pago</span><p class="xs muted" style="margin:8px 0 0;text-align:center">Calcula el envío con tu CP; las líneas por cotizar se atienden con un asesor.</p> }
         <div class="row small muted" style="justify-content:center;margin-top:12px"><bsv-icon name="lock" style="--icon:16px" /> Pago seguro con {{ pasarela }}</div>
       </aside>
@@ -67,5 +80,11 @@ export class Cart {
   cart = inject(CartService); products = inject(ProductService); toast = inject(ToastService); mxn = mxn;
   pasarela = inject(BRAND).vendedor.pasarela;
   quoting = signal<string | null>(null);
+  /** El carrito completo, ya escrito, para pedir la cotización: el asesor no tiene que preguntar qué ni cuánto. */
+  cotizarPorWhatsApp() {
+    const lineas = this.cart.lines().map(l => `${l.qty} × ${this.products.byId(l.id)?.model ?? l.id.toUpperCase()}`).join(', ');
+    const cp = this.cart.cp() ? ` Código postal de envío: ${this.cart.cp()}.` : '';
+    return `${POLITICA.whatsapp}?text=${encodeURIComponent(`Hola, quiero cotizar este carrito de la tienda: ${lineas}.${cp}`)}`;
+  }
   constructor() { afterNextRender(async () => { await this.cart.refreshPrices(); if (this.cart.cp() && this.cart.lines().length) this.cart.resolveShipping(); }); }
 }
