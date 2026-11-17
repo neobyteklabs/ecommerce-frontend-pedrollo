@@ -42,7 +42,8 @@ describe('Home · banners (bala 11)', () => {
     const img = q(el, '[data-component=Hero] img')!;
     expect(img.getAttribute('src')).toBe('/media/pedrollo/banner/1111111111111111.webp'); expect(img.getAttribute('alt')).toBe('Buen Fin hero');
     expect(q(el, '[data-component=Hero] a.banner-link')!.getAttribute('href')).toBe('/categoria/multietapas');
-    expect(q(el, '[data-component=Hero] h1')!.textContent).toContain('Dos rodetes');
+    expect(q(el, '[data-component=Hero] h1')!.textContent).toContain('Bombas Pedrollo México');
+    expect(q(el, '[data-component="Hero/Campana"]')!.textContent).toContain('dos rodetes');
     expect(q(el, '[data-component="Section/Franja"]')).toBeNull();
   });
 

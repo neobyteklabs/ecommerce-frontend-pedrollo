@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/session';
 
 export const routes: Routes = [
-  { path: '', loadComponent: () => import('./features/catalog/home').then(m => m.Home), title: 'Tienda Pedrollo · Bombas y Sistemas Vega' },
+  { path: '', loadComponent: () => import('./features/catalog/home').then(m => m.Home), title: 'Bombas Pedrollo México · Distribuidor autorizado · Bombas y Sistemas Vega' },
   { path: 'categoria/:slug', loadComponent: () => import('./features/catalog/category').then(m => m.Category), title: 'Catálogo' },
   { path: 'buscar', loadComponent: () => import('./features/catalog/search').then(m => m.Search), title: 'Buscar' },
   { path: 'producto/:id', loadComponent: () => import('./features/catalog/product').then(m => m.ProductPage), title: 'Producto' },

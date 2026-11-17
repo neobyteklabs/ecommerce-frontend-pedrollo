@@ -19,9 +19,10 @@ const NO_BANNERS: StoreBanners = { hero: [], franja: [], 'banner-marca': [], cat
   <section class="hero hero-center" data-component="Hero">
     <div class="container hero-inner">
       <div class="copy">
-        <span class="eyebrow">Serie 2CP · Centrífugas de doble rodete</span>
-        <h1>Dos rodetes. <span class="grad">El doble de presión.</span></h1>
-        <p class="lead">Dos impulsores en serie: altura hasta 112 m y caudal hasta 450 l/min según la ficha 60 Hz.</p>
+        <!-- El encabezado dice lo que la gente busca (17-nov). La campaña de la 2CP baja a mensaje destacado, con sus enlaces. -->
+        <span class="eyebrow">Precio en línea · Factura · Envío a todo México</span>
+        <h1 style="max-width:22ch">Bombas Pedrollo México <span class="grad" style="display:block">Distribuidor autorizado</span></h1>
+        <p class="lead" data-component="Hero/Campana"><strong style="color:#fff">Serie 2CP: dos rodetes, el doble de presión.</strong> Dos impulsores en serie: altura hasta 112 m y caudal hasta 450 l/min según la ficha 60 Hz.</p>
         <div class="row hero-links"><a class="btn-link" routerLink="/serie/2cp">Más información ›</a><a class="btn-link" routerLink="/producto/2cp-32-210a">Ver modelos ›</a></div>
       </div>
       <bsv-img-slot slot="hero-home" alt="Electrobomba Pedrollo 2CP sobre fondo negro con salpicaduras de agua" [scene]="true" [eager]="true" [banner]="banners().hero[0] ?? null" />
