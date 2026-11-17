@@ -96,7 +96,10 @@ h1{letter-spacing:-0.035em}
 .product-card .img-slot{background:var(--color-ivory);border-color:transparent;border-radius:var(--radius-lg)}
 .product-card .model{color:var(--color-gold-text);font-size:var(--text-xs);letter-spacing:.06em}
 .product-card .name{font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:-.02em;font-weight:600}
-.product-card .price{font-size:var(--text-2xl);letter-spacing:-.03em;color:var(--color-ink)}
+/* El precio se ajusta al ancho de la tarjeta: en el celular van dos por fila y «$13,681.19» a tamaño fijo se cortaba. */
+.product-card{container-type:inline-size}
+.product-card .price{font-size:clamp(1rem,16cqi,var(--text-2xl));letter-spacing:-.03em;color:var(--color-ink);white-space:nowrap}
+.product-card .price small{display:block;white-space:normal}
 .product-grid{gap:var(--space-4)}
 @media (min-width:1280px){.product-grid{gap:var(--space-5)}}
 .banner-marca{border-radius:var(--radius-xl)}
@@ -263,7 +266,7 @@ h1{letter-spacing:-0.035em}
 .header-nav{overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
 .header-nav::-webkit-scrollbar{display:none}
 .header-nav a{white-space:nowrap;flex:none}
-.product-card .price-pending{font-size:var(--text-md);color:var(--color-text-muted);font-weight:600}
+.product-card .price-pending{font-size:var(--text-md);color:var(--color-text-muted);font-weight:600;white-space:normal}
 .product-card .price-pending small{display:block;font-weight:500}
 .gallery .thumbs .img-slot.scene{background:var(--color-ink)}
 .gallery .thumbs .img-slot.scene img{object-fit:cover;padding:0}
