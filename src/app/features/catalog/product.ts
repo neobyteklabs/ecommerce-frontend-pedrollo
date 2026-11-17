@@ -9,6 +9,7 @@ import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm, PdfModal } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
+import { SpecRow, readableDescription, specSummary, specsFromDescription } from '../../core/specs';
 import { Seo, productJsonLd } from '../../core/seo';
 import { StorefrontApi, GallerySection, StoreDocument } from '../../core/api/storefront-api';
 import { cardFromProduct, cardFromSummary, productFromApi } from '../../core/api/storefront-view';
@@ -91,26 +92,16 @@ import { NotFound } from '../errors/not-found';
   <section class="section" style="padding-top:32px">
     <div class="grid md-grid-2" style="gap:32px">
       <div bsvReveal><h3>Ficha técnica · 60 Hz · México</h3>
-        @if (p.validated) {
+        @if (descripcion(); as d) { <p class="small" style="margin:0 0 12px;max-width:62ch" data-component="Descripcion">{{ d }}</p> }
+        <!-- Una sola tabla para todos: lo que dice el catálogo de ESTE modelo (su descripción) y, donde no alcanza, la ficha 60 Hz.
+             Una fila sin dato no sale: «—» en media tabla solo dice que no sabemos. -->
         <table class="spec-table" data-component="SpecTable"><tbody>
           <tr><th scope="row">Modelo</th><td class="mono">{{ p.model }}</td></tr>
           <tr><th scope="row">Serie</th><td>{{ p.serieName }}</td></tr>
-          <tr><th scope="row">Potencia</th><td>{{ p.hp != null ? p.hp + ' HP · ' + p.kw + ' kW' : '—' }}</td></tr>
-          <tr><th scope="row">Fase</th><td>{{ p.phase || '—' }}</td></tr>
-          <tr><th scope="row">Tensión (60 Hz)</th><td>{{ p.voltages.length ? p.voltages.join(' / ') : '—' }}</td></tr>
-          <tr><th scope="row">Frecuencia</th><td>60 Hz · México</td></tr>
-          <tr><th scope="row">Curvas y tablas</th><td>@if (cutsOk()) { Pestañas "Curvas de rendimiento" y "Ficha técnica" (página {{ p.cuts?.pdf_pagina_curva }} del PDF) } @else { <span class="ex">Ver la ficha técnica (PDF)</span> }</td></tr>
+          @for (r of specs(); track r.id) { <tr [attr.data-spec]="r.id"><th scope="row">{{ r.label }}</th><td>{{ r.value }}</td></tr> }
+          @if (p.validated && cutsOk()) { <tr><th scope="row">Curvas y tablas</th><td>Pestañas "Curvas de rendimiento" y "Ficha técnica" (página {{ p.cuts?.pdf_pagina_curva }} del PDF)</td></tr> }
         </tbody></table>
-        } @else {
-        @if (products.reviewMode()) { <bsv-alert kind="warning" title="Especificaciones pendientes">{{ p.nota || 'Modelo no localizado en la ficha técnica 60 Hz del banco.' }}</bsv-alert> }
-        @else {
-        <table class="spec-table" data-component="SpecTable"><tbody>
-          <tr><th scope="row">Modelo</th><td class="mono">{{ p.model }}</td></tr>
-          <tr><th scope="row">Serie</th><td>{{ p.serieName }}</td></tr>
-          <tr><th scope="row">Frecuencia</th><td>60 Hz · México</td></tr>
-        </tbody></table>
-        }
-        }
+        @if (!p.validated && products.reviewMode()) { <bsv-alert kind="warning" title="Especificaciones pendientes">{{ p.nota || 'Modelo no localizado en la ficha técnica 60 Hz del banco.' }}</bsv-alert> }
         @if (p.nota && p.validated) { <p class="small muted" style="margin-top:8px">{{ p.nota }}</p> }
       </div>
       <div class="stack" bsvReveal [revealIndex]="1">
@@ -231,14 +222,38 @@ export class ProductPage {
   qty = signal(1); adding = signal(false);
   mxn = mxn; availLabel = availLabel; specLine = specLine;
   private title = inject(Title);
+  /** La descripción del catálogo de este modelo (llega con el precio). */
+  descripcion = computed(() => readableDescription(this.remote.hasValue() ? this.remote.value()?.description : null));
+  /**
+   * Las filas técnicas: primero lo que dice el catálogo de este modelo; lo que ahí falte y la ficha 60 Hz sí validó (potencia en kW,
+   * fase, tensiones) se completa del manifiesto. La frecuencia siempre va: toda la tienda es 60 Hz.
+   */
+  specs = computed<SpecRow[]>(() => {
+    const p = this.p(); if (!p) { return []; }
+    const rows = specsFromDescription(this.remote.hasValue() ? this.remote.value()?.description : null);
+    const has = (id: SpecRow['id']) => rows.some(r => r.id === id);
+    if (p.validated) {
+      if (!has('hp') && p.hp != null) { rows.unshift({ id: 'hp', label: 'Potencia', value: `${p.hp} HP` }); }
+      if (!has('fase') && p.phase) { rows.push({ id: 'fase', label: 'Fase', value: p.phase }); }
+      if (!has('voltaje') && p.voltages.length) { rows.push({ id: 'voltaje', label: 'Tensión', value: p.voltages.join(' / ') }); }
+      const hp = rows.find(r => r.id === 'hp'); if (hp && p.kw != null && !hp.value.includes('kW')) { hp.value += ` · ${p.kw} kW`; }
+    }
+    // La frecuencia va en todo lo que lleva motor (toda la tienda es 60 Hz); un sello o una membrana no tienen frecuencia.
+    const f = rows.find(r => r.id === 'frecuencia');
+    if (f) { f.value += ' · México'; } else if (has('hp') || has('voltaje') || rows.some(r => r.id === 'hp')) { rows.push({ id: 'frecuencia', label: 'Frecuencia', value: '60 Hz · México' }); }
+    const orden: SpecRow['id'][] = ['hp', 'fase', 'voltaje', 'frecuencia', 'etapas', 'altura', 'caudal', 'succion', 'descarga', 'solidos', 'capacidad'];
+    return rows.sort((a, b) => orden.indexOf(a.id) - orden.indexOf(b.id));
+  });
   private seo = inject(Seo);
   /** Título, descripción, foto y datos estructurados de la ficha: lo que Google y WhatsApp muestran de este modelo. */
   private _t = effect(() => {
     const p = this.p(); if (!p || !this.publicable()) { return; }
     this.title.setTitle(`Pedrollo ${p.model} · ${p.name} · Precio y ficha técnica`);
     const precio = this.price(), enExistencia = this.avail() === 'carrito';
-    const datos = [p.hp ? `${p.hp} HP` : '', p.phase ?? '', p.voltages.length ? `${p.voltages.join('/')} V` : ''].filter(Boolean).join(', ');
-    const description = `Bomba Pedrollo ${p.model}, ${p.name}${datos ? ` (${datos})` : ''}. `
+    // Lo esencial del modelo —potencia, tensión, hasta qué altura y caudal—, del catálogo; si no lo trae, lo de la ficha 60 Hz.
+    const datos = specSummary(this.specs()) || [p.hp ? `${p.hp} HP` : '', p.phase ?? '', p.voltages.length ? `${p.voltages.join('/')} V` : ''].filter(Boolean).join(', ');
+    // «Bomba» solo si lo es: un sello, una membrana o un tablero no llevan potencia.
+    const description = `${this.specs().some(r => r.id === 'hp') ? 'Bomba Pedrollo' : 'Pedrollo'} ${p.model}, ${p.name}${datos ? ` (${datos})` : ''}. `
       + (precio != null ? `Precio ${mxn(precio)} MXN con IVA, ${enExistencia ? 'en existencia' : 'sobre pedido'}. ` : 'Cotízala con un asesor. ')
       + 'Ficha técnica, factura y envío a todo México. Distribuidor autorizado.';
     const foto = this.galleryTabs().find(t => t.id === 'foto')?.items.find(i => !!i.src)?.src ?? null;
