@@ -30,6 +30,6 @@ export class ImgSlot {
   /** Clase extra (el host usa [class] completo, así que class="x" estático no se mezcla). */
   cls = input('');
   url = computed(() => this.banner()?.url ?? this.src() ?? imageFor(this.slot()));
-  classes = computed(() => ['img-slot', this.cls(), this.product() && 'product', this.scene() && 'scene', this.url() && 'has-img'].filter(Boolean).join(' '));
+  classes = computed(() => ['img-slot', this.cls(), this.product() && 'product', this.scene() && 'scene', this.url() && 'has-img', this.banner() && 'con-banner', this.banner()?.urlMovil && 'con-movil'].filter(Boolean).join(' '));
   external = (l: string) => l.startsWith('https://');
 }

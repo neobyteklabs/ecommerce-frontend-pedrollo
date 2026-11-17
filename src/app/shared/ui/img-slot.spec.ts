@@ -20,6 +20,8 @@ describe('bsv-img-slot · banner (bala 11)', () => {
     const img = el.querySelector('img')!;
     expect(img.getAttribute('src')).toBe(B.url); expect(img.getAttribute('alt')).toBe(B.alt);
     expect(el.classList.contains('has-img')).toBe(true);
+    // El hueco sabe que lleva banner (toma su proporción) y que no hay versión móvil.
+    expect(el.classList.contains('con-banner')).toBe(true); expect(el.classList.contains('con-movil')).toBe(false);
   });
 
   it('con urlMovil agrega el <source> de hasta 767 px', () => {
@@ -27,6 +29,7 @@ describe('bsv-img-slot · banner (bala 11)', () => {
     const el = slot({ slot: 'hero-home', banner: { ...B, urlMovil: '/media/pedrollo/banner/aaaaaaaaaaaaaaaa.webp' } });
     const s = el.querySelector('picture source')!;
     expect(s.getAttribute('media')).toBe('(max-width: 767px)'); expect(s.getAttribute('srcset')).toBe('/media/pedrollo/banner/aaaaaaaaaaaaaaaa.webp');
+    expect(el.classList.contains('con-movil')).toBe(true);
   });
 
   it('el enlace: ruta de la tienda va por routerLink; https abre aparte con noopener', () => {
