@@ -57,10 +57,13 @@ export interface StoreBanner { url: string; urlMovil: string | null; alt: string
 export interface StoreBanners { hero: StoreBanner[]; franja: StoreBanner[]; 'banner-marca': StoreBanner[]; categoria: Record<string, StoreBanner[]>; }
 
 /** Bala 5: cupón, pedido, pago y seguimiento (contrato §5 del hand-off de backend bala 5). */
-export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; iva?: number; total: number; }
+/** Un cupón dentro de una validación de varios: si entró, con cuánto, y si no, por qué. */
+export interface CouponItem { codigo: string; valido: boolean; motivo?: string | null; descuento: number; }
+/** `valido`: todos los cupones enviados entraron. `descuento` y los totales llevan solo los que sí; `cupones` es el desglose. */
+export interface CouponResponse { valido: boolean; motivo?: string | null; descuento: number; subtotal: number; iva?: number; total: number; cupones?: CouponItem[]; topeAplicado?: boolean; }
 export interface OrderBuyer { nombre: string; correo: string; telefono: string; empresa?: string; }
 export interface OrderAddress { cp: string; calle: string; numeroExt: string; numeroInt?: string; colonia: string; municipio: string; estado: string; referencias?: string; }
-export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; }
+export interface OrderRequest { comprador: OrderBuyer; entrega: OrderAddress; lineas: { slug: string; cantidad: number; precioEsperado: number }[]; cupon?: string; /** Varios cupones, en el orden en que se aplicaron. */ cupones?: string[]; }
 export interface OrderCreated { folio: string; numero: string; total: number; expira: string; pago: { modo: 'mercadopago-tarjeta' | 'mercadopago' | 'stripe' | 'simulado'; referencia: string; clientSecret?: string | null; /** Bala 13: con Mercado Pago, el checkout al que se redirige al comprador. */ urlPago?: string | null }; }
 /** Bala 13: lo que entrega el formulario de tarjeta de Mercado Pago (un token de un uso, nunca el número) y lo que contesta el backend. */
 export interface CardPaymentRequest { token: string; paymentMethodId: string; paymentType?: string; installments?: number; email?: string; }
@@ -68,7 +71,7 @@ export interface CardPaymentResult { folio: string; numero: string; estado: 'pag
 export interface OrderConfirm { folio: string; numero: string; estado: 'pagado' | 'pendiente_pago' | 'expirado' | 'cancelado'; }
 export interface OrderLineView { modelo: string; descripcion: string; cantidad: number; precioUnitario: number; importe: number; cedis: string | null; sobrePedido: boolean; diasEstimados: number | null; }
 export interface OrderView {
-  folio: string; numero: string; estado: string; moneda: string; subtotal: number; descuentoCupon: number; cuponCodigo: string | null; iva: number; envio: number; total: number;
+  folio: string; numero: string; estado: string; moneda: string; subtotal: number; descuentoCupon: number; cuponCodigo: string | null; /** El desglose por cupón; un pedido anterior al cambio puede no traerlo. */ cupones?: { codigo: string; descuento: number }[]; iva: number; envio: number; total: number;
   comprador: OrderBuyer; entrega: OrderAddress; renglones: OrderLineView[]; pago: { modo: string; estado: string } | null; creado: string;
 }
 /** Error 409 al crear el pedido: el precio cambió o no hay existencia para alguna línea. */
@@ -120,9 +123,9 @@ export class StorefrontApi {
   quote(body: QuoteRequest, idempotencyKey: string) {
     return firstValueFrom(this.http.post<QuoteResponse>(`${this.base}/api/tienda/v1/cotizaciones`, body, { headers: { 'Idempotency-Key': idempotencyKey } }));
   }
-  /** Valida un cupón contra las líneas del carrito (bala 5). Nunca dice si el código existe. */
-  coupon(codigo: string, lineas: { slug: string; cantidad: number }[]) {
-    return firstValueFrom(this.http.post<CouponResponse>(`${this.base}/api/tienda/v1/carrito/cupon`, { codigo, lineas }));
+  /** Valida los cupones, en su orden, contra las líneas del carrito. De uno que no existe nunca dice más que «no válido». */
+  coupon(codigos: string[], lineas: { slug: string; cantidad: number }[]) {
+    return firstValueFrom(this.http.post<CouponResponse>(`${this.base}/api/tienda/v1/carrito/cupon`, { codigos, lineas }));
   }
   /** Crea el pedido pendiente de pago (snapshot + reserva). 409 si el precio cambió o no hay existencia. */
   createOrder(body: OrderRequest) { return firstValueFrom(this.http.post<OrderCreated>(`${this.base}/api/tienda/v1/pedidos`, body)); }
