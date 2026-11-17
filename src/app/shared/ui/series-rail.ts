@@ -29,7 +29,7 @@ const INTERVALO = 4500;
   <div class="series-rail" #pista (scroll)="medir()" tabindex="0" role="group" aria-roledescription="carrusel" [attr.aria-label]="titulo()">
     @for (c of cards(); track c.slug; let i = $index) {
       <a class="series-card" [routerLink]="['/serie', c.slug]" [attr.data-serie]="c.slug" [class.has-hero]="c.hero" [attr.aria-label]="'Ver la serie ' + c.name">
-        @if (c.img) { <img [src]="c.img" alt="" [attr.loading]="i === 0 && !compact() ? 'eager' : 'lazy'" decoding="async" /> }
+        @if (c.img) { <img [src]="c.img" [alt]="'Serie ' + c.name + ' de Pedrollo' + (c.tipo ? ', ' + c.tipo : '')" [attr.loading]="i === 0 && !compact() ? 'eager' : 'lazy'" decoding="async" /> }
         <span class="series-card-copy"><span class="pre">@if (kicker(); as k) { {{ k }} · }Serie</span><strong>{{ c.name }}</strong>@if (c.tipo) { <span class="tipo">{{ c.tipo }}</span> }<span class="meta">@if (c.count) { {{ c.count }} {{ c.count === 1 ? 'modelo' : 'modelos' }} · } Ver la serie ›</span></span>
       </a>
     }

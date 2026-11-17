@@ -9,6 +9,7 @@ import { BRAND } from '../../core/brand';
 import { SERIES } from '../../core/catalog';
 import { Icon, ImgSlot, ProductCard, Price, Qty, Alert, QuoteForm, PdfModal } from '../../shared/ui';
 import { Reveal } from '../../shared/directives/motion';
+import { Seo, productJsonLd } from '../../core/seo';
 import { StorefrontApi, GallerySection, StoreDocument } from '../../core/api/storefront-api';
 import { cardFromProduct, cardFromSummary, productFromApi } from '../../core/api/storefront-view';
 
@@ -58,10 +59,11 @@ import { NotFound } from '../errors/not-found';
     </div>
     <div class="stack">
       <div>
-        <div class="row" style="margin-bottom:8px"><span class="model" style="color:var(--color-primary);font-size:var(--text-lg)">{{ p.model }}</span>
+        <div class="row" style="margin-bottom:8px"><span class="model" style="color:var(--color-primary);font-size:var(--text-lg)">Pedrollo</span>
           @if (p.validated) { <span class="badge badge-success">Ficha 60 Hz validada</span> } @else if (products.reviewMode()) { <span class="badge badge-warning">Especificaciones pendientes</span> }
           @if (!p.enCrm && products.reviewMode()) { <span class="badge badge-neutral no-dot">No confirmado en CRM</span> }</div>
-        <h1 style="font-size:var(--text-2xl)">{{ p.name }}</h1>
+        <!-- El modelo es lo que la gente busca: va en el encabezado principal, con la serie y la familia debajo. -->
+        <h1 style="font-size:var(--text-2xl)">{{ p.model }}<span style="display:block;font-size:var(--text-md);font-weight:500;color:var(--color-text-muted);letter-spacing:0;margin-top:4px">{{ p.name }}</span></h1>
         <p class="muted">{{ specLine(p) }} · Marca {{ brand.name }}@if (hasStory()) { · <a [routerLink]="['/serie', p.serie]">Conoce la serie {{ p.serieName }} ›</a> }</p>
       </div>
       <div class="buy-box" data-component="BuyBox">
@@ -117,7 +119,7 @@ import { NotFound } from '../errors/not-found';
           @else if (products.reviewMode()) { <div class="download" style="opacity:.7"><bsv-icon name="file" style="--icon:28px" /><div><strong>Ficha técnica 60 Hz</strong><span>Sin ficha en el banco</span></div></div> }
           @for (o of otherPdfs(); track o) { <a class="download" [href]="o" target="_blank" rel="noopener"><bsv-icon name="file" style="--icon:28px" /><div><strong>{{ o.split('/').pop() }}</strong><span>PDF</span></div><bsv-icon name="download" style="margin-left:auto" /></a> }
         </div></div> }
-        <p class="xs muted">Fotografía principal: imagen oficial referencial de la serie {{ p.serieName }}; no es una fotografía verificada de este modelo. Recortes técnicos: tomados tal cual de la ficha 60 Hz, sin redibujo.</p>
+        <p class="xs muted">Imagen ilustrativa de la serie {{ p.serieName }}. Curvas y dimensiones: tomadas de la ficha técnica 60 Hz del fabricante.</p>
       </div>
     </div>
   </section>
@@ -182,14 +184,14 @@ export class ProductPage {
       .map(({ im, i }) => ({ slot: `tienda-${p.id}-${i}`, src: im.url, kind, alt: im.alt || `${p.model}, imagen de tienda`, caption: 'Imagen de tienda' }));
     foto.push(...tienda('foto', 'scene'));
     if (c?.foto_modelo && c.foto_modelo_verificada) foto.push({ slot: `foto-${p.id}`, src: c.foto_modelo, kind: 'catalog', alt: `${p.model}, fotografía verificada`, caption: 'Fotografía verificada del modelo.' });
-    if (p.catalog || rev) foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Serie ${p.serieName}, imagen referencial`, caption: p.catalog ? 'Imagen referencial de la familia (pedrollo.com.mx). No es fotografía verificada de este modelo.' : 'Placeholder: imagen referencial pendiente.' });
+    if (p.catalog || rev) foto.push({ slot: `catalog-${p.serie} · foto oficial referencial pendiente`, src: p.catalog, kind: 'catalog', alt: `Bomba Pedrollo ${p.model}, serie ${p.serieName}`, caption: p.catalog ? 'Imagen ilustrativa de la serie.' : 'Placeholder: imagen referencial pendiente.' });
     p.gallery.forEach((g, i) => foto.push({ slot: `serie-${p.serie}-${i === 0 ? 'hero' : 'banner'}`, src: g, kind: 'scene', alt: `Serie ${p.serieName}, imagen comercial`, caption: 'Imagen comercial representativa de la serie.' }));
     // Paquetes multimedia de familia (catálogo 1:1 + detalles macro). Publicables solo si están aprobados; en revisión, etiquetados.
     for (const mm of this.series()?.comercial.multimedia ?? []) {
       if (!(mm.aprobado || rev)) continue;
       const pendMM = !mm.aprobado;
-      for (const a of mm.catalogo) foto.push({ slot: `mm-catalogo-${p.serie}`, src: a.path, kind: 'catalog', alt: `Serie ${p.serieName}, catálogo 1:1 (referencia de familia)`, caption: 'Catálogo 1:1 derivado de la foto de referencia de familia (re-codificación, sin edición). No es fotografía verificada de este modelo.', pending: pendMM });
-      for (const a of mm.macro) foto.push({ slot: `mm-macro-${p.serie}-${a.etiqueta}`, src: a.path, kind: 'catalog', alt: `${a.etiqueta}, detalle de la serie ${p.serieName}`, caption: `Detalle macro · ${a.etiqueta} · recorte de la foto de referencia de familia (píxeles originales). No es fotografía verificada de este modelo.`, pending: pendMM });
+      for (const a of mm.catalogo) foto.push({ slot: `mm-catalogo-${p.serie}`, src: a.path, kind: 'catalog', alt: `Serie ${p.serieName}, catálogo 1:1 (referencia de familia)`, caption: 'Imagen ilustrativa de la serie.', pending: pendMM });
+      for (const a of mm.macro) foto.push({ slot: `mm-macro-${p.serie}-${a.etiqueta}`, src: a.path, kind: 'catalog', alt: `${a.etiqueta}, detalle de la serie ${p.serieName}`, caption: `Detalle de la serie · ${a.etiqueta}.`, pending: pendMM });
     }
     // Con al menos una imagen de tienda en `foto` ya hay fotografía del modelo: el mosaico «pendiente» no se pinta.
     if (rev && !(c?.foto_modelo && c.foto_modelo_verificada) && !foto.some(x => x.slot.startsWith('tienda-'))) foto.push({ slot: `foto-${p.id} · fotografía original del modelo · pendiente`, src: null, kind: 'placeholder', alt: '', caption: 'Placeholder: fotografía original específica del modelo, pendiente.' });
@@ -229,6 +231,20 @@ export class ProductPage {
   qty = signal(1); adding = signal(false);
   mxn = mxn; availLabel = availLabel; specLine = specLine;
   private title = inject(Title);
-  private _t = effect(() => { const p = this.p(); if (p) this.title.setTitle(`${p.model} · ${p.name} · Pedrollo`); });
+  private seo = inject(Seo);
+  /** Título, descripción, foto y datos estructurados de la ficha: lo que Google y WhatsApp muestran de este modelo. */
+  private _t = effect(() => {
+    const p = this.p(); if (!p || !this.publicable()) { return; }
+    this.title.setTitle(`Pedrollo ${p.model} · ${p.name} · Precio y ficha técnica`);
+    const precio = this.price(), enExistencia = this.avail() === 'carrito';
+    const datos = [p.hp ? `${p.hp} HP` : '', p.phase ?? '', p.voltages.length ? `${p.voltages.join('/')} V` : ''].filter(Boolean).join(', ');
+    const description = `Bomba Pedrollo ${p.model}, ${p.name}${datos ? ` (${datos})` : ''}. `
+      + (precio != null ? `Precio ${mxn(precio)} MXN con IVA, ${enExistencia ? 'en existencia' : 'sobre pedido'}. ` : 'Cotízala con un asesor. ')
+      + 'Ficha técnica, factura y envío a todo México. Distribuidor autorizado.';
+    const foto = this.galleryTabs().find(t => t.id === 'foto')?.items.find(i => !!i.src)?.src ?? null;
+    const path = `/producto/${p.id}`;
+    this.seo.set({ path, description, image: foto, type: 'product',
+      jsonLd: productJsonLd({ path, model: p.model, name: p.name, description, image: foto, price: precio, inStock: enExistencia, seller: this.brand.vendedor.nombreComercial }) });
+  });
   add() { this.adding.set(true); setTimeout(() => { this.adding.set(false); this.cart.add(this.id(), this.qty(), this.price(), this.primeraFoto()); this.toast.show(this.p()!.model + ' agregado al carrito', 'success', { href: '/carrito', label: 'Ver carrito' }); }, 600); }
 }

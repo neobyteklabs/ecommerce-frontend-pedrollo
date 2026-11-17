@@ -14,7 +14,8 @@ import { ToastService } from '../../core/toast';
   selector: 'bsv-tracking', imports: [RouterLink, FormsModule, Icon, Alert, Timeline, AddressFields, InvoiceFormComponent, PdfModal],
   host: { class: 'container section block', style: 'padding-top:16px', 'data-page': 'Seguimiento' },
   template: `
-  <h1 style="font-size:var(--text-2xl)">Seguimiento de tu pedido o cotización</h1>
+  <h1 style="font-size:var(--text-2xl)">{{ factura() === '1' ? 'Solicitar la factura de tu pedido' : 'Seguimiento de tu pedido o cotización' }}</h1>
+  @if (factura() === '1') { <p class="muted" style="margin:4px 0 0" data-component="InvoiceHint">La factura se pide desde el pedido: escribe tu número de pedido y el correo con el que compraste, y te abrimos el formulario.</p> }
   @if (!key()) {
     <form class="card card-sm" style="max-width:520px" (submit)="go($event)" novalidate data-component="TrackingForm">
       <p class="small muted" style="margin:0 0 12px">Escribe el folio que te dimos y el correo o teléfono con el que compraste o cotizaste.</p>

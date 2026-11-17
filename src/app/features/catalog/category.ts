@@ -1,3 +1,4 @@
+import { Seo } from '../../core/seo';
 import { Component, inject, input, signal, computed, effect } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink, Router } from '@angular/router';
@@ -95,7 +96,13 @@ export class Category {
   known = computed(() => !!familyBySlug(this.slug()));
   /** El título de la pestaña (y el que leen los buscadores) es el de la familia, no un «Catálogo» igual para las doce. */
   private title = inject(Title);
-  private _t = effect(() => this.title.setTitle(`${this.cat().name} Pedrollo · Bombas y Sistemas Vega`));
+  private seo = inject(Seo);
+  private _t = effect(() => {
+    if (!this.known()) { return; }
+    const c = this.cat(), n = this.total();
+    this.title.setTitle(`${c.name} Pedrollo · Precios y modelos · Bombas y Sistemas Vega`);
+    this.seo.set({ path: `/categoria/${this.slug()}`, description: `${c.name} Pedrollo${n ? ` (${n} modelos)` : ''}. ${c.desc} Precio en línea, ficha técnica, factura y envío a todo México.` });
+  });
   order = computed<ListingOrder>(() => (ORDERS as string[]).includes(this.orden() ?? '') ? this.orden() as ListingOrder : 'serie');
 
   series = this.api.series(() => this.slug());

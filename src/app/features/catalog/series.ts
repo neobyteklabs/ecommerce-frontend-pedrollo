@@ -1,3 +1,4 @@
+import { Seo } from '../../core/seo';
 import { Component, inject, input, computed, signal, afterNextRender, PLATFORM_ID, DestroyRef, ElementRef, effect, linkedSignal } from '@angular/core';
 import { isPlatformBrowser, LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -135,7 +136,14 @@ export class Series {
   sections = computed(() => [...(this.c() ? [{ id: 'detalle', name: 'Vista general' }, ...(this.c()!.perf.stats.length ? [{ id: 'rendimiento', name: 'Rendimiento' }] : []), ...(this.c()!.eng.tiles.length ? [{ id: 'ingenieria', name: 'Ingeniería' }] : [])] : [{ id: 'detalle', name: 'Ficha' }]), ...(this.sharedCuts().length ? [{ id: 'componentes', name: 'Componentes' }] : []), ...(this.familyGallery().length ? [{ id: 'galeria', name: 'Galería' }] : []), ...(this.products$.reviewMode() && this.reviewPreviews().length ? [{ id: 'revision', name: 'Revisión' }] : []), { id: 'comparar', name: 'Modelos' }, ...(this.c() ? [{ id: 'especificaciones', name: 'Especificaciones' }] : [])]);
   constructor() {
     const title = inject(Title);
-    effect(() => { const r = this.res(); title.setTitle(r ? `Serie ${r.serie} · Pedrollo` : 'Serie · Pedrollo'); });
+    const seo = inject(Seo);
+    effect(() => {
+      const r = this.res(); title.setTitle(r ? `Serie ${r.serie} Pedrollo · Modelos, precios y ficha técnica` : 'Serie · Pedrollo');
+      if (!r) { return; }
+      const n = r.modelos.length;
+      seo.set({ path: `/serie/${r.slug}`, image: r.comercial.hero,
+        description: `Serie ${r.serie} de Pedrollo. ${n ? `${n} modelos con ` : 'Modelos con '}precio en línea, curvas de rendimiento y ficha técnica 60 Hz. Factura y envío a todo México. Distribuidor autorizado Bombas y Sistemas Vega.` });
+    });
     const browser = isPlatformBrowser(inject(PLATFORM_ID)); const host = inject(ElementRef<HTMLElement>).nativeElement; const destroy = inject(DestroyRef);
     afterNextRender(() => {
       if (!browser) return;

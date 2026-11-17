@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideAppInitializer, inject, DOCUMENT } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withComponentInputBinding, TitleStrategy } from '@angular/router';
+import { SeoTitleStrategy } from './core/seo';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { storeKeyInterceptor } from './core/api/storefront-api';
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     // la navegación no termina NUNCA: ni enlaces ni el buscador hacen nada hasta recargar. Lo reportó Felipe («busqué y no buscó hasta recargar»)
     // y se reprodujo con `document.activeViewTransition` atorada. La animación era cosmética; el movimiento de la tienda vive en motion.css.
     provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' })),
+    { provide: TitleStrategy, useClass: SeoTitleStrategy },
     provideHttpClient(withFetch(), withInterceptors([storeKeyInterceptor])),
     provideClientHydration(withEventReplay()),
     provideAppInitializer(() => { inject(DOCUMENT).documentElement?.setAttribute('data-brand', inject(BRAND).id); }),

@@ -407,3 +407,10 @@
 .alert>div{min-width:0;flex:1}
 @media (max-width:767px){.table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}.type-row{grid-template-columns:1fr!important}}
 @media (max-width:767px){body:has(.sticky-buy){padding-bottom:calc(var(--bottombar-h) + 84px)}.brand .by{white-space:nowrap;font-size:9px}}
+/* WhatsApp flotante. A la IZQUIERDA: a la derecha viven la píldora de compra de la serie y, en el celular, los avisos. En el
+   celular sube lo suficiente para no tapar la barra de «Agregar al carrito» de la ficha. */
+.wa-float{position:fixed;left:var(--gutter);bottom:20px;z-index:55;display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 18px 0 14px;border-radius:999px;background:#128c4a;color:#fff;font-weight:600;font-size:var(--text-sm);text-decoration:none;box-shadow:0 6px 20px rgba(10,13,20,.28);transition:transform .2s var(--ease-out),box-shadow .2s}
+.wa-float:hover{color:#fff;transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,13,20,.34)}
+.wa-float:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #128c4a}
+@media (max-width:767px){.wa-float{bottom:calc(var(--bottombar-h) + 84px + env(safe-area-inset-bottom));width:52px;padding:0;justify-content:center}.wa-float-text{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}}
+@media print{.wa-float{display:none}}
