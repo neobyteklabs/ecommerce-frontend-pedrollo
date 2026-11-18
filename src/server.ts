@@ -8,6 +8,8 @@ import express from 'express';
 import { join } from 'node:path';
 import { isMediaKeyPath, mediaHandler } from './media-proxy';
 import { legacyAnswer } from './legacy-redirects';
+import { feedItems, feedXml, FeedPage } from './merchant-feed';
+import { imageFor } from './app/core/images';
 import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage, wwwRedirect } from './sitemap';
 import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
@@ -64,15 +66,28 @@ app.use((req, res, next) => {
   res.status(410).end();
 });
 app.get('/robots.txt', (req, res) => { res.type('text/plain').setHeader('Cache-Control', 'public, max-age=3600'); res.send(robotsTxt(req.headers.host, CANONICAL_HOST)); });
+/** Una página del listado publicado (100 productos): de aquí salen el sitemap y el catálogo de Merchant Center. */
+const listingPage = async (n: number): Promise<SitemapPage & FeedPage> => {
+  const up = await fetch(`${BACKOFFICE_URL}/api/tienda/v1/productos?size=100&page=${n}`, { headers: { 'X-Store-Key': STORE_KEY, Accept: 'application/json' } });
+  if (!up.ok) throw new Error('listado ' + up.status);
+  return await up.json() as SitemapPage & FeedPage;
+};
+/** Catálogo para Google Merchant Center (ver merchant-feed.ts): lo comprable hoy, con precio y foto. Una hora en memoria, como el sitemap. */
+let feedCache: { at: number; xml: string } | null = null;
+app.get('/feed/google.xml', async (_req, res) => {
+  try {
+    if (!feedCache || Date.now() - feedCache.at > 3_600_000) {
+      const origin = 'https://' + CANONICAL_HOST;
+      feedCache = { at: Date.now(), xml: feedXml(origin, await feedItems(origin, listingPage, slug => imageFor('catalog-' + slug))) };
+    }
+    res.type('application/xml').setHeader('Cache-Control', 'public, max-age=3600'); res.send(feedCache.xml);
+  } catch { res.status(503).setHeader('Cache-Control', 'no-store').setHeader('Retry-After', '300'); res.end(); }
+});
 let sitemapCache: { at: number; xml: string } | null = null;
 app.get('/sitemap.xml', async (_req, res) => {
   try {
     if (!sitemapCache || Date.now() - sitemapCache.at > 3_600_000) {
-      const page = async (n: number): Promise<SitemapPage> => {
-        const up = await fetch(`${BACKOFFICE_URL}/api/tienda/v1/productos?size=100&page=${n}`, { headers: { 'X-Store-Key': STORE_KEY, Accept: 'application/json' } });
-        if (!up.ok) throw new Error('listado ' + up.status);
-        return await up.json() as SitemapPage;
-      };
+      const page = listingPage;
       sitemapCache = { at: Date.now(), xml: sitemapXml('https://' + CANONICAL_HOST, await sitemapPaths(page)) };
     }
     res.type('application/xml').setHeader('Cache-Control', 'public, max-age=3600'); res.send(sitemapCache.xml);
