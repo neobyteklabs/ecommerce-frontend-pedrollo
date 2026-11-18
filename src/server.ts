@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import { isMediaKeyPath, mediaHandler } from './media-proxy';
+import { legacyAnswer } from './legacy-redirects';
 import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage, wwwRedirect } from './sitemap';
 import { buyerOf, clearedCookie, looksLikeSession, readSessionCookie, sessionCookie } from './account-proxy';
 
@@ -53,6 +54,14 @@ app.use((req, res, next) => {
   if (!to) { next(); return; }
   res.setHeader('Cache-Control', 'public, max-age=3600');
   res.redirect(req.method === 'GET' || req.method === 'HEAD' ? 301 : 308, to);
+});
+// Direcciones del WordPress anterior (ver legacy-redirects.ts): los PDF de listas de precios → su categoría (301); lo demás, 410.
+app.use((req, res, next) => {
+  const legacy = legacyAnswer(req.path);
+  if (!legacy) { next(); return; }
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  if ('redirect' in legacy) { res.redirect(301, legacy.redirect); return; }
+  res.status(410).end();
 });
 app.get('/robots.txt', (req, res) => { res.type('text/plain').setHeader('Cache-Control', 'public, max-age=3600'); res.send(robotsTxt(req.headers.host, CANONICAL_HOST)); });
 let sitemapCache: { at: number; xml: string } | null = null;
