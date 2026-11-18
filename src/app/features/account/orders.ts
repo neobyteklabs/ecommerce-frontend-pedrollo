@@ -22,7 +22,7 @@ export const etiquetaDe = (o: Pick<AccountOrder, 'estado'>) => PAGO_LABEL[o.esta
     @else {
       <div class="stack-sm" data-component="OrderList">
         @for (o of pedidos(); track o.folio) {
-          <a class="order-row" [routerLink]="['/seguimiento', o.folio]" [queryParams]="{ c: correo() }" [attr.data-pedido]="o.numero"><div><span class="mono" style="font-weight:600">{{ o.numero }}</span><div class="small muted">{{ fecha(o.creado) }} · {{ o.piezas }} {{ o.piezas === 1 ? 'pieza' : 'piezas' }}</div></div><span class="badge" [class]="'badge badge-' + etiqueta(o).badge">{{ etiqueta(o).label }}</span><span class="num" style="font-weight:600">{{ mxn(o.total) }}</span><bsv-icon name="chevronRight" class="muted" /></a>
+          <a class="order-row" [routerLink]="['/seguimiento', o.folio]" [attr.data-pedido]="o.numero"><div><span class="mono" style="font-weight:600">{{ o.numero }}</span><div class="small muted">{{ fecha(o.creado) }} · {{ o.piezas }} {{ o.piezas === 1 ? 'pieza' : 'piezas' }}</div></div><span class="badge" [class]="'badge badge-' + etiqueta(o).badge">{{ etiqueta(o).label }}</span><span class="num" style="font-weight:600">{{ mxn(o.total) }}</span><bsv-icon name="chevronRight" class="muted" /></a>
         } @empty { <div class="card" data-testid="pedidos-vacio"><p style="margin:0">Todavía no hay pedidos con <strong>{{ correo() }}</strong>.</p><p class="muted small" style="margin:8px 0 0">Si compraste con otro correo, puedes ver ese pedido en <a routerLink="/seguimiento">Seguimiento</a> con su número.</p></div> }
       </div>
     }</div></div>`,

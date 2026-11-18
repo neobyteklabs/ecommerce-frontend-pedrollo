@@ -79,7 +79,7 @@ export interface TrackingShipment { id?: number; origen: string; modo?: 'paquete
 export interface TrackingResponse {
   folio: string; numero: string; tipo: 'pedido' | 'cotizacion'; estado: TrackingState; titulo: string; detalle: string; actualizado: string | null; obsoleto?: boolean;
   entregadoEn?: string | null; recibio?: string | null;
-  asesor?: { nombre: string; telefono: string | null; whatsapp: string | null } | null;
+  asesor?: { nombre: string } | null;
   /** `formasPago`: claves del SAT que admite la factura de este pedido según cómo se pagó (03 transferencia; 04 y 28 tarjeta). */
   pedido?: { numero: string; total: number; moneda: string; renglones: { modelo: string; cantidad: number }[]; formasPago?: string[] } | null;
   cotizacion?: { folio: string; total: number; moneda: string; vigencia: string | null; documento: string | null } | null;

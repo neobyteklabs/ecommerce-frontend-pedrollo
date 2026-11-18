@@ -8,6 +8,7 @@ import express from 'express';
 import { join } from 'node:path';
 import { isMediaKeyPath, mediaHandler } from './media-proxy';
 import { legacyAnswer } from './legacy-redirects';
+import { LookupGuard } from './lookup-guard';
 import { feedItems, feedXml, FeedPage } from './merchant-feed';
 import { imageFor } from './app/core/images';
 import { robotsTxt, sitemapPaths, sitemapXml, SitemapPage, wwwRedirect } from './sitemap';
@@ -213,7 +214,9 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
-  if (/^\/api\/tienda\/v1\/(seguimiento|pedidos)\//.test(req.path) && limited(req, 'seguimiento')) {
+  const lookup = LOOKUP_RE.test(req.path);
+  if (lookup && guard.blocked(clientIp(req))) { res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos fallidos. Espera 15 minutos o escríbenos por WhatsApp.', timestamp: new Date().toISOString() }); return; }
+  if (lookup && limited(req, 'seguimiento')) {
     res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
   }
@@ -224,6 +227,7 @@ app.get('/api/tienda/{*splat}', async (req, res) => {
       headers: { 'X-Store-Key': STORE_KEY, Accept: req.path.endsWith('.pdf') ? 'application/pdf' : FILE_BY_TOKEN_RE.test(req.path) ? '*/*' : 'application/json' },
       signal: AbortSignal.timeout(15000),
     });
+    if (lookup && upstream.status === 404) { guard.miss(clientIp(req)); }
     res.status(upstream.status);
     const type = upstream.headers.get('content-type');
     if (type) res.setHeader('Content-Type', type);
@@ -252,8 +256,13 @@ const isWritable = (path: string) => WRITABLE.has(path) || WRITABLE_RE.some(re =
 /** Límite por IP, en memoria (bala 5): crear pedidos y consultar seguimiento no deben servir para enumerar folios ni
  *  para martillar al back-office. 30 peticiones por minuto por IP y ruta; detrás de CloudFront llega X-Forwarded-For. */
 const RATE: Record<string, { n: number; until: number }> = {};
+function clientIp(req: express.Request): string { return (req.headers['x-forwarded-for']?.toString().split(',')[0] ?? req.ip ?? 'ip').trim(); }
+/** Lo que se abre con folio (+ contacto): ahí un 404 es un intento fallido de ver un pedido o una cotización. */
+const LOOKUP_RE = /^\/api\/tienda\/v1\/(seguimiento|pedidos)\/[^/]+/;
+const guard = new LookupGuard();
+setInterval(() => guard.sweep(), 60_000).unref();
 function limited(req: express.Request, bucket: string, max = 30): boolean {
-  const ip = (req.headers['x-forwarded-for']?.toString().split(',')[0] ?? req.ip ?? 'ip').trim();
+  const ip = clientIp(req);
   const k = `${bucket}:${ip}`; const now = Date.now(); const e = RATE[k];
   if (!e || e.until < now) { RATE[k] = { n: 1, until: now + 60_000 }; return false; }
   e.n++; return e.n > max;
@@ -287,6 +296,8 @@ app.post('/api/tienda/{*splat}', rawBody, tooLarge, async (req: express.Request,
     res.status(503).json({ code: 'STORE_NOT_CONFIGURED', message: CONFIG_ERROR, timestamp: new Date().toISOString() });
     return;
   }
+  const lookup = LOOKUP_RE.test(req.path);
+  if (lookup && guard.blocked(clientIp(req))) { res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos fallidos. Espera 15 minutos o escríbenos por WhatsApp.', timestamp: new Date().toISOString() }); return; }
   if ((req.path === '/api/tienda/v1/pedidos' && limited(req, 'pedidos')) || (req.path.endsWith('/pagar') && limited(req, 'pagar', 12)) || (req.path.startsWith('/api/tienda/v1/seguimiento/') && limited(req, 'seguimiento')) || (/\/transferencia(\/comprobante)?$/.test(req.path) && limited(req, 'transferencia', 20))) {
     res.status(429).json({ code: 'TOO_MANY_REQUESTS', message: 'Demasiados intentos. Espera un minuto.', timestamp: new Date().toISOString() });
     return;
@@ -295,6 +306,7 @@ app.post('/api/tienda/{*splat}', rawBody, tooLarge, async (req: express.Request,
     const headers: Record<string, string> = { 'X-Store-Key': STORE_KEY, Accept: 'application/json', 'Content-Type': 'application/json' };
     const idem = req.header('Idempotency-Key'); if (idem) headers['Idempotency-Key'] = idem;
     const upstream = await fetch(`${BACKOFFICE_URL}${req.originalUrl}`, { method: 'POST', headers, body: new Uint8Array(req.body as Buffer), signal: AbortSignal.timeout(INVOICE_RE.test(req.path) || PROOF_RE.test(req.path) ? 30000 : 8000) });
+    if (lookup && upstream.status === 404) { guard.miss(clientIp(req)); }
     res.status(upstream.status);
     const type = upstream.headers.get('content-type');
     if (type) res.setHeader('Content-Type', type);

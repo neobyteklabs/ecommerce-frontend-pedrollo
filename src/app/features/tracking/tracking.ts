@@ -7,6 +7,9 @@ import { EMPTY_ADDRESS, addressComplete, loadAddress, normalizeAddress, saveAddr
 import { mxn } from '../../core/products';
 import { Icon, Alert, Timeline, TimelineStep, AddressFields, PdfModal } from '../../shared/ui';
 import { ToastService } from '../../core/toast';
+import { POLITICA } from '../../core/legal';
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /** `/seguimiento` y `/seguimiento/:folio?c=` (bala 5, spec §10): la tienda pregunta al back-office, que pregunta al CRM.
  *  Dos llaves: folio + correo o teléfono. Sin polling: se consulta al abrir y con «Actualizar». Un 404 no distingue causa. */
@@ -69,7 +72,7 @@ import { ToastService } from '../../core/toast';
           </div> }
       </div>
       <aside class="stack">
-        @if (t.asesor; as a) { <div class="card" data-component="Advisor"><h4>Tu asesor</h4><p style="margin:0"><strong>{{ a.nombre }}</strong>@if (a.telefono) { <br />{{ a.telefono }} }</p>@if (a.whatsapp) { <a class="btn btn-secondary btn-sm" style="margin-top:12px" [href]="a.whatsapp"><bsv-icon name="phone" style="--icon:16px" /> WhatsApp</a> }</div> }
+        @if (t.asesor; as a) { <div class="card" data-component="Advisor"><h4>Tu asesor</h4><p style="margin:0"><strong>{{ a.nombre }}</strong><br /><a [href]="'tel:' + tienda.telefono.tel">{{ tienda.telefono.texto }}</a></p><a class="btn btn-secondary btn-sm" style="margin-top:12px" [href]="tienda.whatsapp" target="_blank" rel="noopener"><bsv-icon name="phone" style="--icon:16px" /> WhatsApp</a></div> }
         @else { <div class="card"><h4>¿Dudas?</h4><p class="small" style="margin:0">Escríbenos por <a href="https://wa.me/525610631274">WhatsApp</a> con tu folio.</p></div> }
         @if (t.pedido; as p) { <div class="card summary" style="position:static"><h4>Pedido {{ p.numero }}</h4>@for (r of p.renglones; track $index) { <div class="between small" style="padding:4px 0"><span><span class="model">{{ r.modelo }}</span> × {{ r.cantidad }}</span></div> }<div class="between" style="margin-top:8px;font-weight:600"><span>Total</span><span class="num">{{ mxn(p.total) }}</span></div></div> }
         @if (t.tipo === 'pedido' && (t.acciones.includes('factura') || t.factura)) {
@@ -131,6 +134,13 @@ export class Tracking {
   folio = input<string>(); c = input<string>();
   /** `?factura=1`: quien llega desde «Solicitar factura» (confirmación del pedido) encuentra el formulario abierto. Una sola vez por visita. */
   factura = input<string>(); private autoOpened = false;
+  /** Ya encontrado, la dirección se cambia por la del folio largo y sin contacto: se puede recargar o guardar sin dejar a la vista el correo ni el número corto. */
+  private cleanUrl = effect(() => {
+    if (typeof window === 'undefined' || !this.remote.hasValue()) { return; }
+    const uuid = this.remote.value().folio; const k = untracked(() => this.key());
+    if (!k || !UUID_RE.test(uuid) || (k.folio.toLowerCase() === uuid.toLowerCase() && !untracked(() => this.c()))) { return; }
+    void this.router.navigate(['/seguimiento', uuid], { queryParams: { c: null }, queryParamsHandling: 'merge', replaceUrl: true });
+  });
   private openInvoice = effect(() => {
     if (this.factura() !== '1' || this.autoOpened || !this.remote.hasValue()) { return; }
     const t = this.remote.value();
@@ -138,6 +148,8 @@ export class Tracking {
     if (t.tipo === 'pedido' && t.acciones.includes('factura')) { untracked(() => this.invoicing.set(true)); }
   });
   private api = inject(StorefrontApi); private router = inject(Router); private toast = inject(ToastService); mxn = mxn;
+  /** El comprador contacta a la TIENDA, no al celular del vendedor (Felipe, 18-nov): del asesor solo se muestra el nombre. */
+  tienda = POLITICA;
   invoicing = signal(false); invoiceNotice = signal<string | null>(null); invoiceCmp = viewChild(InvoiceFormComponent);
   /** La remisión y la cotización se ven en un modal, sin sacar al comprador de la tienda (Felipe, 6-nov). Solo URLs relativas de la propia tienda. */
   pdf = signal<{ titulo: string; url: string } | null>(null);
@@ -146,7 +158,10 @@ export class Tracking {
   /** F14: solo se pide cuando el seguimiento dice `requiereEntrega`; prellenada con la que recuerda el dispositivo. */
   entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
   folioInput = ''; contactoInput = ''; formError = signal<string | null>(null);
-  key = computed(() => { const f = this.folio()?.trim(); const c = this.c()?.trim(); return f && c ? { folio: f, contacto: c } : undefined; });
+  /** El folio largo (UUID) del enlace del correo abre solo; el número corto (PED-…/COT-…) siempre pide el contacto. */
+  /** El contacto tecleado en el formulario vive en memoria, NO en la URL: un correo en la barra de direcciones queda en el historial y en las analíticas. */
+  private typed = signal('');
+  key = computed(() => { const f = this.folio()?.trim(); const c = this.c()?.trim() || this.typed(); return f && (c || UUID_RE.test(f)) ? { folio: f, contacto: c } : undefined; });
   remote = this.api.tracking(() => this.key());
   unavailable = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return (e?.status ?? 0) >= 500 || e?.status === 0; });
   steps = computed<TimelineStep[]>(() => this.remote.hasValue() ? buildSteps(this.remote.value()) : []);
@@ -187,7 +202,7 @@ export class Tracking {
   go(e: Event) {
     e.preventDefault(); const f = this.folioInput.trim(); const c = this.contactoInput.trim();
     if (!f || !c) { this.formError.set('Escribe el folio y tu correo o teléfono.'); return; }
-    this.router.navigate(['/seguimiento', f], { queryParams: { c } });
+    this.typed.set(c); this.router.navigate(['/seguimiento', f], { queryParamsHandling: 'preserve' });
   }
   /** Una fecha sin hora (`2026-10-28`) se lee como día local, no como medianoche UTC: si no, en México se mostraría el día anterior. */
   fecha(iso: string) { const d = new Date(iso.length === 10 ? iso + 'T00:00:00' : iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
