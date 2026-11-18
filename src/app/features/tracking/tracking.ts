@@ -159,8 +159,8 @@ export class Tracking {
   entrega = signal<OrderAddress>(loadAddress() ?? { ...EMPTY_ADDRESS }); addrErrors = signal(false);
   folioInput = ''; contactoInput = ''; formError = signal<string | null>(null);
   /** El folio largo (UUID) del enlace del correo abre solo; el número corto (PED-…/COT-…) siempre pide el contacto. */
-  /** El contacto tecleado en el formulario vive en memoria, NO en la URL: un correo en la barra de direcciones queda en el historial y en las analíticas. */
-  private typed = signal('');
+  /** El contacto tecleado viaja en el estado de la navegación (la pantalla se crea de nuevo al cambiar de ruta), NO en la URL: un correo en la barra de direcciones queda en el historial y en las analíticas. */
+  private typed = signal<string>(this.router.getCurrentNavigation()?.extras.state?.['c'] ?? (typeof history !== 'undefined' ? history.state?.c : '') ?? '');
   key = computed(() => { const f = this.folio()?.trim(); const c = this.c()?.trim() || this.typed(); return f && (c || UUID_RE.test(f)) ? { folio: f, contacto: c } : undefined; });
   remote = this.api.tracking(() => this.key());
   unavailable = computed(() => { const e = this.remote.error() as { status?: number } | undefined; return (e?.status ?? 0) >= 500 || e?.status === 0; });
@@ -202,7 +202,7 @@ export class Tracking {
   go(e: Event) {
     e.preventDefault(); const f = this.folioInput.trim(); const c = this.contactoInput.trim();
     if (!f || !c) { this.formError.set('Escribe el folio y tu correo o teléfono.'); return; }
-    this.typed.set(c); this.router.navigate(['/seguimiento', f], { queryParamsHandling: 'preserve' });
+    this.typed.set(c); this.router.navigate(['/seguimiento', f], { queryParamsHandling: 'preserve', state: { c } });
   }
   /** Una fecha sin hora (`2026-10-28`) se lee como día local, no como medianoche UTC: si no, en México se mostraría el día anterior. */
   fecha(iso: string) { const d = new Date(iso.length === 10 ? iso + 'T00:00:00' : iso); return isNaN(d.getTime()) ? iso : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', ...(iso.length > 10 ? { hour: '2-digit', minute: '2-digit' } : {}) }); }
