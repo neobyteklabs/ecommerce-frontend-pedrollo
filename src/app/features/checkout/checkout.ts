@@ -71,9 +71,17 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
               </div> }
             <div class="between small" style="padding:8px 0"><span>Entrega a</span><span style="text-align:right">{{ f.calle }} {{ f.numeroExt }}{{ f.numeroInt ? ' int. ' + f.numeroInt : '' }}, {{ f.colonia }}<br />{{ f.cp }} {{ f.municipio }}, {{ f.estado }} · <a routerLink="/checkout" [queryParams]="{ step: 1 }">cambiar</a></span></div>
           </div>
-          <form class="card card-sm" (submit)="$event.preventDefault(); applyCoupon()" data-component="Coupon"><h3 style="margin:0 0 8px">Cupón</h3>
+          <form class="card card-sm" (submit)="$event.preventDefault(); applyCoupon()" data-component="Coupon"><h3 style="margin:0 0 8px">Cupones</h3>
             <div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap"><label class="label" style="flex:1;min-width:200px">Código<input class="input mono" name="cupon" [(ngModel)]="couponInput" maxlength="40" autocapitalize="characters" /></label><button class="btn btn-secondary" type="submit" [class.is-loading]="couponLoading()">Aplicar</button></div>
-            @if (cart.coupon(); as c) { @if (c.valido) { <p class="small" style="margin:8px 0 0;color:var(--color-success,green)">Cupón {{ cart.couponCode() }} aplicado: −{{ mxn(c.descuento) }}</p> } @else { <p class="small" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ c.motivo || 'Cupón no válido.' }} <span class="muted">Revisa el código tal como te lo enviaron, letra por letra.</span></p> } }
+            @if (cart.couponItems().length) {
+              <ul data-testid="cupones-aplicados" style="list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px">
+                @for (c of cart.couponItems(); track c.codigo) {
+                  <li class="between small" style="gap:8px;align-items:center"><span style="color:var(--color-success,green)"><span class="mono">{{ c.codigo }}</span> aplicado: −{{ mxn(c.descuento) }}</span><button type="button" class="btn-link small" style="min-height:44px" [attr.aria-label]="'Quitar el cupón ' + c.codigo" (click)="removeCoupon(c.codigo)">Quitar</button></li>
+                }
+              </ul>
+              <p class="xs muted" style="margin:6px 0 0">¿Tienes otro? Escríbelo arriba: se suman en el orden en que los pongas.</p>
+            }
+            @if (cart.couponNotice(); as n) { <p class="small" role="status" data-testid="cupon-aviso" style="margin:8px 0 0;color:var(--color-danger,#b00020)">{{ n }}</p> }
           </form>
           <div class="card card-sm" data-component="Payment"><h3 style="margin:0 0 8px">Pago con tarjeta</h3>
             <div class="row small muted" style="margin-bottom:12px"><bsv-icon name="lock" style="--icon:16px" /> @if (order()?.pago?.modo === 'stripe') { Procesado por Stripe con 3D Secure. } @else { Pago seguro con {{ pasarela }}. } Nunca vemos el número completo de tu tarjeta.</div>
@@ -110,7 +118,7 @@ const EMPTY: Form = { nombre: '', correo: '', telefono: '', empresa: '', cp: '',
     <aside class="card summary" data-component="OrderSummary"><h3>Tu pedido</h3>
       @for (l of cart.checkoutLines(); track l.id) { <div class="between small" style="padding:8px 0;border-bottom:1px solid var(--color-border)"><span><span class="model">{{ cart.view(l).model }}</span> × {{ l.qty }}</span><span class="num">{{ mxn(cart.unitPrice(l)! * l.qty) }}</span></div> }
       <div class="lines" style="margin-top:12px"><span>Subtotal (sin IVA)</span><span class="num">{{ mxn(cart.base()) }}</span>
-        @if (cart.coupon()?.valido) { <span>Cupón {{ cart.couponCode() }}</span><span class="num">−{{ mxn(cart.coupon()!.descuento) }}</span> }
+        @for (c of cart.couponItems(); track c.codigo) { <span>Cupón {{ c.codigo }}</span><span class="num">−{{ mxn(c.descuento) }}</span> }
         <span>IVA 16 %</span><span class="num">{{ mxn(cart.ivaWithCoupon()) }}</span><span>Envío</span><span class="num">{{ cart.shippingResult() ? (cart.shipping() == null ? 'Por confirmar' : cart.shipping() ? mxn(cart.shipping()!) : 'Gratis') : 'Según CP' }}</span><span class="total">Total</span><span class="total num">{{ mxn(total()) }}</span></div>
       @if (cart.hasQuoteOnly()) { <p class="xs muted" style="margin:12px 0 0">Las líneas sin existencia no entran a este pedido: cotízalas desde el carrito.</p> }
     </aside>
@@ -139,12 +147,11 @@ export class Checkout {
     afterNextRender(() => {
       // Pago por transferencia: solo se ofrece si la tienda lo configuró en el portal. Si la consulta falla, queda el enlace a WhatsApp.
       this.api.transferAvailability().then(a => this.transferOk.set(a.disponible)).catch(() => this.transferOk.set(false));
-      this.couponInput = this.cart.couponCode();
       if (this.step() === 2) {
         if (!this.valid()) { this.router.navigate(['/checkout'], { queryParams: { step: 1 } }); return; }
         if (this.f.cp && this.cart.cp() !== this.f.cp) this.cart.cp.set(this.f.cp);
         if (!this.cart.shippingResult() && this.cart.cp()) this.cart.resolveShipping();
-        if (this.cart.couponCode()) this.cart.applyCoupon(this.cart.couponCode());
+        if (this.cart.couponCodes().length) this.cart.revalidateCoupons();
       }
     });
     // Bala 13: monta el formulario de tarjeta de Mercado Pago en cuanto existe su contenedor y el pedido es de ese modo.
@@ -172,7 +179,9 @@ export class Checkout {
     this.saveForm(); this.cart.cp.set(this.f.cp.trim()); this.cart.resolveShipping();
     this.router.navigate(['/checkout'], { queryParams: { step: 2 } });
   }
-  async applyCoupon() { this.couponLoading.set(true); try { await this.cart.applyCoupon(this.couponInput); } finally { this.couponLoading.set(false); } }
+  /** Suma el cupón escrito a los ya aplicados; si entra, el campo queda libre para el siguiente. */
+  async applyCoupon() { this.couponLoading.set(true); try { if (await this.cart.applyCoupon(this.couponInput)) this.couponInput = ''; } finally { this.couponLoading.set(false); } }
+  async removeCoupon(code: string) { this.couponLoading.set(true); try { await this.cart.removeCoupon(code); } finally { this.couponLoading.set(false); } }
 
   transferOk = signal(false);
   /**
@@ -185,7 +194,7 @@ export class Checkout {
       const correo = this.f.correo.trim();
       let folio = this.order()?.folio;
       if (!folio) {
-        const o = await this.api.createOrder({ comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) });
+        const o = await this.api.createOrder({ comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.couponItems().length ? { cupones: this.cart.couponItems().map(c => c.codigo) } : {}) });
         this.remember(o.folio); saveAddress(this.address()); folio = o.folio;
       }
       await this.api.chooseTransfer(folio, correo);
@@ -202,7 +211,7 @@ export class Checkout {
   async createOrder() {
     this.error.set(null); this.creating.set(true);
     try {
-      const body = { comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.coupon()?.valido ? { cupon: this.cart.couponCode() } : {}) };
+      const body = { comprador: this.buyer(), entrega: this.address(), lineas: this.cart.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty, precioEsperado: this.cart.unitPrice(l)! })), ...(this.cart.couponItems().length ? { cupones: this.cart.couponItems().map(c => c.codigo) } : {}) };
       const o = await this.api.createOrder(body);
       this.remember(o.folio); saveAddress(this.address());   // F14: la próxima cotización o compra la prellena
       // Bala 13: con Mercado Pago el comprador paga en su checkout y regresa a `/checkout/confirmando`. La URL se recuerda en esta pestaña

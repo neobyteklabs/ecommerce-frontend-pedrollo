@@ -43,9 +43,14 @@ export class CartService {
   /** Líneas que van al pedido (bala 5): con precio y no «por cotizar». Las parciales van completas; el backend las parte. */
   readonly checkoutLines = computed(() => this.lines().filter(l => this.billable(l)));
   readonly canCheckout = computed(() => this.checkoutLines().length > 0);
-  /** Cupón aplicado en el carrito/checkout (bala 5). Se valida contra el backend; el pedido lo vuelve a validar al crearse. */
-  readonly couponCode = signal<string>(this.loadSession('bsv.cupon') ?? '');
+  /** Cupones aplicados (bala 5; varios desde nov-2026), en el orden en que se pusieron: se aplican en cascada. Se validan contra el
+   *  backend; el pedido los vuelve a validar al crearse. */
+  readonly couponCodes = signal<string[]>(this.loadCoupons());
+  /** Los códigos juntos, para mostrarlos en una línea. */
+  readonly couponCode = computed(() => this.couponCodes().join(' + '));
   readonly coupon = signal<CouponResponse | null>(null);
+  /** Lo último que pasó al aplicar: por qué un cupón no entró, o que la tienda topó el descuento. */
+  readonly couponNotice = signal<string | null>(null);
   /** Con cupón válido, los totales son los del backend (descuento antes de IVA); sin cupón, los locales. */
   /** La compra mínima en línea de la tienda, que llega con el envío; nulo = sin mínimo (o aún sin cotizar el envío). */
   readonly minPurchase = computed<number | null>(() => this.shippingResult()?.compraMinima ?? null);
@@ -58,7 +63,7 @@ export class CartService {
   constructor() {
     effect(() => { if (this.browser) localStorage.setItem('bsv.cart', JSON.stringify(this.lines())); });
     effect(() => { if (this.browser) { const cp = this.cp(); if (cp) sessionStorage.setItem('bsv.cp', cp); else sessionStorage.removeItem('bsv.cp'); } });
-    effect(() => { if (this.browser) { const c = this.couponCode(); if (c) sessionStorage.setItem('bsv.cupon', c); else sessionStorage.removeItem('bsv.cupon'); } });
+    effect(() => { if (this.browser) { const c = this.couponCodes(); if (c.length) sessionStorage.setItem('bsv.cupones', JSON.stringify(c)); else sessionStorage.removeItem('bsv.cupones'); } });
   }
 
   /** Lo que el carrito y el pago pintan de una línea: lo guardado al agregar y, si falta, la lista local; nunca queda sin modelo. */
@@ -77,18 +82,50 @@ export class CartService {
   }
   setQty(id: string, qty: number) { this.lines.update(ls => ls.map(x => x.id === id ? { ...x, qty } : x).filter(x => x.qty > 0)); this.shippingResult.set(null); }
   remove(id: string) { this.lines.update(ls => ls.filter(x => x.id !== id)); this.shippingResult.set(null); }
-  clear() { this.lines.set([]); this.shippingResult.set(null); this.coupon.set(null); this.couponCode.set(''); }
+  clear() { this.lines.set([]); this.shippingResult.set(null); this.coupon.set(null); this.couponCodes.set([]); this.couponNotice.set(null); }
   /** El backend rechazó el pedido con 409 PRECIO_CAMBIO: aplica los precios nuevos y marca las líneas para avisar. */
   applyPriceChanges(cambios: { slug: string; precioActual?: number }[]) {
     this.lines.update(ls => ls.map(l => { const c = cambios.find(x => x.slug === l.id); if (!c || c.precioActual == null || c.precioActual === l.priceAtAdd) return l; return { ...l, priceAtAdd: c.precioActual, fromApi: true, changedFrom: l.priceAtAdd }; }));
   }
-  /** Valida el cupón contra las líneas del pedido. Con código vacío, lo quita. */
-  async applyCoupon(code: string) {
-    const codigo = code.trim().toUpperCase(); this.couponCode.set(codigo);
-    if (!codigo) { this.coupon.set(null); return null; }
-    try { const r = await this.api.coupon(codigo, this.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty }))); this.coupon.set(r); return r; }
-    catch { const r: CouponResponse = { valido: false, motivo: 'No pudimos validar el cupón. Intenta de nuevo.', descuento: 0, subtotal: this.base(), total: this.total() }; this.coupon.set(r); return r; }
+  /** Agrega un cupón a los ya aplicados y los valida todos. @returns si el cupón entró */
+  async applyCoupon(code: string): Promise<boolean> {
+    const codigo = code.trim().toUpperCase();
+    if (!codigo) return false;
+    if (this.couponCodes().includes(codigo)) { this.couponNotice.set(`El cupón ${codigo} ya está aplicado.`); return false; }
+    await this.validateCoupons([...this.couponCodes(), codigo]);
+    return this.couponCodes().includes(codigo);
   }
+  async removeCoupon(code: string) { this.couponNotice.set(null); await this.validateCoupons(this.couponCodes().filter(c => c !== code)); }
+  /** Vuelve a validar los cupones guardados (al entrar al pago, o si cambió el carrito). */
+  revalidateCoupons() { return this.validateCoupons(this.couponCodes()); }
+
+  /**
+   * Valida la lista completa contra el backend. Los que no entran se QUITAN de la lista y se dice por qué: lo que el comprador ve
+   * aplicado es exactamente lo que el pedido va a llevar (el backend rechaza un pedido con un cupón que no entra, no lo corrige).
+   */
+  private async validateCoupons(codes: string[]) {
+    this.couponNotice.set(null);
+    if (!codes.length) { this.couponCodes.set([]); this.coupon.set(null); return; }
+    const lineas = this.checkoutLines().map(l => ({ slug: l.id, cantidad: l.qty }));
+    try {
+      let r = await this.api.coupon(codes, lineas);
+      const items = r.cupones ?? codes.map(c => ({ codigo: c, valido: r.valido, motivo: r.motivo, descuento: r.valido ? r.descuento : 0 }));
+      const fuera = items.filter(i => !i.valido);
+      const dentro = items.filter(i => i.valido).map(i => i.codigo);
+      if (fuera.length) {
+        this.couponNotice.set(fuera.map(i => !i.motivo || i.motivo === 'no válido' ? `El cupón ${i.codigo} no es válido.` : `${i.codigo}: ${i.motivo}`).join(' '));
+        r = dentro.length ? await this.api.coupon(dentro, lineas) : { ...r, valido: false, descuento: 0, cupones: [] };
+      } else if (r.topeAplicado) {
+        this.couponNotice.set('Alcanzaste el descuento máximo por cupones: el último se aplicó en parte.');
+      }
+      this.couponCodes.set(dentro); this.coupon.set(dentro.length ? r : null);
+    } catch {
+      // Sin respuesta no se sabe qué vale: se conserva la lista, sin descuento, y se avisa. El pedido los valida de todos modos.
+      this.couponCodes.set(codes); this.coupon.set(null); this.couponNotice.set('No pudimos validar los cupones. Intenta de nuevo.');
+    }
+  }
+  /** Lo que descontó cada cupón aplicado, para el resumen. */
+  readonly couponItems = computed(() => (this.coupon()?.cupones ?? []).filter(i => i.valido));
   acknowledgePrices() { this.lines.update(ls => ls.map(l => ({ ...l, changedFrom: undefined }))); }
 
   /** Refresca el precio de cada línea desde la API (bala 4): si cambió, se actualiza y se marca para avisar. */
@@ -112,5 +149,10 @@ export class CartService {
 
 
   private load(): CartLine[] { if (!this.browser) return []; try { return JSON.parse(localStorage.getItem('bsv.cart') || '[]'); } catch { return []; } }
+  /** Los cupones de la sesión; lee también la clave anterior, de cuando era uno solo. */
+  private loadCoupons(): string[] {
+    try { const many = JSON.parse(this.loadSession('bsv.cupones') ?? 'null'); if (Array.isArray(many)) return many.filter(c => typeof c === 'string' && c); } catch { /* cae al valor viejo */ }
+    const one = this.loadSession('bsv.cupon'); return one ? [one] : [];
+  }
   private loadSession(k: string): string | null { if (!this.browser) return null; try { return sessionStorage.getItem(k); } catch { return null; } }
 }
